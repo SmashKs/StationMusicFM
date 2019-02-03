@@ -19,6 +19,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.ext;
+package com.no1.taiwan.stationmusicfm.ext
 
-public class MyClass {}
+class MyClass

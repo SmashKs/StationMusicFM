@@ -24,6 +24,22 @@ apply plugin: "kotlin"
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation(dependencies.Deps.Global.kotlin)
+    implementation(dependencies.Deps.Global.coroutine)
+
+    testImplementation(dependencies.Deps.GlobalTest.kotlin)
+    testImplementation(dependencies.Deps.GlobalTest.mockito) {
+        exclude(group: "org.jetbrains.kotlin", module: "kotlin-reflect")
+    }
+    testImplementation(dependencies.Deps.GlobalTest.assertk) {
+        exclude(group: "org.jetbrains.kotlin")
+    }
+
+    //region For the the newest version.
+    testImplementation(dependencies.Deps.GlobalTest.byteBuddy)
+    testImplementation(dependencies.Deps.GlobalTest.byteBuddyAgent)
+    //endregion
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

@@ -25,11 +25,12 @@ apply plugin: "kotlin-android-extensions"
 apply plugin: "org.jetbrains.kotlin.kapt"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion dependencies.Versions.Android.compileSdk
+
     defaultConfig {
         applicationId "com.no1.taiwan.stationmusicfm"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion dependencies.Versions.Android.minSdk
+        targetSdkVersion dependencies.Versions.Android.targetSdk
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true
@@ -80,11 +81,104 @@ kapt {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "androidx.core:core-ktx:1.0.1"
-    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
-    testImplementation "junit:junit:4.12"
-    androidTestImplementation "androidx.test:runner:1.1.1"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+    //region Kotlin
+    implementation(dependencies.Deps.Global.kotlin)
+    implementation(dependencies.Deps.Global.coroutine)
+    implementation(dependencies.Deps.Global.refelect)
+    implementation(dependencies.Deps.Presentation.androidCoroutine)
+    //endregion
+
+    //region Jieyi Libraries
+    implementation(dependencies.Deps.Presentation.knifer)
+    implementation(dependencies.Deps.Presentation.arv)
+    implementation(dependencies.Deps.Presentation.quickDialog)
+    //endregion
+
+    //region Anko
+    implementation(dependencies.Deps.Presentation.anko)
+    implementation(dependencies.Deps.Presentation.ankoSdk25)
+    implementation(dependencies.Deps.Presentation.ankoV7)
+    implementation(dependencies.Deps.Presentation.ankoCoroutine)
+    implementation(dependencies.Deps.Presentation.ankoV7Coroutine)
+    //endregion
+
+    //region DI
+    implementation(dependencies.Deps.Global.kodeinJVM) {
+        exclude(group: "org.jetbrains.kotlin")
+    }
+    implementation(dependencies.Deps.Global.kodeinCore) {
+        exclude(group: "org.jetbrains.kotlin")
+    }
+    implementation(dependencies.Deps.Global.kodeinAndroidX) {
+        exclude(group: "org.jetbrains.kotlin")
+    }
+    //endregion
+
+    //region Rx Bus
+    implementation(dependencies.Deps.Presentation.rxBus) {
+        exclude(group: "com.jakewharton.timber", module: "timber")
+    }
+    //endregion
+
+    //region Internet & Image loading
+    implementation(dependencies.Deps.Presentation.retrofit2)
+    implementation(dependencies.Deps.Presentation.retrofit2Gson)
+    implementation(dependencies.Deps.Presentation.retrofit2Courtine) {
+        exclude(group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-core")
+    }
+    implementation(dependencies.Deps.Presentation.okhttpLogging)
+    implementation(dependencies.Deps.Presentation.glide)
+    implementation(dependencies.Deps.GlobalDebug.okHttpProfiler)
+    //endregion
+
+    //region Firebase & Database
+    implementation(dependencies.Deps.Presentation.firebaseCore)
+    implementation(dependencies.Deps.Presentation.firebaseDB)
+    implementation(dependencies.Deps.Presentation.firebaseMessaging)
+    implementation(dependencies.Deps.Presentation.room)
+    implementation(dependencies.Deps.Presentation.mmkv)
+    //endregion
+
+    //region Android extension
+    implementation(dependencies.Deps.Presentation.ktx)
+    implementation(dependencies.Deps.Presentation.lifecycle)
+    //endregion
+
+    //region Androidx SDK
+    implementation(dependencies.Deps.Presentation.dexTool)
+    implementation(dependencies.Deps.Presentation.appcompat)
+    implementation(dependencies.Deps.Presentation.materialDessign)
+    implementation(dependencies.Deps.Presentation.recyclerview)
+    implementation(dependencies.Deps.Presentation.cardview)
+    implementation(dependencies.Deps.Presentation.annot)
+    implementation(dependencies.Deps.Presentation.constraintLayout)
+    implementation(dependencies.Deps.Presentation.coordinatorLayout)
+    implementation(dependencies.Deps.Presentation.navigationUi)
+    implementation(dependencies.Deps.Presentation.navigationFragment)
+    implementation(dependencies.Deps.Presentation.worker)
+
+    implementation(dependencies.Deps.Presentation.idlingEspresso)
+    //endregion
+
+    //region Third-party view components
+    implementation(dependencies.Deps.Presentation.shapeOfView)
+    //endregion
+
+    //region Debug
+    debugImplementation(dependencies.Deps.GlobalDebug.steho)
+    debugImplementation(dependencies.Deps.GlobalDebug.stehoInterceptor)
+    debugImplementation(dependencies.Deps.GlobalDebug.debugDb)
+    debugRuntimeOnly(dependencies.Deps.GlobalDebug.activityLauncher)
+    //endregion
+
+    //region Android Test
+    androidTestImplementation(dependencies.Deps.GlobalTest.junit)
+    androidTestImplementation(dependencies.Deps.GlobalTest.junitCore)
+    androidTestImplementation(dependencies.Deps.GlobalTest.assertk) {
+        exclude(group: "org.jetbrains.kotlin")
+    }
+    androidTestImplementation(dependencies.Deps.PresentationTest.runner)
+    androidTestImplementation(dependencies.Deps.PresentationTest.espressoCore)
+    androidTestImplementation(dependencies.Deps.PresentationTest.kakao)
+    //endregion
 }

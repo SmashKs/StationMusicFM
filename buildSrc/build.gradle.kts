@@ -19,6 +19,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain;
+plugins {
+    `kotlin-dsl`
+}
 
-public class MyClass {}
+// gradle versions above 4.10.
+repositories {
+    jcenter()
+}
