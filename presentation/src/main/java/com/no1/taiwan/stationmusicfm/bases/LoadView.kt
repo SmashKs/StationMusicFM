@@ -19,14 +19,43 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm
+package com.no1.taiwan.stationmusicfm.bases
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.UiThread
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+/**
+ * Interface representing a View that will use to load data.
+ */
+interface LoadView {
+    /**
+     * Show a view with a progress bar indicating a loading process.
+     */
+    @UiThread
+    fun showLoading()
+
+    /**
+     * Hide a loading view.
+     */
+    @UiThread
+    fun hideLoading()
+
+    /**
+     * Show a retry view in case of an error when retrieving data.
+     */
+    @UiThread
+    fun showRetry()
+
+    /**
+     * Hide a retry view shown if there was an error when retrieving data.
+     */
+    @UiThread
+    fun hideRetry()
+
+    /**
+     * Show an error message
+     *
+     * @param message A string representing an error.
+     */
+    @UiThread
+    fun showError(message: String)
 }

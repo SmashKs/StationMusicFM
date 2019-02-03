@@ -19,6 +19,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain
+package com.no1.taiwan.stationmusicfm.features.splash
 
-class MyClass
+import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.bases.BaseActivity
+
+class SplashActivity : BaseActivity() {
+    override fun provideLayoutId() = R.layout.activity_splash
+}

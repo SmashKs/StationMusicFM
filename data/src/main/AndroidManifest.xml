@@ -20,4 +20,8 @@
   -->
 
 <manifest
-    package="com.no1.taiwan.stationmusicfm.data"/>
+    package="com.no1.taiwan.stationmusicfm.data"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+</manifest>

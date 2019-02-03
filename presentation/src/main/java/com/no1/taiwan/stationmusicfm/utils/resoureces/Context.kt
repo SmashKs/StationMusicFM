@@ -19,6 +19,32 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.ext
+package com.no1.taiwan.stationmusicfm.utils.resoureces
 
-class MyClass
+import android.content.res.Resources
+import androidx.annotation.ArrayRes
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
+import androidx.annotation.StringRes
+import com.no1.taiwan.stationmusicfm.MusicApp
+import org.jetbrains.anko.dimen
+
+fun gContext() = MusicApp.appContext.applicationContext
+
+fun gDimen(@DimenRes id: Int) = gContext().dimen(id)
+
+fun gString(@StringRes id: Int) = gContext().getString(id)
+
+fun gText(@StringRes id: Int) = gContext().getText(id)
+
+fun gColor(@ColorRes id: Int, theme: Resources.Theme? = null) = gContext().resources.getColor(id, theme)
+
+fun gStringArray(@ArrayRes id: Int) = gContext().resources.getStringArray(id)
+
+fun gTypeArray(@ArrayRes id: Int) = gContext().resources.obtainTypedArray(id)
+
+fun gResArray(@ArrayRes id: Int) =
+    gStringArray(id).mapIndexed { index, _ -> index to gTypeArray(id) }.toMutableList()
+
+fun gResArrays(@ArrayRes vararg ids: Int) =
+    ids.map(::gResArray).reduce { acc, new -> acc.addAll(new);acc }
