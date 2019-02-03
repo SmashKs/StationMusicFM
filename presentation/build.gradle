@@ -80,6 +80,7 @@ kapt {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation([project(":domain"), project(":data"), project(":widget"), project(":ext")])
 
     //region Kotlin
     implementation(dependencies.Deps.Global.kotlin)

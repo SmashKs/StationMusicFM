@@ -51,6 +51,7 @@ kapt {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation([project(":domain"), project(":ext")])
 
     implementation(dependencies.Deps.Global.kotlin)
     implementation(dependencies.Deps.Global.coroutine)

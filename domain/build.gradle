@@ -24,6 +24,7 @@ apply plugin: "kotlin"
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation(project(":ext"))
 
     implementation(dependencies.Deps.Global.kotlin)
     implementation(dependencies.Deps.Global.refelect)

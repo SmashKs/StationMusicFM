@@ -19,4 +19,5 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<manifest package="com.no1.taiwan.stationmusicfm.data"/>
+<manifest
+    package="com.no1.taiwan.stationmusicfm.data"/>
