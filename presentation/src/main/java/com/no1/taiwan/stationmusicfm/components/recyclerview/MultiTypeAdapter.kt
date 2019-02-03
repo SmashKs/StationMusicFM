@@ -2,9 +2,9 @@ package com.no1.taiwan.stationmusicfm.components.recyclerview
 
 import android.view.ViewGroup
 import com.devrapid.adaptiverecyclerview.AdaptiveDiffUtil
+import com.no1.taiwan.stationmusicfm.components.recyclerview.helpers.AdapterItemTouchHelper
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.internal.di.RecyclerViewModule
-import com.no1.taiwan.stationmusicfm.widget.extensions.components.recyclerview.helpers.AdapterItemTouchHelper
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance

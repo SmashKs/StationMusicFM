@@ -1,4 +1,4 @@
-package com.no1.taiwan.stationmusicfm.widget.extensions.components.recyclerview.helpers
+package com.no1.taiwan.stationmusicfm.components.recyclerview.helpers
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN

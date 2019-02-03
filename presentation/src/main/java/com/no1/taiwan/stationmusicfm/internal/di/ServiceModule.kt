@@ -5,6 +5,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
 import com.no1.taiwan.stationmusicfm.data.remote.RestfulApiFactory
 import com.no1.taiwan.stationmusicfm.data.remote.config.LastFmConfig
+import com.no1.taiwan.stationmusicfm.data.remote.config.MusicConfig
+import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
+import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.internal.di.NetModule.netProvider
 import com.tencent.mmkv.MMKV
@@ -45,10 +48,14 @@ object ServiceModule {
     }
 
     /**
-     * To provide the necessary objects [ApiConfig] into the repository.
+     * To provide the necessary objects [com.no1.taiwan.stationmusicfm.data.remote.config.ApiConfig]
+     * into the repository.
      */
     private fun retrofitConfigProvider() = Module("Retrofit Configuration") {
         bind<LastFmConfig>() with instance(RestfulApiFactory().createLastFmConfig())
+        bind<MusicConfig>() with instance(RestfulApiFactory().createMusicConfig())
+        bind<MusicSeekerConfig>() with instance(RestfulApiFactory().createMusicSeekerConfig())
+        bind<RankingConfig>() with instance(RestfulApiFactory().createRankingConfig())
     }
 
     /**
