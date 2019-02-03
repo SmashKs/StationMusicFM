@@ -61,6 +61,11 @@ android {
             ext.alwaysUpdateBuildId = false
         }
     }
+    sourceSets {
+        main {
+            res.srcDirs += resources.FeatureRes.dirs
+        }
+    }
     dexOptions {
         javaMaxHeapSize = "4g"
         jumboMode = true

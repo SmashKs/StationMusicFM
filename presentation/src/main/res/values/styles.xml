@@ -20,13 +20,37 @@
   -->
 
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MainTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!-- color for the app bar and other primary UI elements -->
+        <item name="colorPrimary">?themeColorPrimary</item>
+        <item name="colorPrimaryVariant">?themeColorPrimaryDark</item>
+        <!-- A darker variant of the primary color, used for the status bar (on Android 5.0+) and contextual app bars -->
+        <item name="colorPrimaryDark">?themeColorPrimaryDark</item>
+        <!-- A secondary color for controls like checkboxes and text fields -->
+        <item name="colorAccent">?themeColorAccent</item>
+        <item name="colorSecondary">?themeColorSecondary</item>
+        <item name="colorSecondaryVariant">?themeColorSecondaryDark</item>
+
+        <item name="android:textColorPrimary">?themeTextColorPrimary</item>
+
+        <!--<item name="android:fontFamily">?themeFont</item>-->
+        <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+        <!--<item name="fontFamily">?themeFont</item>-->
+        <item name="android:textColor">?themeTextColorPrimary</item>
+        <item name="android:navigationBarColor">?themeNavigationBarColor</item>
+        <item name="android:colorBackground">?themeBackgroundColor</item>
+
+        <!-- The view fit to until the state bar -->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!-- The view fit to until the navigation bar -->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+
+        <!--<item name="materialButtonStyle">@style/Btn</item>-->
     </style>
 
+    <style name="MainTheme.Transitions">
+        <item name="android:windowContentTransitions">true</item>
+    </style>
 </resources>
