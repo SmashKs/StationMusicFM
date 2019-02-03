@@ -53,4 +53,87 @@
     <style name="MainTheme.Transitions">
         <item name="android:windowContentTransitions">true</item>
     </style>
+
+    <!-- Constraint Basic Setting -->
+    <style name="Constraint"/>
+
+    <!-- START Excepting the Constant Layout -->
+    <style name="Constraint.MatchParent">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="Constraint.Wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Constraint.Wrap.FitWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="Constraint.Wrap.FitHeight">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Constraint.Any">
+        <item name="android:layout_width">@dimen/md_zero_unit</item>
+        <item name="android:layout_height">@dimen/md_zero_unit</item>
+    </style>
+
+    <style name="Constraint.Any.MatchHorParent">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="Constraint.Any.MatchVerParent">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Constraint.Wrap.Center">
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+    </style>
+    <!-- END Excepting the Constant Layout -->
+
+    <!-- Dialog Fragment -->
+    <style name="NewsDialog"/>
+
+    <!--<style name="NewsDialog.Animation">-->
+    <!--<item name="android:windowEnterAnimation">@anim/scale_enter_dialog</item>-->
+    <!--<item name="android:windowExitAnimation">@anim/scale_exit_dialog</item>-->
+    <!--</style>-->
+
+    <!-- Action Bar -->
+    <style name="CustomToolBar"/>
+
+    <style name="View.ToolBar" parent="CustomToolBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?android:attr/actionBarSize</item>
+    </style>
+
+    <style name="View.ToolBar.Bar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?android:attr/actionBarSize</item>
+        <item name="android:background">?themeColorPrimary</item>
+    </style>
+
+    <style name="View.ToolBar.Shadow" parent="CustomToolBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/md_one_unit</item>
+        <item name="android:background">@drawable/toolbar_shadow</item>
+    </style>
+
+    <!-- Material Button -->
+    <style name="Btn" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">?attr/colorSecondary</item>
+    </style>
+
+    <style name="Btn.keyword">
+    </style>
+
+    <style name="FAB" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="rippleColor">#FFFFFF</item>
+    </style>
 </resources>
