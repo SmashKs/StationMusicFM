@@ -48,6 +48,21 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+
+            buildConfigField 'String', "SeekSongUriDomain", getProps("seek_song_uri_domain")
+            buildConfigField 'String', "SeekSongUriRequest", getProps("seek_song_uri_request")
+            buildConfigField 'String', "SongUriDomain", getProps("song_uri_domain")
+            buildConfigField 'String', "SongUriRequest", getProps("song_uri_request")
+            buildConfigField 'String', "RankingUriDomain", getProps("ranking_uri_domain")
+            buildConfigField 'String', "RankingUriRequest", getProps("ranking_uri_request")
+        }
+        debug {
+            buildConfigField 'String', "SeekSongUriDomain", getProps("seek_song_uri_domain")
+            buildConfigField 'String', "SeekSongUriRequest", getProps("seek_song_uri_request")
+            buildConfigField 'String', "SongUriDomain", getProps("song_uri_domain")
+            buildConfigField 'String', "SongUriRequest", getProps("song_uri_request")
+            buildConfigField 'String', "RankingUriDomain", getProps("ranking_uri_domain")
+            buildConfigField 'String', "RankingUriRequest", getProps("ranking_uri_request")
         }
     }
 }
@@ -81,4 +96,17 @@ dependencies {
     //endregion
 
     implementation(dependencies.Deps.Data.firebaseDB)
+}
+
+
+// Get a variable from local.properties.
+def getProps(String propName) {
+    def propsFile = rootProject.file('local.properties')
+
+    if (!propsFile.exists()) return "\"No_Exist\""
+
+    def props = new Properties()
+    props.load(new FileInputStream(propsFile))
+
+    return null != props[propName].toString() ? props[propName] : "\"There_is_no_parameter\""
 }
