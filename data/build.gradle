@@ -23,6 +23,15 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "org.jetbrains.kotlin.kapt"
 
+tasks.whenObjectAdded {
+    if (name == "clean" ||
+            name.contains("lint") ||
+            name.contains("jacoco") ||
+            name.contains("lintVitalRelease")) {
+        enabled = false
+    }
+}
+
 android {
     compileSdkVersion dependencies.Versions.Android.compileSdk
 

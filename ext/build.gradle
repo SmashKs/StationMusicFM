@@ -22,6 +22,15 @@
 apply plugin: "java-library"
 apply plugin: "kotlin"
 
+tasks.whenObjectAdded {
+    if (name == "clean" ||
+            name.contains("lint") ||
+            name.contains("jacoco") ||
+            name.contains("lintVitalRelease")) {
+        enabled = false
+    }
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
