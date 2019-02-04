@@ -19,23 +19,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.datastores
+package com.no1.taiwan.stationmusicfm.domain.repositories
 
+import com.no1.taiwan.stationmusicfm.domain.models.rank.HotPlaylistModel
+import com.no1.taiwan.stationmusicfm.domain.models.rank.MusicInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.rank.PlaylistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.rank.RankChartModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
-import com.tencent.mmkv.MMKV
+import kotlinx.coroutines.Deferred
 
 /**
- * The implementation of the local data store. The responsibility is selecting a correct
- * local service(Database/Local file) to access the data.
+ * This interface will be the similar to [com.no1.taiwan.newsbasket.data.datastores.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-class LocalDataStore(
-    private val mmkv: MMKV
-) : DataStore {
-    override fun getMusicRanking(parameterable: Parameterable) = throw UnsupportedOperationException()
+interface MusicBankRepository {
+    //region Music Rank
+    fun fetchMusicRanking(parameterable: Parameterable): Deferred<RankChartModel>
 
-    override fun getSearchMusic(parameterable: Parameterable) = throw UnsupportedOperationException()
+    fun fetchSearchMusic(parameterable: Parameterable): Deferred<MusicInfoModel>
 
-    override fun getHotPlaylist(parameterable: Parameterable) = throw UnsupportedOperationException()
+    fun fetchHotPlaylist(parameterable: Parameterable): Deferred<HotPlaylistModel>
 
-    override fun getPlaylistDetail(parameterable: Parameterable) = throw UnsupportedOperationException()
+    fun fetchPlaylistDetail(parameterable: Parameterable): Deferred<PlaylistInfoModel>
+    //endregion
 }

@@ -47,7 +47,6 @@ class SongMapper(
                                    shareUri,
                                    sid,
                                    songIdExt,
-                                   CommonMusicModel.SourceModel(),  // redundant data
                                    title,
                                    uploader,
                                    url)

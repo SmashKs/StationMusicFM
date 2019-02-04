@@ -52,7 +52,6 @@ object CommonMusicModel {
         val shareUri: String = DEFAULT_STR,
         val sid: Int = 0,
         val songIdExt: String = DEFAULT_STR,
-        val source: SourceModel = SourceModel(),
         val title: String = DEFAULT_STR,
         val uploader: String = DEFAULT_STR,
         val url: String = DEFAULT_STR
@@ -104,9 +103,5 @@ object CommonMusicModel {
         val title: String = DEFAULT_STR,
         val views: Long = 0,
         val yVideoId: String = DEFAULT_STR
-    ) : Model
-
-    data class SourceModel(
-        val unknown: Any? = null
     ) : Model
 }
