@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 import org.w3c.dom.Attr
 
-data class ArtistTopTrackData(
+data class ArtistTopTrackInfoData(
     @SerializedName("toptracks")
-    val topTracks: Tracks
+    val topTracks: TracksData
 ) : Data {
-    data class Tracks(
+    data class TracksData(
         @SerializedName("track")
-        val tracks: List<TrackData.TrackWithStreamableString>,
+        val tracks: List<TrackInfoData.TrackWithStreamableStringData>,
         @SerializedName("@attr")
         val attr: Attr?
     ) : Data

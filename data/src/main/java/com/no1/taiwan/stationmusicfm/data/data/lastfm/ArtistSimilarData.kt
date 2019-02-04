@@ -5,5 +5,5 @@ import com.no1.taiwan.stationmusicfm.data.data.Data
 
 data class ArtistSimilarData(
     @SerializedName("similarartists")
-    val similarArtist: TopArtistData.Artists
+    val similarArtist: TopArtistInfoData.ArtistsData
 ) : Data

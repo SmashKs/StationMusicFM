@@ -5,29 +5,29 @@ import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 import org.w3c.dom.Attr
 
-data class AlbumData(
-    val album: Album?
+data class AlbumInfoData(
+    val album: AlbumData?
 ) : Data {
-    data class Album(
+    data class AlbumData(
         val artist: String?,
         @SerializedName("playcount")
         val playCount: String? = null
-    ) : BaseAlbum(), Data
+    ) : BaseAlbumData(), Data
 
-    data class AlbumWithArtist(
-        val artist: ArtistData.Artist?,
+    data class AlbumWithArtistData(
+        val artist: ArtistInfoData.ArtistData?,
         @SerializedName("playcount")
         val playCount: String? = null
-    ) : BaseAlbum(), Data
+    ) : BaseAlbumData(), Data
 
-    data class AlbumWithPlaycount(
-        val artist: ArtistData.Artist?,
+    data class AlbumWithPlaycountData(
+        val artist: ArtistInfoData.ArtistData?,
         @SerializedName("playcount")
         val playCount: Int?,
         val index: Int = -1
-    ) : BaseAlbum(), Data
+    ) : BaseAlbumData(), Data
 
-    open class BaseAlbum(
+    open class BaseAlbumData(
         @SerializedName("@attr")
         val attr: Attr? = null,
         @SerializedName("image")
@@ -35,11 +35,11 @@ data class AlbumData(
         val listeners: String? = null,
         val mbid: String? = null,
         val name: String? = null,
-        val tags: Tags? = null,
+        val tags: CommonLastFmData.TagsData? = null,
         val title: String? = null,
         @SerializedName("tracks")
-        val track: TopTrackData.Tracks? = null,
+        val track: TopTrackInfoData.TracksData? = null,
         val url: String? = null,
-        val wiki: Wiki? = null
+        val wiki: CommonLastFmData.WikiData? = null
     ) : Data
 }

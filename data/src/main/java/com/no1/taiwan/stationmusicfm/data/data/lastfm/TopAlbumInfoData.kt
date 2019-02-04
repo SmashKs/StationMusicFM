@@ -2,16 +2,14 @@ package com.no1.taiwan.stationmusicfm.data.data.lastfm
 
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
-import org.w3c.dom.Attr
 
-data class ArtistTopAlbumData(
-    @SerializedName("topalbums")
-    val topAlbums: TopAlbums
+data class TopAlbumInfoData(
+    val albums: TopAlbumsData
 ) : Data {
-    data class TopAlbums(
+    data class TopAlbumsData(
         @SerializedName("album")
-        val albums: List<AlbumData.AlbumWithPlaycount>,
+        val albums: List<AlbumInfoData.AlbumWithArtistData>,
         @SerializedName("@attr")
-        val attr: Attr?
+        val attr: CommonLastFmData.AttrData?
     ) : Data
 }

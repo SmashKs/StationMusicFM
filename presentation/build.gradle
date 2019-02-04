@@ -24,15 +24,6 @@ apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "org.jetbrains.kotlin.kapt"
 
-tasks.whenObjectAdded {
-    if (name == "clean" ||
-            name.contains("lint") ||
-            name.contains("jacoco") ||
-            name.contains("lintVitalRelease")) {
-        enabled = false
-    }
-}
-
 android {
     compileSdkVersion dependencies.Versions.Android.compileSdk
 
@@ -135,7 +126,7 @@ dependencies {
     }
     //endregion
 
-    //region Internet & Image loading
+    //region Internet & ImageData loading
     implementation(dependencies.Deps.Presentation.retrofit2)
     implementation(dependencies.Deps.Presentation.retrofit2Gson)
     implementation(dependencies.Deps.Presentation.retrofit2Courtine) {

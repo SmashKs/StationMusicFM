@@ -3,25 +3,25 @@ package com.no1.taiwan.stationmusicfm.data.data.lastfm
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 
-data class TrackData(
-    val track: Track?
+data class TrackInfoData(
+    val track: TrackData?
 ) : Data {
-    data class Track(
-        val streamable: Streamable?
-    ) : BaseTrack(), Data
+    data class TrackData(
+        val streamable: CommonLastFmData.StreamableData?
+    ) : BaseTrackData(), Data
 
-    data class TrackWithStreamableString(
+    data class TrackWithStreamableStringData(
         val streamable: String?
-    ) : BaseTrack(), Data
+    ) : BaseTrackData(), Data
 
-    open class BaseTrack(
-        val album: AlbumData.Album? = null,
+    open class BaseTrackData(
+        val album: AlbumInfoData.AlbumData? = null,
         @SerializedName("@attr")
-        val attr: Attr? = null,
-        val artist: ArtistData.Artist? = null,
+        val attr: CommonLastFmData.AttrData? = null,
+        val artist: ArtistInfoData.ArtistData? = null,
         val duration: String? = null,
         @SerializedName("image")
-        val images: List<Image>? = null,
+        val images: List<CommonLastFmData.ImageData>? = null,
         val listeners: String? = null,
         val match: Double? = null,
         val mbid: String? = null,
@@ -29,10 +29,10 @@ data class TrackData(
         @SerializedName("playcount")
         val playcount: String? = null,
         @SerializedName("toptags")
-        val topTag: Tags? = null,
+        val topTag: CommonLastFmData.TagsData? = null,
         val url: String? = null,
         val realUrl: String? = null,
-        val wiki: Wiki? = null
+        val wiki: CommonLastFmData.WikiData? = null
     ) : Data {
         override fun toString() =
             """

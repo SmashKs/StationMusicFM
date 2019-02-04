@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class ArtistData(
-    val artist: Artist?
+data class ArtistInfoData(
+    val artist: ArtistData?
 ) : Data {
-    data class Artist(
+    data class ArtistData(
         val name: String? = DEFAULT_STR,
         val mbid: String? = DEFAULT_STR,
         val match: String? = DEFAULT_STR,
@@ -21,36 +21,38 @@ data class ArtistData(
         val onTour: String? = DEFAULT_STR,
         @SerializedName("playcount")
         val playCount: String? = DEFAULT_STR,
-        val stats: Stats? = null,
-        val similar: Similar? = null,
-        val tags: Tags? = null,
-        val bio: Bio? = null
+        val stats: StatsData? = null,
+        val similar: SimilarData? = null,
+        val tags: CommonLastFmData.TagsData? = null,
+        val bio: BioData? = null
     ) : Data
 
-    data class Bio(
-        val links: Links?,
+    data class BioData(
+        val links: LinksData?,
         val published: String?,
         val summary: String?,
         val content: String?
     ) : Data
 
-    data class Links(val link: Link?)
+    data class LinksData(
+        val link: LinkData?
+    ) : Data
 
-    data class Link(
+    data class LinkData(
         @SerializedName("#text")
         val text: String?,
         val rel: String?,
         val href: String?
     ) : Data
 
-    data class Stats(
+    data class StatsData(
         val listeners: String?,
         @SerializedName("playcount")
         val playCount: String?
     ) : Data
 
-    data class Similar(
+    data class SimilarData(
         @SerializedName("artist")
-        val artists: List<Artist>?
+        val artists: List<ArtistData>?
     ) : Data
 }

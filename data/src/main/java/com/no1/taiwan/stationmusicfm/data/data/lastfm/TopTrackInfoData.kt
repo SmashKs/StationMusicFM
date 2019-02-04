@@ -3,14 +3,14 @@ package com.no1.taiwan.stationmusicfm.data.data.lastfm
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 
-data class TopTrackData(
+data class TopTrackInfoData(
     @SerializedName("tracks")
-    val track: Tracks
+    val track: TracksData
 ) : Data {
-    data class Tracks(
+    data class TracksData(
         @SerializedName("track")
-        val tracks: List<TrackData.Track>,
+        val tracks: List<TrackInfoData.TrackData>,
         @SerializedName("@attr")
-        val attr: Attr?
+        val attr: CommonLastFmData.AttrData?
     ) : Data
 }

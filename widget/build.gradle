@@ -21,15 +21,6 @@
 
 apply plugin: "com.android.library"
 
-tasks.whenObjectAdded {
-    if (name == "clean" ||
-            name.contains("lint") ||
-            name.contains("jacoco") ||
-            name.contains("lintVitalRelease")) {
-        enabled = false
-    }
-}
-
 android {
     compileSdkVersion dependencies.Versions.Android.compileSdk
 

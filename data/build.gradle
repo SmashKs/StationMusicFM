@@ -24,15 +24,6 @@ apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "org.jetbrains.kotlin.kapt"
 
-tasks.whenObjectAdded {
-    if (name == "clean" ||
-            name.contains("lint") ||
-            name.contains("jacoco") ||
-            name.contains("lintVitalRelease")) {
-        enabled = false
-    }
-}
-
 android {
     compileSdkVersion dependencies.Versions.Android.compileSdk
 
@@ -42,7 +33,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -58,6 +49,9 @@ android {
             buildConfigField 'String', "RankingUriRequest", getProps("ranking_uri_request")
         }
         debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+
             buildConfigField 'String', "SeekSongUriDomain", getProps("seek_song_uri_domain")
             buildConfigField 'String', "SeekSongUriRequest", getProps("seek_song_uri_request")
             buildConfigField 'String', "SongUriDomain", getProps("song_uri_domain")
@@ -89,7 +83,7 @@ dependencies {
     implementation(dependencies.Deps.Data.room)
     implementation(dependencies.Deps.Data.mmkv)
 
-    //region Internet & Image loading
+    //region Internet & ImageData loading
     implementation(dependencies.Deps.Data.retrofit2)
     implementation(dependencies.Deps.Data.retrofit2AdapterCoroutine) {
         exclude(group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-core")
@@ -98,7 +92,6 @@ dependencies {
 
     implementation(dependencies.Deps.Data.firebaseDB)
 }
-
 
 // Get a variable from local.properties.
 def getProps(String propName) {
