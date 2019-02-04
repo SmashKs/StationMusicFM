@@ -24,12 +24,16 @@ package com.no1.taiwan.stationmusicfm.domain.models.rank
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class HotPlaylistModel(
+data class MusicInfoModel(
     val status: String = DEFAULT_STR,
-    val data: HotListInfoModel = HotListInfoModel()
+    val data: MusicModel = MusicModel()
 ) : Model {
-    data class HotListInfoModel(
-        val hasMore: Int = 0,
-        val playlists: List<CommonMusicModel.PlayListModel> = emptyList()
+    data class MusicModel(
+        // 🔽 Only Music has.
+        val hasMore: Boolean = false,
+        val items: List<CommonMusicModel.SongModel> = emptyList(),
+        // 🔽 Only Rank has.
+        val timestamp: Double = 0.0,
+        val songs: List<CommonMusicModel.SongModel> = emptyList()
     ) : Model
 }

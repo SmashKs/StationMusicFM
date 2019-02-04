@@ -19,31 +19,21 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.remote.services
+package com.no1.taiwan.stationmusicfm.data.data.mappers
 
 import com.no1.taiwan.stationmusicfm.data.data.rank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.rank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.rank.PlaylistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.rank.RankChartData
-import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
-import kotlinx.coroutines.Deferred
-import retrofit2.http.GET
-import retrofit2.http.QueryMap
+import com.no1.taiwan.stationmusicfm.domain.models.rank.HotPlaylistModel
 
 /**
- * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
- * Using prefix name (retrieve), (insert), (replace), (release)
+ * A transforming mapping between [HotPlaylistData.HotListInfoData] and [HotPlaylistModel.HotListInfoModel]. The different layers have
+ * their own data objects, the objects should transform and fit each layers.
  */
-interface MusicBankService {
-    @GET("${RankingConfig.API_REQUEST}/rank_song_list")
-    fun retrieveMusicRanking(@QueryMap queries: Map<String, String>): Deferred<RankChartData>
+class HotListMapper : Mapper<HotPlaylistData.HotListInfoData, HotPlaylistModel.HotListInfoModel> {
+    override fun toModelFrom(data: HotPlaylistData.HotListInfoData) = data.run {
+        HotPlaylistModel.HotListInfoModel()
+    }
 
-    @GET("${RankingConfig.API_REQUEST}/search")
-    fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
-
-    @GET("${RankingConfig.API_REQUEST}/hot_song_list")
-    fun retrieveHotPlaylist(@QueryMap queries: Map<String, String>): Deferred<HotPlaylistData>
-
-    @GET("${RankingConfig.API_REQUEST}/song_list")
-    fun retrievePlaylistDetail(@QueryMap queries: Map<String, String>): Deferred<PlaylistInfoData>
+    override fun toDataFrom(model: HotPlaylistModel.HotListInfoModel) = model.run {
+        HotPlaylistData.HotListInfoData()
+    }
 }

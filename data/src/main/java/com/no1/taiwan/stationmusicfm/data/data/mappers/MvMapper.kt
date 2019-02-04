@@ -19,17 +19,21 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.rank
+package com.no1.taiwan.stationmusicfm.data.data.mappers
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.data.data.rank.CommonMusicData
+import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
 
-data class HotPlaylistModel(
-    val status: String = DEFAULT_STR,
-    val data: HotListInfoModel = HotListInfoModel()
-) : Model {
-    data class HotListInfoModel(
-        val hasMore: Int = 0,
-        val playlists: List<CommonMusicModel.PlayListModel> = emptyList()
-    ) : Model
+/**
+ * A transforming mapping between [CommonMusicData.MvData] and [CommonMusicModel.MvModel]. The different layers have
+ * their own data objects, the objects should transform and fit each layers.
+ */
+class MvMapper : Mapper<CommonMusicData.MvData, CommonMusicModel.MvModel> {
+    override fun toModelFrom(data: CommonMusicData.MvData) = data.run {
+        CommonMusicModel.MvModel()
+    }
+
+    override fun toDataFrom(model: CommonMusicModel.MvModel) = model.run {
+        CommonMusicData.MvData()
+    }
 }
