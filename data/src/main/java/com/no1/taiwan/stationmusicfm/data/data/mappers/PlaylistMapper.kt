@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers
 
+import com.no1.taiwan.stationmusicfm.data.data.PlaylistDataMap
 import com.no1.taiwan.stationmusicfm.data.data.rank.CommonMusicData
 import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
 
@@ -28,7 +29,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
  * A transforming mapping between [CommonMusicData.PlayListData] and [CommonMusicModel.PlayListModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class PlaylistMapper : Mapper<CommonMusicData.PlayListData, CommonMusicModel.PlayListModel> {
+class PlaylistMapper : PlaylistDataMap {
     override fun toModelFrom(data: CommonMusicData.PlayListData) = data.run {
         CommonMusicModel.PlayListModel()
     }
