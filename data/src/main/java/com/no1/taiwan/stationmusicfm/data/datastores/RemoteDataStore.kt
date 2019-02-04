@@ -28,7 +28,6 @@ import com.no1.taiwan.stationmusicfm.data.data.rank.RankChartData
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
-import kotlinx.coroutines.Deferred
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct
@@ -38,19 +37,19 @@ class RemoteDataStore(
     private val lastFmService: LastFmService,
     private val musicBankService: MusicBankService
 ) : DataStore {
-    override fun getMusicRanking(parameterable: Parameterable): Deferred<RankChartData> {
-        return musicBankService.retrieveMusicRanking(parameterable.toApiParam())
+    override suspend fun getMusicRanking(parameterable: Parameterable): RankChartData {
+        return musicBankService.retrieveMusicRanking(parameterable.toApiParam()).await()
     }
 
-    override fun getSearchMusic(parameterable: Parameterable): Deferred<MusicInfoData> {
-        return musicBankService.retrieveSearchMusic(parameterable.toApiParam())
+    override suspend fun getSearchMusic(parameterable: Parameterable): MusicInfoData {
+        return musicBankService.retrieveSearchMusic(parameterable.toApiParam()).await()
     }
 
-    override fun getHotPlaylist(parameterable: Parameterable): Deferred<HotPlaylistData> {
-        return musicBankService.retrieveHotPlaylist(parameterable.toApiParam())
+    override suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData {
+        return musicBankService.retrieveHotPlaylist(parameterable.toApiParam()).await()
     }
 
-    override fun getPlaylistDetail(parameterable: Parameterable): Deferred<PlaylistInfoData> {
-        return musicBankService.retrievePlaylistDetail(parameterable.toApiParam())
+    override suspend fun getPlaylistDetail(parameterable: Parameterable): PlaylistInfoData {
+        return musicBankService.retrievePlaylistDetail(parameterable.toApiParam()).await()
     }
 }

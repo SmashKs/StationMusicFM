@@ -26,7 +26,6 @@ import com.no1.taiwan.stationmusicfm.data.data.rank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.rank.PlaylistInfoData
 import com.no1.taiwan.stationmusicfm.data.data.rank.RankChartData
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
-import kotlinx.coroutines.Deferred
 
 /**
  * This interface will common the all data stores.
@@ -34,12 +33,12 @@ import kotlinx.coroutines.Deferred
  */
 interface DataStore {
     //region Music Rank
-    fun getMusicRanking(parameterable: Parameterable): Deferred<RankChartData>
+    suspend fun getMusicRanking(parameterable: Parameterable): RankChartData
 
-    fun getSearchMusic(parameterable: Parameterable): Deferred<MusicInfoData>
+    suspend fun getSearchMusic(parameterable: Parameterable): MusicInfoData
 
-    fun getHotPlaylist(parameterable: Parameterable): Deferred<HotPlaylistData>
+    suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData
 
-    fun getPlaylistDetail(parameterable: Parameterable): Deferred<PlaylistInfoData>
+    suspend fun getPlaylistDetail(parameterable: Parameterable): PlaylistInfoData
     //endregion
 }

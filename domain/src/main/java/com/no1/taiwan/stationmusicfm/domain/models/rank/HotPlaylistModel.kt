@@ -26,9 +26,9 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 data class HotPlaylistModel(
     val status: String = DEFAULT_STR,
-    val data: HotListInfoModel = HotListInfoModel()
+    val data: HotListModel = HotListModel()
 ) : Model {
-    data class HotListInfoModel(
+    data class HotListModel(
         val hasMore: Int = 0,
         val playlists: List<CommonMusicModel.PlayListModel> = emptyList()
     ) : Model

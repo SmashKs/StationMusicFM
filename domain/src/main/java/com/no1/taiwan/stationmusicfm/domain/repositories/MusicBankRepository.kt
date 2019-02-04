@@ -21,12 +21,11 @@
 
 package com.no1.taiwan.stationmusicfm.domain.repositories
 
+import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.rank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.rank.MusicInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.rank.PlaylistInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.rank.RankChartModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
-import kotlinx.coroutines.Deferred
 
 /**
  * This interface will be the similar to [com.no1.taiwan.newsbasket.data.datastores.DataStore].
@@ -34,12 +33,12 @@ import kotlinx.coroutines.Deferred
  */
 interface MusicBankRepository {
     //region Music Rank
-    fun fetchMusicRanking(parameterable: Parameterable): Deferred<RankChartModel>
+    suspend fun fetchMusicRanking(parameters: Parameterable): RankChartModel
 
-    fun fetchSearchMusic(parameterable: Parameterable): Deferred<MusicInfoModel>
+    suspend fun fetchSearchMusic(parameters: Parameterable): MusicInfoModel.MusicModel
 
-    fun fetchHotPlaylist(parameterable: Parameterable): Deferred<HotPlaylistModel>
+    suspend fun fetchHotPlaylist(parameters: Parameterable): HotPlaylistModel.HotListModel
 
-    fun fetchPlaylistDetail(parameterable: Parameterable): Deferred<PlaylistInfoModel>
+    suspend fun fetchPlaylistDetail(parameters: Parameterable): CommonMusicModel.PlayListModel
     //endregion
 }

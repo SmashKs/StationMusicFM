@@ -36,7 +36,7 @@ typealias DataMapperPool = Map<Class<out DataMapper>, DataMapper>
 
 // Mappers
 
-typealias HotListDataMap = Mapper<HotPlaylistData.HotListInfoData, HotPlaylistModel.HotListInfoModel>
+typealias HotListDataMap = Mapper<HotPlaylistData.HotListData, HotPlaylistModel.HotListModel>
 typealias MusicDataMap = Mapper<MusicInfoData.MusicData, MusicInfoModel.MusicModel>
 typealias MvDataMap = Mapper<CommonMusicData.MvData, CommonMusicModel.MvModel>
 typealias PlaylistDataMap = Mapper<CommonMusicData.PlayListData, CommonMusicModel.PlayListModel>

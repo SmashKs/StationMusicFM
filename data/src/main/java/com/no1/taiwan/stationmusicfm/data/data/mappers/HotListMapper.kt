@@ -27,17 +27,17 @@ import com.no1.taiwan.stationmusicfm.data.data.rank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.domain.models.rank.HotPlaylistModel
 
 /**
- * A transforming mapping between [HotPlaylistData.HotListInfoData] and [HotPlaylistModel.HotListInfoModel]. The different layers have
+ * A transforming mapping between [HotPlaylistData.HotListData] and [HotPlaylistModel.HotListModel]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
 class HotListMapper(
     private val playlistMapper: PlaylistDataMap
 ) : HotListDataMap {
-    override fun toModelFrom(data: HotPlaylistData.HotListInfoData) = data.run {
-        HotPlaylistModel.HotListInfoModel(hasMore, playlists.map(playlistMapper::toModelFrom))
+    override fun toModelFrom(data: HotPlaylistData.HotListData) = data.run {
+        HotPlaylistModel.HotListModel(hasMore, playlists.map(playlistMapper::toModelFrom))
     }
 
-    override fun toDataFrom(model: HotPlaylistModel.HotListInfoModel) = model.run {
-        HotPlaylistData.HotListInfoData(hasMore, playlists.map(playlistMapper::toDataFrom))
+    override fun toDataFrom(model: HotPlaylistModel.HotListModel) = model.run {
+        HotPlaylistData.HotListData(hasMore, playlists.map(playlistMapper::toDataFrom))
     }
 }

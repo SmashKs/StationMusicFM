@@ -22,14 +22,13 @@
 package com.no1.taiwan.stationmusicfm.data.repositories
 
 import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
+import com.no1.taiwan.stationmusicfm.data.data.HotListDataMap
+import com.no1.taiwan.stationmusicfm.data.data.MusicDataMap
+import com.no1.taiwan.stationmusicfm.data.data.PlaylistDataMap
+import com.no1.taiwan.stationmusicfm.data.data.RankChartDataMap
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
-import com.no1.taiwan.stationmusicfm.domain.models.rank.HotPlaylistModel
-import com.no1.taiwan.stationmusicfm.domain.models.rank.MusicInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.rank.PlaylistInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.rank.RankChartModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 
 /**
@@ -45,20 +44,20 @@ class MusicBankDataRepository constructor(
     private val remote: DataStore,
     mapperPool: DataMapperPool
 ) : BaseRepository(mapperPool), MusicBankRepository {
-    override fun fetchMusicRanking(parameterable: Parameterable): Deferred<RankChartModel> {
-        remote.getMusicRanking()
-    }
+    private val musicMapper by lazy { digDataMapper<MusicDataMap>() }
+    private val hotListMapper by lazy { digDataMapper<HotListDataMap>() }
+    private val playlistMapper by lazy { digDataMapper<PlaylistDataMap>() }
+    private val rankChartMapper by lazy { digDataMapper<RankChartDataMap>() }
 
-    override fun fetchSearchMusic(parameterable: Parameterable): Deferred<MusicInfoModel> {
-        remote.getSearchMusic()
-    }
+    override suspend fun fetchMusicRanking(parameters: Parameterable) =
+        remote.getMusicRanking(parameters).run(rankChartMapper::toModelFrom)
 
-    override fun fetchHotPlaylist(parameterable: Parameterable): Deferred<HotPlaylistModel> {
-        remote.getHotPlaylist()
-    }
+    override suspend fun fetchSearchMusic(parameters: Parameterable) =
+        remote.getSearchMusic(parameters).data.run(musicMapper::toModelFrom)
 
-    override fun fetchPlaylistDetail(parameterable: Parameterable): Deferred<PlaylistInfoModel> {
-        remote.getPlaylistDetail()
-    }
+    override suspend fun fetchHotPlaylist(parameters: Parameterable) =
+        remote.getHotPlaylist(parameters).data.run(hotListMapper::toModelFrom)
 
+    override suspend fun fetchPlaylistDetail(parameters: Parameterable) =
+        remote.getPlaylistDetail(parameters).data.run(playlistMapper::toModelFrom)
 }
