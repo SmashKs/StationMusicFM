@@ -31,10 +31,10 @@ import com.no1.taiwan.stationmusicfm.domain.models.rank.RankChartModel
  */
 class RankChartMapper : RankChartDataMap {
     override fun toModelFrom(data: RankChartData) = data.run {
-        RankChartModel()
+        RankChartModel(id, rankType, coverUrl, chartName, updateTime)
     }
 
     override fun toDataFrom(model: RankChartModel) = model.run {
-        RankChartData()
+        RankChartData(id, rankType, coverUrl, chartName, updateTime)
     }
 }

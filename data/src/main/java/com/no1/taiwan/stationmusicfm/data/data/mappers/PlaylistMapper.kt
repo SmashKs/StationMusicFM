@@ -22,6 +22,8 @@
 package com.no1.taiwan.stationmusicfm.data.data.mappers
 
 import com.no1.taiwan.stationmusicfm.data.data.PlaylistDataMap
+import com.no1.taiwan.stationmusicfm.data.data.SongDataMap
+import com.no1.taiwan.stationmusicfm.data.data.UserDataMap
 import com.no1.taiwan.stationmusicfm.data.data.rank.CommonMusicData
 import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
 
@@ -29,12 +31,51 @@ import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
  * A transforming mapping between [CommonMusicData.PlayListData] and [CommonMusicModel.PlayListModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class PlaylistMapper : PlaylistDataMap {
+class PlaylistMapper(
+    private val songMapper: SongDataMap,
+    private val userMapper: UserDataMap
+) : PlaylistDataMap {
     override fun toModelFrom(data: CommonMusicData.PlayListData) = data.run {
-        CommonMusicModel.PlayListModel()
+        CommonMusicModel.PlayListModel(commentCount,
+                                       favCount,
+                                       hasFav,
+                                       isCoverModified,
+                                       permission,
+                                       playedCount,
+                                       shareCount,
+                                       shareLink,
+                                       shareUri,
+                                       songListCover,
+                                       songListDesc,
+                                       songListId,
+                                       songListName,
+                                       songListType,
+                                       songNum,
+                                       songs.map(songMapper::toModelFrom),
+                                       tagIds,
+                                       tags,
+                                       userMapper.toModelFrom(user))
     }
 
     override fun toDataFrom(model: CommonMusicModel.PlayListModel) = model.run {
-        CommonMusicData.PlayListData()
+        CommonMusicData.PlayListData(commentCount,
+                                     favCount,
+                                     hasFav,
+                                     isCoverModified,
+                                     permission,
+                                     playedCount,
+                                     shareCount,
+                                     shareLink,
+                                     shareUri,
+                                     songListCover,
+                                     songListDesc,
+                                     songListId,
+                                     songListName,
+                                     songListType,
+                                     songNum,
+                                     songs.map(songMapper::toDataFrom),
+                                     tagIds,
+                                     tags,
+                                     userMapper.toDataFrom(user))
     }
 }

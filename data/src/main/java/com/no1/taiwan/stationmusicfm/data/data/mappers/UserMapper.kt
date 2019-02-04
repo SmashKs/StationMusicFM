@@ -31,10 +31,28 @@ import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
  */
 class UserMapper : UserDataMap {
     override fun toModelFrom(data: CommonMusicData.UserData) = data.run {
-        CommonMusicModel.UserModel()
+        CommonMusicModel.UserModel(address,
+                                   avatarUrl,
+                                   birthday,
+                                   email,
+                                   gender,
+                                   phone,
+                                   platform,
+                                   platformUid,
+                                   screenName,
+                                   uid)
     }
 
     override fun toDataFrom(model: CommonMusicModel.UserModel) = model.run {
-        CommonMusicData.UserData()
+        CommonMusicData.UserData(address,
+                                 avatarUrl,
+                                 birthday,
+                                 email,
+                                 gender,
+                                 phone,
+                                 platform,
+                                 platformUid,
+                                 screenName,
+                                 uid)
     }
 }

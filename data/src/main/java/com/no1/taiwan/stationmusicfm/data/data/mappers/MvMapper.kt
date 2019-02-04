@@ -31,10 +31,54 @@ import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
  */
 class MvMapper : MvDataMap {
     override fun toModelFrom(data: CommonMusicData.MvData) = data.run {
-        CommonMusicModel.MvModel()
+        CommonMusicModel.MvModel(comments,
+                                 coverImage,
+                                 ctime,
+                                 description,
+                                 dislikes,
+                                 duration,
+                                 embeddable,
+                                 fmMvActive,
+                                 id,
+                                 isActive,
+                                 isPublic,
+                                 languageId,
+                                 likes,
+                                 mtime,
+                                 publishedAt,
+                                 rate,
+                                 regionAllowed,
+                                 regionBlocked,
+                                 reviewInfo,
+                                 source,
+                                 title,
+                                 views,
+                                 yVideoId)
     }
 
     override fun toDataFrom(model: CommonMusicModel.MvModel) = model.run {
-        CommonMusicData.MvData()
+        CommonMusicData.MvData(comments,
+                               coverImage,
+                               ctime,
+                               description,
+                               dislikes,
+                               duration,
+                               embeddable,
+                               fmMvActive,
+                               id,
+                               isActive,
+                               isPublic,
+                               languageId,
+                               likes,
+                               mtime,
+                               publishedAt,
+                               rate,
+                               regionAllowed,
+                               regionBlocked,
+                               reviewInfo,
+                               source,
+                               title,
+                               views,
+                               yVideoId)
     }
 }
