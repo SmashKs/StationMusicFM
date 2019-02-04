@@ -27,7 +27,7 @@ import com.no1.taiwan.stationmusicfm.utils.RespMutableLiveData
 
 /**
  * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state
- * changing and the state becomes [Success] when retrieving a data from Data layer by Kotlin coroutine.
+ * changing and the state becomes [Success] when retrieving a data from RankInfoData layer by Kotlin coroutine.
  *
  * Also, unboxing the [ResponseState] and obtaining the data inside of the [ResponseState], then return the
  * data to [RespMutableLiveData].
@@ -45,7 +45,7 @@ fun <E, R> RespMutableLiveData<R>.reqDataMap(
 
 /**
  * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state
- * changing and the state becomes [Success] when retrieving a data from Data layer by Kotlin coroutine.
+ * changing and the state becomes [Success] when retrieving a data from RankInfoData layer by Kotlin coroutine.
  */
 infix fun <E> RespMutableLiveData<E>.reqData(usecaseRes: suspend () -> E) = preProc {
     // Fetching the data from the data layer.

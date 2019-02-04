@@ -43,11 +43,11 @@ object UtilModule {
     /**
      * Import this module in the [com.no1.taiwan.newsbasket.App] because data layer needs this.
      */
-    fun dataUtilProvider() = Module("Data Layer Util") {
+    fun dataUtilProvider() = Module("RankInfoData Layer Util") {
         /** Mapper Set for [com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper] */
         bind() from setBinding<DataMapperEntry>()
 
-        /** Data Layer Mapper */
+        /** RankInfoData Layer Mapper */
     }
 
     /**
