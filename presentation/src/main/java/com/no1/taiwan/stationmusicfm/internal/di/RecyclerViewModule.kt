@@ -22,9 +22,9 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview.MultiTypeFactory
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview.ViewHolderEntry
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.utils.MusicDiffUtil
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.ViewHolderEntry
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDiffUtil
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -48,7 +48,9 @@ object RecyclerViewModule {
     }
 
     private fun adapterProvider() = Module("Recycler View Adapter") {
-        bind<MultiTypeFactory>() with singleton { MultiTypeFactory(instance()) }
+        bind<MultiTypeFactory>() with singleton {
+            MultiTypeFactory(instance())
+        }
     }
 
     private fun diffUtilProvider() = Module("Recycler View DiffUtil") {

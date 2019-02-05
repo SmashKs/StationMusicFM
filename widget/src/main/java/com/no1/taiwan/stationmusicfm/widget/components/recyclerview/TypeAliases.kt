@@ -19,17 +19,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
 
-import com.devrapid.adaptiverecyclerview.ViewTypeFactory
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.adaptiverecyclerview.AdaptiveDiffUtil
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.devrapid.adaptiverecyclerview.IVisitable
 
-/**
- * A factory for providing the viewholder from an object data type to the recyclerview.
- */
-class MultiTypeFactory(
-    private val viewHolders: ViewHolderEntries
-) : ViewTypeFactory() {
-    override var transformMap
-        get() = viewHolders.toMap().toMutableMap()
-        set(_) = throw UnsupportedOperationException("We don't allow this method to use!")
-}
+typealias ViewHolderEntry = Pair<Int, Pair<Int, (View) -> RecyclerView.ViewHolder>>
+typealias ViewHolderEntries = Set<ViewHolderEntry>
+
+typealias MusicViewHolder = AdaptiveViewHolder<MultiTypeFactory, MusicMultiVisitable>
+typealias MusicMultiVisitable = IVisitable<MultiTypeFactory>
+typealias MusicAdapter = AdaptiveAdapter<MultiTypeFactory, MusicMultiVisitable, MusicViewHolder>
+typealias MusicDiffUtil = AdaptiveDiffUtil<MultiTypeFactory, MusicMultiVisitable>
+typealias MultiData = MutableList<MusicMultiVisitable>

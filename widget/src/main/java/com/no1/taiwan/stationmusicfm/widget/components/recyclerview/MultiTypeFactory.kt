@@ -19,22 +19,17 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.utils
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
 
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview.MusicDiffUtil
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview.MusicMultiVisitable
+import com.devrapid.adaptiverecyclerview.ViewTypeFactory
 
-class MusicDiffUtil : MusicDiffUtil() {
-    override var newList = mutableListOf<MusicMultiVisitable>()
-    override var oldList = mutableListOf<MusicMultiVisitable>()
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        newList[newItemPosition].hashCode() == oldList[oldItemPosition].hashCode()
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        newList[newItemPosition] == oldList[oldItemPosition]
-
-    override fun getNewListSize() = newList.size
-
-    override fun getOldListSize() = oldList.size
+/**
+ * A factory for providing the viewholder from an object data type to the recyclerview.
+ */
+class MultiTypeFactory(
+    private val viewHolders: ViewHolderEntries
+) : ViewTypeFactory() {
+    override var transformMap
+        get() = viewHolders.toMap().toMutableMap()
+        set(_) = throw UnsupportedOperationException("We don't allow this method to use!")
 }

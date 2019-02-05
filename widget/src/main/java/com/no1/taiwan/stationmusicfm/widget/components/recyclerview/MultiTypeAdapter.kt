@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
 
 import android.view.ViewGroup
 import com.devrapid.adaptiverecyclerview.AdaptiveDiffUtil

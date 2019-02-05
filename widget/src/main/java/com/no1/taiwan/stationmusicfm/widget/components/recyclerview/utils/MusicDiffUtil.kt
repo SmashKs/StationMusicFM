@@ -19,20 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils
 
-import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveDiffUtil
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
-import com.devrapid.adaptiverecyclerview.IVisitable
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicDiffUtil
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
-typealias ViewHolderEntry = Pair<Int, Pair<Int, (View) -> RecyclerView.ViewHolder>>
-typealias ViewHolderEntries = Set<ViewHolderEntry>
+class MusicDiffUtil : MusicDiffUtil() {
+    override var newList = mutableListOf<MusicMultiVisitable>()
+    override var oldList = mutableListOf<MusicMultiVisitable>()
 
-typealias MusicViewHolder = AdaptiveViewHolder<MultiTypeFactory, MusicMultiVisitable>
-typealias MusicMultiVisitable = IVisitable<MultiTypeFactory>
-typealias MusicAdapter = AdaptiveAdapter<MultiTypeFactory, MusicMultiVisitable, MusicViewHolder>
-typealias MusicDiffUtil = AdaptiveDiffUtil<MultiTypeFactory, MusicMultiVisitable>
-typealias MultiData = MutableList<MusicMultiVisitable>
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+        newList[newItemPosition].hashCode() == oldList[oldItemPosition].hashCode()
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+        newList[newItemPosition] == oldList[oldItemPosition]
+
+    override fun getNewListSize() = newList.size
+
+    override fun getOldListSize() = oldList.size
+}
