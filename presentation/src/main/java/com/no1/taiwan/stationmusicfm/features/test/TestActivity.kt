@@ -19,19 +19,29 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.extensions.components.viewmodel
+package com.no1.taiwan.stationmusicfm.features.test
 
-import android.app.Application
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import android.os.Bundle
+import com.devrapid.kotlinknifer.logw
+import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.bases.AdvActivity
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
-/**
- * A factory for creating a map to store a related [ViewModel]'s tag and the [ViewModel].
- */
-class ViewModelFactory(
-    application: Application,
-    private val viewModels: LookUpViewModel
-) : ViewModelProvider.AndroidViewModelFactory(application) {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>) = viewModels[modelClass] as T
+class TestActivity : AdvActivity<TestViewModel>() {
+    override fun provideLayoutId() = R.layout.activity_main
+
+    /**
+     * Initialize doing some methods and actions.
+     *
+     * @param savedInstanceState previous state after this activity was destroyed.
+     */
+    override fun init(savedInstanceState: Bundle?) {
+        observeNonNull(vm.ld) {
+            logw(this)
+            peel { logw(it) } doWith this@TestActivity
+        }
+        vm.testFetching()
+    }
 }

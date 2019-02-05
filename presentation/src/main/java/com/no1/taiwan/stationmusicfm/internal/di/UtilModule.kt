@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import androidx.work.WorkManager
-import com.devrapid.kotlinshaver.cast
 import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -88,23 +87,15 @@ object UtilModule {
         bind<DataMapperEntry>().inSet() with singleton { UserDMapper::class.java to UserDMapper() }
         bind<DataMapperEntry>().inSet() with singleton { RankChartDMapper::class.java to RankChartDMapper() }
         bind<DataMapperEntry>().inSet() with singleton { MvDMapper::class.java to MvDMapper() }
+        bind<DataMapperEntry>().inSet() with singleton { SongDMapper::class.java to SongDMapper(MvDMapper()) }
         bind<DataMapperEntry>().inSet() with singleton {
-            val mapper: Set<DataMapperEntry> by kodein.instance()
-            SongDMapper::class.java to SongDMapper(cast(mapper.toMap()[MvDMapper::class.java]))
+            MusicDMapper::class.java to MusicDMapper(SongDMapper(MvDMapper()))
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            val mapper: Set<DataMapperEntry> by kodein.instance()
-            MusicDMapper::class.java to MusicDMapper(cast(mapper.toMap()[SongDMapper::class.java]))
+            PlaylistDMapper::class.java to PlaylistDMapper(SongDMapper(MvDMapper()), UserDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            val mapper: Set<DataMapperEntry> by kodein.instance()
-            val map = mapper.toMap()
-            PlaylistDMapper::class.java to PlaylistDMapper(cast(map[SongDMapper::class.java]),
-                                                           cast(map[UserDMapper::class.java]))
-        }
-        bind<DataMapperEntry>().inSet() with singleton {
-            val mapper: Set<DataMapperEntry> by kodein.instance()
-            HotListDMapper::class.java to HotListDMapper(cast(mapper.toMap()[PlaylistDMapper::class.java]))
+            HotListDMapper::class.java to HotListDMapper(PlaylistDMapper(SongDMapper(MvDMapper()), UserDMapper()))
         }
     }
 
@@ -119,23 +110,15 @@ object UtilModule {
         bind<PreziMapperEntry>().inSet() with singleton { UserPMapper::class.java to UserPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { RankChartPMapper::class.java to RankChartPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { MvPMapper::class.java to MvPMapper() }
+        bind<PreziMapperEntry>().inSet() with singleton { SongPMapper::class.java to SongPMapper(MvPMapper()) }
         bind<PreziMapperEntry>().inSet() with singleton {
-            val mapper: Set<PreziMapperEntry> by kodein.instance()
-            SongPMapper::class.java to SongPMapper(cast(mapper.toMap()[MvPMapper::class.java]))
+            MusicPMapper::class.java to MusicPMapper(SongPMapper(MvPMapper()))
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            val mapper: Set<PreziMapperEntry> by kodein.instance()
-            MusicPMapper::class.java to MusicPMapper(cast(mapper.toMap()[SongPMapper::class.java]))
+            PlaylistPMapper::class.java to PlaylistPMapper(SongPMapper(MvPMapper()), UserPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            val mapper: Set<PreziMapperEntry> by kodein.instance()
-            val map = mapper.toMap()
-            PlaylistPMapper::class.java to PlaylistPMapper(cast(map[SongPMapper::class.java]),
-                                                           cast(map[UserPMapper::class.java]))
-        }
-        bind<PreziMapperEntry>().inSet() with singleton {
-            val mapper: Set<PreziMapperEntry> by kodein.instance()
-            HotListPMapper::class.java to HotListPMapper(cast(mapper.toMap()[PlaylistPMapper::class.java]))
+            HotListPMapper::class.java to HotListPMapper(PlaylistPMapper(SongPMapper(MvPMapper()), UserPMapper()))
         }
     }
 }

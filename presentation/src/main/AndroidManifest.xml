@@ -37,8 +37,11 @@
         android:supportsRtl="true"
         android:theme="@style/Music"
         tools:replace="android:label">
-
-        <activity android:name=".features.main.MainActivity">
+        <activity
+            android:name=".features.test.TestActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".features.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

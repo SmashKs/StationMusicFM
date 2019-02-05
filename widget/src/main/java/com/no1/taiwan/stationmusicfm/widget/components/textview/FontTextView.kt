@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.extensions.components.textview
+package com.no1.taiwan.stationmusicfm.widget.components.textview
 
 import android.content.Context
 import android.graphics.Typeface

@@ -29,7 +29,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.no1.taiwan.stationmusicfm.internal.di.RecyclerViewModule
 import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntries
-import com.no1.taiwan.stationmusicfm.widget.extensions.components.viewmodel.ViewModelFactory
+import com.no1.taiwan.stationmusicfm.internal.di.dependencies.activities.SuperActivityModule
+import com.no1.taiwan.stationmusicfm.utils.viewmodel.ViewModelFactory
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.android.retainedKodein
@@ -48,7 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
         import(UtilModule.presentationUtilProvider())
         import(RecyclerViewModule.recyclerViewProvider())
         /* activity specific bindings */
-//        import(activityModule())
+        import(SuperActivityModule.activityModule())
 
         bind<ViewModelProvider.Factory>() with provider {
             ViewModelFactory(instance(), instance<ViewModelEntries>().toMap().toMutableMap())
@@ -73,16 +74,16 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
     }
     //endregion
 
+    @LayoutRes
+    abstract fun provideLayoutId(): Int
+
     /**
      * Initialize doing some methods and actions.
      *
      * @param savedInstanceState previous state after this activity was destroyed.
      */
     @UiThread
-    protected fun init(savedInstanceState: Bundle?) = Unit
-
-    @LayoutRes
-    abstract fun provideLayoutId(): Int
+    protected open fun init(savedInstanceState: Bundle?) = Unit
 
     /**
      * For separating the huge function code in [init]. Initialize all view components here.

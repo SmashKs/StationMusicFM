@@ -27,7 +27,9 @@ import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.LocalDataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.RemoteDataStore
 import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
+import com.no1.taiwan.stationmusicfm.data.repositories.MusicBankDataRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
+import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.LOCAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.REMOTE
 import org.kodein.di.Kodein.Module
@@ -51,6 +53,9 @@ object RepositoryModule {
         // Repositories into mapper
         bind<LastFmRepository>() with singleton {
             LastFmDataRepository(instance(LOCAL), instance(REMOTE), instance())
+        }
+        bind<MusicBankRepository>() with singleton {
+            MusicBankDataRepository(instance(LOCAL), instance(REMOTE), instance())
         }
     }
 }

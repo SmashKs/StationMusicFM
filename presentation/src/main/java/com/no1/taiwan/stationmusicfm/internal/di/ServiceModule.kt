@@ -1,14 +1,35 @@
+/*
+ * Copyright (C) 2019 The Smash Ks Open Project
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished
+ * to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
-import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
 import com.no1.taiwan.stationmusicfm.data.remote.RestfulApiFactory
 import com.no1.taiwan.stationmusicfm.data.remote.config.LastFmConfig
 import com.no1.taiwan.stationmusicfm.data.remote.config.MusicConfig
 import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
 import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
+import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.internal.di.NetModule.netProvider
 import com.tencent.mmkv.MMKV
 import com.tencent.mmkv.MMKV.SINGLE_PROCESS_MODE
@@ -44,7 +65,7 @@ object ServiceModule {
      * To provide the necessary objects [FirebaseDatabase] into the repository.
      */
     private fun firebaseProvider() = Module("Firebase") {
-        bind<FirebaseDatabase>() with instance(FirebaseDatabase.getInstance())
+        //        bind<FirebaseDatabase>() with instance(FirebaseDatabase.getInstance())
     }
 
     /**
@@ -68,6 +89,12 @@ object ServiceModule {
                 build()
             }.create(LastFmService::class.java)
         }
+        bind<MusicBankService>() with singleton {
+            with(instance<Retrofit.Builder>()) {
+                baseUrl(instance<RankingConfig>().apiBaseUrl)
+                build()
+            }.create(MusicBankService::class.java)
+        }
 //        bind<NewsFirebase>() with singleton { NewsFirebaseImpl(instance()) }
     }
     //endregion
@@ -77,7 +104,7 @@ object ServiceModule {
      * To provide the necessary objects Local Implementation objects into the repository.
      */
     private fun implementationLocalProvider(context: Context) = Module("Implementation Local") {
-        bind<MusicDatabase>() with instance(MusicDatabase.getDatabase(context))
+        //        bind<MusicDatabase>() with instance(MusicDatabase.getDatabase(context))
         bind<MMKV>() with singleton { defaultMMKV(SINGLE_PROCESS_MODE, TOKEN_PUBLIC_KEY) }
     }
     //endregion

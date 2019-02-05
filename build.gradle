@@ -62,14 +62,14 @@ subprojects {
         }
     }
 
-    tasks.whenObjectAdded { task ->
-        if (task.name == "clean" ||
-                task.name.contains("lint") ||
-                task.name.contains("jacoco") ||
-                task.name.contains("lintVitalRelease")) {
-            task.enabled = false
-        }
-    }
+//    tasks.whenObjectAdded { task ->
+//        if (task.name == "clean" ||
+//                task.name.contains("lint") ||
+//                task.name.contains("jacoco") ||
+//                task.name.contains("lintVitalRelease")) {
+//            task.enabled = false
+//        }
+//    }
 }
 
 allprojects {
