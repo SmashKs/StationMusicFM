@@ -19,17 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers
 
-import androidx.lifecycle.ViewModel
-import com.no1.taiwan.stationmusicfm.data.data.DataMapper
-import com.no1.taiwan.stationmusicfm.entities.PreziMapper
-
-typealias ViewModelEntry = Pair<Class<out ViewModel>, ViewModel>
-typealias ViewModelEntries = Set<ViewModelEntry>
-
-typealias DataMapperEntry = Pair<Class<out DataMapper>, DataMapper>
-typealias DataMapperEntries = Set<DataMapperEntry>
-
-typealias PreziMapperEntry = Pair<Class<out PreziMapper>, PreziMapper>
-typealias PreziMapperEntries = Set<PreziMapperEntry>
+interface ViewItemTouchCallback {
+    fun onItemSwiped(position: Int)
+    fun onItemMoved(fromPosition: Int, toPosition: Int)
+}

@@ -21,4 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.widget.components.viewmodel
 
-//typealias LookUpViewModel = MutableMap<Class<out ViewModel>, ViewModel>
+import androidx.lifecycle.ViewModel
+
+typealias LookUpViewModel = MutableMap<Class<out ViewModel>, ViewModel>

@@ -19,19 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils.viewmodel
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers
 
-import android.app.Application
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-
-/**
- * A factory for creating a map to store a related [ViewModel]'s tag and the [ViewModel].
- */
-class ViewModelFactory(
-    application: Application,
-    private val viewModels: LookUpViewModel
-) : ViewModelProvider.AndroidViewModelFactory(application) {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>) = viewModels[modelClass] as T
+interface AdapterItemTouchHelper {
+    fun onItemSwiped(position: Int)
+    fun onItemMoved(fromPosition: Int, toPosition: Int)
 }

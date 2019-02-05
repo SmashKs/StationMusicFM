@@ -30,7 +30,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.RecyclerViewModule
 import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntries
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.activities.SuperActivityModule
-import com.no1.taiwan.stationmusicfm.utils.viewmodel.ViewModelFactory
+import com.no1.taiwan.stationmusicfm.widget.components.viewmodel.ViewModelFactory
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.android.retainedKodein

@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.extensions
+package com.no1.taiwan.stationmusicfm.utils.aac
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment

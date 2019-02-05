@@ -49,7 +49,13 @@ android {
             buildConfigField 'String', "RankingUriRequest", getProps("ranking_uri_request")
         }
         debug {
-            minifyEnabled false
+            splits.abi.enable = false
+            splits.density.enable = false
+            aaptOptions.cruncherEnabled = false
+            minifyEnabled = false
+            testCoverageEnabled = true
+            // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
+            ext.alwaysUpdateBuildId = false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
 
             buildConfigField 'String', "SeekSongUriDomain", getProps("seek_song_uri_domain")
@@ -60,6 +66,8 @@ android {
             buildConfigField 'String', "RankingUriRequest", getProps("ranking_uri_request")
         }
     }
+    testOptions { unitTests.returnDefaultValues = true }
+    lintOptions { abortOnError = false }
 }
 
 kapt {

@@ -19,17 +19,17 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview
 
-import androidx.lifecycle.ViewModel
-import com.no1.taiwan.stationmusicfm.data.data.DataMapper
-import com.no1.taiwan.stationmusicfm.entities.PreziMapper
+import com.devrapid.adaptiverecyclerview.ViewTypeFactory
 
-typealias ViewModelEntry = Pair<Class<out ViewModel>, ViewModel>
-typealias ViewModelEntries = Set<ViewModelEntry>
-
-typealias DataMapperEntry = Pair<Class<out DataMapper>, DataMapper>
-typealias DataMapperEntries = Set<DataMapperEntry>
-
-typealias PreziMapperEntry = Pair<Class<out PreziMapper>, PreziMapper>
-typealias PreziMapperEntries = Set<PreziMapperEntry>
+/**
+ * A factory for providing the viewholder from an object data type to the recyclerview.
+ */
+class MultiTypeFactory(
+    private val viewHolders: ViewHolderEntries
+) : ViewTypeFactory() {
+    override var transformMap
+        get() = viewHolders.toMap().toMutableMap()
+        set(_) = throw UnsupportedOperationException("We don't allow this method to use!")
+}

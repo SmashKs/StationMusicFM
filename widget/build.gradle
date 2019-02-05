@@ -20,6 +20,7 @@
  */
 
 apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
 
 android {
     compileSdkVersion dependencies.Versions.Android.compileSdk
@@ -46,16 +47,11 @@ android {
             testCoverageEnabled = true
             // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
             ext.alwaysUpdateBuildId = false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
+    testOptions { unitTests.returnDefaultValues = true }
     lintOptions { abortOnError = false }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -65,6 +61,7 @@ dependencies {
     implementation(dependencies.Deps.Global.kotlin)
 
     implementation(dependencies.Deps.Widget.appcompat)
+    implementation(dependencies.Deps.Presentation.arv)
     implementation(dependencies.Deps.Widget.quickDialog)
     implementation(dependencies.Deps.Widget.constraintLayout)
 }

@@ -19,8 +19,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils.viewmodel
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview
 
-import androidx.lifecycle.ViewModel
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.adaptiverecyclerview.AdaptiveDiffUtil
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.devrapid.adaptiverecyclerview.IVisitable
 
-typealias LookUpViewModel = MutableMap<Class<out ViewModel>, ViewModel>
+typealias ViewHolderEntry = Pair<Int, Pair<Int, (View) -> RecyclerView.ViewHolder>>
+typealias ViewHolderEntries = Set<ViewHolderEntry>
+
+typealias MusicViewHolder = AdaptiveViewHolder<MultiTypeFactory, MusicMultiVisitable>
+typealias MusicMultiVisitable = IVisitable<MultiTypeFactory>
+typealias MusicAdapter = AdaptiveAdapter<MultiTypeFactory, MusicMultiVisitable, MusicViewHolder>
+typealias MusicDiffUtil = AdaptiveDiffUtil<MultiTypeFactory, MusicMultiVisitable>
+typealias MultiData = MutableList<MusicMultiVisitable>

@@ -19,17 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.utils
 
-import androidx.lifecycle.ViewModel
-import com.no1.taiwan.stationmusicfm.data.data.DataMapper
-import com.no1.taiwan.stationmusicfm.entities.PreziMapper
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview.MusicDiffUtil
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.recyclerview.MusicMultiVisitable
 
-typealias ViewModelEntry = Pair<Class<out ViewModel>, ViewModel>
-typealias ViewModelEntries = Set<ViewModelEntry>
+class MusicDiffUtil : MusicDiffUtil() {
+    override var newList = mutableListOf<MusicMultiVisitable>()
+    override var oldList = mutableListOf<MusicMultiVisitable>()
 
-typealias DataMapperEntry = Pair<Class<out DataMapper>, DataMapper>
-typealias DataMapperEntries = Set<DataMapperEntry>
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+        newList[newItemPosition].hashCode() == oldList[oldItemPosition].hashCode()
 
-typealias PreziMapperEntry = Pair<Class<out PreziMapper>, PreziMapper>
-typealias PreziMapperEntries = Set<PreziMapperEntry>
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+        newList[newItemPosition] == oldList[oldItemPosition]
+
+    override fun getNewListSize() = newList.size
+
+    override fun getOldListSize() = oldList.size
+}
