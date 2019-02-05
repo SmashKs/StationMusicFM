@@ -23,7 +23,7 @@ package com.no1.taiwan.stationmusicfm.entities.mappers
 
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.entities.HotListPreziMap
-import com.no1.taiwan.stationmusicfm.entities.PlaylistPreziMap
+import com.no1.taiwan.stationmusicfm.entities.SongListPreziMap
 import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
 
 /**
@@ -31,13 +31,13 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class HotListPMapper(
-    private val playlistMapper: PlaylistPreziMap
+    private val songListMapper: SongListPreziMap
 ) : HotListPreziMap {
     override fun toEntityFrom(model: HotPlaylistModel.HotListModel) = model.run {
-        HotPlaylistEntity.HotListEntity(hasMore, playlists.map(playlistMapper::toEntityFrom))
+        HotPlaylistEntity.HotListEntity(hasMore, playlists.map(songListMapper::toEntityFrom))
     }
 
     override fun toModelFrom(entity: HotPlaylistEntity.HotListEntity) = entity.run {
-        HotPlaylistModel.HotListModel(hasMore, playlists.map(playlistMapper::toModelFrom))
+        HotPlaylistModel.HotListModel(hasMore, playlists.map(songListMapper::toModelFrom))
     }
 }

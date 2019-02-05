@@ -23,12 +23,12 @@ package com.no1.taiwan.stationmusicfm.internal.di.dependencies
 
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchHotListCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongListCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchPlaylistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongListRespCase
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -41,7 +41,7 @@ object UsecaseModule {
     fun usecaseProvider() = Kodein.Module("Use Cases") {
         //region For Fragments
         bind<FetchRankMusicCase>() with singleton { FetchRankMusicRespCase(instance()) }
-        bind<FetchPlaylistCase>() with singleton { FetchPlaylistRespCase(instance()) }
+        bind<FetchSongListCase>() with singleton { FetchSongListRespCase(instance()) }
         bind<FetchMusicCase>() with singleton { FetchMusicRespCase(instance()) }
         bind<FetchHotListCase>() with singleton { FetchHotListRespCase(instance()) }
         //endregion

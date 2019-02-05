@@ -19,25 +19,23 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.datastores
+package com.no1.taiwan.stationmusicfm.domain.parameters.musicbank
 
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
-import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-interface DataStore {
-    //region Music Rank
-    suspend fun getMusicRanking(parameterable: Parameterable): MusicInfoData
+data class HotSongParams(
+    private val pageNo: Int = DEFAULT_INT,
+    private val channelLang: String = DEFAULT_STR
+) : BaseParams() {
+    companion object {
+        const val PARAM_NAME_PAGE = "page_no"
+        const val PARAM_NAME_CHANNEL_LANG = "channel_lang"
+    }
 
-    suspend fun getMusic(parameterable: Parameterable): MusicInfoData
-
-    suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData
-
-    suspend fun getSongList(parameterable: Parameterable): SongListInfoData
-    //endregion
+    override fun toApiParam() = hashMapOf(
+        PARAM_NAME_PAGE to pageNo.toString(),
+        PARAM_NAME_CHANNEL_LANG to channelLang
+    )
 }

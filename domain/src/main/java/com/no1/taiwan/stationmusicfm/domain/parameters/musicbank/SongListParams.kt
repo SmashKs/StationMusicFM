@@ -19,25 +19,19 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.datastores
+package com.no1.taiwan.stationmusicfm.domain.parameters.musicbank
 
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
-import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-interface DataStore {
-    //region Music Rank
-    suspend fun getMusicRanking(parameterable: Parameterable): MusicInfoData
+data class SongListParams(
+    private val song_list_id: Int = DEFAULT_INT
+) : BaseParams() {
+    companion object {
+        const val PARAM_NAME_SONG_LIST_ID = "song_list_id"
+    }
 
-    suspend fun getMusic(parameterable: Parameterable): MusicInfoData
-
-    suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData
-
-    suspend fun getSongList(parameterable: Parameterable): SongListInfoData
-    //endregion
+    override fun toApiParam() = hashMapOf(
+        PARAM_NAME_SONG_LIST_ID to song_list_id.toString()
+    )
 }

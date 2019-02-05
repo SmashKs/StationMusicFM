@@ -64,6 +64,10 @@ android {
             buildConfigField 'String', "SongUriRequest", getProps("song_uri_request")
             buildConfigField 'String', "RankingUriDomain", getProps("ranking_uri_domain")
             buildConfigField 'String', "RankingUriRequest", getProps("ranking_uri_request")
+            buildConfigField 'String', "query1", getProps("query_1")
+            buildConfigField 'String', "query2", getProps("query_2")
+            buildConfigField 'String', "param1", getProps("param_1")
+            buildConfigField 'String', "param2", getProps("param_2")
         }
     }
     testOptions { unitTests.returnDefaultValues = true }
@@ -110,5 +114,5 @@ def getProps(String propName) {
     def props = new Properties()
     props.load(new FileInputStream(propsFile))
 
-    return null != props[propName].toString() ? props[propName] : "\"There_is_no_parameter\""
+    return null != props[propName] ? props[propName] : "\"There_is_no_parameter\""
 }

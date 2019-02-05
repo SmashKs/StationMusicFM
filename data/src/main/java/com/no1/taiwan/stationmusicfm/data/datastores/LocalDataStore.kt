@@ -37,5 +37,5 @@ class LocalDataStore(
 
     override suspend fun getHotPlaylist(parameterable: Parameterable) = throw UnsupportedOperationException()
 
-    override suspend fun getPlaylistDetail(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getSongList(parameterable: Parameterable) = throw UnsupportedOperationException()
 }

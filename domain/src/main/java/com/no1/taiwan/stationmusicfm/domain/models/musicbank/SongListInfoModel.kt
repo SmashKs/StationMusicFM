@@ -19,25 +19,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.datastores
+package com.no1.taiwan.stationmusicfm.domain.models.musicbank
 
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
-import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-interface DataStore {
-    //region Music Rank
-    suspend fun getMusicRanking(parameterable: Parameterable): MusicInfoData
-
-    suspend fun getMusic(parameterable: Parameterable): MusicInfoData
-
-    suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData
-
-    suspend fun getSongList(parameterable: Parameterable): SongListInfoData
-    //endregion
-}
+data class SongListInfoModel(
+    val status: String = DEFAULT_STR,
+    val data: CommonMusicModel.PlayListModel = CommonMusicModel.PlayListModel()
+) : Model

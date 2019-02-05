@@ -19,12 +19,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.musicbank
+package com.no1.taiwan.stationmusicfm.entities.musicbank
 
-import com.no1.taiwan.stationmusicfm.data.data.Data
+import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class PlaylistInfoData(
+data class SongListInfoEntity(
     val status: String = DEFAULT_STR,
-    val data: CommonMusicData.PlayListData = CommonMusicData.PlayListData()
-) : Data
+    val data: CommonMusicEntity.PlayListEntity = CommonMusicEntity.PlayListEntity()
+) : Entity

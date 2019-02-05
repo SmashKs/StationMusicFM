@@ -21,8 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
 
-import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SrchSongParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
@@ -38,5 +38,5 @@ class FetchMusicRespCase(
         repository.fetchMusic(it.parameters)
     }
 
-    class Request(val parameters: Parameterable = EmptyParams()) : RequestValues
+    class Request(val parameters: Parameterable = SrchSongParams()) : RequestValues
 }

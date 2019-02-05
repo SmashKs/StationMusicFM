@@ -21,22 +21,22 @@
 
 package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
 
-import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SongListParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongListCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongListReq
 
-class FetchPlaylistRespCase(
+class FetchSongListRespCase(
     private val repository: MusicBankRepository
-) : FetchPlaylistCase() {
+) : FetchSongListCase() {
     /** Provide a common parameter variable for the children class. */
-    override var requestValues: FetchPlaylistReq? = null
+    override var requestValues: FetchSongListReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        repository.fetchPlaylistDetail(it.parameters)
+        repository.fetchSongList(it.parameters)
     }
 
-    class Request(val parameters: Parameterable = EmptyParams()) : RequestValues
+    class Request(val parameters: Parameterable = SongListParams()) : RequestValues
 }

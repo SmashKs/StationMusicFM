@@ -22,7 +22,7 @@
 package com.no1.taiwan.stationmusicfm.data.data.mappers
 
 import com.no1.taiwan.stationmusicfm.data.data.HotListDataMap
-import com.no1.taiwan.stationmusicfm.data.data.PlaylistDataMap
+import com.no1.taiwan.stationmusicfm.data.data.SongListDataMap
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 
@@ -31,13 +31,13 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
  * their own data objects, the objects should transform and fit each layers.
  */
 class HotListDMapper(
-    private val playlistMapper: PlaylistDataMap
+    private val songListMapper: SongListDataMap
 ) : HotListDataMap {
     override fun toModelFrom(data: HotPlaylistData.HotListData) = data.run {
-        HotPlaylistModel.HotListModel(hasMore, playlists.map(playlistMapper::toModelFrom))
+        HotPlaylistModel.HotListModel(hasMore, playlists.map(songListMapper::toModelFrom))
     }
 
     override fun toDataFrom(model: HotPlaylistModel.HotListModel) = model.run {
-        HotPlaylistData.HotListData(hasMore, playlists.map(playlistMapper::toDataFrom))
+        HotPlaylistData.HotListData(hasMore, playlists.map(songListMapper::toDataFrom))
     }
 }

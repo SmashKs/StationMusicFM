@@ -19,12 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.musicbank
+package com.no1.taiwan.stationmusicfm.domain.parameters.musicbank
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class PlaylistInfoModel(
-    val status: String = DEFAULT_STR,
-    val data: CommonMusicModel.PlayListModel = CommonMusicModel.PlayListModel()
-) : Model
+data class SrchSongParams(
+    private val pageNo: Int = DEFAULT_INT,
+    private val query: String = DEFAULT_STR,
+    private val channelLang: String = DEFAULT_STR
+) : BaseParams() {
+    companion object {
+        const val PARAM_NAME_PAGE_NO = "page_no"
+        const val PARAM_NAME_QUERY = "query"
+        const val PARAM_NAME_CHANNEL_LANG = "channel_lang"
+    }
+
+    override fun toApiParam() = hashMapOf(
+        PARAM_NAME_PAGE_NO to pageNo.toString(),
+        PARAM_NAME_QUERY to query,
+        PARAM_NAME_CHANNEL_LANG to channelLang
+    )
+}

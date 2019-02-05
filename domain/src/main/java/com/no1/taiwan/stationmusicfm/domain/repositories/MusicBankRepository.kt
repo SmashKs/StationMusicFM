@@ -24,7 +24,6 @@ package com.no1.taiwan.stationmusicfm.domain.repositories
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 
 /**
@@ -33,12 +32,12 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
  */
 interface MusicBankRepository {
     //region Music Rank
-    suspend fun fetchMusicRanking(parameters: Parameterable): RankChartModel
+    suspend fun fetchMusicRanking(parameters: Parameterable): MusicInfoModel.MusicModel
 
     suspend fun fetchMusic(parameters: Parameterable): MusicInfoModel.MusicModel
 
     suspend fun fetchHotPlaylist(parameters: Parameterable): HotPlaylistModel.HotListModel
 
-    suspend fun fetchPlaylistDetail(parameters: Parameterable): CommonMusicModel.PlayListModel
+    suspend fun fetchSongList(parameters: Parameterable): CommonMusicModel.PlayListModel
     //endregion
 }

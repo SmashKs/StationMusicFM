@@ -21,10 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.datastores
 
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
+import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.PlaylistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
@@ -37,19 +35,21 @@ class RemoteDataStore(
     private val lastFmService: LastFmService,
     private val musicBankService: MusicBankService
 ) : DataStore {
-    override suspend fun getMusicRanking(parameterable: Parameterable): RankChartData {
-        return musicBankService.retrieveMusicRanking(parameterable.toApiParam()).await()
-    }
+    override suspend fun getMusicRanking(parameterable: Parameterable) =
+        musicBankService.retrieveMusicRanking(parameterable.toApiParam()).await()
 
     override suspend fun getMusic(parameterable: Parameterable): MusicInfoData {
-        return musicBankService.retrieveSearchMusic(parameterable.toApiParam()).await()
+        val queries = parameterable.toApiParam().apply {
+            put(BuildConfig.query1, BuildConfig.param1)
+            put(BuildConfig.query2, BuildConfig.param2)
+        }
+
+        return musicBankService.retrieveSearchMusic(queries).await()
     }
 
-    override suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData {
-        return musicBankService.retrieveHotPlaylist(parameterable.toApiParam()).await()
-    }
+    override suspend fun getHotPlaylist(parameterable: Parameterable) =
+        musicBankService.retrieveHotPlaylist(parameterable.toApiParam()).await()
 
-    override suspend fun getPlaylistDetail(parameterable: Parameterable): PlaylistInfoData {
-        return musicBankService.retrievePlaylistDetail(parameterable.toApiParam()).await()
-    }
+    override suspend fun getSongList(parameterable: Parameterable) =
+        musicBankService.retrieveSongList(parameterable.toApiParam()).await()
 }

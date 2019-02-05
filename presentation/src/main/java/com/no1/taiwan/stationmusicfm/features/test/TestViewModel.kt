@@ -23,11 +23,12 @@ package com.no1.taiwan.stationmusicfm.features.test
 
 import androidx.lifecycle.ViewModel
 import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.entities.mappers.RankChartPMapper
-import com.no1.taiwan.stationmusicfm.entities.musicbank.RankChartEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.MusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
 import com.no1.taiwan.stationmusicfm.utils.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
@@ -38,12 +39,12 @@ class TestViewModel(
     private val fetchRankMusicCase: FetchRankMusicCase,
     private val mapperPool: PreziMapperPool
 ) : ViewModel() {
-    val ld by lazy { RespMutableLiveData<RankChartEntity>() }
-    private val mapper by lazy { cast<RankChartPMapper>(mapperPool[RankChartPMapper::class.java]) }
+    val ld by lazy { RespMutableLiveData<MusicInfoEntity.MusicEntity>() }
+    private val mapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
 
     fun testFetching() = GlobalScope.launch {
         ld reqData {
-            fetchRankMusicCase.execMapping(mapper, FetchRankMusicReq())
+            fetchRankMusicCase.execMapping(mapper, FetchRankMusicReq(RankParams(31000)))
         }
     }
 }

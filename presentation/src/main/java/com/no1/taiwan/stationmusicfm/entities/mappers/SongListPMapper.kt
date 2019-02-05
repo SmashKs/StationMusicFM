@@ -19,23 +19,45 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers
+package com.no1.taiwan.stationmusicfm.entities.mappers
 
-import com.no1.taiwan.stationmusicfm.data.data.PlaylistDataMap
-import com.no1.taiwan.stationmusicfm.data.data.SongDataMap
-import com.no1.taiwan.stationmusicfm.data.data.UserDataMap
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.CommonMusicData
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
+import com.no1.taiwan.stationmusicfm.entities.SongListPreziMap
+import com.no1.taiwan.stationmusicfm.entities.SongPreziMap
+import com.no1.taiwan.stationmusicfm.entities.UserPreziMap
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 
 /**
- * A transforming mapping between [CommonMusicData.PlayListData] and [CommonMusicModel.PlayListModel].
+ * A transforming mapping between [CommonMusicModel.PlayListModel] and [CommonMusicEntity.PlayListEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class PlaylistDMapper(
-    private val songMapper: SongDataMap,
-    private val userMapper: UserDataMap
-) : PlaylistDataMap {
-    override fun toModelFrom(data: CommonMusicData.PlayListData) = data.run {
+class SongListPMapper(
+    private val songMapper: SongPreziMap,
+    private val userMapper: UserPreziMap
+) : SongListPreziMap {
+    override fun toEntityFrom(model: CommonMusicModel.PlayListModel) = model.run {
+        CommonMusicEntity.PlayListEntity(commentCount,
+                                         favCount,
+                                         hasFav,
+                                         isCoverModified,
+                                         permission,
+                                         playedCount,
+                                         shareCount,
+                                         shareLink,
+                                         shareUri,
+                                         songListCover,
+                                         songListDesc,
+                                         songListId,
+                                         songListName,
+                                         songListType,
+                                         songNum,
+                                         songs.map(songMapper::toEntityFrom),
+                                         tagIds,
+                                         tags,
+                                         userMapper.toEntityFrom(user))
+    }
+
+    override fun toModelFrom(entity: CommonMusicEntity.PlayListEntity) = entity.run {
         CommonMusicModel.PlayListModel(commentCount,
                                        favCount,
                                        hasFav,
@@ -55,27 +77,5 @@ class PlaylistDMapper(
                                        tagIds,
                                        tags,
                                        userMapper.toModelFrom(user))
-    }
-
-    override fun toDataFrom(model: CommonMusicModel.PlayListModel) = model.run {
-        CommonMusicData.PlayListData(commentCount,
-                                     favCount,
-                                     hasFav,
-                                     isCoverModified,
-                                     permission,
-                                     playedCount,
-                                     shareCount,
-                                     shareLink,
-                                     shareUri,
-                                     songListCover,
-                                     songListDesc,
-                                     songListId,
-                                     songListName,
-                                     songListType,
-                                     songNum,
-                                     songs.map(songMapper::toDataFrom),
-                                     tagIds,
-                                     tags,
-                                     userMapper.toDataFrom(user))
     }
 }

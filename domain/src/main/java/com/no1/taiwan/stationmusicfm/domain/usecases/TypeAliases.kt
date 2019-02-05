@@ -25,18 +25,17 @@ import com.no1.taiwan.stationmusicfm.domain.DeferredUsecase
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchPlaylistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongListRespCase
 
 typealias FetchRankMusicReq = FetchRankMusicRespCase.Request
-typealias FetchPlaylistReq = FetchPlaylistRespCase.Request
+typealias FetchSongListReq = FetchSongListRespCase.Request
 typealias FetchMusicReq = FetchMusicRespCase.Request
 typealias FetchHotListReq = FetchHotListRespCase.Request
 
-typealias FetchRankMusicCase = DeferredUsecase<RankChartModel, FetchRankMusicReq>
-typealias FetchPlaylistCase = DeferredUsecase<CommonMusicModel.PlayListModel, FetchPlaylistReq>
+typealias FetchRankMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchRankMusicReq>
+typealias FetchSongListCase = DeferredUsecase<CommonMusicModel.PlayListModel, FetchSongListReq>
 typealias FetchMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchMusicReq>
 typealias FetchHotListCase = DeferredUsecase<HotPlaylistModel.HotListModel, FetchHotListReq>

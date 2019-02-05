@@ -23,8 +23,7 @@ package com.no1.taiwan.stationmusicfm.data.remote.services
 
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.PlaylistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
 import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
@@ -36,7 +35,7 @@ import retrofit2.http.QueryMap
  */
 interface MusicBankService {
     @GET("${RankingConfig.API_REQUEST}/rank_song_list")
-    fun retrieveMusicRanking(@QueryMap queries: Map<String, String>): Deferred<RankChartData>
+    fun retrieveMusicRanking(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
 
     @GET("${RankingConfig.API_REQUEST}/search")
     fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
@@ -45,5 +44,5 @@ interface MusicBankService {
     fun retrieveHotPlaylist(@QueryMap queries: Map<String, String>): Deferred<HotPlaylistData>
 
     @GET("${RankingConfig.API_REQUEST}/song_list")
-    fun retrievePlaylistDetail(@QueryMap queries: Map<String, String>): Deferred<PlaylistInfoData>
+    fun retrieveSongList(@QueryMap queries: Map<String, String>): Deferred<SongListInfoData>
 }
