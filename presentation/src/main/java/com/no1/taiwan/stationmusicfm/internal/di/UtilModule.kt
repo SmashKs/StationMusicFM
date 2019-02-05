@@ -30,13 +30,13 @@ import com.devrapid.kotlinshaver.cast
 import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.no1.taiwan.stationmusicfm.data.data.mappers.HotListMapper
-import com.no1.taiwan.stationmusicfm.data.data.mappers.MusicMapper
-import com.no1.taiwan.stationmusicfm.data.data.mappers.MvMapper
-import com.no1.taiwan.stationmusicfm.data.data.mappers.PlaylistMapper
-import com.no1.taiwan.stationmusicfm.data.data.mappers.RankChartMapper
-import com.no1.taiwan.stationmusicfm.data.data.mappers.SongMapper
-import com.no1.taiwan.stationmusicfm.data.data.mappers.UserMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.HotListMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.MusicMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.MvMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.PlaylistMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.RankChartMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.SongMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.UserMapper
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
@@ -74,7 +74,7 @@ object UtilModule {
      * Import this module in the [com.no1.taiwan.newsbasket.App] because data layer needs this.
      */
     fun dataUtilProvider() = Module("Data Layer Util") {
-        /** Mapper Set for [com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper] */
+        /** Mapper Set for [com.no1.taiwan.stationmusicfm.entities.mappers.Mapper] */
         bind() from setBinding<DataMapperEntry>()
 
         /** RankInfoData Layer Mapper */
@@ -105,7 +105,7 @@ object UtilModule {
      * Import this module for each activity entry, they don't be needed in the beginning.
      */
     fun presentationUtilProvider(context: Context) = Module("Presentation Layer Util") {
-        /** Mapper Set for [com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper] */
+        /** Mapper Set for [com.no1.taiwan.stationmusicfm.entities.mappers.Mapper] */
         bind() from setBinding<PresentationMapperEntry>()
 
         /** Presentation Layer Mapper */
