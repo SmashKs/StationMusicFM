@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.data.data.mappers
 
 import com.no1.taiwan.stationmusicfm.data.data.RankChartDataMap
-import com.no1.taiwan.stationmusicfm.data.data.rank.RankChartData
-import com.no1.taiwan.stationmusicfm.domain.models.rank.RankChartModel
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
 
 /**
  * A transforming mapping between [RankChartData] and [RankChartModel]. The different layers have

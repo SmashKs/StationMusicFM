@@ -21,10 +21,10 @@
 
 package com.no1.taiwan.stationmusicfm.data.remote.services
 
-import com.no1.taiwan.stationmusicfm.data.data.rank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.rank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.rank.PlaylistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.rank.RankChartData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.PlaylistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
 import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET

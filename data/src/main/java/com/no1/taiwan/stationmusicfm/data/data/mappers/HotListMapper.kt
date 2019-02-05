@@ -23,8 +23,8 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers
 
 import com.no1.taiwan.stationmusicfm.data.data.HotListDataMap
 import com.no1.taiwan.stationmusicfm.data.data.PlaylistDataMap
-import com.no1.taiwan.stationmusicfm.data.data.rank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.domain.models.rank.HotPlaylistModel
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 
 /**
  * A transforming mapping between [HotPlaylistData.HotListData] and [HotPlaylistModel.HotListModel]. The different layers have

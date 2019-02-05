@@ -21,10 +21,10 @@
 
 package com.no1.taiwan.stationmusicfm.data.datastores
 
-import com.no1.taiwan.stationmusicfm.data.data.rank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.rank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.rank.PlaylistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.rank.RankChartData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.PlaylistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
@@ -41,7 +41,7 @@ class RemoteDataStore(
         return musicBankService.retrieveMusicRanking(parameterable.toApiParam()).await()
     }
 
-    override suspend fun getSearchMusic(parameterable: Parameterable): MusicInfoData {
+    override suspend fun getMusic(parameterable: Parameterable): MusicInfoData {
         return musicBankService.retrieveSearchMusic(parameterable.toApiParam()).await()
     }
 

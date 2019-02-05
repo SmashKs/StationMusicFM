@@ -19,26 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.repositories
+package com.no1.taiwan.stationmusicfm.domain.usecases
 
+import com.no1.taiwan.stationmusicfm.domain.DeferredUsecase
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
-import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchPlaylistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
 
-/**
- * This interface will be the similar to [com.no1.taiwan.newsbasket.data.datastores.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
- */
-interface MusicBankRepository {
-    //region Music Rank
-    suspend fun fetchMusicRanking(parameters: Parameterable): RankChartModel
+typealias FetchRankMusicReq = FetchRankMusicRespCase.Request
+typealias FetchPlaylistReq = FetchPlaylistRespCase.Request
+typealias FetchMusicReq = FetchMusicRespCase.Request
+typealias FetchHotListReq = FetchHotListRespCase.Request
 
-    suspend fun fetchMusic(parameters: Parameterable): MusicInfoModel.MusicModel
-
-    suspend fun fetchHotPlaylist(parameters: Parameterable): HotPlaylistModel.HotListModel
-
-    suspend fun fetchPlaylistDetail(parameters: Parameterable): CommonMusicModel.PlayListModel
-    //endregion
-}
+typealias FetchRankMusicCase = DeferredUsecase<RankChartModel, FetchRankMusicReq>
+typealias FetchPlaylistCase = DeferredUsecase<CommonMusicModel.PlayListModel, FetchPlaylistReq>
+typealias FetchMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchMusicReq>
+typealias FetchHotListCase = DeferredUsecase<HotPlaylistModel.HotListModel, FetchHotListReq>

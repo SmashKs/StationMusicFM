@@ -19,23 +19,15 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.rank
+package com.no1.taiwan.stationmusicfm.domain.models.musicbank
 
-import com.google.gson.annotations.SerializedName
-import com.no1.taiwan.stationmusicfm.data.data.Data
+import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class MusicInfoData(
-    val status: String = DEFAULT_STR,
-    val data: MusicData = MusicData()
-) : Data {
-    data class MusicData(
-        // 🔽 Only Music has.
-        @SerializedName("has_more")
-        val hasMore: Boolean = false,
-        val items: List<CommonMusicData.SongData> = emptyList(),
-        // 🔽 Only Rank has.
-        val timestamp: Double = 0.0,
-        val songs: List<CommonMusicData.SongData> = emptyList()
-    ) : Data
-}
+data class RankChartModel(
+    var id: Long = 0,
+    var rankType: Int = 0,
+    var coverUrl: String = DEFAULT_STR,
+    var chartName: String = DEFAULT_STR,
+    var updateTime: String = DEFAULT_STR
+) : Model

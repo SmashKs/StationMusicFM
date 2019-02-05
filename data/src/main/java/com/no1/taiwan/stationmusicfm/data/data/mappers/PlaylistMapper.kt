@@ -24,8 +24,8 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers
 import com.no1.taiwan.stationmusicfm.data.data.PlaylistDataMap
 import com.no1.taiwan.stationmusicfm.data.data.SongDataMap
 import com.no1.taiwan.stationmusicfm.data.data.UserDataMap
-import com.no1.taiwan.stationmusicfm.data.data.rank.CommonMusicData
-import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.CommonMusicData
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 
 /**
  * A transforming mapping between [CommonMusicData.PlayListData] and [CommonMusicModel.PlayListModel].

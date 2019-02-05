@@ -19,26 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.datastores
+package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
 
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.PlaylistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
+import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
+import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicReq
 
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-interface DataStore {
-    //region Music Rank
-    suspend fun getMusicRanking(parameterable: Parameterable): RankChartData
+class FetchMusicRespCase(
+    private val repository: MusicBankRepository
+) : FetchMusicCase() {
+    /** Provide a common parameter variable for the children class. */
+    override var requestValues: FetchMusicReq? = null
 
-    suspend fun getMusic(parameterable: Parameterable): MusicInfoData
+    override suspend fun acquireCase() = attachParameter {
+        repository.fetchMusic(it.parameters)
+    }
 
-    suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData
-
-    suspend fun getPlaylistDetail(parameterable: Parameterable): PlaylistInfoData
-    //endregion
+    class Request(val parameters: Parameterable = EmptyParams()) : RequestValues
 }

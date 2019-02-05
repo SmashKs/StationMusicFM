@@ -22,14 +22,14 @@
 package com.no1.taiwan.stationmusicfm.data.data
 
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.data.data.rank.CommonMusicData
-import com.no1.taiwan.stationmusicfm.data.data.rank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.rank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.rank.RankChartData
-import com.no1.taiwan.stationmusicfm.domain.models.rank.CommonMusicModel
-import com.no1.taiwan.stationmusicfm.domain.models.rank.HotPlaylistModel
-import com.no1.taiwan.stationmusicfm.domain.models.rank.MusicInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.rank.RankChartModel
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.CommonMusicData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
 
 typealias DataMapper = Mapper<*, *>
 typealias DataMapperPool = Map<Class<out DataMapper>, DataMapper>

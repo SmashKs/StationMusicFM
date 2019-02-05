@@ -26,15 +26,16 @@ import com.no1.taiwan.stationmusicfm.data.data.HotListDataMap
 import com.no1.taiwan.stationmusicfm.data.data.MusicDataMap
 import com.no1.taiwan.stationmusicfm.data.data.PlaylistDataMap
 import com.no1.taiwan.stationmusicfm.data.data.RankChartDataMap
+import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
-import kotlinx.coroutines.async
 
 /**
  * The data repository for being responsible for selecting an appropriate data store to access
  * the data.
- * Also we need to do [async] & [await] one time for getting the data then transform and wrap to Domain layer.
+ * Also we need to do one time for getting the data then transform and wrap to Domain layer by
+ * [Mapper].
  *
  * @property local from database/file/memory data store.
  * @property mapperPool keeping all of the data mapper here.
@@ -52,8 +53,8 @@ class MusicBankDataRepository constructor(
     override suspend fun fetchMusicRanking(parameters: Parameterable) =
         remote.getMusicRanking(parameters).run(rankChartMapper::toModelFrom)
 
-    override suspend fun fetchSearchMusic(parameters: Parameterable) =
-        remote.getSearchMusic(parameters).data.run(musicMapper::toModelFrom)
+    override suspend fun fetchMusic(parameters: Parameterable) =
+        remote.getMusic(parameters).data.run(musicMapper::toModelFrom)
 
     override suspend fun fetchHotPlaylist(parameters: Parameterable) =
         remote.getHotPlaylist(parameters).data.run(hotListMapper::toModelFrom)

@@ -31,11 +31,11 @@ import com.tencent.mmkv.MMKV
 class LocalDataStore(
     private val mmkv: MMKV
 ) : DataStore {
-    override fun getMusicRanking(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getMusicRanking(parameterable: Parameterable) = throw UnsupportedOperationException()
 
-    override fun getSearchMusic(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getMusic(parameterable: Parameterable) = throw UnsupportedOperationException()
 
-    override fun getHotPlaylist(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getHotPlaylist(parameterable: Parameterable) = throw UnsupportedOperationException()
 
-    override fun getPlaylistDetail(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getPlaylistDetail(parameterable: Parameterable) = throw UnsupportedOperationException()
 }

@@ -24,6 +24,9 @@ package com.no1.taiwan.stationmusicfm
 import android.content.Context
 import androidx.multidex.MultiDexApplication
 import androidx.work.WorkManager
+import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
+import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
+import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -52,6 +55,9 @@ class MusicApp : MultiDexApplication(), KodeinAware {
      */
     override val kodein = Kodein.lazy {
         import(androidXModule(this@MusicApp))
+        /** usecases are bind here but the scope is depending on each layers.  */
+        import(UsecaseModule.usecaseProvider())
+        import(RepositoryModule.repositoryProvider(this@MusicApp))
+        import(UtilModule.dataUtilProvider())
     }
-
 }

@@ -19,26 +19,15 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.datastores
+package com.no1.taiwan.stationmusicfm.data.data.musicbank
 
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.PlaylistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
-import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.data.data.Data
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-interface DataStore {
-    //region Music Rank
-    suspend fun getMusicRanking(parameterable: Parameterable): RankChartData
-
-    suspend fun getMusic(parameterable: Parameterable): MusicInfoData
-
-    suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData
-
-    suspend fun getPlaylistDetail(parameterable: Parameterable): PlaylistInfoData
-    //endregion
-}
+data class RankChartData(
+    var id: Long = 0,
+    var rankType: Int = 0,
+    var coverUrl: String = DEFAULT_STR,
+    var chartName: String = DEFAULT_STR,
+    var updateTime: String = DEFAULT_STR
+) : Data

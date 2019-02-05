@@ -23,8 +23,8 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers
 
 import com.no1.taiwan.stationmusicfm.data.data.MusicDataMap
 import com.no1.taiwan.stationmusicfm.data.data.SongDataMap
-import com.no1.taiwan.stationmusicfm.data.data.rank.MusicInfoData
-import com.no1.taiwan.stationmusicfm.domain.models.rank.MusicInfoModel
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 
 /**
  * A transforming mapping between [MusicInfoData.MusicData] and [MusicInfoModel.MusicModel]. The different layers have

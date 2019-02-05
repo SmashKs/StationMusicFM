@@ -19,17 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.rank
+package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
+import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistReq
 
-data class HotPlaylistModel(
-    val status: String = DEFAULT_STR,
-    val data: HotListModel = HotListModel()
-) : Model {
-    data class HotListModel(
-        val hasMore: Int = 0,
-        val playlists: List<CommonMusicModel.PlayListModel> = emptyList()
-    ) : Model
+class FetchPlaylistRespCase(
+    private val repository: MusicBankRepository
+) : FetchPlaylistCase() {
+    /** Provide a common parameter variable for the children class. */
+    override var requestValues: FetchPlaylistReq? = null
+
+    override suspend fun acquireCase() = attachParameter {
+        repository.fetchPlaylistDetail(it.parameters)
+    }
+
+    class Request(val parameters: Parameterable = EmptyParams()) : RequestValues
 }
