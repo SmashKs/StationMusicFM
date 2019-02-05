@@ -19,18 +19,44 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers
+package com.no1.taiwan.stationmusicfm.entities.mappers
 
-import com.no1.taiwan.stationmusicfm.data.data.MvDataMap
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.CommonMusicData
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
+import com.no1.taiwan.stationmusicfm.entities.MvPreziMap
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 
 /**
- * A transforming mapping between [CommonMusicData.MvData] and [CommonMusicModel.MvModel]. The different layers have
+ * A transforming mapping between [CommonMusicModel.MvModel] and [CommonMusicEntity.MvEntity]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
-class MvMapper : MvDataMap {
-    override fun toModelFrom(data: CommonMusicData.MvData) = data.run {
+class MvPMapper : MvPreziMap {
+    override fun toEntityFrom(model: CommonMusicModel.MvModel) = model.run {
+        CommonMusicEntity.MvEntity(comments,
+                                   coverImage,
+                                   ctime,
+                                   description,
+                                   dislikes,
+                                   duration,
+                                   embeddable,
+                                   fmMvActive,
+                                   id,
+                                   isActive,
+                                   isPublic,
+                                   languageId,
+                                   likes,
+                                   mtime,
+                                   publishedAt,
+                                   rate,
+                                   regionAllowed,
+                                   regionBlocked,
+                                   reviewInfo,
+                                   source,
+                                   title,
+                                   views,
+                                   yVideoId)
+    }
+
+    override fun toModelFrom(entity: CommonMusicEntity.MvEntity) = entity.run {
         CommonMusicModel.MvModel(comments,
                                  coverImage,
                                  ctime,
@@ -54,31 +80,5 @@ class MvMapper : MvDataMap {
                                  title,
                                  views,
                                  yVideoId)
-    }
-
-    override fun toDataFrom(model: CommonMusicModel.MvModel) = model.run {
-        CommonMusicData.MvData(comments,
-                               coverImage,
-                               ctime,
-                               description,
-                               dislikes,
-                               duration,
-                               embeddable,
-                               fmMvActive,
-                               id,
-                               isActive,
-                               isPublic,
-                               languageId,
-                               likes,
-                               mtime,
-                               publishedAt,
-                               rate,
-                               regionAllowed,
-                               regionBlocked,
-                               reviewInfo,
-                               source,
-                               title,
-                               views,
-                               yVideoId)
     }
 }

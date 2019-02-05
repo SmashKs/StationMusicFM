@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
  * A transforming mapping between [CommonMusicModel.PlayListModel] and [CommonMusicEntity.PlayListEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class PlaylistMapper(
+class PlaylistPMapper(
     private val songMapper: SongPreziMap,
     private val userMapper: UserPreziMap
 ) : PlaylistPreziMap {

@@ -30,13 +30,20 @@ import com.devrapid.kotlinshaver.cast
 import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.no1.taiwan.stationmusicfm.entities.mappers.HotListMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.MusicMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.MvMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.PlaylistMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.RankChartMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.SongMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.UserMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.HotListDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.MusicDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.MvDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.PlaylistDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.RankChartDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.SongDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.UserDMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.HotListPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.MusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.MvPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.PlaylistPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.RankChartPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.SongPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.UserPMapper
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
@@ -78,36 +85,57 @@ object UtilModule {
         bind() from setBinding<DataMapperEntry>()
 
         /** RankInfoData Layer Mapper */
-        bind<DataMapperEntry>().inSet() with singleton { UserMapper::class.java to UserMapper() }
-        bind<DataMapperEntry>().inSet() with singleton { RankChartMapper::class.java to RankChartMapper() }
-        bind<DataMapperEntry>().inSet() with singleton { MvMapper::class.java to MvMapper() }
+        bind<DataMapperEntry>().inSet() with singleton { UserDMapper::class.java to UserDMapper() }
+        bind<DataMapperEntry>().inSet() with singleton { RankChartDMapper::class.java to RankChartDMapper() }
+        bind<DataMapperEntry>().inSet() with singleton { MvDMapper::class.java to MvDMapper() }
         bind<DataMapperEntry>().inSet() with singleton {
             val mapper: Set<DataMapperEntry> by kodein.instance()
-            SongMapper::class.java to SongMapper(cast(mapper.toMap()[MvMapper::class.java]))
+            SongDMapper::class.java to SongDMapper(cast(mapper.toMap()[MvDMapper::class.java]))
         }
         bind<DataMapperEntry>().inSet() with singleton {
             val mapper: Set<DataMapperEntry> by kodein.instance()
-            MusicMapper::class.java to MusicMapper(cast(mapper.toMap()[SongMapper::class.java]))
+            MusicDMapper::class.java to MusicDMapper(cast(mapper.toMap()[SongDMapper::class.java]))
         }
         bind<DataMapperEntry>().inSet() with singleton {
             val mapper: Set<DataMapperEntry> by kodein.instance()
             val map = mapper.toMap()
-            PlaylistMapper::class.java to PlaylistMapper(cast(map[SongMapper::class.java]),
-                                                         cast(map[UserMapper::class.java]))
+            PlaylistDMapper::class.java to PlaylistDMapper(cast(map[SongDMapper::class.java]),
+                                                           cast(map[UserDMapper::class.java]))
         }
         bind<DataMapperEntry>().inSet() with singleton {
             val mapper: Set<DataMapperEntry> by kodein.instance()
-            HotListMapper::class.java to HotListMapper(cast(mapper.toMap()[PlaylistMapper::class.java]))
+            HotListDMapper::class.java to HotListDMapper(cast(mapper.toMap()[PlaylistDMapper::class.java]))
         }
     }
 
     /**
      * Import this module for each activity entry, they don't be needed in the beginning.
      */
-    fun presentationUtilProvider(context: Context) = Module("Presentation Layer Util") {
+    fun presentationUtilProvider() = Module("Presentation Layer Util") {
         /** Mapper Set for [com.no1.taiwan.stationmusicfm.entities.mappers.Mapper] */
-        bind() from setBinding<PresentationMapperEntry>()
+        bind() from setBinding<PreziMapperEntry>()
 
         /** Presentation Layer Mapper */
+        bind<PreziMapperEntry>().inSet() with singleton { UserPMapper::class.java to UserPMapper() }
+        bind<PreziMapperEntry>().inSet() with singleton { RankChartPMapper::class.java to RankChartPMapper() }
+        bind<PreziMapperEntry>().inSet() with singleton { MvPMapper::class.java to MvPMapper() }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            val mapper: Set<PreziMapperEntry> by kodein.instance()
+            SongPMapper::class.java to SongPMapper(cast(mapper.toMap()[MvPMapper::class.java]))
+        }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            val mapper: Set<PreziMapperEntry> by kodein.instance()
+            MusicPMapper::class.java to MusicPMapper(cast(mapper.toMap()[SongPMapper::class.java]))
+        }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            val mapper: Set<PreziMapperEntry> by kodein.instance()
+            val map = mapper.toMap()
+            PlaylistPMapper::class.java to PlaylistPMapper(cast(map[SongPMapper::class.java]),
+                                                           cast(map[UserPMapper::class.java]))
+        }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            val mapper: Set<PreziMapperEntry> by kodein.instance()
+            HotListPMapper::class.java to HotListPMapper(cast(mapper.toMap()[PlaylistPMapper::class.java]))
+        }
     }
 }

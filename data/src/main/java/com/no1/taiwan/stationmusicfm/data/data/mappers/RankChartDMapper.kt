@@ -19,22 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers
+package com.no1.taiwan.stationmusicfm.data.data.mappers
 
+import com.no1.taiwan.stationmusicfm.data.data.RankChartDataMap
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
-import com.no1.taiwan.stationmusicfm.entities.RankChartPreziMap
-import com.no1.taiwan.stationmusicfm.entities.musicbank.RankChartEntity
 
 /**
- * A transforming mapping between [RankChartModel] and [RankChartEntity]. The different layers have
+ * A transforming mapping between [RankChartData] and [RankChartModel]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
-class RankChartMapper : RankChartPreziMap {
-    override fun toEntityFrom(model: RankChartModel) = model.run {
-        RankChartEntity(id, rankType, coverUrl, chartName, updateTime)
+class RankChartDMapper : RankChartDataMap {
+    override fun toModelFrom(data: RankChartData) = data.run {
+        RankChartModel(id, rankType, coverUrl, chartName, updateTime)
     }
 
-    override fun toModelFrom(entity: RankChartEntity) = entity.run {
-        RankChartModel(id, rankType, coverUrl, chartName, updateTime)
+    override fun toDataFrom(model: RankChartModel) = model.run {
+        RankChartData(id, rankType, coverUrl, chartName, updateTime)
     }
 }

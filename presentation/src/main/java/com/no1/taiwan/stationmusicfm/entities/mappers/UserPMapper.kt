@@ -29,8 +29,8 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
  * A transforming mapping between [CommonMusicModel.UserModel] and [CommonMusicEntity.UserEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class UserMapper : UserPreziMap {
-    override fun toEntityFrom(data: CommonMusicModel.UserModel) = data.run {
+class UserPMapper : UserPreziMap {
+    override fun toEntityFrom(model: CommonMusicModel.UserModel) = model.run {
         CommonMusicEntity.UserEntity(address,
                                      avatarUrl,
                                      birthday,
@@ -43,7 +43,7 @@ class UserMapper : UserPreziMap {
                                      uid)
     }
 
-    override fun toModelFrom(model: CommonMusicEntity.UserEntity) = model.run {
+    override fun toModelFrom(entity: CommonMusicEntity.UserEntity) = entity.run {
         CommonMusicModel.UserModel(address,
                                    avatarUrl,
                                    birthday,

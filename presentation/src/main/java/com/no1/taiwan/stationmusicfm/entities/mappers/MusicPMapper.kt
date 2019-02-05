@@ -19,31 +19,31 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers
+package com.no1.taiwan.stationmusicfm.entities.mappers
 
-import com.no1.taiwan.stationmusicfm.data.data.MusicDataMap
-import com.no1.taiwan.stationmusicfm.data.data.SongDataMap
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
+import com.no1.taiwan.stationmusicfm.entities.MusicPreziMap
+import com.no1.taiwan.stationmusicfm.entities.SongPreziMap
+import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
 
 /**
- * A transforming mapping between [MusicInfoData.MusicData] and [MusicInfoModel.MusicModel]. The different layers have
+ * A transforming mapping between [MusicInfoModel.MusicModel] and [MusicInfoEntity.MusicEntity]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
-class MusicMapper(
-    private val songMapper: SongDataMap
-) : MusicDataMap {
-    override fun toModelFrom(data: MusicInfoData.MusicData) = data.run {
+class MusicPMapper(
+    private val songMapper: SongPreziMap
+) : MusicPreziMap {
+    override fun toEntityFrom(model: MusicInfoModel.MusicModel) = model.run {
+        MusicInfoEntity.MusicEntity(hasMore,
+                                    items.map(songMapper::toEntityFrom),
+                                    timestamp,
+                                    songs.map(songMapper::toEntityFrom))
+    }
+
+    override fun toModelFrom(entity: MusicInfoEntity.MusicEntity) = entity.run {
         MusicInfoModel.MusicModel(hasMore,
                                   items.map(songMapper::toModelFrom),
                                   timestamp,
                                   songs.map(songMapper::toModelFrom))
-    }
-
-    override fun toDataFrom(model: MusicInfoModel.MusicModel) = model.run {
-        MusicInfoData.MusicData(hasMore,
-                                items.map(songMapper::toDataFrom),
-                                timestamp,
-                                songs.map(songMapper::toDataFrom))
     }
 }

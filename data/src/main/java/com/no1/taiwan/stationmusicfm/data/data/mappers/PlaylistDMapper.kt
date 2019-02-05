@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
  * A transforming mapping between [CommonMusicData.PlayListData] and [CommonMusicModel.PlayListModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class PlaylistMapper(
+class PlaylistDMapper(
     private val songMapper: SongDataMap,
     private val userMapper: UserDataMap
 ) : PlaylistDataMap {

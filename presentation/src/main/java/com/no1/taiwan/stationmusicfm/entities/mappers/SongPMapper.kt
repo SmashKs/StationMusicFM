@@ -30,7 +30,7 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
  * A transforming mapping between [CommonMusicModel.SongModel] and [CommonMusicEntity.SongEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class SongMapper(
+class SongPMapper(
     private val mvMapper: MvPreziMap
 ) : SongPreziMap {
     override fun toEntityFrom(model: CommonMusicModel.SongModel) = model.run {

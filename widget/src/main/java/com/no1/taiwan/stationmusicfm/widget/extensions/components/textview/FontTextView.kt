@@ -19,25 +19,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers
+package com.no1.taiwan.stationmusicfm.widget.extensions.components.textview
 
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
-import com.no1.taiwan.stationmusicfm.entities.HotListPreziMap
-import com.no1.taiwan.stationmusicfm.entities.PlaylistPreziMap
-import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
+import android.content.Context
+import android.graphics.Typeface
+import android.util.AttributeSet
+import android.widget.TextView
+import com.no1.taiwan.stationmusicfm.widget.R
 
 /**
- * A transforming mapping between [HotPlaylistEntity.HotListEntity] and [HotPlaylistEntity.HotListEntity].
- * The different layers have their own data objects, the objects should transform and fit each layers.
+ * It's able to set a font from imported resource font.
  */
-class HotListMapper(
-    private val playlistMapper: PlaylistPreziMap
-) : HotListPreziMap {
-    override fun toEntityFrom(model: HotPlaylistModel.HotListModel) = model.run {
-        HotPlaylistEntity.HotListEntity(hasMore, playlists.map(playlistMapper::toEntityFrom))
-    }
-
-    override fun toModelFrom(entity: HotPlaylistEntity.HotListEntity) = entity.run {
-        HotPlaylistModel.HotListModel(hasMore, playlists.map(playlistMapper::toModelFrom))
+class FontTextView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : TextView(context, attrs, defStyleAttr) {
+    init {
+        context.obtainStyledAttributes(attrs, R.styleable.FontTextView, defStyleAttr, 0).also {
+            it.getString(R.styleable.FontTextView_textFont)?.let {
+                typeface = Typeface.createFromAsset(context.assets, "fonts/$it")
+            }
+        }.recycle()
     }
 }

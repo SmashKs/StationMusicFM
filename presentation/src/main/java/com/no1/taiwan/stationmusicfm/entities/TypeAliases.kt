@@ -31,8 +31,8 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.RankChartEntity
 
-typealias PresentationMapper = Mapper<*, *>
-typealias PresentationMapperPool = Map<Class<out PresentationMapper>, PresentationMapper>
+typealias PreziMapper = Mapper<*, *>
+typealias PreziMapperPool = Map<Class<out PreziMapper>, PreziMapper>
 
 typealias HotListPreziMap = Mapper<HotPlaylistModel.HotListModel, HotPlaylistEntity.HotListEntity>
 typealias MusicPreziMap = Mapper<MusicInfoModel.MusicModel, MusicInfoEntity.MusicEntity>

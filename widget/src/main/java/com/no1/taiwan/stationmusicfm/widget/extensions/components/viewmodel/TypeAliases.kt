@@ -19,22 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers
+package com.no1.taiwan.stationmusicfm.widget.extensions.components.viewmodel
 
-import com.no1.taiwan.stationmusicfm.data.data.RankChartDataMap
-import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
+import androidx.lifecycle.ViewModel
 
-/**
- * A transforming mapping between [RankChartData] and [RankChartModel]. The different layers have
- * their own data objects, the objects should transform and fit each layers.
- */
-class RankChartMapper : RankChartDataMap {
-    override fun toModelFrom(data: RankChartData) = data.run {
-        RankChartModel(id, rankType, coverUrl, chartName, updateTime)
-    }
-
-    override fun toDataFrom(model: RankChartModel) = model.run {
-        RankChartData(id, rankType, coverUrl, chartName, updateTime)
-    }
-}
+typealias LookUpViewModel = MutableMap<Class<out ViewModel>, ViewModel>

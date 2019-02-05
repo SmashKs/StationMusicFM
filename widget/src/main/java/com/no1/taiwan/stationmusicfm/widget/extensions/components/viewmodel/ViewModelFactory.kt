@@ -19,22 +19,19 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di
+package com.no1.taiwan.stationmusicfm.widget.extensions.components.viewmodel
 
-import android.view.View
+import android.app.Application
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
-import com.no1.taiwan.stationmusicfm.data.data.DataMapper
-import com.no1.taiwan.stationmusicfm.entities.PreziMapper
+import androidx.lifecycle.ViewModelProvider
 
-typealias ViewModelEntry = Pair<Class<out ViewModel>, ViewModel>
-typealias ViewModelEntries = Set<ViewModelEntry>
-
-typealias ViewHolderEntry = Pair<Int, Pair<Int, (View) -> RecyclerView.ViewHolder>>
-typealias ViewHolderEntries = Set<ViewHolderEntry>
-
-typealias DataMapperEntry = Pair<Class<out DataMapper>, DataMapper>
-typealias DataMapperEntries = Set<DataMapperEntry>
-
-typealias PreziMapperEntry = Pair<Class<out PreziMapper>, PreziMapper>
-typealias PreziMapperEntries = Set<PreziMapperEntry>
+/**
+ * A factory for creating a map to store a related [ViewModel]'s tag and the [ViewModel].
+ */
+class ViewModelFactory(
+    application: Application,
+    private val viewModels: LookUpViewModel
+) : ViewModelProvider.AndroidViewModelFactory(application) {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>) = viewModels[modelClass] as T
+}

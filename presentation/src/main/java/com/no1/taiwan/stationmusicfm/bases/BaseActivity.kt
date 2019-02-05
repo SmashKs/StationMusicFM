@@ -25,9 +25,17 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.no1.taiwan.stationmusicfm.internal.di.RecyclerViewModule
+import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
+import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntries
+import com.no1.taiwan.stationmusicfm.widget.extensions.components.viewmodel.ViewModelFactory
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.android.retainedKodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 /**
  * The basic activity is for the normal activity which prepares all necessary variables or functions.
@@ -37,14 +45,14 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
         extend(parentKodein)
 //        import(appProvider())
         /** activities or fragments */
-//        import(presentationUtilProvider(this@BaseActivity))
-//        import(recyclerViewProvider())
+        import(UtilModule.presentationUtilProvider())
+        import(RecyclerViewModule.recyclerViewProvider())
         /* activity specific bindings */
 //        import(activityModule())
 
-//        bind<ViewModelProvider.Factory>() with provider {
-//            ViewModelFactory(instance(), instance<ViewModelEntries>().toMap().toMutableMap())
-//        }
+        bind<ViewModelProvider.Factory>() with provider {
+            ViewModelFactory(instance(), instance<ViewModelEntries>().toMap().toMutableMap())
+        }
     }
     private val parentKodein by closestKodein()
 

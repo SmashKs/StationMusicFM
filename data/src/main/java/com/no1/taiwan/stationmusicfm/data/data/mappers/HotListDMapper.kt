@@ -30,7 +30,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
  * A transforming mapping between [HotPlaylistData.HotListData] and [HotPlaylistModel.HotListModel]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
-class HotListMapper(
+class HotListDMapper(
     private val playlistMapper: PlaylistDataMap
 ) : HotListDataMap {
     override fun toModelFrom(data: HotPlaylistData.HotListData) = data.run {

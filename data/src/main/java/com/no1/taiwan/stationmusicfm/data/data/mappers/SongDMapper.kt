@@ -30,7 +30,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
  * A transforming mapping between [CommonMusicData.SongData] and [CommonMusicModel.SongModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class SongMapper(
+class SongDMapper(
     private val mvMapper: MvDataMap
 ) : SongDataMap {
     override fun toModelFrom(data: CommonMusicData.SongData) = data.run {

@@ -21,29 +21,23 @@
 
 package com.no1.taiwan.stationmusicfm.entities.mappers
 
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
-import com.no1.taiwan.stationmusicfm.entities.MusicPreziMap
-import com.no1.taiwan.stationmusicfm.entities.SongPreziMap
-import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
+import com.no1.taiwan.stationmusicfm.entities.HotListPreziMap
+import com.no1.taiwan.stationmusicfm.entities.PlaylistPreziMap
+import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
 
 /**
- * A transforming mapping between [MusicInfoModel.MusicModel] and [MusicInfoEntity.MusicEntity]. The different layers have
- * their own data objects, the objects should transform and fit each layers.
+ * A transforming mapping between [HotPlaylistEntity.HotListEntity] and [HotPlaylistEntity.HotListEntity].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class MusicMapper(
-    private val songMapper: SongPreziMap
-) : MusicPreziMap {
-    override fun toEntityFrom(model: MusicInfoModel.MusicModel) = model.run {
-        MusicInfoEntity.MusicEntity(hasMore,
-                                    items.map(songMapper::toEntityFrom),
-                                    timestamp,
-                                    songs.map(songMapper::toEntityFrom))
+class HotListPMapper(
+    private val playlistMapper: PlaylistPreziMap
+) : HotListPreziMap {
+    override fun toEntityFrom(model: HotPlaylistModel.HotListModel) = model.run {
+        HotPlaylistEntity.HotListEntity(hasMore, playlists.map(playlistMapper::toEntityFrom))
     }
 
-    override fun toModelFrom(entity: MusicInfoEntity.MusicEntity) = entity.run {
-        MusicInfoModel.MusicModel(hasMore,
-                                  items.map(songMapper::toModelFrom),
-                                  timestamp,
-                                  songs.map(songMapper::toModelFrom))
+    override fun toModelFrom(entity: HotPlaylistEntity.HotListEntity) = entity.run {
+        HotPlaylistModel.HotListModel(hasMore, playlists.map(playlistMapper::toModelFrom))
     }
 }
