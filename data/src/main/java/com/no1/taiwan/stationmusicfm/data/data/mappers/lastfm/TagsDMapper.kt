@@ -19,10 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.lastfm
+package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
+import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
-data class TagTopTrackInfoModel(
-    val tracks: TopTrackInfoModel.TracksModel = TopTrackInfoModel.TracksModel()
-) : Model
+/**
+ * A transforming mapping between [CommonLastFmData.TagsData] and [CommonLastFmModel.TagsModel].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class TagsDMapper(
+    private val tagMapper: TagDMapper,
+    private val attrMapper: AttrDMapper
+) : Mapper<CommonLastFmData.TagsData, CommonLastFmModel.TagsModel> {
+    override fun toModelFrom(data: CommonLastFmData.TagsData) = data.run {
+        CommonLastFmModel.TagsModel(tags?.map(tagMapper::toModelFrom).orEmpty(),
+                                    attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel())
+    }
+
+    override fun toDataFrom(model: CommonLastFmModel.TagsModel) = model.run {
+        CommonLastFmData.TagsData(tags.map(tagMapper::toDataFrom), attrMapper.toDataFrom(attr))
+    }
+}

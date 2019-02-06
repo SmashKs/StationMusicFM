@@ -26,11 +26,11 @@ import com.no1.taiwan.stationmusicfm.data.data.Data
 
 data class ArtistTopTrackInfoData(
     @SerializedName("toptracks")
-    val topTracks: TracksData
+    val topTracks: TracksWithStreamableData
 ) : Data {
-    data class TracksData(
+    data class TracksWithStreamableData(
         @SerializedName("track")
-        val tracks: List<TrackInfoData.TrackWithStreamableStringData>,
+        val tracks: List<TrackInfoData.TrackWithStreamableData>,
         @SerializedName("@attr")
         val attr: CommonLastFmData.AttrData?
     ) : Data

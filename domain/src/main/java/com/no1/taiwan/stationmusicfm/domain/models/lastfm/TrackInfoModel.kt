@@ -31,7 +31,7 @@ data class TrackInfoModel(
         val streamable: CommonLastFmModel.StreamableModel = CommonLastFmModel.StreamableModel()
     ) : BaseTrackModel(), Model
 
-    data class TrackWithStreamableStringModel(
+    data class TrackWithStreamableModel(
         val streamable: String = DEFAULT_STR
     ) : BaseTrackModel(), Model
 

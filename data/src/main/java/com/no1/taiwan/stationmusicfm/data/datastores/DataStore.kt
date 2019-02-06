@@ -21,6 +21,19 @@
 
 package com.no1.taiwan.stationmusicfm.data.datastores
 
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistSimilarData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistTopAlbumInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistTopTrackInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TagInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TagTopArtistData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopAlbumInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopArtistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTagInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TrackInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TrackSimilarData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
@@ -39,5 +52,43 @@ interface DataStore {
     suspend fun getHotPlaylist(parameterable: Parameterable): HotPlaylistData
 
     suspend fun getSongList(parameterable: Parameterable): SongListInfoData
+    //endregion
+
+    //region AlbumData
+    suspend fun getAlbumInfo(parameterable: Parameterable): AlbumInfoData
+    //endregion
+
+    //region ArtistData
+    suspend fun getArtistInfo(parameterable: Parameterable): ArtistInfoData
+
+    suspend fun getArtistTopAlbum(parameterable: Parameterable): ArtistTopAlbumInfoData
+
+    suspend fun getArtistTopTrack(parameterable: Parameterable): ArtistTopTrackInfoData
+
+    suspend fun getSimilarArtistInfo(parameterable: Parameterable): ArtistSimilarData
+    //endregion
+
+    //region TrackData
+    suspend fun getTrackInfo(parameterable: Parameterable): TrackInfoData
+
+    suspend fun getSimilarTrackInfo(parameterable: Parameterable): TrackSimilarData
+    //endregion
+
+    //region Chart
+    suspend fun getChartTopTrack(parameterable: Parameterable): TopTrackInfoData
+
+    suspend fun getChartTopArtist(parameterable: Parameterable): TopArtistInfoData
+
+    suspend fun getChartTopTag(parameterable: Parameterable): TopTagInfoData
+    //endregion
+
+    //region TagData
+    suspend fun getTagInfo(parameterable: Parameterable): TagInfoData
+
+    suspend fun getTagTopAlbum(parameterable: Parameterable): TopAlbumInfoData
+
+    suspend fun getTagTopArtist(parameterable: Parameterable): TagTopArtistData
+
+    suspend fun getTagTopTrack(parameterable: Parameterable): TopTrackInfoData
     //endregion
 }

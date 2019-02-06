@@ -31,7 +31,7 @@ data class TrackInfoData(
         val streamable: CommonLastFmData.StreamableData?
     ) : BaseTrackData(), Data
 
-    data class TrackWithStreamableStringData(
+    data class TrackWithStreamableData(
         val streamable: String?
     ) : BaseTrackData(), Data
 

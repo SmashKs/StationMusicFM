@@ -36,13 +36,7 @@ data class AlbumInfoData(
     data class AlbumWithArtistData(
         val artist: ArtistInfoData.ArtistData?,
         @SerializedName("playcount")
-        val playCount: String? = null
-    ) : BaseAlbumData(), Data
-
-    data class AlbumWithPlaycountData(
-        val artist: ArtistInfoData.ArtistData?,
-        @SerializedName("playcount")
-        val playCount: Int?,
+        val playCount: String? = null,
         val index: Int = -1
     ) : BaseAlbumData(), Data
 

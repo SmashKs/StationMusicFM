@@ -19,11 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.lastfm
+package com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.data.data.RankChartDataMap
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
 
-data class ArtistSimilarModel(
-    val similarArtist: TopArtistInfoModel.ArtistsModel = TopArtistInfoModel.ArtistsModel()
-) : Model
+/**
+ * A transforming mapping between [RankChartData] and [RankChartModel]. The different layers have
+ * their own data objects, the objects should transform and fit each layers.
+ */
+class RankChartDMapper : RankChartDataMap {
+    override fun toModelFrom(data: RankChartData) = data.run {
+        RankChartModel(id, rankType, coverUrl, chartName, updateTime)
+    }
 
+    override fun toDataFrom(model: RankChartModel) = model.run {
+        RankChartData(id, rankType, coverUrl, chartName, updateTime)
+    }
+}

@@ -26,12 +26,5 @@ import com.no1.taiwan.stationmusicfm.data.data.Data
 
 data class ArtistTopAlbumInfoData(
     @SerializedName("topalbums")
-    val topAlbums: TopAlbumsData
-) : Data {
-    data class TopAlbumsData(
-        @SerializedName("album")
-        val albums: List<AlbumInfoData.AlbumWithPlaycountData>,
-        @SerializedName("@attr")
-        val attr: CommonLastFmData.AttrData?
-    ) : Data
-}
+    val topAlbums: CommonLastFmData.TopAlbumsData
+) : Data

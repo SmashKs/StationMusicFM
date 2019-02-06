@@ -19,15 +19,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.lastfm
+package com.no1.taiwan.stationmusicfm.ext.exceptions
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
-
-data class TopTrackInfoModel(
-    val track: TracksModel
-) : Model {
-    data class TracksModel(
-        val tracks: List<TrackInfoModel.TrackModel> = emptyList(),
-        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
-    ) : Model
+class EmptyException : Exception {
+    constructor() : super()
+    constructor(msg: String) : super(msg)
+    constructor(msg: String, throwable: Throwable) : super(msg, throwable)
+    constructor(throwable: Throwable) : super(throwable)
 }

@@ -52,4 +52,46 @@ class RemoteDataStore(
 
     override suspend fun getSongList(parameterable: Parameterable) =
         musicBankService.retrieveSongList(parameterable.toApiParam()).await()
+
+    override suspend fun getAlbumInfo(parameterable: Parameterable) =
+        lastFmService.retrieveAlbumInfo(parameterable.toApiParam()).await()
+
+    override suspend fun getArtistInfo(parameterable: Parameterable) =
+        lastFmService.retrieveArtistInfo(parameterable.toApiParam()).await()
+
+    override suspend fun getArtistTopAlbum(parameterable: Parameterable) =
+        lastFmService.retrieveArtistTopAlbum(parameterable.toApiParam()).await()
+
+    override suspend fun getArtistTopTrack(parameterable: Parameterable) =
+        lastFmService.retrieveArtistTopTrack(parameterable.toApiParam()).await()
+
+    override suspend fun getSimilarArtistInfo(parameterable: Parameterable) =
+        lastFmService.retrieveSimilarArtistInfo(parameterable.toApiParam()).await()
+
+    override suspend fun getTrackInfo(parameterable: Parameterable) =
+        lastFmService.retrieveTrackInfo(parameterable.toApiParam()).await()
+
+    override suspend fun getSimilarTrackInfo(parameterable: Parameterable) =
+        lastFmService.retrieveSimilarTrackInfo(parameterable.toApiParam()).await()
+
+    override suspend fun getChartTopTrack(parameterable: Parameterable) =
+        lastFmService.retrieveChartTopTrack(parameterable.toApiParam()).await()
+
+    override suspend fun getChartTopArtist(parameterable: Parameterable) =
+        lastFmService.retrieveChartTopArtist(parameterable.toApiParam()).await()
+
+    override suspend fun getChartTopTag(parameterable: Parameterable) =
+        lastFmService.retrieveChartTopTag(parameterable.toApiParam()).await()
+
+    override suspend fun getTagInfo(parameterable: Parameterable) =
+        lastFmService.retrieveTagInfo(parameterable.toApiParam()).await()
+
+    override suspend fun getTagTopAlbum(parameterable: Parameterable) =
+        lastFmService.retrieveTagTopAlbum(parameterable.toApiParam()).await()
+
+    override suspend fun getTagTopArtist(parameterable: Parameterable) =
+        lastFmService.retrieveTagTopArtist(parameterable.toApiParam()).await()
+
+    override suspend fun getTagTopTrack(parameterable: Parameterable) =
+        lastFmService.retrieveTagTopTrack(parameterable.toApiParam()).await()
 }

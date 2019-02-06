@@ -19,10 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.lastfm
+package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TrackInfoData
+import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 
-data class TrackSimilarModel(
-    val similarTracks: TopTrackInfoModel.TracksModel = TopTrackInfoModel.TracksModel()
-) : Model
+/**
+ * A transforming mapping between [TrackInfoData.TrackWithStreamableData] and [TrackInfoModel.TrackWithStreamableModel].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class TrackWithStreamableDMapper : Mapper<TrackInfoData.TrackWithStreamableData, TrackInfoModel.TrackWithStreamableModel> {
+    override fun toModelFrom(data: TrackInfoData.TrackWithStreamableData) = data.run {
+        TrackInfoModel.TrackWithStreamableModel(streamable.orEmpty())
+    }
+
+    override fun toDataFrom(model: TrackInfoModel.TrackWithStreamableModel) = model.run {
+        TrackInfoData.TrackWithStreamableData(streamable)
+    }
+}

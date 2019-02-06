@@ -25,6 +25,11 @@ import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 object CommonLastFmModel {
+    data class TopAlbumsModel(
+        val albums: List<AlbumInfoModel.AlbumWithArtistModel> = emptyList(),
+        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
+    ) : Model
+
     data class TagsModel(
         val tags: List<TagInfoModel.TagModel> = emptyList(),
         val attr: AttrModel = AttrModel()

@@ -34,12 +34,7 @@ data class AlbumInfoModel(
 
     data class AlbumWithArtistModel(
         val artist: ArtistInfoModel.ArtistModel = ArtistInfoModel.ArtistModel(),
-        val playCount: String = DEFAULT_STR
-    ) : BaseAlbumModel(), Model
-
-    data class AlbumWithPlaycountModel(
-        val artist: ArtistInfoModel.ArtistModel = ArtistInfoModel.ArtistModel(),
-        val playCount: Int = 0,
+        val playCount: String = DEFAULT_STR,
         val index: Int = 0
     ) : BaseAlbumModel(), Model
 

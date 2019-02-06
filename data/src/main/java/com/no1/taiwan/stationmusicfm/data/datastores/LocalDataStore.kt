@@ -31,6 +31,7 @@ import com.tencent.mmkv.MMKV
 class LocalDataStore(
     private val mmkv: MMKV
 ) : DataStore {
+    //region UnsupportedOperationException
     override suspend fun getMusicRanking(parameterable: Parameterable) = throw UnsupportedOperationException()
 
     override suspend fun getMusic(parameterable: Parameterable) = throw UnsupportedOperationException()
@@ -38,4 +39,33 @@ class LocalDataStore(
     override suspend fun getHotPlaylist(parameterable: Parameterable) = throw UnsupportedOperationException()
 
     override suspend fun getSongList(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getAlbumInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getArtistInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getArtistTopAlbum(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getArtistTopTrack(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getSimilarArtistInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getTrackInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getSimilarTrackInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getChartTopTrack(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getChartTopArtist(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getChartTopTag(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getTagInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getTagTopAlbum(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getTagTopArtist(parameterable: Parameterable) = throw UnsupportedOperationException()
+
+    override suspend fun getTagTopTrack(parameterable: Parameterable) = throw UnsupportedOperationException()
+    //endregion
 }

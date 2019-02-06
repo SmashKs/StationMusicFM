@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers
+package com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank
 
 import com.no1.taiwan.stationmusicfm.data.data.MusicDataMap
 import com.no1.taiwan.stationmusicfm.data.data.SongDataMap

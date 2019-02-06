@@ -23,11 +23,7 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 
-data class ArtistTopTrackInfoModel(
-    val topTracks: TracksModel = TracksModel()
-) : Model {
-    data class TracksModel(
-        val tracks: List<TrackInfoModel.TrackWithStreamableStringModel> = emptyList(),
-        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
-    ) : Model
-}
+data class ArtistsModel(
+    val artists: List<ArtistInfoModel.ArtistModel> = emptyList(),
+    val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
+) : Model
