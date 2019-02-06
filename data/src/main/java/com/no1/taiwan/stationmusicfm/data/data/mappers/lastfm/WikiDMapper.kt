@@ -19,10 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.lastfm
+package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
+import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
-data class TagTopTrackInfoModel(
-    val tracks: TopTrackInfoModel.TracksModel = TopTrackInfoModel.TracksModel()
-) : Model
+/**
+ * A transforming mapping between [CommonLastFmData.WikiData] and [CommonLastFmModel.WikiModel].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class WikiDMapper : Mapper<CommonLastFmData.WikiData, CommonLastFmModel.WikiModel> {
+    override fun toModelFrom(data: CommonLastFmData.WikiData) = data.run {
+        CommonLastFmModel.WikiModel(published.orEmpty(), summary.orEmpty(), content.orEmpty())
+    }
+
+    override fun toDataFrom(model: CommonLastFmModel.WikiModel) = model.run {
+        CommonLastFmData.WikiData(published, summary, content)
+    }
+}

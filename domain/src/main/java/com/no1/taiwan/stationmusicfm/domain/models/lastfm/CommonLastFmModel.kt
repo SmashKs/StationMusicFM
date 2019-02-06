@@ -22,36 +22,37 @@
 package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 object CommonLastFmModel {
     data class TagsModel(
-        val tags: List<TagInfoModel.TagModel>?,
-        val attr: AttrModel?
+        val tags: List<TagInfoModel.TagModel> = emptyList(),
+        val attr: AttrModel = AttrModel()
     ) : Model
 
     data class ImageModel(
-        val text: String?,
-        val size: String?
+        val text: String = DEFAULT_STR,
+        val size: String = DEFAULT_STR
     ) : Model
 
     data class StreamableModel(
-        val text: String?,
-        val fulltrack: String?
+        val text: String = DEFAULT_STR,
+        val fulltrack: String = DEFAULT_STR
     ) : Model
 
     data class WikiModel(
-        val published: String?,
-        val summary: String?,
-        val content: String?
+        val published: String = DEFAULT_STR,
+        val summary: String = DEFAULT_STR,
+        val content: String = DEFAULT_STR
     ) : Model
 
     data class AttrModel(
-        val artist: String?,
-        val totalPages: String?,
-        val total: String?,
-        val rank: String?,
-        val position: String?,
-        val perPage: String?,
-        val page: String?
+        val artist: String = DEFAULT_STR,
+        val totalPages: String = DEFAULT_STR,
+        val total: String = DEFAULT_STR,
+        val rank: String = DEFAULT_STR,
+        val position: String = DEFAULT_STR,
+        val perPage: String = DEFAULT_STR,
+        val page: String = DEFAULT_STR
     ) : Model
 }

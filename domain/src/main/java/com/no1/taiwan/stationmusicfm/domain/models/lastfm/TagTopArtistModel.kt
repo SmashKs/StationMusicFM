@@ -24,5 +24,5 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 
 data class TagTopArtistModel(
-    val topArtists: TopArtistInfoModel.ArtistsModel
+    val topArtists: TopArtistInfoModel.ArtistsModel = TopArtistInfoModel.ArtistsModel()
 ) : Model

@@ -19,10 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.lastfm
+package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 
-data class TagTopTrackInfoModel(
-    val tracks: TopTrackInfoModel.TracksModel = TopTrackInfoModel.TracksModel()
-) : Model
+/**
+ * A transforming mapping between [ArtistInfoData.StatsData] and [ArtistInfoModel.StatsModel].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class StatsDMapper : Mapper<ArtistInfoData.StatsData, ArtistInfoModel.StatsModel> {
+    override fun toModelFrom(data: ArtistInfoData.StatsData) = data.run {
+        ArtistInfoModel.StatsModel(listeners.orEmpty(), playCount.orEmpty())
+    }
+
+    override fun toDataFrom(model: ArtistInfoModel.StatsModel) = model.run {
+        ArtistInfoData.StatsData(listeners, playCount)
+    }
+}

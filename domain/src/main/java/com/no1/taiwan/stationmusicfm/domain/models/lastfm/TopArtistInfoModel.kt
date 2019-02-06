@@ -27,7 +27,7 @@ data class TopArtistInfoModel(
     val artists: ArtistsModel
 ) : Model {
     data class ArtistsModel(
-        val artists: List<ArtistInfoModel.ArtistModel>,
-        val attr: CommonLastFmModel.AttrModel?
+        val artists: List<ArtistInfoModel.ArtistModel> = emptyList(),
+        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
     ) : Model
 }

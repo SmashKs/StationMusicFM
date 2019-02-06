@@ -27,7 +27,7 @@ data class TopTrackInfoModel(
     val track: TracksModel
 ) : Model {
     data class TracksModel(
-        val tracks: List<TrackInfoModel.TrackModel>,
-        val attr: CommonLastFmModel.AttrModel?
+        val tracks: List<TrackInfoModel.TrackModel> = emptyList(),
+        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
     ) : Model
 }

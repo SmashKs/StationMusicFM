@@ -22,33 +22,34 @@
 package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 data class TrackInfoModel(
-    val track: TrackModel?
+    val track: TrackModel
 ) : Model {
     data class TrackModel(
-        val streamable: CommonLastFmModel.StreamableModel?
+        val streamable: CommonLastFmModel.StreamableModel = CommonLastFmModel.StreamableModel()
     ) : BaseTrackModel(), Model
 
     data class TrackWithStreamableStringModel(
-        val streamable: String?
+        val streamable: String = DEFAULT_STR
     ) : BaseTrackModel(), Model
 
     open class BaseTrackModel(
-        val album: AlbumInfoModel.AlbumModel? = null,
-        val attr: CommonLastFmModel.AttrModel? = null,
-        val artist: ArtistInfoModel.ArtistModel? = null,
-        val duration: String? = null,
-        val images: List<CommonLastFmModel.ImageModel>? = null,
-        val listeners: String? = null,
-        val match: Double? = null,
-        val mbid: String? = null,
-        val name: String? = null,
-        val playcount: String? = null,
-        val topTag: CommonLastFmModel.TagsModel? = null,
-        val url: String? = null,
-        val realUrl: String? = null,
-        val wiki: CommonLastFmModel.WikiModel? = null
+        var album: AlbumInfoModel.AlbumModel = AlbumInfoModel.AlbumModel(),
+        var attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel(),
+        var artist: ArtistInfoModel.ArtistModel = ArtistInfoModel.ArtistModel(),
+        var duration: String = DEFAULT_STR,
+        var images: List<CommonLastFmModel.ImageModel> = emptyList(),
+        var listeners: String = DEFAULT_STR,
+        var match: Double = .0,
+        var mbid: String = DEFAULT_STR,
+        var name: String = DEFAULT_STR,
+        var playcount: String = DEFAULT_STR,
+        var topTags: List<TagInfoModel.TagModel> = emptyList(),
+        var url: String = DEFAULT_STR,
+        var realUrl: String = DEFAULT_STR,
+        var wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
     ) : Model {
         override fun toString() =
             """
@@ -62,7 +63,7 @@ match: $match
 mbid: $mbid
 name: $name
 playcount: $playcount
-topTag: $topTag
+topTags: $topTags
 url: $url
 realUrl: $realUrl
 wiki: $wiki

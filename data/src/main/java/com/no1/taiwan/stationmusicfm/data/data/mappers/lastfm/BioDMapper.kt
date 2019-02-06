@@ -19,19 +19,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.lastfm
+package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
-import com.google.gson.annotations.SerializedName
-import com.no1.taiwan.stationmusicfm.data.data.Data
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 
-data class ArtistTopAlbumInfoData(
-    @SerializedName("topalbums")
-    val topAlbums: TopAlbumsData
-) : Data {
-    data class TopAlbumsData(
-        @SerializedName("album")
-        val albums: List<AlbumInfoData.AlbumWithPlaycountData>,
-        @SerializedName("@attr")
-        val attr: CommonLastFmData.AttrData?
-    ) : Data
+/**
+ * A transforming mapping between [ArtistInfoData.BioData] and [ArtistInfoModel.BioModel].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class BioDMapper(
+    private val linkMapper: LinkDMapper
+) : Mapper<ArtistInfoData.BioData, ArtistInfoModel.BioModel> {
+    override fun toModelFrom(data: ArtistInfoData.BioData) = data.run {
+        ArtistInfoModel.BioModel(links?.link?.let(linkMapper::toModelFrom) ?: ArtistInfoModel.LinkModel(),
+                                 published.orEmpty(),
+                                 summary.orEmpty(),
+                                 content.orEmpty())
+    }
+
+    override fun toDataFrom(model: ArtistInfoModel.BioModel) = model.run {
+        ArtistInfoData.BioData(ArtistInfoData.LinksData(linkMapper.toDataFrom(link)), published, summary, content)
+    }
 }

@@ -23,50 +23,41 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
-import java.awt.Image
 
 data class ArtistInfoModel(
-    val artist: ArtistModel?
+    val artist: ArtistModel = ArtistModel()
 ) : Model {
     data class ArtistModel(
-        val name: String? = DEFAULT_STR,
-        val mbid: String? = DEFAULT_STR,
-        val match: String? = DEFAULT_STR,
-        val url: String? = DEFAULT_STR,
-        val images: List<Image>? = emptyList(),
-        val streamable: String? = DEFAULT_STR,
-        val listeners: String? = DEFAULT_STR,
-        val onTour: String? = DEFAULT_STR,
-        val playCount: String? = DEFAULT_STR,
-        val stats: StatsModel? = null,
-        val similar: SimilarModel? = null,
-        val tags: CommonLastFmModel.TagsModel? = null,
-        val bio: BioModel? = null
+        val name: String = DEFAULT_STR,
+        val mbid: String = DEFAULT_STR,
+        val match: String = DEFAULT_STR,
+        val url: String = DEFAULT_STR,
+        val images: List<CommonLastFmModel.ImageModel> = emptyList(),
+        val streamable: String = DEFAULT_STR,
+        val listeners: String = DEFAULT_STR,
+        val onTour: String = DEFAULT_STR,
+        val playCount: String = DEFAULT_STR,
+        val stats: StatsModel = StatsModel(),
+        val similars: List<ArtistModel> = emptyList(),
+        val tags: List<TagInfoModel.TagModel> = emptyList(),
+        val bio: BioModel = BioModel()
     ) : Model
 
     data class BioModel(
-        val links: LinksModel?,
-        val published: String?,
-        val summary: String?,
-        val content: String?
-    ) : Model
-
-    data class LinksModel(
-        val link: LinkModel?
+        val link: LinkModel = LinkModel(),
+        val published: String = DEFAULT_STR,
+        val summary: String = DEFAULT_STR,
+        val content: String = DEFAULT_STR
     ) : Model
 
     data class LinkModel(
-        val text: String?,
-        val rel: String?,
-        val href: String?
+        val text: String = DEFAULT_STR,
+        val rel: String = DEFAULT_STR,
+        val href: String = DEFAULT_STR
     ) : Model
 
     data class StatsModel(
-        val listeners: String?,
-        val playCount: String?
-    ) : Model
-
-    data class SimilarModel(
-        val artists: List<ArtistModel>?
+        val listeners: String = DEFAULT_STR,
+        val playCount: String = DEFAULT_STR
     ) : Model
 }

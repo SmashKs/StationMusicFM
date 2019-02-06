@@ -24,5 +24,5 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 
 data class TrackSimilarModel(
-    val similarTracks: TopTrackInfoModel.TracksModel
+    val similarTracks: TopTrackInfoModel.TracksModel = TopTrackInfoModel.TracksModel()
 ) : Model

@@ -22,15 +22,16 @@
 package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 data class TagInfoModel(
-    val tag: TagModel
+    val tag: TagModel = TagModel()
 ) : Model {
     data class TagModel(
-        val name: String?,
-        val total: Int?,
-        val reach: Int?,
-        val url: String?,
-        val wiki: CommonLastFmModel.WikiModel?
+        val name: String = DEFAULT_STR,
+        val total: Int = 0,
+        val reach: Int = 0,
+        val url: String = DEFAULT_STR,
+        val wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
     ) : Model
 }

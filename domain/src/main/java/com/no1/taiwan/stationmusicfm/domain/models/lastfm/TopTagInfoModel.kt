@@ -24,5 +24,5 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 
 data class TopTagInfoModel(
-    val tag: CommonLastFmModel.TagsModel
+    val tag: CommonLastFmModel.TagsModel = CommonLastFmModel.TagsModel()
 ) : Model

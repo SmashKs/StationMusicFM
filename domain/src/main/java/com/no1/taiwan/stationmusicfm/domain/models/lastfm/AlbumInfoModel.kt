@@ -22,38 +22,37 @@
 package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.Model
-import org.w3c.dom.Attr
-import java.awt.Image
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 data class AlbumInfoModel(
-    val album: AlbumModel?
+    val album: AlbumModel = AlbumModel()
 ) : Model {
     data class AlbumModel(
-        val artist: String?,
-        val playCount: String? = null
+        val artist: String = DEFAULT_STR,
+        val playCount: String = DEFAULT_STR
     ) : BaseAlbumModel(), Model
 
     data class AlbumWithArtistModel(
-        val artist: ArtistInfoModel.ArtistModel?,
-        val playCount: String? = null
+        val artist: ArtistInfoModel.ArtistModel = ArtistInfoModel.ArtistModel(),
+        val playCount: String = DEFAULT_STR
     ) : BaseAlbumModel(), Model
 
     data class AlbumWithPlaycountModel(
-        val artist: ArtistInfoModel.ArtistModel?,
-        val playCount: Int?,
-        val index: Int = -1
+        val artist: ArtistInfoModel.ArtistModel = ArtistInfoModel.ArtistModel(),
+        val playCount: Int = 0,
+        val index: Int = 0
     ) : BaseAlbumModel(), Model
 
     open class BaseAlbumModel(
-        val attr: Attr? = null,
-        val images: List<Image>? = null,
-        val listeners: String? = null,
-        val mbid: String? = null,
-        val name: String? = null,
-        val tags: CommonLastFmModel.TagsModel? = null,
-        val title: String? = null,
-        val track: TopTrackInfoModel.TracksModel? = null,
-        val url: String? = null,
-        val wiki: CommonLastFmModel.WikiModel? = null
+        var attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel(),
+        var images: List<CommonLastFmModel.ImageModel> = emptyList(),
+        var listeners: String = DEFAULT_STR,
+        var mbid: String = DEFAULT_STR,
+        var name: String = DEFAULT_STR,
+        var tags: List<TagInfoModel.TagModel> = emptyList(),
+        var title: String = DEFAULT_STR,
+        var tracks: List<TrackInfoModel.TrackModel> = emptyList(),
+        var url: String = DEFAULT_STR,
+        var wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
     ) : Model
 }

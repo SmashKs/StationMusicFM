@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.lastfm
 
-import android.media.Image
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
@@ -35,7 +34,7 @@ data class ArtistInfoData(
         val match: String? = DEFAULT_STR,
         val url: String? = DEFAULT_STR,
         @SerializedName("image")
-        val images: List<Image>? = emptyList(),
+        val images: List<CommonLastFmData.ImageData>? = emptyList(),
         val streamable: String? = DEFAULT_STR,
         val listeners: String? = DEFAULT_STR,
         @SerializedName("ontour")
