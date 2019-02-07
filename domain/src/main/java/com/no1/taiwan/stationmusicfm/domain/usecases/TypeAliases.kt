@@ -22,9 +22,28 @@
 package com.no1.taiwan.stationmusicfm.domain.usecases
 
 import com.no1.taiwan.stationmusicfm.domain.DeferredUsecase
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopAlbumRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchChartTopArtistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchChartTopTagRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchChartTopTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchSimilarArtistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchSimilarTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopAlbumRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopArtistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTrackRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
@@ -39,3 +58,33 @@ typealias FetchRankMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchR
 typealias FetchSongListCase = DeferredUsecase<CommonMusicModel.PlayListModel, FetchSongListReq>
 typealias FetchMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchMusicReq>
 typealias FetchHotListCase = DeferredUsecase<HotPlaylistModel.HotListModel, FetchHotListReq>
+
+typealias FetchAlbumReq = FetchAlbumRespCase.Request
+typealias FetchArtistReq = FetchArtistRespCase.Request
+typealias FetchArtistTopAlbumReq = FetchArtistTopAlbumRespCase.Request
+typealias FetchArtistTopTrackReq = FetchArtistTopTrackRespCase.Request
+typealias FetchChartTopArtistReq = FetchChartTopArtistRespCase.Request
+typealias FetchChartTopTagReq = FetchChartTopTagRespCase.Request
+typealias FetchChartTopTrackReq = FetchChartTopTrackRespCase.Request
+typealias FetchSimilarArtistReq = FetchSimilarArtistRespCase.Request
+typealias FetchSimilarTrackReq = FetchSimilarTrackRespCase.Request
+typealias FetchTagReq = FetchTagRespCase.Request
+typealias FetchTagTopAlbumReq = FetchTagTopAlbumRespCase.Request
+typealias FetchTagTopArtistReq = FetchTagTopArtistRespCase.Request
+typealias FetchTagTopTrackReq = FetchTagTopTrackRespCase.Request
+typealias FetchTrackReq = FetchTrackRespCase.Request
+
+typealias FetchAlbumCase = DeferredUsecase<AlbumInfoModel.AlbumModel, FetchAlbumReq>
+typealias FetchArtistCase = DeferredUsecase<ArtistInfoModel.ArtistModel, FetchArtistReq>
+typealias FetchArtistTopAlbumCase = DeferredUsecase<CommonLastFmModel.TopAlbumsModel, FetchArtistTopAlbumReq>
+typealias FetchArtistTopTrackCase = DeferredUsecase<TrackInfoModel.TracksWithStreamableModel, FetchArtistTopTrackReq>
+typealias FetchChartTopArtistCase = DeferredUsecase<ArtistInfoModel.ArtistsModel, FetchChartTopArtistReq>
+typealias FetchChartTopTagCase = DeferredUsecase<CommonLastFmModel.TagsModel, FetchChartTopTagReq>
+typealias FetchChartTopTrackCase = DeferredUsecase<TrackInfoModel.TracksModel, FetchChartTopTrackReq>
+typealias FetchSimilarArtistCase = DeferredUsecase<ArtistInfoModel.ArtistsModel, FetchSimilarArtistReq>
+typealias FetchSimilarTrackCase = DeferredUsecase<TrackInfoModel.TracksModel, FetchSimilarTrackReq>
+typealias FetchTagCase = DeferredUsecase<TagInfoModel.TagModel, FetchTagReq>
+typealias FetchTagTopAlbumCase = DeferredUsecase<CommonLastFmModel.TopAlbumsModel, FetchTagTopAlbumReq>
+typealias FetchTagTopArtistCase = DeferredUsecase<ArtistInfoModel.ArtistsModel, FetchTagTopArtistReq>
+typealias FetchTagTopTrackCase = DeferredUsecase<TrackInfoModel.TracksModel, FetchTagTopTrackReq>
+typealias FetchTrackCase = DeferredUsecase<TrackInfoModel.TrackModel, FetchTrackReq>
