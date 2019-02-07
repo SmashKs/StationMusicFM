@@ -24,40 +24,33 @@ package com.no1.taiwan.stationmusicfm.entities.lastfm
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class ArtistInfoEntity(
-    val artist: ArtistEntity = ArtistEntity()
-) : Entity {
-    data class ArtistEntity(
-        val name: String = DEFAULT_STR,
-        val mbid: String = DEFAULT_STR,
-        val match: String = DEFAULT_STR,
-        val url: String = DEFAULT_STR,
-        val images: List<CommonLastFmEntity.ImageEntity> = emptyList(),
-        val streamable: String = DEFAULT_STR,
-        val listeners: String = DEFAULT_STR,
-        val onTour: String = DEFAULT_STR,
-        val playCount: String = DEFAULT_STR,
-        val stats: StatsEntity = StatsEntity(),
-        val similars: List<ArtistEntity> = emptyList(),
-        val tags: List<TagInfoEntity.TagEntity> = emptyList(),
-        val bio: BioEntity = BioEntity()
-    ) : Entity
-
-    data class BioEntity(
-        val link: LinkEntity = LinkEntity(),
-        val published: String = DEFAULT_STR,
-        val summary: String = DEFAULT_STR,
-        val content: String = DEFAULT_STR
-    ) : Entity
-
-    data class LinkEntity(
-        val text: String = DEFAULT_STR,
-        val rel: String = DEFAULT_STR,
-        val href: String = DEFAULT_STR
-    ) : Entity
-
-    data class StatsEntity(
-        val listeners: String = DEFAULT_STR,
+object AlbumInfo {
+    data class AlbumEntity(
+        val artist: String = DEFAULT_STR,
         val playCount: String = DEFAULT_STR
+    ) : BaseAlbumEntity(), Entity
+
+    data class TopAlbumsEntity(
+        val albums: List<AlbumInfo.AlbumWithArtistEntity> = emptyList(),
+        val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
+    ) : Entity
+
+    data class AlbumWithArtistEntity(
+        val artist: ArtistInfo.ArtistEntity = ArtistInfo.ArtistEntity(),
+        val playCount: String = DEFAULT_STR,
+        val index: Int = 0
+    ) : BaseAlbumEntity(), Entity
+
+    open class BaseAlbumEntity(
+        var attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity(),
+        var images: List<CommonLastFmEntity.ImageEntity> = emptyList(),
+        var listeners: String = DEFAULT_STR,
+        var mbid: String = DEFAULT_STR,
+        var name: String = DEFAULT_STR,
+        var tags: List<TagInfo.TagEntity> = emptyList(),
+        var title: String = DEFAULT_STR,
+        var tracks: List<TrackInfoEntity.TrackEntity> = emptyList(),
+        var url: String = DEFAULT_STR,
+        var wiki: CommonLastFmEntity.WikiEntity = CommonLastFmEntity.WikiEntity()
     ) : Entity
 }

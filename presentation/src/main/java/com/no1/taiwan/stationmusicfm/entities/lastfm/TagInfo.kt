@@ -19,13 +19,23 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.lastfm
+package com.no1.taiwan.stationmusicfm.entities.lastfm
 
 import com.no1.taiwan.stationmusicfm.entities.Entity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class TracksWithStreamableEntity(
-    val tracks: List<TrackInfoEntity.TrackWithStreamableEntity> = emptyList(),
-    val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
-) : Entity
+object TagInfo {
+    data class TagEntity(
+        val name: String = DEFAULT_STR,
+        val total: Int = 0,
+        val reach: Int = 0,
+        val url: String = DEFAULT_STR,
+        val wiki: CommonLastFmEntity.WikiEntity = CommonLastFmEntity.WikiEntity()
+    ) : Entity
+
+    data class TagsEntity(
+        val tags: List<TagInfo.TagEntity> = emptyList(),
+        val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
+    ) : Entity
+
+}

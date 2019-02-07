@@ -24,21 +24,29 @@ package com.no1.taiwan.stationmusicfm.entities.lastfm
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class TrackInfoEntity(
-    val track: TrackEntity
-) : Entity {
+object TrackInfoEntity {
     data class TrackEntity(
         val streamable: CommonLastFmEntity.StreamableEntity = CommonLastFmEntity.StreamableEntity()
     ) : BaseTrackEntity(), Entity
+
+    data class TracksEntity(
+        val tracks: List<TrackInfoEntity.TrackEntity> = emptyList(),
+        val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
+    ) : Entity
+
+    data class TracksWithStreamableEntity(
+        val tracks: List<TrackInfoEntity.TrackWithStreamableEntity> = emptyList(),
+        val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
+    ) : Entity
 
     data class TrackWithStreamableEntity(
         val streamable: String = DEFAULT_STR
     ) : BaseTrackEntity(), Entity
 
     open class BaseTrackEntity(
-        var album: AlbumInfoEntity.AlbumEntity = AlbumInfoEntity.AlbumEntity(),
+        var album: AlbumInfo.AlbumEntity = AlbumInfo.AlbumEntity(),
         var attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity(),
-        var artist: ArtistInfoEntity.ArtistEntity = ArtistInfoEntity.ArtistEntity(),
+        var artist: ArtistInfo.ArtistEntity = ArtistInfo.ArtistEntity(),
         var duration: String = DEFAULT_STR,
         var images: List<CommonLastFmEntity.ImageEntity> = emptyList(),
         var listeners: String = DEFAULT_STR,
@@ -46,7 +54,7 @@ data class TrackInfoEntity(
         var mbid: String = DEFAULT_STR,
         var name: String = DEFAULT_STR,
         var playcount: String = DEFAULT_STR,
-        var topTags: List<TagInfoEntity.TagEntity> = emptyList(),
+        var topTags: List<TagInfo.TagEntity> = emptyList(),
         var url: String = DEFAULT_STR,
         var realUrl: String = DEFAULT_STR,
         var wiki: CommonLastFmEntity.WikiEntity = CommonLastFmEntity.WikiEntity()

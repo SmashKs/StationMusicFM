@@ -25,16 +25,6 @@ import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 object CommonLastFmEntity {
-    data class TopAlbumsEntity(
-        val albums: List<AlbumInfoEntity.AlbumWithArtistEntity> = emptyList(),
-        val attr: AttrEntity = AttrEntity()
-    ) : Entity
-
-    data class TagsEntity(
-        val tags: List<TagInfoEntity.TagEntity> = emptyList(),
-        val attr: AttrEntity = AttrEntity()
-    ) : Entity
-
     data class ImageEntity(
         val text: String = DEFAULT_STR,
         val size: String = DEFAULT_STR
