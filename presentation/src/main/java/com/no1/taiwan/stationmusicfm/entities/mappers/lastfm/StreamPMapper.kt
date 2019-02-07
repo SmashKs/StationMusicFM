@@ -19,23 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.lastfm
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.entities.Entity
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
-object TagInfo {
-    data class TagEntity(
-        val name: String = DEFAULT_STR,
-        val total: Int = 0,
-        val reach: Int = 0,
-        val url: String = DEFAULT_STR,
-        val wiki: CommonLastFmEntity.WikiEntity = CommonLastFmEntity.WikiEntity()
-    ) : Entity
+/**
+ * A transforming mapping between [CommonLastFmModel.StreamableModel] and [CommonLastFmEntity.StreamableEntity].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class StreamPMapper : Mapper<CommonLastFmModel.StreamableModel, CommonLastFmEntity.StreamableEntity> {
+    override fun toEntityFrom(model: CommonLastFmModel.StreamableModel) = model.run {
+        CommonLastFmEntity.StreamableEntity(text, fulltrack)
+    }
 
-    data class TagsEntity(
-        val tags: List<TagInfo.TagEntity> = emptyList(),
-        val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
-    ) : Entity
-
+    override fun toModelFrom(entity: CommonLastFmEntity.StreamableEntity) = entity.run {
+        CommonLastFmModel.StreamableModel(text, fulltrack)
+    }
 }

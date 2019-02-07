@@ -88,23 +88,16 @@ object UtilModule {
         bind<DataMapperEntry>().inSet() with singleton { RankChartDMapper::class.java to RankChartDMapper() }
         bind<DataMapperEntry>().inSet() with singleton { MvDMapper::class.java to MvDMapper() }
         bind<DataMapperEntry>().inSet() with singleton {
-            SongDMapper::class.java to SongDMapper(
-                MvDMapper())
+            SongDMapper::class.java to SongDMapper(MvDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            MusicDMapper::class.java to MusicDMapper(
-                SongDMapper(MvDMapper()))
+            MusicDMapper::class.java to MusicDMapper(SongDMapper(MvDMapper()))
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            SongListDMapper::class.java to SongListDMapper(
-                SongDMapper(MvDMapper()),
-                UserDMapper())
+            SongListDMapper::class.java to SongListDMapper(SongDMapper(MvDMapper()), UserDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            HotListDMapper::class.java to HotListDMapper(
-                SongListDMapper(SongDMapper(
-                    MvDMapper()),
-                                UserDMapper()))
+            HotListDMapper::class.java to HotListDMapper(SongListDMapper(SongDMapper(MvDMapper()), UserDMapper()))
         }
     }
 
@@ -120,23 +113,16 @@ object UtilModule {
         bind<PreziMapperEntry>().inSet() with singleton { RankChartPMapper::class.java to RankChartPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { MvPMapper::class.java to MvPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton {
-            SongPMapper::class.java to SongPMapper(
-                MvPMapper())
+            SongPMapper::class.java to SongPMapper(MvPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            MusicPMapper::class.java to MusicPMapper(
-                SongPMapper(MvPMapper()))
+            MusicPMapper::class.java to MusicPMapper(SongPMapper(MvPMapper()))
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            SongListPMapper::class.java to SongListPMapper(
-                SongPMapper(MvPMapper()),
-                UserPMapper())
+            SongListPMapper::class.java to SongListPMapper(SongPMapper(MvPMapper()), UserPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            HotListPMapper::class.java to HotListPMapper(
-                SongListPMapper(SongPMapper(
-                    MvPMapper()),
-                                UserPMapper()))
+            HotListPMapper::class.java to HotListPMapper(SongListPMapper(SongPMapper(MvPMapper()), UserPMapper()))
         }
     }
 }

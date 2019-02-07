@@ -24,57 +24,33 @@ package com.no1.taiwan.stationmusicfm.entities.lastfm
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-object TrackInfoEntity {
-    data class TrackEntity(
-        val streamable: CommonLastFmEntity.StreamableEntity = CommonLastFmEntity.StreamableEntity()
-    ) : BaseTrackEntity(), Entity
+object AlbumInfoEntity {
+    data class AlbumEntity(
+        val artist: String = DEFAULT_STR,
+        val playCount: String = DEFAULT_STR
+    ) : BaseAlbumEntity(), Entity
 
-    data class TracksEntity(
-        val tracks: List<TrackInfoEntity.TrackEntity> = emptyList(),
+    data class TopAlbumsEntity(
+        val albums: List<AlbumInfoEntity.AlbumWithArtistEntity> = emptyList(),
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 
-    data class TracksWithStreamableEntity(
-        val tracks: List<TrackInfoEntity.TrackWithStreamableEntity> = emptyList(),
-        val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
-    ) : Entity
+    data class AlbumWithArtistEntity(
+        val artist: ArtistInfoEntity.ArtistEntity = ArtistInfoEntity.ArtistEntity(),
+        val playCount: String = DEFAULT_STR,
+        val index: Int = 0
+    ) : BaseAlbumEntity(), Entity
 
-    data class TrackWithStreamableEntity(
-        val streamable: String = DEFAULT_STR
-    ) : BaseTrackEntity(), Entity
-
-    open class BaseTrackEntity(
-        var album: AlbumInfoEntity.AlbumEntity = AlbumInfoEntity.AlbumEntity(),
+    open class BaseAlbumEntity(
         var attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity(),
-        var artist: ArtistInfoEntity.ArtistEntity = ArtistInfoEntity.ArtistEntity(),
-        var duration: String = DEFAULT_STR,
         var images: List<CommonLastFmEntity.ImageEntity> = emptyList(),
         var listeners: String = DEFAULT_STR,
-        var match: Double = .0,
         var mbid: String = DEFAULT_STR,
         var name: String = DEFAULT_STR,
-        var playcount: String = DEFAULT_STR,
-        var topTags: List<TagInfoEntity.TagEntity> = emptyList(),
+        var tags: List<TagInfoEntity.TagEntity> = emptyList(),
+        var title: String = DEFAULT_STR,
+        var tracks: List<TrackInfoEntity.TrackEntity> = emptyList(),
         var url: String = DEFAULT_STR,
-        var realUrl: String = DEFAULT_STR,
         var wiki: CommonLastFmEntity.WikiEntity = CommonLastFmEntity.WikiEntity()
-    ) : Entity {
-        override fun toString() =
-            """
-album: $album
-attr: $attr
-artist: $artist
-duration: $duration
-images: $images
-listeners: $listeners
-match: $match
-mbid: $mbid
-name: $name
-playcount: $playcount
-topTags: $topTags
-url: $url
-realUrl: $realUrl
-wiki: $wiki
-"""
-    }
+    ) : Entity
 }

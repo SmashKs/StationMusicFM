@@ -24,40 +24,43 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-object CommonLastFmModel {
-    data class TopAlbumsModel(
-        val albums: List<AlbumInfoModel.AlbumWithArtistModel> = emptyList(),
+object ArtistInfoModel {
+    data class ArtistModel(
+        val name: String = DEFAULT_STR,
+        val mbid: String = DEFAULT_STR,
+        val match: String = DEFAULT_STR,
+        val url: String = DEFAULT_STR,
+        val images: List<CommonLastFmModel.ImageModel> = emptyList(),
+        val streamable: String = DEFAULT_STR,
+        val listeners: String = DEFAULT_STR,
+        val onTour: String = DEFAULT_STR,
+        val playCount: String = DEFAULT_STR,
+        val stats: StatsModel = StatsModel(),
+        val similars: List<ArtistModel> = emptyList(),
+        val tags: List<TagInfoModel.TagModel> = emptyList(),
+        val bio: BioModel = BioModel()
+    ) : Model
+
+    data class ArtistsModel(
+        val artists: List<ArtistInfoModel.ArtistModel> = emptyList(),
         val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
     ) : Model
 
-    data class TagsModel(
-        val tags: List<TagInfoModel.TagModel> = emptyList(),
-        val attr: AttrModel = AttrModel()
-    ) : Model
-
-    data class ImageModel(
-        val text: String = DEFAULT_STR,
-        val size: String = DEFAULT_STR
-    ) : Model
-
-    data class StreamableModel(
-        val text: String = DEFAULT_STR,
-        val fulltrack: String = DEFAULT_STR
-    ) : Model
-
-    data class WikiModel(
+    data class BioModel(
+        val link: LinkModel = LinkModel(),
         val published: String = DEFAULT_STR,
         val summary: String = DEFAULT_STR,
         val content: String = DEFAULT_STR
     ) : Model
 
-    data class AttrModel(
-        val artist: String = DEFAULT_STR,
-        val totalPages: String = DEFAULT_STR,
-        val total: String = DEFAULT_STR,
-        val rank: String = DEFAULT_STR,
-        val position: String = DEFAULT_STR,
-        val perPage: String = DEFAULT_STR,
-        val page: String = DEFAULT_STR
+    data class LinkModel(
+        val text: String = DEFAULT_STR,
+        val rel: String = DEFAULT_STR,
+        val href: String = DEFAULT_STR
+    ) : Model
+
+    data class StatsModel(
+        val listeners: String = DEFAULT_STR,
+        val playCount: String = DEFAULT_STR
     ) : Model
 }

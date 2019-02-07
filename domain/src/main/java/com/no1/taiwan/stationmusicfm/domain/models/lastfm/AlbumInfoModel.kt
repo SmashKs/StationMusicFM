@@ -24,57 +24,28 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-object TrackInfo {
-    data class TrackModel(
-        val streamable: CommonLastFmModel.StreamableModel = CommonLastFmModel.StreamableModel()
-    ) : BaseTrackModel(), Model
+object AlbumInfoModel {
+    data class AlbumModel(
+        val artist: String = DEFAULT_STR,
+        val playCount: String = DEFAULT_STR
+    ) : BaseAlbumModel(), Model
 
-    data class TracksModel(
-        val tracks: List<TrackInfo.TrackModel> = emptyList(),
-        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
-    ) : Model
+    data class AlbumWithArtistModel(
+        val artist: ArtistInfoModel.ArtistModel = ArtistInfoModel.ArtistModel(),
+        val playCount: String = DEFAULT_STR,
+        val index: Int = 0
+    ) : BaseAlbumModel(), Model
 
-    data class TracksWithStreamableModel(
-        val tracks: List<TrackInfo.TrackWithStreamableModel> = emptyList(),
-        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
-    ) : Model
-
-    data class TrackWithStreamableModel(
-        val streamable: String = DEFAULT_STR
-    ) : BaseTrackModel(), Model
-
-    open class BaseTrackModel(
-        var album: AlbumInfo.AlbumModel = AlbumInfo.AlbumModel(),
+    open class BaseAlbumModel(
         var attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel(),
-        var artist: ArtistInfo.ArtistModel = ArtistInfo.ArtistModel(),
-        var duration: String = DEFAULT_STR,
         var images: List<CommonLastFmModel.ImageModel> = emptyList(),
         var listeners: String = DEFAULT_STR,
-        var match: Double = .0,
         var mbid: String = DEFAULT_STR,
         var name: String = DEFAULT_STR,
-        var playcount: String = DEFAULT_STR,
-        var topTags: List<TagInfo.TagModel> = emptyList(),
+        var tags: List<TagInfoModel.TagModel> = emptyList(),
+        var title: String = DEFAULT_STR,
+        var tracks: List<TrackInfoModel.TrackModel> = emptyList(),
         var url: String = DEFAULT_STR,
-        var realUrl: String = DEFAULT_STR,
         var wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
-    ) : Model {
-        override fun toString() =
-            """
-album: $album
-attr: $attr
-artist: $artist
-duration: $duration
-images: $images
-listeners: $listeners
-match: $match
-mbid: $mbid
-name: $name
-playcount: $playcount
-topTags: $topTags
-url: $url
-realUrl: $realUrl
-wiki: $wiki
-"""
-    }
+    ) : Model
 }

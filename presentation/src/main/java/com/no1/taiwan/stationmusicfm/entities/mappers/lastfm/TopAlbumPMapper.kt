@@ -19,22 +19,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
- * A transforming mapping between [ArtistInfoData.LinkData] and [ArtistInfoModel.LinkModel].
+ * A transforming mapping between [CommonLastFmModel.TopAlbumsModel] and [CommonLastFmEntity.TopAlbumsEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class LinkDMapper : Mapper<ArtistInfoData.LinkData, ArtistInfoModel.LinkModel> {
-    override fun toModelFrom(data: ArtistInfoData.LinkData) = data.run {
-        ArtistInfoModel.LinkModel(text.orEmpty(), rel.orEmpty(), href.orEmpty())
+class TopAlbumPMapper(
+    private val albumWithArtistMapper: AlbumWithArtistPMapper,
+    private val attrMapper: AttrPMapper
+) : Mapper<CommonLastFmModel.TopAlbumsModel, AlbumInfoEntity.TopAlbumsEntity> {
+    override fun toEntityFrom(model: CommonLastFmModel.TopAlbumsModel) = model.run {
+        AlbumInfoEntity.TopAlbumsEntity(albums.map(albumWithArtistMapper::toEntityFrom),
+                                        attr.let(attrMapper::toEntityFrom))
     }
 
-    override fun toDataFrom(model: ArtistInfoModel.LinkModel) = model.run {
-        ArtistInfoData.LinkData(text, rel, href)
+    override fun toModelFrom(entity: AlbumInfoEntity.TopAlbumsEntity) = entity.run {
+        CommonLastFmModel.TopAlbumsModel(albums.map(albumWithArtistMapper::toModelFrom), attrMapper.toModelFrom(attr))
     }
 }

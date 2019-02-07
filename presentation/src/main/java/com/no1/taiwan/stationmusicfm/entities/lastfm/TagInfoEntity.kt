@@ -24,43 +24,18 @@ package com.no1.taiwan.stationmusicfm.entities.lastfm
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-object ArtistInfo {
-    data class ArtistEntity(
+object TagInfoEntity {
+    data class TagEntity(
         val name: String = DEFAULT_STR,
-        val mbid: String = DEFAULT_STR,
-        val match: String = DEFAULT_STR,
+        val total: Int = 0,
+        val reach: Int = 0,
         val url: String = DEFAULT_STR,
-        val images: List<CommonLastFmEntity.ImageEntity> = emptyList(),
-        val streamable: String = DEFAULT_STR,
-        val listeners: String = DEFAULT_STR,
-        val onTour: String = DEFAULT_STR,
-        val playCount: String = DEFAULT_STR,
-        val stats: StatsEntity = StatsEntity(),
-        val similars: List<ArtistEntity> = emptyList(),
-        val tags: List<TagInfo.TagEntity> = emptyList(),
-        val bio: BioEntity = BioEntity()
+        val wiki: CommonLastFmEntity.WikiEntity = CommonLastFmEntity.WikiEntity()
     ) : Entity
 
-    data class ArtistsEntity(
-        val artists: List<ArtistEntity> = emptyList(),
+    data class TagsEntity(
+        val tags: List<TagInfoEntity.TagEntity> = emptyList(),
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 
-    data class BioEntity(
-        val link: LinkEntity = LinkEntity(),
-        val published: String = DEFAULT_STR,
-        val summary: String = DEFAULT_STR,
-        val content: String = DEFAULT_STR
-    ) : Entity
-
-    data class LinkEntity(
-        val text: String = DEFAULT_STR,
-        val rel: String = DEFAULT_STR,
-        val href: String = DEFAULT_STR
-    ) : Entity
-
-    data class StatsEntity(
-        val listeners: String = DEFAULT_STR,
-        val playCount: String = DEFAULT_STR
-    ) : Entity
 }

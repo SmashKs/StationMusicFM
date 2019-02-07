@@ -24,22 +24,22 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfo
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 
 /**
- * A transforming mapping between [TopTrackInfoData.TracksData] and [TrackInfo.TracksModel].
+ * A transforming mapping between [TopTrackInfoData.TracksData] and [TrackInfoModel.TracksModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class TracksDMapper(
     private val trackMapper: TrackDMapper,
     private val attrMapper: AttrDMapper
-) : Mapper<TopTrackInfoData.TracksData, TrackInfo.TracksModel> {
+) : Mapper<TopTrackInfoData.TracksData, TrackInfoModel.TracksModel> {
     override fun toModelFrom(data: TopTrackInfoData.TracksData) = data.run {
-        TrackInfo.TracksModel(tracks.map(trackMapper::toModelFrom),
-                              attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel())
+        TrackInfoModel.TracksModel(tracks.map(trackMapper::toModelFrom),
+                                   attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel())
     }
 
-    override fun toDataFrom(model: TrackInfo.TracksModel) = model.run {
+    override fun toDataFrom(model: TrackInfoModel.TracksModel) = model.run {
         TopTrackInfoData.TracksData(tracks.map(trackMapper::toDataFrom), attrMapper.toDataFrom(attr))
     }
 }

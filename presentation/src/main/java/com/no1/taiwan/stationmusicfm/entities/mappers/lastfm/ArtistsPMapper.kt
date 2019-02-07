@@ -19,22 +19,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
- * A transforming mapping between [ArtistInfoData.LinkData] and [ArtistInfoModel.LinkModel].
+ * A transforming mapping between [ArtistInfoModel.ArtistsModel] and [ArtistInfoEntity.ArtistsEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class LinkDMapper : Mapper<ArtistInfoData.LinkData, ArtistInfoModel.LinkModel> {
-    override fun toModelFrom(data: ArtistInfoData.LinkData) = data.run {
-        ArtistInfoModel.LinkModel(text.orEmpty(), rel.orEmpty(), href.orEmpty())
+class ArtistsPMapper(
+    private val artistMapper: ArtistPMapper,
+    private val attrMapper: AttrPMapper
+) : Mapper<ArtistInfoModel.ArtistsModel, ArtistInfoEntity.ArtistsEntity> {
+    override fun toEntityFrom(model: ArtistInfoModel.ArtistsModel) = model.run {
+        ArtistInfoEntity.ArtistsEntity(artists.map(artistMapper::toEntityFrom),
+                                       attr.let { attrMapper.toEntityFrom(it) })
     }
 
-    override fun toDataFrom(model: ArtistInfoModel.LinkModel) = model.run {
-        ArtistInfoData.LinkData(text, rel, href)
+    override fun toModelFrom(entity: ArtistInfoEntity.ArtistsEntity) = entity.run {
+        ArtistInfoModel.ArtistsModel(artists.map(artistMapper::toModelFrom),
+                                     attrMapper.toModelFrom(attr))
     }
 }

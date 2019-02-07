@@ -19,22 +19,28 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
- * A transforming mapping between [ArtistInfoData.LinkData] and [ArtistInfoModel.LinkModel].
+ * A transforming mapping between [TrackInfoModel.TracksWithStreamableModel]
+ * and [TrackInfoEntity.TracksWithStreamableEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class LinkDMapper : Mapper<ArtistInfoData.LinkData, ArtistInfoModel.LinkModel> {
-    override fun toModelFrom(data: ArtistInfoData.LinkData) = data.run {
-        ArtistInfoModel.LinkModel(text.orEmpty(), rel.orEmpty(), href.orEmpty())
+class TracksWithStreamablePMapper(
+    private val trackWithStreamableMapper: TrackWithStreamablePMapper,
+    private val attrMapper: AttrPMapper
+) : Mapper<TrackInfoModel.TracksWithStreamableModel, TrackInfoEntity.TracksWithStreamableEntity> {
+    override fun toEntityFrom(model: TrackInfoModel.TracksWithStreamableModel) = model.run {
+        TrackInfoEntity.TracksWithStreamableEntity(tracks.map(trackWithStreamableMapper::toEntityFrom),
+                                                   attr.let(attrMapper::toEntityFrom))
     }
 
-    override fun toDataFrom(model: ArtistInfoModel.LinkModel) = model.run {
-        ArtistInfoData.LinkData(text, rel, href)
+    override fun toModelFrom(entity: TrackInfoEntity.TracksWithStreamableEntity) = entity.run {
+        TrackInfoModel.TracksWithStreamableModel(tracks.map(trackWithStreamableMapper::toModelFrom),
+                                                 attrMapper.toModelFrom(attr))
     }
 }

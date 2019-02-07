@@ -19,22 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
- * A transforming mapping between [ArtistInfoData.LinkData] and [ArtistInfoModel.LinkModel].
+ * A transforming mapping between [CommonLastFmModel.TagsModel] and [TagInfoEntity.TagsEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class LinkDMapper : Mapper<ArtistInfoData.LinkData, ArtistInfoModel.LinkModel> {
-    override fun toModelFrom(data: ArtistInfoData.LinkData) = data.run {
-        ArtistInfoModel.LinkModel(text.orEmpty(), rel.orEmpty(), href.orEmpty())
+class TagsPMapper(
+    private val tagMapper: TagPMapper,
+    private val attrMapper: AttrPMapper
+) : Mapper<CommonLastFmModel.TagsModel, TagInfoEntity.TagsEntity> {
+    override fun toEntityFrom(model: CommonLastFmModel.TagsModel) = model.run {
+        TagInfoEntity.TagsEntity(tags.map(tagMapper::toEntityFrom),
+                                 attr.let(attrMapper::toEntityFrom))
     }
 
-    override fun toDataFrom(model: ArtistInfoModel.LinkModel) = model.run {
-        ArtistInfoData.LinkData(text, rel, href)
+    override fun toModelFrom(entity: TagInfoEntity.TagsEntity) = entity.run {
+        CommonLastFmModel.TagsModel(tags.map(tagMapper::toModelFrom), attrMapper.toModelFrom(attr))
     }
 }

@@ -23,23 +23,23 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopArtistInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfo
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
 /**
- * A transforming mapping between [TopArtistInfoData.ArtistsData] and [ArtistInfo.ArtistsModel].
+ * A transforming mapping between [TopArtistInfoData.ArtistsData] and [ArtistInfoModel.ArtistsModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class ArtistsDMapper(
     private val artistMapper: ArtistDMapper,
     private val attrMapper: AttrDMapper
-) : Mapper<TopArtistInfoData.ArtistsData, ArtistInfo.ArtistsModel> {
+) : Mapper<TopArtistInfoData.ArtistsData, ArtistInfoModel.ArtistsModel> {
     override fun toModelFrom(data: TopArtistInfoData.ArtistsData) = data.run {
-        ArtistInfo.ArtistsModel(artists.map(artistMapper::toModelFrom),
-                                attr?.let { attrMapper.toModelFrom(it) } ?: CommonLastFmModel.AttrModel())
+        ArtistInfoModel.ArtistsModel(artists.map(artistMapper::toModelFrom),
+                                     attr?.let { attrMapper.toModelFrom(it) } ?: CommonLastFmModel.AttrModel())
     }
 
-    override fun toDataFrom(model: ArtistInfo.ArtistsModel) = model.run {
+    override fun toDataFrom(model: ArtistInfoModel.ArtistsModel) = model.run {
         TopArtistInfoData.ArtistsData(artists.map(artistMapper::toDataFrom),
                                       attrMapper.toDataFrom(attr))
     }

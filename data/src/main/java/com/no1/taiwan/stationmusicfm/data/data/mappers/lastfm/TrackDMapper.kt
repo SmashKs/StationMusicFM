@@ -24,14 +24,14 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TrackInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfo
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfo
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfo
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_DOUBLE
 
 /**
- * A transforming mapping between [TrackInfoData.TrackData] and [TrackInfo.TrackModel].
+ * A transforming mapping between [TrackInfoData.TrackData] and [TrackInfoModel.TrackModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class TrackDMapper(
@@ -42,14 +42,14 @@ class TrackDMapper(
     private val streamMapper: StreamDMapper,
     private val tagMapper: TagDMapper,
     private val wikiMapper: WikiDMapper
-) : Mapper<TrackInfoData.TrackData, TrackInfo.TrackModel> {
-    override fun toModelFrom(data: TrackInfoData.TrackData): TrackInfo.TrackModel {
+) : Mapper<TrackInfoData.TrackData, TrackInfoModel.TrackModel> {
+    override fun toModelFrom(data: TrackInfoData.TrackData): TrackInfoModel.TrackModel {
         return data.run {
-            TrackInfo.TrackModel(streamable?.let(streamMapper::toModelFrom) ?: CommonLastFmModel.StreamableModel())
+            TrackInfoModel.TrackModel(streamable?.let(streamMapper::toModelFrom) ?: CommonLastFmModel.StreamableModel())
                 .apply {
-                    album = data.album?.let(albumMapper::toModelFrom) ?: AlbumInfo.AlbumModel()
+                    album = data.album?.let(albumMapper::toModelFrom) ?: AlbumInfoModel.AlbumModel()
                     attr = data.attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel()
-                    artist = data.artist?.let(artistMapper::toModelFrom) ?: ArtistInfo.ArtistModel()
+                    artist = data.artist?.let(artistMapper::toModelFrom) ?: ArtistInfoModel.ArtistModel()
                     duration = data.duration.orEmpty()
                     images = data.images?.map(imageMapper::toModelFrom).orEmpty()
                     listeners = data.listeners.orEmpty()
@@ -65,7 +65,7 @@ class TrackDMapper(
         }
     }
 
-    override fun toDataFrom(model: TrackInfo.TrackModel): TrackInfoData.TrackData {
+    override fun toDataFrom(model: TrackInfoModel.TrackModel): TrackInfoData.TrackData {
         return model.run {
             TrackInfoData.TrackData(streamMapper.toDataFrom(streamable)).apply {
                 album = model.album.let(albumMapper::toDataFrom)

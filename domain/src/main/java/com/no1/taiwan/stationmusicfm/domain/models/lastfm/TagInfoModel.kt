@@ -24,43 +24,12 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-object ArtistInfo {
-    data class ArtistModel(
+object TagInfoModel {
+    data class TagModel(
         val name: String = DEFAULT_STR,
-        val mbid: String = DEFAULT_STR,
-        val match: String = DEFAULT_STR,
+        val total: Int = 0,
+        val reach: Int = 0,
         val url: String = DEFAULT_STR,
-        val images: List<CommonLastFmModel.ImageModel> = emptyList(),
-        val streamable: String = DEFAULT_STR,
-        val listeners: String = DEFAULT_STR,
-        val onTour: String = DEFAULT_STR,
-        val playCount: String = DEFAULT_STR,
-        val stats: StatsModel = StatsModel(),
-        val similars: List<ArtistModel> = emptyList(),
-        val tags: List<TagInfo.TagModel> = emptyList(),
-        val bio: BioModel = BioModel()
-    ) : Model
-
-    data class ArtistsModel(
-        val artists: List<ArtistInfo.ArtistModel> = emptyList(),
-        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
-    ) : Model
-
-    data class BioModel(
-        val link: LinkModel = LinkModel(),
-        val published: String = DEFAULT_STR,
-        val summary: String = DEFAULT_STR,
-        val content: String = DEFAULT_STR
-    ) : Model
-
-    data class LinkModel(
-        val text: String = DEFAULT_STR,
-        val rel: String = DEFAULT_STR,
-        val href: String = DEFAULT_STR
-    ) : Model
-
-    data class StatsModel(
-        val listeners: String = DEFAULT_STR,
-        val playCount: String = DEFAULT_STR
+        val wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
     ) : Model
 }

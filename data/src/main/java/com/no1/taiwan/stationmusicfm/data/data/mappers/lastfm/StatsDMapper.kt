@@ -23,18 +23,18 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfo
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 
 /**
- * A transforming mapping between [ArtistInfoData.StatsData] and [ArtistInfo.StatsModel].
+ * A transforming mapping between [ArtistInfoData.StatsData] and [ArtistInfoModel.StatsModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class StatsDMapper : Mapper<ArtistInfoData.StatsData, ArtistInfo.StatsModel> {
+class StatsDMapper : Mapper<ArtistInfoData.StatsData, ArtistInfoModel.StatsModel> {
     override fun toModelFrom(data: ArtistInfoData.StatsData) = data.run {
-        ArtistInfo.StatsModel(listeners.orEmpty(), playCount.orEmpty())
+        ArtistInfoModel.StatsModel(listeners.orEmpty(), playCount.orEmpty())
     }
 
-    override fun toDataFrom(model: ArtistInfo.StatsModel) = model.run {
+    override fun toDataFrom(model: ArtistInfoModel.StatsModel) = model.run {
         ArtistInfoData.StatsData(listeners, playCount)
     }
 }

@@ -19,17 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.models.lastfm
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.domain.models.Model
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
-object TagInfo {
-    data class TagModel(
-        val name: String = DEFAULT_STR,
-        val total: Int = 0,
-        val reach: Int = 0,
-        val url: String = DEFAULT_STR,
-        val wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
-    ) : Model
+/**
+ * A transforming mapping between [TagInfoModel.TagModel] and [TagInfoEntity.TagEntity]. The different layers have
+ * their own data objects, the objects should transform and fit each layers.
+ */
+class TagPMapper(
+    private val wikiMapper: WikiPMapper
+) : Mapper<TagInfoModel.TagModel, TagInfoEntity.TagEntity> {
+    override fun toEntityFrom(model: TagInfoModel.TagModel) = model.run {
+        TagInfoEntity.TagEntity(name, total, reach, url, wiki.let(wikiMapper::toEntityFrom))
+    }
+
+    override fun toModelFrom(entity: TagInfoEntity.TagEntity) = entity.run {
+        TagInfoModel.TagModel(name, total, reach, url, wiki.let(wikiMapper::toModelFrom))
+    }
 }
