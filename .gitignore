@@ -63,3 +63,11 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+libs/
+src/androidTest/
+src/main/.DS_Store
+src/main/java/com/no1/taiwan/stationmusicfm/data/local/services/
+src/main/java/com/no1/taiwan/stationmusicfm/data/local/v1/
+src/main/java/com/no1/taiwan/stationmusicfm/data/remote/v1/
+src/main/res/
+src/test/
