@@ -41,8 +41,7 @@ class RemoteDataStore(
 ) : DataStore {
     private val lastFmToken by lazy { context.getString(R.string.lastfm_api_key) }
     private val lastFmAuth by lazy {
-        hashMapOf(Constants.LASTFM_QUERY_TOKEN to lastFmToken,
-                  Constants.LASTFM_QUERY_FORMAT to Constants.LASTFM_PARAM_FORMAT)
+        hashMapOf(Constants.LASTFM_QUERY_TOKEN to lastFmToken)
     }
 
     //region 🔽 Music Bank
@@ -88,7 +87,7 @@ class RemoteDataStore(
 
     override suspend fun getTrackInfo(parameterable: Parameterable) =
         lastFmService.retrieveTrackInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                           Constants.LASTFM_PARAM_TRACK_SEARCH)).await()
+                                                           Constants.LASTFM_PARAM_TRACK_INFO)).await()
 
     override suspend fun getSimilarTrackInfo(parameterable: Parameterable) =
         lastFmService.retrieveSimilarTrackInfo(combineLastFmQuery(parameterable.toApiParam(),

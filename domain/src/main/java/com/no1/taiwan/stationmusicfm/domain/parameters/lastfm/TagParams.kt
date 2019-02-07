@@ -19,20 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters
+package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 
-abstract class BaseParams : Parameterable {
+data class TagParams(
+    val tagName: String = DEFAULT_STR,
+    val language: String = DEFAULT_STR
+) : BaseParams() {
     companion object {
-        const val PARAM_NAME_FORMAT = "format"
-
-        private const val PARAM_RESPONSE_FORMAT = "json"
+        const val PARAM_NAME_TAG = "tag"
+        const val PARAM_NAME_LANG = "lang"
     }
 
-    open val format = PARAM_RESPONSE_FORMAT
-
-    override fun toApiParam() = hashMapOf(PARAM_NAME_FORMAT to format)
+    override fun toApiParam() = super.toApiParam().apply {
+        put(PARAM_NAME_TAG, tagName)
+        language.takeUnlessDefault { put(PARAM_NAME_LANG, it) }
+    }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
 }

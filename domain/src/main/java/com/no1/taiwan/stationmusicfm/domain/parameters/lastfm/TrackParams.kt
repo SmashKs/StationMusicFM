@@ -19,20 +19,32 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters
+package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
+import com.devrapid.kotlinshaver.toInt
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 
-abstract class BaseParams : Parameterable {
+data class TrackParams(
+    val trackName: String = DEFAULT_STR,
+    val artistName: String = DEFAULT_STR,
+    val userName: String = DEFAULT_STR,
+    val autocorrect: Boolean = true
+) : BaseWithPagingParams() {
     companion object {
-        const val PARAM_NAME_FORMAT = "format"
-
-        private const val PARAM_RESPONSE_FORMAT = "json"
+        const val PARAM_NAME_TRACK = "track"
+        const val PARAM_NAME_ARTIST = "artist"
+        const val PARAM_NAME_USER_NAME = "username"
+        const val PARAM_NAME_AUTOCORRECT = "autocorrect"
     }
 
-    open val format = PARAM_RESPONSE_FORMAT
-
-    override fun toApiParam() = hashMapOf(PARAM_NAME_FORMAT to format)
+    override fun toApiParam() = super.toApiParam().apply {
+        put(PARAM_NAME_TRACK, trackName)
+        artistName.takeUnlessDefault { put(PARAM_NAME_ARTIST, it) }
+        userName.takeUnlessDefault { put(PARAM_NAME_USER_NAME, it) }
+        put(PARAM_NAME_AUTOCORRECT, autocorrect.toInt().toString())
+    }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
 }

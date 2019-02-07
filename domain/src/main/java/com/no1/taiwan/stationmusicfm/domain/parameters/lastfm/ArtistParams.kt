@@ -19,20 +19,25 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters
+package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
+import com.devrapid.kotlinshaver.toInt
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-abstract class BaseParams : Parameterable {
+data class ArtistParams(
+    val artistName: String = DEFAULT_STR,
+    val autocorrect: Boolean = true  // TopAlbums, TopTracks, Similar
+) : BaseWithPagingParams() {
     companion object {
-        const val PARAM_NAME_FORMAT = "format"
-
-        private const val PARAM_RESPONSE_FORMAT = "json"
+        const val PARAM_NAME_ARTIST = "artist"
+        const val PARAM_NAME_AUTOCORRECT = "autocorrect"
     }
 
-    open val format = PARAM_RESPONSE_FORMAT
-
-    override fun toApiParam() = hashMapOf(PARAM_NAME_FORMAT to format)
+    override fun toApiParam() = super.toApiParam().apply {
+        put(PARAM_NAME_ARTIST, artistName)
+        put(PARAM_NAME_AUTOCORRECT, autocorrect.toInt().toString())
+    }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
 }

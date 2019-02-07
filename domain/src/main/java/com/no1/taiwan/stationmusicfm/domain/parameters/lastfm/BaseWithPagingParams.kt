@@ -19,20 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters
+package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
 
-abstract class BaseParams : Parameterable {
+open class BaseWithPagingParams : BaseParams() {
     companion object {
-        const val PARAM_NAME_FORMAT = "format"
+        const val PARAM_NAME_LIMIT = "limit"
+        const val PARAM_NAME_PAGE = "page"
 
-        private const val PARAM_RESPONSE_FORMAT = "json"
+        private const val PARAM_RESPONSE_PAGE = 30
     }
 
-    open val format = PARAM_RESPONSE_FORMAT
+    open var limit = PARAM_RESPONSE_PAGE
+    open var page = 0
 
-    override fun toApiParam() = hashMapOf(PARAM_NAME_FORMAT to format)
+    override fun toApiParam() = super.toApiParam().apply {
+        put(PARAM_NAME_LIMIT, limit.toString())
+        put(PARAM_NAME_PAGE, page.toString())
+    }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
 }

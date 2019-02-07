@@ -45,7 +45,7 @@ object RepositoryModule {
         // The necessary providers are from the service provider.
         import(ServiceModule.serviceProvider(context))
 
-        bind<DataStore>(REMOTE) with singleton { RemoteDataStore(instance(), instance()) }
+        bind<DataStore>(REMOTE) with singleton { RemoteDataStore(instance(), instance(), context) }
         bind<DataStore>(LOCAL) with singleton { LocalDataStore(instance()) }
         /** Mapper Pool for providing all data mappers */
         bind<DataMapperPool>() with singleton { instance<DataMapperEntries>().toMap() }

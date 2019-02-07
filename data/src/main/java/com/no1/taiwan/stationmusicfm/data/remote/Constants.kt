@@ -23,17 +23,14 @@ package com.no1.taiwan.stationmusicfm.data.remote
 
 object Constants {
     const val LASTFM_QUERY_TOKEN = "api_key"
-    const val LASTFM_QUERY_FORMAT = "format"
     const val LASTFM_QUERY_METHOD = "method"
-
-    const val LASTFM_PARAM_FORMAT = "json"
 
     const val LASTFM_PARAM_ALBUM_SEARCH = "album.search"
     const val LASTFM_PARAM_ARTIST_SEARCH = "artist.search"
     const val LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS = "artist.getTopAlbums"
     const val LASTFM_PARAM_ARTIST_GET_TOP_TRACKS = "artist.getTopTracks"
     const val LASTFM_PARAM_ARTIST_GET_SIMILAR = "artist.getSimilar"
-    const val LASTFM_PARAM_TRACK_SEARCH = "track.search"
+    const val LASTFM_PARAM_TRACK_INFO = "track.info"
     const val LASTFM_PARAM_TRACK_GET_SIMILAR = "track.getSimilar"
     const val LASTFM_PARAM_CHART_GET_TOP_TRACKS = "chart.getTopTracks"
     const val LASTFM_PARAM_CHART_GET_TOP_ARTISTS = "chart.getTopArtists"
