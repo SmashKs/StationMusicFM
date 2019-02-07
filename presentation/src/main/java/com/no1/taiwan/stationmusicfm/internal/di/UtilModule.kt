@@ -36,13 +36,13 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.RankChartDMappe
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.UserDMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.HotListPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.MusicPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.MvPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.RankChartPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.SongListPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.SongPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.UserPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.HotListPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MvPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.RankChartPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.SongListPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.SongPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.UserPMapper
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
@@ -119,15 +119,24 @@ object UtilModule {
         bind<PreziMapperEntry>().inSet() with singleton { UserPMapper::class.java to UserPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { RankChartPMapper::class.java to RankChartPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { MvPMapper::class.java to MvPMapper() }
-        bind<PreziMapperEntry>().inSet() with singleton { SongPMapper::class.java to SongPMapper(MvPMapper()) }
         bind<PreziMapperEntry>().inSet() with singleton {
-            MusicPMapper::class.java to MusicPMapper(SongPMapper(MvPMapper()))
+            SongPMapper::class.java to SongPMapper(
+                MvPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            SongListPMapper::class.java to SongListPMapper(SongPMapper(MvPMapper()), UserPMapper())
+            MusicPMapper::class.java to MusicPMapper(
+                SongPMapper(MvPMapper()))
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            HotListPMapper::class.java to HotListPMapper(SongListPMapper(SongPMapper(MvPMapper()), UserPMapper()))
+            SongListPMapper::class.java to SongListPMapper(
+                SongPMapper(MvPMapper()),
+                UserPMapper())
+        }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            HotListPMapper::class.java to HotListPMapper(
+                SongListPMapper(SongPMapper(
+                    MvPMapper()),
+                                UserPMapper()))
         }
     }
 }

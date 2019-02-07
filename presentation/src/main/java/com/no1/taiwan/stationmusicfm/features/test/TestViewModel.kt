@@ -27,7 +27,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.entities.mappers.MusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
 import com.no1.taiwan.stationmusicfm.utils.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping

@@ -19,25 +19,13 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers
+package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
-import com.no1.taiwan.stationmusicfm.entities.HotListPreziMap
-import com.no1.taiwan.stationmusicfm.entities.SongListPreziMap
-import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
+import com.no1.taiwan.stationmusicfm.entities.Entity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 
-/**
- * A transforming mapping between [HotPlaylistEntity.HotListEntity] and [HotPlaylistEntity.HotListEntity].
- * The different layers have their own data objects, the objects should transform and fit each layers.
- */
-class HotListPMapper(
-    private val songListMapper: SongListPreziMap
-) : HotListPreziMap {
-    override fun toEntityFrom(model: HotPlaylistModel.HotListModel) = model.run {
-        HotPlaylistEntity.HotListEntity(hasMore, playlists.map(songListMapper::toEntityFrom))
-    }
-
-    override fun toModelFrom(entity: HotPlaylistEntity.HotListEntity) = entity.run {
-        HotPlaylistModel.HotListModel(hasMore, playlists.map(songListMapper::toModelFrom))
-    }
-}
+data class TracksWithStreamableEntity(
+    val tracks: List<TrackInfoEntity.TrackWithStreamableEntity> = emptyList(),
+    val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
+) : Entity

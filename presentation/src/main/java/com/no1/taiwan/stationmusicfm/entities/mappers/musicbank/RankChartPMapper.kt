@@ -19,31 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers
+package com.no1.taiwan.stationmusicfm.entities.mappers.musicbank
 
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
-import com.no1.taiwan.stationmusicfm.entities.MusicPreziMap
-import com.no1.taiwan.stationmusicfm.entities.SongPreziMap
-import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
+import com.no1.taiwan.stationmusicfm.entities.RankChartPreziMap
+import com.no1.taiwan.stationmusicfm.entities.musicbank.RankChartEntity
 
 /**
- * A transforming mapping between [MusicInfoModel.MusicModel] and [MusicInfoEntity.MusicEntity]. The different layers have
+ * A transforming mapping between [RankChartModel] and [RankChartEntity]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
-class MusicPMapper(
-    private val songMapper: SongPreziMap
-) : MusicPreziMap {
-    override fun toEntityFrom(model: MusicInfoModel.MusicModel) = model.run {
-        MusicInfoEntity.MusicEntity(hasMore,
-                                    items.map(songMapper::toEntityFrom),
-                                    timestamp,
-                                    songs.map(songMapper::toEntityFrom))
+class RankChartPMapper : RankChartPreziMap {
+    override fun toEntityFrom(model: RankChartModel) = model.run {
+        RankChartEntity(id, rankType, coverUrl, chartName, updateTime)
     }
 
-    override fun toModelFrom(entity: MusicInfoEntity.MusicEntity) = entity.run {
-        MusicInfoModel.MusicModel(hasMore,
-                                  items.map(songMapper::toModelFrom),
-                                  timestamp,
-                                  songs.map(songMapper::toModelFrom))
+    override fun toModelFrom(entity: RankChartEntity) = entity.run {
+        RankChartModel(id, rankType, coverUrl, chartName, updateTime)
     }
 }
