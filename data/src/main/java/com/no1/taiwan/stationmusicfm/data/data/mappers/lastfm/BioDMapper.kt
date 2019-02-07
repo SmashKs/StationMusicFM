@@ -21,8 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.BioDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 
 /**
@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
  */
 class BioDMapper(
     private val linkMapper: LinkDMapper
-) : Mapper<ArtistInfoData.BioData, ArtistInfoModel.BioModel> {
+) : BioDataMap {
     override fun toModelFrom(data: ArtistInfoData.BioData) = data.run {
         ArtistInfoModel.BioModel(links?.link?.let(linkMapper::toModelFrom) ?: ArtistInfoModel.LinkModel(),
                                  published.orEmpty(),

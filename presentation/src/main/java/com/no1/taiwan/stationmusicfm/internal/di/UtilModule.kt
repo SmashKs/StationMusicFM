@@ -29,17 +29,51 @@ import androidx.work.WorkManager
 import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AlbumDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AlbumWithArtistDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistsDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AttrDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.BioDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ImageDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.LinkDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.StatsDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.StreamDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TagDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TagsDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TopAlbumDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TrackDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TrackWithStreamableDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksWithStreamableDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.WikiDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.HotListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MusicDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MvDMapper
-import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.RankChartDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.UserDMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumWithArtistPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AttrPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.BioPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ImagePMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.LinkPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.StatsPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.StreamPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagsPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TrackPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TrackWithStreamablePMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.WikiPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.HotListPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MvPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.RankChartPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.SongListPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.SongPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.UserPMapper
@@ -77,27 +111,48 @@ object UtilModule {
     }
 
     /**
-     * Import this module in the [com.no1.taiwan.newsbasket.App] because data layer needs this.
+     * Import this module in the [com.no1.taiwan.stationmusicfm.MusicApp] because data layer needs this.
      */
     fun dataUtilProvider() = Module("Data Layer Util") {
         /** Mapper Set for [com.no1.taiwan.stationmusicfm.entities.mappers.Mapper] */
         bind() from setBinding<DataMapperEntry>()
 
         /** RankInfoData Layer Mapper */
-        bind<DataMapperEntry>().inSet() with singleton { UserDMapper::class.java to UserDMapper() }
-        bind<DataMapperEntry>().inSet() with singleton { RankChartDMapper::class.java to RankChartDMapper() }
-        bind<DataMapperEntry>().inSet() with singleton { MvDMapper::class.java to MvDMapper() }
+        val songMapper = SongDMapper(MvDMapper())
+        val songListMapper = SongListDMapper(songMapper, UserDMapper())
+        bind<DataMapperEntry>().inSet() with singleton { MusicDMapper::class.java to MusicDMapper(songMapper) }
+        bind<DataMapperEntry>().inSet() with singleton { SongListDMapper::class.java to songListMapper }
+        bind<DataMapperEntry>().inSet() with singleton { HotListDMapper::class.java to HotListDMapper(songListMapper) }
+
+        val tagMapper = TagDMapper(WikiDMapper())
+        val bioMapper = BioDMapper(LinkDMapper())
+        val artistMapper = ArtistDMapper(bioMapper, ImageDMapper(), StatsDMapper(), tagMapper)
+        val trackMapper = TrackDMapper(artistMapper,
+                                       AttrDMapper(),
+                                       ImageDMapper(),
+                                       StreamDMapper(),
+                                       tagMapper,
+                                       WikiDMapper())
+        val albumMapper = AlbumDMapper(AttrDMapper(), ImageDMapper(), tagMapper, trackMapper, WikiDMapper())
+        bind<DataMapperEntry>().inSet() with singleton { AlbumDMapper::class.java to albumMapper }
+        bind<DataMapperEntry>().inSet() with singleton { ArtistDMapper::class.java to artistMapper }
         bind<DataMapperEntry>().inSet() with singleton {
-            SongDMapper::class.java to SongDMapper(MvDMapper())
+            ArtistsDMapper::class.java to ArtistsDMapper(artistMapper, AttrDMapper())
+        }
+        bind<DataMapperEntry>().inSet() with singleton { TagDMapper::class.java to tagMapper }
+        bind<DataMapperEntry>().inSet() with singleton {
+            TagsDMapper::class.java to TagsDMapper(tagMapper, AttrDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            MusicDMapper::class.java to MusicDMapper(SongDMapper(MvDMapper()))
+            TopAlbumDMapper::class.java to TopAlbumDMapper(AlbumWithArtistDMapper(artistMapper), AttrDMapper())
+        }
+        bind<DataMapperEntry>().inSet() with singleton { TrackDMapper::class.java to trackMapper }
+        bind<DataMapperEntry>().inSet() with singleton {
+            TracksDMapper::class.java to TracksDMapper(trackMapper, AttrDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            SongListDMapper::class.java to SongListDMapper(SongDMapper(MvDMapper()), UserDMapper())
-        }
-        bind<DataMapperEntry>().inSet() with singleton {
-            HotListDMapper::class.java to HotListDMapper(SongListDMapper(SongDMapper(MvDMapper()), UserDMapper()))
+            TracksWithStreamableDMapper::class.java to TracksWithStreamableDMapper(TrackWithStreamableDMapper(),
+                                                                                   AttrDMapper())
         }
     }
 
@@ -109,20 +164,41 @@ object UtilModule {
         bind() from setBinding<PreziMapperEntry>()
 
         /** Presentation Layer Mapper */
-        bind<PreziMapperEntry>().inSet() with singleton { UserPMapper::class.java to UserPMapper() }
-        bind<PreziMapperEntry>().inSet() with singleton { RankChartPMapper::class.java to RankChartPMapper() }
-        bind<PreziMapperEntry>().inSet() with singleton { MvPMapper::class.java to MvPMapper() }
+        val songMapper = SongPMapper(MvPMapper())
+        val songListMapper = SongListPMapper(songMapper, UserPMapper())
+        bind<PreziMapperEntry>().inSet() with singleton { MusicPMapper::class.java to MusicPMapper(songMapper) }
+        bind<PreziMapperEntry>().inSet() with singleton { SongListPMapper::class.java to songListMapper }
+        bind<PreziMapperEntry>().inSet() with singleton { HotListPMapper::class.java to HotListPMapper(songListMapper) }
+
+        val tagMapper = TagPMapper(WikiPMapper())
+        val bioMapper = BioPMapper(LinkPMapper())
+        val artistMapper = ArtistPMapper(bioMapper, ImagePMapper(), StatsPMapper(), tagMapper)
+        val trackMapper = TrackPMapper(artistMapper,
+                                       AttrPMapper(),
+                                       ImagePMapper(),
+                                       StreamPMapper(),
+                                       tagMapper,
+                                       WikiPMapper())
+        val albumMapper = AlbumPMapper(AttrPMapper(), ImagePMapper(), tagMapper, trackMapper, WikiPMapper())
+        bind<PreziMapperEntry>().inSet() with singleton { AlbumPMapper::class.java to albumMapper }
+        bind<PreziMapperEntry>().inSet() with singleton { ArtistPMapper::class.java to artistMapper }
         bind<PreziMapperEntry>().inSet() with singleton {
-            SongPMapper::class.java to SongPMapper(MvPMapper())
+            ArtistsPMapper::class.java to ArtistsPMapper(artistMapper, AttrPMapper())
+        }
+        bind<PreziMapperEntry>().inSet() with singleton { TagPMapper::class.java to tagMapper }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            TagsPMapper::class.java to TagsPMapper(tagMapper, AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            MusicPMapper::class.java to MusicPMapper(SongPMapper(MvPMapper()))
+            TopAlbumPMapper::class.java to TopAlbumPMapper(AlbumWithArtistPMapper(artistMapper), AttrPMapper())
+        }
+        bind<PreziMapperEntry>().inSet() with singleton { TrackPMapper::class.java to trackMapper }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            TracksPMapper::class.java to TracksPMapper(trackMapper, AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            SongListPMapper::class.java to SongListPMapper(SongPMapper(MvPMapper()), UserPMapper())
-        }
-        bind<PreziMapperEntry>().inSet() with singleton {
-            HotListPMapper::class.java to HotListPMapper(SongListPMapper(SongPMapper(MvPMapper()), UserPMapper()))
+            TracksWithStreamablePMapper::class.java to TracksWithStreamablePMapper(TrackWithStreamablePMapper(),
+                                                                                   AttrPMapper())
         }
     }
 }

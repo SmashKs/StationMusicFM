@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.entities.BioPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [ArtistInfoModel.BioModel] and [ArtistInfoEntity.BioEntity].
@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
  */
 class BioPMapper(
     private val linkMapper: LinkPMapper
-) : Mapper<ArtistInfoModel.BioModel, ArtistInfoEntity.BioEntity> {
+) : BioPreziMap {
     override fun toEntityFrom(model: ArtistInfoModel.BioModel) = model.run {
         ArtistInfoEntity.BioEntity(link.let(linkMapper::toEntityFrom), published, summary, content)
     }

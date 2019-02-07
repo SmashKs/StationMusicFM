@@ -22,14 +22,14 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.entities.LinkPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [ArtistInfoModel.LinkModel] and [ArtistInfoEntity.LinkEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class LinkPMapper : Mapper<ArtistInfoModel.LinkModel, ArtistInfoEntity.LinkEntity> {
+class LinkPMapper : LinkPreziMap {
     override fun toEntityFrom(model: ArtistInfoModel.LinkModel) = model.run {
         ArtistInfoEntity.LinkEntity(text, rel, href)
     }

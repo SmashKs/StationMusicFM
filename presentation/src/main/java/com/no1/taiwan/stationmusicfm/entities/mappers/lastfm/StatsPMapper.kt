@@ -22,14 +22,14 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.entities.StatsPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [ArtistInfoModel.StatsModel] and [ArtistInfoEntity.StatsEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class StatsPMapper : Mapper<ArtistInfoModel.StatsModel, ArtistInfoEntity.StatsEntity> {
+class StatsPMapper : StatsPreziMap {
     override fun toEntityFrom(model: ArtistInfoModel.StatsModel) = model.run {
         ArtistInfoEntity.StatsEntity(listeners, playCount)
     }

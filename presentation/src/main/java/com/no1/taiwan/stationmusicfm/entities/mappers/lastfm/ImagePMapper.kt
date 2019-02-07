@@ -22,14 +22,14 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.ImagePreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [CommonLastFmModel.ImageModel] and [CommonLastFmEntity.ImageEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class ImagePMapper : Mapper<CommonLastFmModel.ImageModel, CommonLastFmEntity.ImageEntity> {
+class ImagePMapper : ImagePreziMap {
     override fun toEntityFrom(model: CommonLastFmModel.ImageModel) = model.run {
         CommonLastFmEntity.ImageEntity(text, size)
     }

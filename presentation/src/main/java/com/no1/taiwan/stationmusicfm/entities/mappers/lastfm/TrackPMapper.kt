@@ -22,22 +22,24 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.entities.TrackPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [TrackInfoModel.TrackModel] and [TrackInfoEntity.TrackEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class TrackPMapper(
-    private val albumMapper: AlbumPMapper,
     private val artistMapper: ArtistPMapper,
     private val attrMapper: AttrPMapper,
     private val imageMapper: ImagePMapper,
     private val streamMapper: StreamPMapper,
     private val tagMapper: TagPMapper,
     private val wikiMapper: WikiPMapper
-) : Mapper<TrackInfoModel.TrackModel, TrackInfoEntity.TrackEntity> {
+) : TrackPreziMap {
+    // OPTIMIZE(jieyi): 2019-02-07 Here will happened recursive dependency if as an argument.
+    private val albumMapper = AlbumPMapper(attrMapper, imageMapper, tagMapper, this, wikiMapper)
+
     override fun toEntityFrom(model: TrackInfoModel.TrackModel): TrackInfoEntity.TrackEntity {
         return model.run {
             TrackInfoEntity.TrackEntity(streamable.let(streamMapper::toEntityFrom))

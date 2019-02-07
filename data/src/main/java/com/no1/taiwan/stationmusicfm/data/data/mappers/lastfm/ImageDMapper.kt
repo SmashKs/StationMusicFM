@@ -21,15 +21,15 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.ImageDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
 /**
  * A transforming mapping between [CommonLastFmData.ImageData] and [CommonLastFmModel.ImageModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class ImageDMapper : Mapper<CommonLastFmData.ImageData, CommonLastFmModel.ImageModel> {
+class ImageDMapper : ImageDataMap {
     override fun toModelFrom(data: CommonLastFmData.ImageData) = data.run {
         CommonLastFmModel.ImageModel(text.orEmpty(), size.orEmpty())
     }

@@ -21,8 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.TopAlbumDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
 /**
@@ -32,7 +32,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 class TopAlbumDMapper(
     private val albumWithArtistMapper: AlbumWithArtistDMapper,
     private val attrMapper: AttrDMapper
-) : Mapper<CommonLastFmData.TopAlbumsData, CommonLastFmModel.TopAlbumsModel> {
+) : TopAlbumDataMap {
     override fun toModelFrom(data: CommonLastFmData.TopAlbumsData) = data.run {
         CommonLastFmModel.TopAlbumsModel(albums.map(albumWithArtistMapper::toModelFrom),
                                          attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel())

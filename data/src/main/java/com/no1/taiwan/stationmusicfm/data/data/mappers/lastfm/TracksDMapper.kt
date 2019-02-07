@@ -21,8 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.TracksDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 
@@ -33,7 +33,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 class TracksDMapper(
     private val trackMapper: TrackDMapper,
     private val attrMapper: AttrDMapper
-) : Mapper<TopTrackInfoData.TracksData, TrackInfoModel.TracksModel> {
+) : TracksDataMap {
     override fun toModelFrom(data: TopTrackInfoData.TracksData) = data.run {
         TrackInfoModel.TracksModel(tracks.map(trackMapper::toModelFrom),
                                    attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel())

@@ -21,11 +21,24 @@
 
 package com.no1.taiwan.stationmusicfm.data.data
 
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistTopTrackInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TagInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopArtistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TrackInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.CommonMusicData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
@@ -35,6 +48,7 @@ typealias DataMapper = Mapper<*, *>
 typealias DataMapperPool = Map<Class<out DataMapper>, DataMapper>
 
 // Mappers
+// MusicBank
 
 typealias HotListDataMap = Mapper<HotPlaylistData.HotListData, HotPlaylistModel.HotListModel>
 typealias MusicDataMap = Mapper<MusicInfoData.MusicData, MusicInfoModel.MusicModel>
@@ -43,3 +57,24 @@ typealias SongListDataMap = Mapper<CommonMusicData.PlayListData, CommonMusicMode
 typealias RankChartDataMap = Mapper<RankChartData, RankChartModel>
 typealias SongDataMap = Mapper<CommonMusicData.SongData, CommonMusicModel.SongModel>
 typealias UserDataMap = Mapper<CommonMusicData.UserData, CommonMusicModel.UserModel>
+
+// LastFm
+
+typealias AlbumDataMap = Mapper<AlbumInfoData.AlbumData, AlbumInfoModel.AlbumModel>
+typealias AlbumWithArtistDataMap = Mapper<AlbumInfoData.AlbumWithArtistData, AlbumInfoModel.AlbumWithArtistModel>
+typealias ArtistDataMap = Mapper<ArtistInfoData.ArtistData, ArtistInfoModel.ArtistModel>
+typealias ArtistsDataMap = Mapper<TopArtistInfoData.ArtistsData, ArtistInfoModel.ArtistsModel>
+typealias AttrDataMap = Mapper<CommonLastFmData.AttrData, CommonLastFmModel.AttrModel>
+typealias BioDataMap = Mapper<ArtistInfoData.BioData, ArtistInfoModel.BioModel>
+typealias ImageDataMap = Mapper<CommonLastFmData.ImageData, CommonLastFmModel.ImageModel>
+typealias LinkDataMap = Mapper<ArtistInfoData.LinkData, ArtistInfoModel.LinkModel>
+typealias StatsDataMap = Mapper<ArtistInfoData.StatsData, ArtistInfoModel.StatsModel>
+typealias StreamDataMap = Mapper<CommonLastFmData.StreamableData, CommonLastFmModel.StreamableModel>
+typealias TagDataMap = Mapper<TagInfoData.TagData, TagInfoModel.TagModel>
+typealias TagsDataMap = Mapper<CommonLastFmData.TagsData, CommonLastFmModel.TagsModel>
+typealias TopAlbumDataMap = Mapper<CommonLastFmData.TopAlbumsData, CommonLastFmModel.TopAlbumsModel>
+typealias TrackDataMap = Mapper<TrackInfoData.TrackData, TrackInfoModel.TrackModel>
+typealias TracksDataMap = Mapper<TopTrackInfoData.TracksData, TrackInfoModel.TracksModel>
+typealias TracksWithStreamableDataMap = Mapper<ArtistTopTrackInfoData.TracksWithStreamableData, TrackInfoModel.TracksWithStreamableModel>
+typealias TrackWithStreamableDataMap = Mapper<TrackInfoData.TrackWithStreamableData, TrackInfoModel.TrackWithStreamableModel>
+typealias WikiDataMap = Mapper<CommonLastFmData.WikiData, CommonLastFmModel.WikiModel>

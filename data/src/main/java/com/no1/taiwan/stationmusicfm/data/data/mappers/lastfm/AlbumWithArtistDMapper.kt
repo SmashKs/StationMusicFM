@@ -21,8 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.AlbumWithArtistDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 
@@ -32,7 +32,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
  */
 class AlbumWithArtistDMapper(
     private val artistMapper: ArtistDMapper
-) : Mapper<AlbumInfoData.AlbumWithArtistData, AlbumInfoModel.AlbumWithArtistModel> {
+) : AlbumWithArtistDataMap {
     override fun toModelFrom(data: AlbumInfoData.AlbumWithArtistData) = data.run {
         AlbumInfoModel.AlbumWithArtistModel(artist?.let(artistMapper::toModelFrom) ?: ArtistInfoModel.ArtistModel(),
                                             playCount.orEmpty(),

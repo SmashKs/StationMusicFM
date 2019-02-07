@@ -22,14 +22,14 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.StreamPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [CommonLastFmModel.StreamableModel] and [CommonLastFmEntity.StreamableEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class StreamPMapper : Mapper<CommonLastFmModel.StreamableModel, CommonLastFmEntity.StreamableEntity> {
+class StreamPMapper : StreamPreziMap {
     override fun toEntityFrom(model: CommonLastFmModel.StreamableModel) = model.run {
         CommonLastFmEntity.StreamableEntity(text, fulltrack)
     }

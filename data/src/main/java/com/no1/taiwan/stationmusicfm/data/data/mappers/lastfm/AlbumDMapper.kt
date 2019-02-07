@@ -21,9 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.AlbumDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
@@ -37,7 +37,7 @@ class AlbumDMapper(
     private val tagMapper: TagDMapper,
     private val trackMapper: TrackDMapper,
     private val wikiMapper: WikiDMapper
-) : Mapper<AlbumInfoData.AlbumData, AlbumInfoModel.AlbumModel> {
+) : AlbumDataMap {
     override fun toModelFrom(data: AlbumInfoData.AlbumData) = data.run {
         AlbumInfoModel.AlbumModel(artist.orEmpty(), playCount.orEmpty()).apply {
             attr = data.attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel()

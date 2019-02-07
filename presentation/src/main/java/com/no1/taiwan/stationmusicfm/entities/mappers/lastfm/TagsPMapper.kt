@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.TagsPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [CommonLastFmModel.TagsModel] and [TagInfoEntity.TagsEntity].
@@ -32,7 +32,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 class TagsPMapper(
     private val tagMapper: TagPMapper,
     private val attrMapper: AttrPMapper
-) : Mapper<CommonLastFmModel.TagsModel, TagInfoEntity.TagsEntity> {
+) : TagsPreziMap {
     override fun toEntityFrom(model: CommonLastFmModel.TagsModel) = model.run {
         TagInfoEntity.TagsEntity(tags.map(tagMapper::toEntityFrom),
                                  attr.let(attrMapper::toEntityFrom))

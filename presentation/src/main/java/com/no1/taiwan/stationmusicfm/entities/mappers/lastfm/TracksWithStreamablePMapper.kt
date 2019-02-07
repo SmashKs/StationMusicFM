@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.entities.TracksWithStreamablePreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [TrackInfoModel.TracksWithStreamableModel]
@@ -33,7 +33,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 class TracksWithStreamablePMapper(
     private val trackWithStreamableMapper: TrackWithStreamablePMapper,
     private val attrMapper: AttrPMapper
-) : Mapper<TrackInfoModel.TracksWithStreamableModel, TrackInfoEntity.TracksWithStreamableEntity> {
+) : TracksWithStreamablePreziMap {
     override fun toEntityFrom(model: TrackInfoModel.TracksWithStreamableModel) = model.run {
         TrackInfoEntity.TracksWithStreamableEntity(tracks.map(trackWithStreamableMapper::toEntityFrom),
                                                    attr.let(attrMapper::toEntityFrom))

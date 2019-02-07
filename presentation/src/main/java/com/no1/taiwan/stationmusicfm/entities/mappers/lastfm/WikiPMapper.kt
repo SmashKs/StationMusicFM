@@ -22,14 +22,14 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.WikiPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [CommonLastFmModel.WikiModel] and [CommonLastFmEntity.WikiEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class WikiPMapper : Mapper<CommonLastFmModel.WikiModel, CommonLastFmEntity.WikiEntity> {
+class WikiPMapper : WikiPreziMap {
     override fun toEntityFrom(model: CommonLastFmModel.WikiModel) = model.run {
         CommonLastFmEntity.WikiEntity(published.orEmpty(), summary.orEmpty(), content.orEmpty())
     }

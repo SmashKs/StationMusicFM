@@ -21,15 +21,15 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.AttrDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
 /**
  * A transforming mapping between [CommonLastFmData.AttrData] and [CommonLastFmModel.AttrModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class AttrDMapper : Mapper<CommonLastFmData.AttrData, CommonLastFmModel.AttrModel> {
+class AttrDMapper : AttrDataMap {
     override fun toModelFrom(data: CommonLastFmData.AttrData) = data.run {
         CommonLastFmModel.AttrModel(artist.orEmpty(),
                                     totalPages.orEmpty(),

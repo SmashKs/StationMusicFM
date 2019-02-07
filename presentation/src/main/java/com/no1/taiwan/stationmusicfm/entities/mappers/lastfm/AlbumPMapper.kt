@@ -22,20 +22,20 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
+import com.no1.taiwan.stationmusicfm.entities.AlbumPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [AlbumInfoModel.AlbumModel] and [AlbumInfoEntity.AlbumEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class AlbumPMapper(
-    private val imageMapper: ImagePMapper,
     private val attrMapper: AttrPMapper,
+    private val imageMapper: ImagePMapper,
     private val tagMapper: TagPMapper,
     private val trackMapper: TrackPMapper,
     private val wikiMapper: WikiPMapper
-) : Mapper<AlbumInfoModel.AlbumModel, AlbumInfoEntity.AlbumEntity> {
+) : AlbumPreziMap {
     override fun toEntityFrom(model: AlbumInfoModel.AlbumModel) = model.run {
         AlbumInfoEntity.AlbumEntity(artist, playCount).apply {
             attr = model.attr.let(attrMapper::toEntityFrom)

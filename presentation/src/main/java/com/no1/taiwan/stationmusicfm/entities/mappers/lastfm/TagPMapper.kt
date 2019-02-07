@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
+import com.no1.taiwan.stationmusicfm.entities.TagPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [TagInfoModel.TagModel] and [TagInfoEntity.TagEntity]. The different layers have
@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
  */
 class TagPMapper(
     private val wikiMapper: WikiPMapper
-) : Mapper<TagInfoModel.TagModel, TagInfoEntity.TagEntity> {
+) : TagPreziMap {
     override fun toEntityFrom(model: TagInfoModel.TagModel) = model.run {
         TagInfoEntity.TagEntity(name, total, reach, url, wiki.let(wikiMapper::toEntityFrom))
     }

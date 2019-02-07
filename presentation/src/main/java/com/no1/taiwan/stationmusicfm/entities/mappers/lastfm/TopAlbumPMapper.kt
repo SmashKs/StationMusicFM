@@ -22,9 +22,9 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.TopAlbumPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [CommonLastFmModel.TopAlbumsModel] and [CommonLastFmEntity.TopAlbumsEntity].
@@ -33,7 +33,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 class TopAlbumPMapper(
     private val albumWithArtistMapper: AlbumWithArtistPMapper,
     private val attrMapper: AttrPMapper
-) : Mapper<CommonLastFmModel.TopAlbumsModel, AlbumInfoEntity.TopAlbumsEntity> {
+) : TopAlbumPreziMap {
     override fun toEntityFrom(model: CommonLastFmModel.TopAlbumsModel) = model.run {
         AlbumInfoEntity.TopAlbumsEntity(albums.map(albumWithArtistMapper::toEntityFrom),
                                         attr.let(attrMapper::toEntityFrom))

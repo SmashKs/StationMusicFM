@@ -22,14 +22,14 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.entities.TrackWithStreamablePreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [TrackInfoModel.TrackWithStreamableModel] and [TrackInfoEntity.TrackWithStreamableEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class TrackWithStreamablePMapper : Mapper<TrackInfoModel.TrackWithStreamableModel, TrackInfoEntity.TrackWithStreamableEntity> {
+class TrackWithStreamablePMapper : TrackWithStreamablePreziMap {
     override fun toEntityFrom(model: TrackInfoModel.TrackWithStreamableModel) = model.run {
         TrackInfoEntity.TrackWithStreamableEntity(streamable)
     }

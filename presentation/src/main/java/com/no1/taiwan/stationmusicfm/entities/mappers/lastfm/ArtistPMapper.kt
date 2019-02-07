@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.entities.ArtistPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [ArtistInfoModel.ArtistModel] and [ArtistInfoEntity.ArtistEntity]. The different layers have
@@ -34,7 +34,7 @@ class ArtistPMapper(
     private val imageMapper: ImagePMapper,
     private val statsMapper: StatsPMapper,
     private val tagMapper: TagPMapper
-) : Mapper<ArtistInfoModel.ArtistModel, ArtistInfoEntity.ArtistEntity> {
+) : ArtistPreziMap {
     override fun toEntityFrom(model: ArtistInfoModel.ArtistModel): ArtistInfoEntity.ArtistEntity = model.run {
         ArtistInfoEntity.ArtistEntity(name,
                                       mbid,

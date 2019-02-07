@@ -21,8 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.TagDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TagInfoData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
@@ -33,7 +33,7 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
  */
 class TagDMapper(
     private val wikiMapper: WikiDMapper
-) : Mapper<TagInfoData.TagData, TagInfoModel.TagModel> {
+) : TagDataMap {
     override fun toModelFrom(data: TagInfoData.TagData) = data.run {
         TagInfoModel.TagModel(name.orEmpty(),
                               total ?: DEFAULT_INT,

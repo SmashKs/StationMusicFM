@@ -21,15 +21,15 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.WikiDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
 /**
  * A transforming mapping between [CommonLastFmData.WikiData] and [CommonLastFmModel.WikiModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class WikiDMapper : Mapper<CommonLastFmData.WikiData, CommonLastFmModel.WikiModel> {
+class WikiDMapper : WikiDataMap {
     override fun toModelFrom(data: CommonLastFmData.WikiData) = data.run {
         CommonLastFmModel.WikiModel(published.orEmpty(), summary.orEmpty(), content.orEmpty())
     }

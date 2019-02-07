@@ -22,14 +22,14 @@
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
+import com.no1.taiwan.stationmusicfm.entities.AttrPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
-import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
 
 /**
  * A transforming mapping between [CommonLastFmModel.AttrModel] and [CommonLastFmEntity.AttrEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class AttrPMapper : Mapper<CommonLastFmModel.AttrModel, CommonLastFmEntity.AttrEntity> {
+class AttrPMapper : AttrPreziMap {
     override fun toEntityFrom(model: CommonLastFmModel.AttrModel) = model.run {
         CommonLastFmEntity.AttrEntity(artist, totalPages, total, rank, position, perPage, page)
     }

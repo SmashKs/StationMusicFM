@@ -21,8 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.data.data.TagsDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
 /**
@@ -32,7 +32,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 class TagsDMapper(
     private val tagMapper: TagDMapper,
     private val attrMapper: AttrDMapper
-) : Mapper<CommonLastFmData.TagsData, CommonLastFmModel.TagsModel> {
+) : TagsDataMap {
     override fun toModelFrom(data: CommonLastFmData.TagsData) = data.run {
         CommonLastFmModel.TagsModel(tags?.map(tagMapper::toModelFrom).orEmpty(),
                                     attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel())
