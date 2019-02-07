@@ -23,23 +23,23 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfo
 
 /**
- * A transforming mapping between [ArtistInfoData.BioData] and [ArtistInfoModel.BioModel].
+ * A transforming mapping between [ArtistInfoData.BioData] and [ArtistInfo.BioModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class BioDMapper(
     private val linkMapper: LinkDMapper
-) : Mapper<ArtistInfoData.BioData, ArtistInfoModel.BioModel> {
+) : Mapper<ArtistInfoData.BioData, ArtistInfo.BioModel> {
     override fun toModelFrom(data: ArtistInfoData.BioData) = data.run {
-        ArtistInfoModel.BioModel(links?.link?.let(linkMapper::toModelFrom) ?: ArtistInfoModel.LinkModel(),
-                                 published.orEmpty(),
-                                 summary.orEmpty(),
-                                 content.orEmpty())
+        ArtistInfo.BioModel(links?.link?.let(linkMapper::toModelFrom) ?: ArtistInfo.LinkModel(),
+                            published.orEmpty(),
+                            summary.orEmpty(),
+                            content.orEmpty())
     }
 
-    override fun toDataFrom(model: ArtistInfoModel.BioModel) = model.run {
+    override fun toDataFrom(model: ArtistInfo.BioModel) = model.run {
         ArtistInfoData.BioData(ArtistInfoData.LinksData(linkMapper.toDataFrom(link)), published, summary, content)
     }
 }

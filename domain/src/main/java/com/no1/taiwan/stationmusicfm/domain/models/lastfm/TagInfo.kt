@@ -22,8 +22,14 @@
 package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.Model
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class ArtistsModel(
-    val artists: List<ArtistInfoModel.ArtistModel> = emptyList(),
-    val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
-) : Model
+object TagInfo {
+    data class TagModel(
+        val name: String = DEFAULT_STR,
+        val total: Int = 0,
+        val reach: Int = 0,
+        val url: String = DEFAULT_STR,
+        val wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
+    ) : Model
+}

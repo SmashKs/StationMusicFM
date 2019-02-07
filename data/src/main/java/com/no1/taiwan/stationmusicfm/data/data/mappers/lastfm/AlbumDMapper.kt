@@ -24,11 +24,11 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfo
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
 /**
- * A transforming mapping between [AlbumInfoData.AlbumData] and [AlbumInfoModel.AlbumModel]. The different layers have
+ * A transforming mapping between [AlbumInfoData.AlbumData] and [AlbumInfo.AlbumModel]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
 class AlbumDMapper(
@@ -37,9 +37,9 @@ class AlbumDMapper(
     private val tagMapper: TagDMapper,
     private val trackMapper: TrackDMapper,
     private val wikiMapper: WikiDMapper
-) : Mapper<AlbumInfoData.AlbumData, AlbumInfoModel.AlbumModel> {
+) : Mapper<AlbumInfoData.AlbumData, AlbumInfo.AlbumModel> {
     override fun toModelFrom(data: AlbumInfoData.AlbumData) = data.run {
-        AlbumInfoModel.AlbumModel(artist.orEmpty(), playCount.orEmpty()).apply {
+        AlbumInfo.AlbumModel(artist.orEmpty(), playCount.orEmpty()).apply {
             attr = data.attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel()
             images = data.images?.map(imageMapper::toModelFrom).orEmpty()
             listeners = data.listeners.orEmpty()
@@ -53,7 +53,7 @@ class AlbumDMapper(
         }
     }
 
-    override fun toDataFrom(model: AlbumInfoModel.AlbumModel) = model.run {
+    override fun toDataFrom(model: AlbumInfo.AlbumModel) = model.run {
         AlbumInfoData.AlbumData(artist, playCount).apply {
             attr = attrMapper.toDataFrom(model.attr)
             images = model.images.map(imageMapper::toDataFrom)

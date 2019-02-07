@@ -23,18 +23,18 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TrackInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfo
 
 /**
- * A transforming mapping between [TrackInfoData.TrackWithStreamableData] and [TrackInfoModel.TrackWithStreamableModel].
+ * A transforming mapping between [TrackInfoData.TrackWithStreamableData] and [TrackInfo.TrackWithStreamableModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class TrackWithStreamableDMapper : Mapper<TrackInfoData.TrackWithStreamableData, TrackInfoModel.TrackWithStreamableModel> {
+class TrackWithStreamableDMapper : Mapper<TrackInfoData.TrackWithStreamableData, TrackInfo.TrackWithStreamableModel> {
     override fun toModelFrom(data: TrackInfoData.TrackWithStreamableData) = data.run {
-        TrackInfoModel.TrackWithStreamableModel(streamable.orEmpty())
+        TrackInfo.TrackWithStreamableModel(streamable.orEmpty())
     }
 
-    override fun toDataFrom(model: TrackInfoModel.TrackWithStreamableModel) = model.run {
+    override fun toDataFrom(model: TrackInfo.TrackWithStreamableModel) = model.run {
         TrackInfoData.TrackWithStreamableData(streamable)
     }
 }

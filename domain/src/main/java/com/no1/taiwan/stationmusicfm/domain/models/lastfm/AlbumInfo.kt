@@ -24,40 +24,28 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class ArtistInfoModel(
-    val artist: ArtistModel = ArtistModel()
-) : Model {
-    data class ArtistModel(
-        val name: String = DEFAULT_STR,
-        val mbid: String = DEFAULT_STR,
-        val match: String = DEFAULT_STR,
-        val url: String = DEFAULT_STR,
-        val images: List<CommonLastFmModel.ImageModel> = emptyList(),
-        val streamable: String = DEFAULT_STR,
-        val listeners: String = DEFAULT_STR,
-        val onTour: String = DEFAULT_STR,
-        val playCount: String = DEFAULT_STR,
-        val stats: StatsModel = StatsModel(),
-        val similars: List<ArtistModel> = emptyList(),
-        val tags: List<TagInfoModel.TagModel> = emptyList(),
-        val bio: BioModel = BioModel()
-    ) : Model
-
-    data class BioModel(
-        val link: LinkModel = LinkModel(),
-        val published: String = DEFAULT_STR,
-        val summary: String = DEFAULT_STR,
-        val content: String = DEFAULT_STR
-    ) : Model
-
-    data class LinkModel(
-        val text: String = DEFAULT_STR,
-        val rel: String = DEFAULT_STR,
-        val href: String = DEFAULT_STR
-    ) : Model
-
-    data class StatsModel(
-        val listeners: String = DEFAULT_STR,
+object AlbumInfo {
+    data class AlbumModel(
+        val artist: String = DEFAULT_STR,
         val playCount: String = DEFAULT_STR
+    ) : BaseAlbumModel(), Model
+
+    data class AlbumWithArtistModel(
+        val artist: ArtistInfo.ArtistModel = ArtistInfo.ArtistModel(),
+        val playCount: String = DEFAULT_STR,
+        val index: Int = 0
+    ) : BaseAlbumModel(), Model
+
+    open class BaseAlbumModel(
+        var attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel(),
+        var images: List<CommonLastFmModel.ImageModel> = emptyList(),
+        var listeners: String = DEFAULT_STR,
+        var mbid: String = DEFAULT_STR,
+        var name: String = DEFAULT_STR,
+        var tags: List<TagInfo.TagModel> = emptyList(),
+        var title: String = DEFAULT_STR,
+        var tracks: List<TrackInfo.TrackModel> = emptyList(),
+        var url: String = DEFAULT_STR,
+        var wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
     ) : Model
 }

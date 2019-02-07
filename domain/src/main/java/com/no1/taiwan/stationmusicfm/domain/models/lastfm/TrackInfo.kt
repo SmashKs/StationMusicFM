@@ -24,21 +24,29 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-data class TrackInfoModel(
-    val track: TrackModel
-) : Model {
+object TrackInfo {
     data class TrackModel(
         val streamable: CommonLastFmModel.StreamableModel = CommonLastFmModel.StreamableModel()
     ) : BaseTrackModel(), Model
+
+    data class TracksModel(
+        val tracks: List<TrackInfo.TrackModel> = emptyList(),
+        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
+    ) : Model
+
+    data class TracksWithStreamableModel(
+        val tracks: List<TrackInfo.TrackWithStreamableModel> = emptyList(),
+        val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
+    ) : Model
 
     data class TrackWithStreamableModel(
         val streamable: String = DEFAULT_STR
     ) : BaseTrackModel(), Model
 
     open class BaseTrackModel(
-        var album: AlbumInfoModel.AlbumModel = AlbumInfoModel.AlbumModel(),
+        var album: AlbumInfo.AlbumModel = AlbumInfo.AlbumModel(),
         var attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel(),
-        var artist: ArtistInfoModel.ArtistModel = ArtistInfoModel.ArtistModel(),
+        var artist: ArtistInfo.ArtistModel = ArtistInfo.ArtistModel(),
         var duration: String = DEFAULT_STR,
         var images: List<CommonLastFmModel.ImageModel> = emptyList(),
         var listeners: String = DEFAULT_STR,
@@ -46,7 +54,7 @@ data class TrackInfoModel(
         var mbid: String = DEFAULT_STR,
         var name: String = DEFAULT_STR,
         var playcount: String = DEFAULT_STR,
-        var topTags: List<TagInfoModel.TagModel> = emptyList(),
+        var topTags: List<TagInfo.TagModel> = emptyList(),
         var url: String = DEFAULT_STR,
         var realUrl: String = DEFAULT_STR,
         var wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()

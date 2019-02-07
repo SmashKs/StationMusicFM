@@ -24,25 +24,25 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TagInfoData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfo
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 
 /**
- * A transforming mapping between [TagInfoData.TagData] and [TagInfoModel.TagModel]. The different layers have
+ * A transforming mapping between [TagInfoData.TagData] and [TagInfo.TagModel]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
 class TagDMapper(
     private val wikiMapper: WikiDMapper
-) : Mapper<TagInfoData.TagData, TagInfoModel.TagModel> {
+) : Mapper<TagInfoData.TagData, TagInfo.TagModel> {
     override fun toModelFrom(data: TagInfoData.TagData) = data.run {
-        TagInfoModel.TagModel(name.orEmpty(),
-                              total ?: DEFAULT_INT,
-                              reach ?: DEFAULT_INT,
-                              url.orEmpty(),
-                              wiki?.let(wikiMapper::toModelFrom) ?: CommonLastFmModel.WikiModel())
+        TagInfo.TagModel(name.orEmpty(),
+                         total ?: DEFAULT_INT,
+                         reach ?: DEFAULT_INT,
+                         url.orEmpty(),
+                         wiki?.let(wikiMapper::toModelFrom) ?: CommonLastFmModel.WikiModel())
     }
 
-    override fun toDataFrom(model: TagInfoModel.TagModel) = model.run {
+    override fun toDataFrom(model: TagInfo.TagModel) = model.run {
         TagInfoData.TagData(name, total, reach, url, wiki.let(wikiMapper::toDataFrom))
     }
 }

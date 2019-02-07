@@ -24,10 +24,10 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
 import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfo
 
 /**
- * A transforming mapping between [ArtistInfoData.ArtistData] and [ArtistInfoModel.ArtistModel]. The different layers have
+ * A transforming mapping between [ArtistInfoData.ArtistData] and [ArtistInfo.ArtistModel]. The different layers have
  * their own data objects, the objects should transform and fit each layers.
  */
 class ArtistDMapper(
@@ -35,26 +35,26 @@ class ArtistDMapper(
     private val imageMapper: ImageDMapper,
     private val statsMapper: StatsDMapper,
     private val tagMapper: TagDMapper
-) : Mapper<ArtistInfoData.ArtistData, ArtistInfoModel.ArtistModel> {
-    override fun toModelFrom(data: ArtistInfoData.ArtistData): ArtistInfoModel.ArtistModel {
+) : Mapper<ArtistInfoData.ArtistData, ArtistInfo.ArtistModel> {
+    override fun toModelFrom(data: ArtistInfoData.ArtistData): ArtistInfo.ArtistModel {
         return data.run {
-            ArtistInfoModel.ArtistModel(name.orEmpty(),
-                                        mbid.orEmpty(),
-                                        match.orEmpty(),
-                                        url.orEmpty(),
-                                        images?.map(imageMapper::toModelFrom).orEmpty(),
-                                        streamable.orEmpty(),
-                                        listeners.orEmpty(),
-                                        onTour.orEmpty(),
-                                        playCount.orEmpty(),
-                                        stats?.let(statsMapper::toModelFrom) ?: ArtistInfoModel.StatsModel(),
-                                        similar?.artists?.map(this@ArtistDMapper::toModelFrom).orEmpty(),
-                                        tags?.tags?.map(tagMapper::toModelFrom).orEmpty(),
-                                        bio?.let(bioMapper::toModelFrom) ?: ArtistInfoModel.BioModel())
+            ArtistInfo.ArtistModel(name.orEmpty(),
+                                   mbid.orEmpty(),
+                                   match.orEmpty(),
+                                   url.orEmpty(),
+                                   images?.map(imageMapper::toModelFrom).orEmpty(),
+                                   streamable.orEmpty(),
+                                   listeners.orEmpty(),
+                                   onTour.orEmpty(),
+                                   playCount.orEmpty(),
+                                   stats?.let(statsMapper::toModelFrom) ?: ArtistInfo.StatsModel(),
+                                   similar?.artists?.map(this@ArtistDMapper::toModelFrom).orEmpty(),
+                                   tags?.tags?.map(tagMapper::toModelFrom).orEmpty(),
+                                   bio?.let(bioMapper::toModelFrom) ?: ArtistInfo.BioModel())
         }
     }
 
-    override fun toDataFrom(model: ArtistInfoModel.ArtistModel): ArtistInfoData.ArtistData {
+    override fun toDataFrom(model: ArtistInfo.ArtistModel): ArtistInfoData.ArtistData {
         return model.run {
             ArtistInfoData.ArtistData(name,
                                       mbid,

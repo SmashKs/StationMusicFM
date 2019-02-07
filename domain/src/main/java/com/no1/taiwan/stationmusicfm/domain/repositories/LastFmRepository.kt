@@ -21,14 +21,11 @@
 
 package com.no1.taiwan.stationmusicfm.domain.repositories
 
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistsModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfo
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfo
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TracksModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TracksWithStreamableModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfo
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfo
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 
 /**
@@ -37,11 +34,11 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
  */
 interface LastFmRepository {
     //region AlbumModel
-    suspend fun fetchAlbum(parameters: Parameterable): AlbumInfoModel.AlbumModel
+    suspend fun fetchAlbum(parameters: Parameterable): AlbumInfo.AlbumModel
     //endregion
 
     //region ArtistModel
-    suspend fun fetchArtist(parameters: Parameterable): ArtistInfoModel.ArtistModel
+    suspend fun fetchArtist(parameters: Parameterable): ArtistInfo.ArtistModel
 
     suspend fun fetchArtistTopAlbum(parameters: Parameterable): CommonLastFmModel.TopAlbumsModel
 
@@ -51,7 +48,7 @@ interface LastFmRepository {
     //endregion
 
     //region TrackModel
-    suspend fun fetchTrack(parameters: Parameterable): TrackInfoModel.TrackModel
+    suspend fun fetchTrack(parameters: Parameterable): TrackInfo.TrackModel
 
     suspend fun fetchSimilarTrackInfo(parameters: Parameterable): TracksModel
     //endregion
@@ -65,7 +62,7 @@ interface LastFmRepository {
     //endregion
 
     //region TagModel
-    suspend fun fetchTag(parameters: Parameterable): TagInfoModel.TagModel
+    suspend fun fetchTag(parameters: Parameterable): TagInfo.TagModel
 
     suspend fun fetchTagTopAlbum(parameters: Parameterable): CommonLastFmModel.TopAlbumsModel
 
