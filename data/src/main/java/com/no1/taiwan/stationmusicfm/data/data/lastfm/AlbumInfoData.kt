@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.data.data.lastfm
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 
+// FIXME(jieyi): 2019-02-08 This data structure is incorrect anymore from lastfm request api.
 data class AlbumInfoData(
     val album: AlbumData?
 ) : Data {

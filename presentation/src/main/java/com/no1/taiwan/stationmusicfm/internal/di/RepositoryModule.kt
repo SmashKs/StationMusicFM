@@ -26,12 +26,12 @@ import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.LocalDataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.RemoteDataStore
+import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.MusicBankDataRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.LOCAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.REMOTE
-import com.no1.taiwan.stationmusicfm.repositories.LastFmDataRepository
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance

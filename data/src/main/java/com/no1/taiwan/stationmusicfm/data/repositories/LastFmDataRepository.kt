@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.repositories
+package com.no1.taiwan.stationmusicfm.data.repositories
 
 import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AlbumDMapper
@@ -32,7 +32,6 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TrackDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksWithStreamableDMapper
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
-import com.no1.taiwan.stationmusicfm.data.repositories.BaseRepository
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.ext.exceptions.EmptyException

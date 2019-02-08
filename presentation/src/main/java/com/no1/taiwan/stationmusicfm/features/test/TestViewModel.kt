@@ -23,12 +23,12 @@ package com.no1.taiwan.stationmusicfm.features.test
 
 import androidx.lifecycle.ViewModel
 import com.devrapid.kotlinshaver.cast
-import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
+import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.AlbumParams
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
-import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
 import com.no1.taiwan.stationmusicfm.utils.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
@@ -36,15 +36,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class TestViewModel(
-    private val fetchRankMusicCase: FetchRankMusicCase,
+    private val fetchAlbumCase: FetchAlbumCase,
     private val mapperPool: PreziMapperPool
 ) : ViewModel() {
-    val ld by lazy { RespMutableLiveData<MusicInfoEntity.MusicEntity>() }
-    private val mapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
+    val ld by lazy { RespMutableLiveData<AlbumInfoEntity.AlbumEntity>() }
+    private val mapper by lazy { cast<AlbumPMapper>(mapperPool[AlbumPMapper::class.java]) }
 
     fun testFetching() = GlobalScope.launch {
         ld reqData {
-            fetchRankMusicCase.execMapping(mapper, FetchRankMusicReq(RankParams(31000)))
+            fetchAlbumCase.execMapping(mapper, FetchAlbumReq(AlbumParams("lady gaga")))
         }
     }
 }

@@ -29,15 +29,16 @@ open class BaseWithPagingParams : BaseParams() {
         const val PARAM_NAME_LIMIT = "limit"
         const val PARAM_NAME_PAGE = "page"
 
-        private const val PARAM_RESPONSE_PAGE = 30
+        private const val PARAM_QUERY_LIMIT = 30
+        private const val PARAM_QUERY_PAGE = 1
     }
 
-    open var limit = PARAM_RESPONSE_PAGE
-    open var page = 0
+    open var limit = PARAM_QUERY_LIMIT
+    open var page = PARAM_QUERY_PAGE
 
     override fun toApiParam() = super.toApiParam().apply {
-        put(PARAM_NAME_LIMIT, limit.toString())
-        put(PARAM_NAME_PAGE, page.toString())
+        page.takeIf { PARAM_QUERY_PAGE != it }?.let { put(PARAM_NAME_PAGE, it.toString()) }
+        limit.takeIf { PARAM_QUERY_LIMIT != it }?.let { put(PARAM_NAME_LIMIT, it.toString()) }
     }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
