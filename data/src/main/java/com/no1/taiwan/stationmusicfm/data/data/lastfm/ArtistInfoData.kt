@@ -25,7 +25,6 @@ import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
-// FIXME(jieyi): 2019-02-08 This data structure is incorrect anymore from lastfm request api.
 data class ArtistInfoData(
     val artist: ArtistData?
 ) : Data {

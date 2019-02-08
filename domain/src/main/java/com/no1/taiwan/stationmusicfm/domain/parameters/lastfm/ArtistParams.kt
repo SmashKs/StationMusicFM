@@ -27,16 +27,16 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 data class ArtistParams(
     val artistName: String = DEFAULT_STR,
-    val autocorrect: Boolean = true  // TopAlbums, TopTracks, Similar
+    val autoCorrect: Boolean = true  // TopAlbums, TopTracks, Similar
 ) : BaseWithPagingParams() {
     companion object {
         const val PARAM_NAME_ARTIST = "artist"
-        const val PARAM_NAME_AUTOCORRECT = "autocorrect"
+        const val PARAM_NAME_AUTO_CORRECT = "autocorrect"
     }
 
     override fun toApiParam() = super.toApiParam().apply {
         put(PARAM_NAME_ARTIST, artistName)
-        put(PARAM_NAME_AUTOCORRECT, autocorrect.toInt().toString())
+        put(PARAM_NAME_AUTO_CORRECT, autoCorrect.toInt().toString())
     }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)

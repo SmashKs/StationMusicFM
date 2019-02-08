@@ -44,7 +44,8 @@ class TestViewModel(
 
     fun testFetching() = GlobalScope.launch {
         ld reqData {
-            fetchAlbumCase.execMapping(mapper, FetchAlbumReq(AlbumParams("lady gaga")))
+            fetchAlbumCase.execMapping(mapper,
+                                       FetchAlbumReq(AlbumParams(mbid = "61bf0388-b8a9-48f4-81d1-7eb02706dfb0")))
         }
     }
 }

@@ -24,7 +24,6 @@ package com.no1.taiwan.stationmusicfm.data.data.lastfm
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 
-// FIXME(jieyi): 2019-02-08 This data structure is incorrect anymore from lastfm request api.
 data class AlbumInfoData(
     val album: AlbumData?
 ) : Data {
@@ -49,7 +48,7 @@ data class AlbumInfoData(
         var listeners: String? = null,
         var mbid: String? = null,
         var name: String? = null,
-        var tags: List<TagInfoData.TagData>? = null,
+        var tags: CommonLastFmData.TagsData? = null,
         var title: String? = null,
         @SerializedName("tracks")
         var tracks: TopTrackInfoData.TracksData? = null,

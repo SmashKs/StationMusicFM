@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.data.data.AlbumDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
@@ -45,7 +46,7 @@ class AlbumDMapper(
             listeners = data.listeners.orEmpty()
             mbid = data.mbid.orEmpty()
             name = data.name.orEmpty()
-            tags = data.tags?.map(tagMapper::toModelFrom).orEmpty()
+            tags = data.tags?.tags?.map(tagMapper::toModelFrom).orEmpty()
             title = data.title.orEmpty()
             tracks = data.tracks?.tracks?.map(trackMapper::toModelFrom).orEmpty()
             url = data.url.orEmpty()
@@ -60,7 +61,7 @@ class AlbumDMapper(
             listeners = model.listeners
             mbid = model.mbid
             name = model.name
-            tags = model.tags.map(tagMapper::toDataFrom)
+            tags = CommonLastFmData.TagsData(model.tags.map(tagMapper::toDataFrom), null)
             title = model.title
             tracks = TopTrackInfoData.TracksData(model.tracks.map(trackMapper::toDataFrom), null)
             url = model.url

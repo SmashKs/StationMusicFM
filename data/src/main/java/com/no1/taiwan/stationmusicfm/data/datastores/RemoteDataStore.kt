@@ -67,11 +67,11 @@ class RemoteDataStore(
     //region 🔽 Last Fm
     override suspend fun getAlbumInfo(parameterable: Parameterable) =
         lastFmService.retrieveAlbumInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                           Constants.LASTFM_PARAM_ALBUM_SEARCH)).await()
+                                                           Constants.LASTFM_PARAM_ALBUM_GET_INFO)).await()
 
     override suspend fun getArtistInfo(parameterable: Parameterable) =
         lastFmService.retrieveArtistInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                            Constants.LASTFM_PARAM_ARTIST_SEARCH)).await()
+                                                            Constants.LASTFM_PARAM_ARTIST_GET_INFO)).await()
 
     override suspend fun getArtistTopAlbum(parameterable: Parameterable) =
         lastFmService.retrieveArtistTopAlbum(combineLastFmQuery(parameterable.toApiParam(),

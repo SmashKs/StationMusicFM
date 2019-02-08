@@ -22,7 +22,7 @@
 package com.no1.taiwan.stationmusicfm.domain.usecases.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
-import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.HotSongParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.BaseWithPagingParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
@@ -38,5 +38,5 @@ class FetchChartTopTrackRespCase(
         repository.fetchChartTopTrack(it.parameters)
     }
 
-    class Request(val parameters: Parameterable = HotSongParams()) : RequestValues
+    class Request(val parameters: Parameterable = BaseWithPagingParams()) : RequestValues
 }

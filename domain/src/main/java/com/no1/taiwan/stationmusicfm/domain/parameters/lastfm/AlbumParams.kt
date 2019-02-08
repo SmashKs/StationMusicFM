@@ -21,18 +21,36 @@
 
 package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
+import com.devrapid.kotlinshaver.toInt
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 
 data class AlbumParams(
-    val albumName: String = DEFAULT_STR
+    val albumName: String = DEFAULT_STR,
+    val artistName: String = DEFAULT_STR,
+    val mbid: String = DEFAULT_STR,
+    val language: String = DEFAULT_STR,
+    val userName: String = DEFAULT_STR,
+    val autoCorrect: Boolean = true
 ) : BaseWithPagingParams() {
     companion object {
         const val PARAM_NAME_ALBUM = "album"
+        const val PARAM_NAME_ARTIST = "artist"
+        const val PARAM_NAME_MBID = "mbid"
+        const val PARAM_NAME_LANG = "lang"
+        const val PARAM_NAME_USERNAME = "username"
+        const val PARAM_NAME_AUTO_CORRECT = "autocorrect"
     }
 
     override fun toApiParam() = super.toApiParam().apply {
-        put(PARAM_NAME_ALBUM, albumName)
+        mbid.takeUnlessDefault { put(PARAM_NAME_MBID, it) } ?: apply {
+            put(PARAM_NAME_ALBUM, albumName)
+            put(PARAM_NAME_ARTIST, artistName)
+        }
+        language.takeUnlessDefault { put(PARAM_NAME_LANG, it) }
+        userName.takeUnlessDefault { put(PARAM_NAME_USERNAME, it) }
+        put(PARAM_NAME_AUTO_CORRECT, autoCorrect.toInt().toString())
     }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)

@@ -25,8 +25,8 @@ object Constants {
     const val LASTFM_QUERY_TOKEN = "api_key"
     const val LASTFM_QUERY_METHOD = "method"
 
-    const val LASTFM_PARAM_ALBUM_SEARCH = "album.search"
-    const val LASTFM_PARAM_ARTIST_SEARCH = "artist.search"
+    const val LASTFM_PARAM_ALBUM_GET_INFO = "album.getInfo"
+    const val LASTFM_PARAM_ARTIST_GET_INFO = "artist.getInfo"
     const val LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS = "artist.getTopAlbums"
     const val LASTFM_PARAM_ARTIST_GET_TOP_TRACKS = "artist.getTopTracks"
     const val LASTFM_PARAM_ARTIST_GET_SIMILAR = "artist.getSimilar"
