@@ -21,10 +21,38 @@
 
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies
 
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopAlbumCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopTrackCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchHotListCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongListCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopAlbumRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchChartTopArtistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchChartTopTagRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchChartTopTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchSimilarArtistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchSimilarTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopAlbumRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopArtistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTrackRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
@@ -44,6 +72,23 @@ object UsecaseModule {
         bind<FetchSongListCase>() with singleton { FetchSongListRespCase(instance()) }
         bind<FetchMusicCase>() with singleton { FetchMusicRespCase(instance()) }
         bind<FetchHotListCase>() with singleton { FetchHotListRespCase(instance()) }
+        //endregion
+
+        //region LastFm
+        bind<FetchAlbumCase>() with singleton { FetchAlbumRespCase(instance()) }
+        bind<FetchArtistCase>() with singleton { FetchArtistRespCase(instance()) }
+        bind<FetchArtistTopAlbumCase>() with singleton { FetchArtistTopAlbumRespCase(instance()) }
+        bind<FetchArtistTopTrackCase>() with singleton { FetchArtistTopTrackRespCase(instance()) }
+        bind<FetchChartTopArtistCase>() with singleton { FetchChartTopArtistRespCase(instance()) }
+        bind<FetchChartTopTagCase>() with singleton { FetchChartTopTagRespCase(instance()) }
+        bind<FetchChartTopTrackCase>() with singleton { FetchChartTopTrackRespCase(instance()) }
+        bind<FetchSimilarArtistCase>() with singleton { FetchSimilarArtistRespCase(instance()) }
+        bind<FetchSimilarTrackCase>() with singleton { FetchSimilarTrackRespCase(instance()) }
+        bind<FetchTagCase>() with singleton { FetchTagRespCase(instance()) }
+        bind<FetchTagTopAlbumCase>() with singleton { FetchTagTopAlbumRespCase(instance()) }
+        bind<FetchTagTopArtistCase>() with singleton { FetchTagTopArtistRespCase(instance()) }
+        bind<FetchTagTopTrackCase>() with singleton { FetchTagTopTrackRespCase(instance()) }
+        bind<FetchTrackCase>() with singleton { FetchTrackRespCase(instance()) }
         //endregion
     }
 }
