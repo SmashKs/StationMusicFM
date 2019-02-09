@@ -19,20 +19,17 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package resources
+package com.no1.taiwan.stationmusicfm.features.main.rank
 
-/**
- * For separating the resource modules.
- */
-object FeatureRes {
-    val dirs = arrayOf(
-        "src/main/res-features",
-        "src/main/res-splash",
-        "src/main/res-theme",
-        "src/main/res-rank",
-        "src/main/res-explore",
-        "src/main/res-mymusic",
-        "src/main/res-search",
-        "src/main/res-main"
-    )
+import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.bases.BaseFragment
+import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+
+class RankFragment : BaseFragment<MainActivity>() {
+    /**
+     * Set the parentView for inflating.
+     *
+     * @return [LayoutRes] layout xml.
+     */
+    override fun provideInflateView() = R.layout.fragment_search
 }
