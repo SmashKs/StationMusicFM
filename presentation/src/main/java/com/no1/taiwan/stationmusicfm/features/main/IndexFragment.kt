@@ -21,9 +21,13 @@
 
 package com.no1.taiwan.stationmusicfm.features.main
 
-import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseActivity
+import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 
-class MainActivity : BaseActivity() {
-    override fun provideLayoutId() = R.layout.activity_main
+class IndexFragment : BaseFragment<MainActivity>() {
+    /**
+     * Set the parentView for inflating.
+     *
+     * @return [LayoutRes] layout xml.
+     */
+    override fun provideInflateView() = Unit
 }
