@@ -19,16 +19,17 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main
+package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseFragment
+import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 
-class IndexFragment : BaseFragment<MainActivity>() {
+class ExploreFragment : BaseFragment<MainActivity>() {
     /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.
      */
-    override fun provideInflateView() = R.layout.fragment_index
+    override fun provideInflateView() = R.layout.fragment_explore
 }

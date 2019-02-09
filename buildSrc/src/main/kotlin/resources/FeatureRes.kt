@@ -29,6 +29,9 @@ object FeatureRes {
         "src/main/res-features",
         "src/main/res-splash",
         "src/main/res-theme",
+        "src/main/res-explore",
+        "src/main/res-mymusic",
+        "src/main/res-search",
         "src/main/res-main"
     )
 }
