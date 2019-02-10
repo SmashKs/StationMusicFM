@@ -51,11 +51,10 @@ infix fun <E> RespMutableLiveData<E>.reqData(usecaseRes: suspend () -> E) = preP
     tryResp { ResponseState.Success(usecaseRes()) }.let(this@reqData::postValue)
 }
 
-infix fun <E> RespMutableLiveData<E>.reqDataWrap(usecaseRes: suspend () -> ResponseState<E>) =
-    preProc {
-        // Fetching the data from the data layer.
-        tryResp { usecaseRes() }.let(this@reqDataWrap::postValue)
-    }
+infix fun <E> RespMutableLiveData<E>.reqDataWrap(usecaseRes: suspend () -> ResponseState<E>) = preProc {
+    // Fetching the data from the data layer.
+    tryResp { usecaseRes() }.let(this@reqDataWrap::postValue)
+}
 
 /**
  * Pre-process does that showing the loading view.

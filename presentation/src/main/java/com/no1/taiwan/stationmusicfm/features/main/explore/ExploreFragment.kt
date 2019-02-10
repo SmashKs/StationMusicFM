@@ -22,8 +22,9 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
@@ -33,15 +34,18 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
 class ExploreFragment : AdvFragment<MainActivity, ExploreViewModel>() {
-    private var count = 1
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.topTracks) {
             peel {
-                logw(it.tracks)
-                count++
-                if (count <= 2)
-                    vm.runTaskFetchTopTrack()
+                logd(it.tracks)
+            } happenError {
+                loge(it)
+            } doWith this@ExploreFragment
+        }
+        observeNonNull(vm.topArtists) {
+            peel {
+                logd(it.artists)
             } happenError {
                 loge(it)
             } doWith this@ExploreFragment
@@ -55,7 +59,12 @@ class ExploreFragment : AdvFragment<MainActivity, ExploreViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.runTaskFetchTopTrack()
+        vm.apply {
+            if (topTracks.value.isNull())
+                runTaskFetchTopTrack()
+            if (topArtists.value.isNull())
+                runTaskFetchTopArtist()
+        }
     }
 
     /**

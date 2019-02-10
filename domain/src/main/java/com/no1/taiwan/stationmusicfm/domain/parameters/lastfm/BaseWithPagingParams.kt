@@ -39,7 +39,7 @@ open class BaseWithPagingParams : BaseParams() {
 
     override fun toApiParam() = super.toApiParam().apply {
         page.takeIf { PARAM_QUERY_PAGE != it }?.let { put(PARAM_NAME_PAGE, it.toString()) }
-        limit.takeIf { PARAM_QUERY_LIMIT != it }?.let { put(PARAM_NAME_LIMIT, it.toString()) }
+        put(PARAM_NAME_LIMIT, limit.toString())
     }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)

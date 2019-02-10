@@ -21,10 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
-import androidx.lifecycle.ViewModel
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
-import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.BaseWithPagingParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
@@ -35,6 +32,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
+import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
@@ -46,38 +44,27 @@ class ExploreViewModel(
     private val fetchChartTopTrackCase: FetchChartTopTrackCase,
     private val fetchChartTopArtistCase: FetchChartTopArtistCase,
     private val mapperPool: PreziMapperPool
-) : ViewModel() {
+) : AutoViewModel() {
     private val _topTracks by lazy { RespMutableLiveData<TrackInfoEntity.TracksEntity>() }
     val topTracks: RespLiveData<TrackInfoEntity.TracksEntity> = _topTracks
     private val _topArtists by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsEntity>() }
-    val topArtists get() = requireNotNull(_topArtists.value?.data?.artists)
+    val topArtists: RespLiveData<ArtistInfoEntity.ArtistsEntity> = _topArtists
     private val topTracksMapper by lazy { cast<TracksPMapper>(mapperPool[TracksPMapper::class.java]) }
     private val topArtistsMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
 
-    fun runTaskFetchTopTrack(perPage: Int = Pager.LIMIT) = GlobalScope.launch {
+    fun runTaskFetchTopTrack(limit: Int = Pager.LIMIT) = GlobalScope.launch {
         var params = FetchChartTopTrackReq()
-
         _topTracks.value?.data?.attr?.let {
-            params = FetchChartTopTrackReq(BaseWithPagingParams().apply {
-                page = it.page.toInt() + 1
-                limit = perPage
-            })
+            params = FetchChartTopTrackReq(autoIncreaseParams(it, limit) ?: return@launch)
         }
-        // If already find until the last page, we need to return.
-        // FIXME(jieyi): 2019-02-10 Call again will happen error -> java.lang.NumberFormatException: For input string: ""
-        _topTracks.value?.data?.attr?.takeIf {
-            logw(it.perPage, it.totalPages)
-            it.perPage.toInt() >= it.totalPages.toInt()
-        }?.let { return@launch }
         _topTracks reqData { fetchChartTopTrackCase.execMapping(topTracksMapper, params) }
     }
 
-    fun runTaskFetchTopArtist(page: Int = Pager.PAGE, limit: Int = Pager.LIMIT) = GlobalScope.launch {
-        val params = BaseWithPagingParams().also {
-            it.page = page
-            it.limit = limit
+    fun runTaskFetchTopArtist(limit: Int = Pager.LIMIT) = GlobalScope.launch {
+        var params = FetchChartTopArtistReq()
+        _topArtists.value?.data?.attr?.let {
+            params = FetchChartTopArtistReq(autoIncreaseParams(it, limit) ?: return@launch)
         }
-
-        _topArtists reqData { fetchChartTopArtistCase.execMapping(topArtistsMapper, FetchChartTopArtistReq(params)) }
+        _topArtists reqData { fetchChartTopArtistCase.execMapping(topArtistsMapper, params) }
     }
 }

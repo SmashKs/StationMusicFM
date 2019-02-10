@@ -19,27 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
+package com.no1.taiwan.stationmusicfm.utils.aac
 
-import com.no1.taiwan.stationmusicfm.data.data.TracksDataMap
-import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import androidx.lifecycle.ViewModel
+import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.BaseWithPagingParams
+import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
 
-/**
- * A transforming mapping between [TopTrackInfoData.TracksData] and [TrackInfoModel.TracksModel].
- * The different layers have their own data objects, the objects should transform and fit each layers.
- */
-class TracksDMapper(
-    private val trackMapper: TrackDMapper,
-    private val attrMapper: AttrDMapper
-) : TracksDataMap {
-    override fun toModelFrom(data: TopTrackInfoData.TracksData) = data.run {
-        TrackInfoModel.TracksModel(tracks.map(trackMapper::toModelFrom),
-                                   attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel())
-    }
-
-    override fun toDataFrom(model: TrackInfoModel.TracksModel) = model.run {
-        TopTrackInfoData.TracksData(tracks.map(trackMapper::toDataFrom), attrMapper.toDataFrom(attr))
+open class AutoViewModel : ViewModel() {
+    /**
+     * Auto-increasing for the query of the lastfm request.
+     *
+     * @param attr
+     * @param perPage
+     */
+    protected fun autoIncreaseParams(attr: CommonLastFmEntity.AttrEntity, perPage: Int): BaseWithPagingParams? {
+        // If it's already found until the last page, we need to return.
+        if (attr.perPage.toInt() >= attr.totalPages.toInt())
+            return null
+        return BaseWithPagingParams().apply {
+            page = attr.page.toInt() + 1
+            limit = perPage
+        }
     }
 }

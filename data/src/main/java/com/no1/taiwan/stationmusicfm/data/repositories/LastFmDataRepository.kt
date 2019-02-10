@@ -82,11 +82,7 @@ class LastFmDataRepository constructor(
         remote.getSimilarTrackInfo(parameters).similarTracks.run(tracksMapper::toModelFrom)
 
     override suspend fun fetchChartTopTrack(parameters: Parameterable) =
-        remote.getChartTopTrack(parameters).track.apply {
-            println("=================================================")
-            println(this.attr)
-            println("=================================================")
-        }.run(tracksMapper::toModelFrom)
+        remote.getChartTopTrack(parameters).track.run(tracksMapper::toModelFrom)
 
     override suspend fun fetchChartTopArtist(parameters: Parameterable) =
         remote.getChartTopArtist(parameters).artists.run(artistsMapper::toModelFrom)
