@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import androidx.lifecycle.ViewModel
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.BaseWithPagingParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistCase
@@ -53,13 +54,6 @@ class ExploreViewModel(
     private val topTracksMapper by lazy { cast<TracksPMapper>(mapperPool[TracksPMapper::class.java]) }
     private val topArtistsMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
 
-//    fun testFetching() = GlobalScope.launch {
-//        ld reqData {
-//            fetchAlbumCase.execMapping(mapper,
-//                                       FetchAlbumReq(AlbumParams(mbid = "61bf0388-b8a9-48f4-81d1-7eb02706dfb0")))
-//        }
-//    }
-
     fun runTaskFetchTopTrack(perPage: Int = Pager.LIMIT) = GlobalScope.launch {
         var params = FetchChartTopTrackReq()
 
@@ -71,7 +65,10 @@ class ExploreViewModel(
         }
         // If already find until the last page, we need to return.
         // FIXME(jieyi): 2019-02-10 Call again will happen error -> java.lang.NumberFormatException: For input string: ""
-        _topTracks.value?.data?.attr?.takeIf { it.perPage.toInt() >= it.totalPages.toInt() }?.let { return@launch }
+        _topTracks.value?.data?.attr?.takeIf {
+            logw(it.perPage, it.totalPages)
+            it.perPage.toInt() >= it.totalPages.toInt()
+        }?.let { return@launch }
         _topTracks reqData { fetchChartTopTrackCase.execMapping(topTracksMapper, params) }
     }
 

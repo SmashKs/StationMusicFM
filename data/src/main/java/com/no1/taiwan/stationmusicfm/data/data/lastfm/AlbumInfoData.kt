@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.data.data.lastfm
 
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
+import com.no1.taiwan.stationmusicfm.ext.string.trimMarginAndNewLine
 
 data class AlbumInfoData(
     val album: AlbumData?
@@ -31,14 +32,29 @@ data class AlbumInfoData(
         val artist: String?,
         @SerializedName("playcount")
         val playCount: String? = null
-    ) : BaseAlbumData(), Data
+    ) : BaseAlbumData(), Data {
+        override fun toString() = """
+            |${this::class.java.simpleName}(
+            |artist=$artist
+            |playCount=$playCount
+            |${super.toString()})
+            |""".trimMarginAndNewLine()
+    }
 
     data class AlbumWithArtistData(
         val artist: ArtistInfoData.ArtistData?,
         @SerializedName("playcount")
         val playCount: String? = null,
         val index: Int = -1
-    ) : BaseAlbumData(), Data
+    ) : BaseAlbumData(), Data {
+        override fun toString() = """
+            |${this::class.java.simpleName}(
+            |artist=$artist
+            |playCount=$playCount
+            |index=$index
+            |${super.toString()})
+            |""".trimMarginAndNewLine()
+    }
 
     open class BaseAlbumData(
         @SerializedName("@attr")
@@ -54,5 +70,18 @@ data class AlbumInfoData(
         var tracks: TopTrackInfoData.TracksData? = null,
         var url: String? = null,
         var wiki: CommonLastFmData.WikiData? = null
-    ) : Data
+    ) : Data {
+        override fun toString() = """
+            |attr=$attr
+            |images=$images
+            |listeners=$listeners
+            |mbid=$mbid
+            |name=$name
+            |tags=$tags
+            |title=$title
+            |tracks=$tracks
+            |url=$url
+            |wiki=$wiki
+            |""".trimMarginAndNewLine()
+    }
 }

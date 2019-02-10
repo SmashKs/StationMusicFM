@@ -23,17 +23,30 @@ package com.no1.taiwan.stationmusicfm.data.data.lastfm
 
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
+import com.no1.taiwan.stationmusicfm.ext.string.trimMarginAndNewLine
 
 data class TrackInfoData(
     val track: TrackData?
 ) : Data {
     data class TrackData(
         val streamable: CommonLastFmData.StreamableData?
-    ) : BaseTrackData(), Data
+    ) : BaseTrackData(), Data {
+        override fun toString() = """
+            |${this::class.java.simpleName}(
+            |streamable: $streamable
+            |${super.toString()})
+            |""".trimMarginAndNewLine()
+    }
 
     data class TrackWithStreamableData(
         val streamable: String?
-    ) : BaseTrackData(), Data
+    ) : BaseTrackData(), Data {
+        override fun toString() = """
+            |${this::class.java.simpleName}(
+            |streamable: $streamable
+            |${super.toString()})
+            |""".trimMarginAndNewLine()
+    }
 
     open class BaseTrackData(
         var album: AlbumInfoData.AlbumData? = null,
@@ -55,22 +68,21 @@ data class TrackInfoData(
         var realUrl: String? = null,
         var wiki: CommonLastFmData.WikiData? = null
     ) : Data {
-        override fun toString() =
-            """
-album: $album
-attr: $attr
-artist: $artist
-duration: $duration
-images: $images
-listeners: $listeners
-match: $match
-mbid: $mbid
-name: $name
-playcount: $playcount
-topTag: $topTag
-url: $url
-realUrl: $realUrl
-wiki: $wiki
-"""
+        override fun toString() = """
+            |album: $album
+            |attr: $attr
+            |artist: $artist
+            |duration: $duration
+            |images: $images
+            |listeners: $listeners
+            |match: $match
+            |mbid: $mbid
+            |name: $name
+            |playcount: $playcount
+            |topTag: $topTag
+            |url: $url
+            |realUrl: $realUrl
+            |wiki: $wiki
+            |""".trimMarginAndNewLine()
     }
 }

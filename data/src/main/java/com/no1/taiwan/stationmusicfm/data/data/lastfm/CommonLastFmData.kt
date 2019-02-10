@@ -59,10 +59,12 @@ object CommonLastFmData {
 
     data class AttrData(
         val artist: String?,
+        @SerializedName("totalPages")
         val totalPages: String?,
         val total: String?,
         val rank: String?,
         val position: String?,
+        @SerializedName("perPage")
         val perPage: String?,
         val page: String?
     ) : Data

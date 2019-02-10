@@ -31,6 +31,9 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
  */
 class AttrDMapper : AttrDataMap {
     override fun toModelFrom(data: CommonLastFmData.AttrData) = data.run {
+        println("=================================================")
+        println(this)
+        println("=================================================")
         CommonLastFmModel.AttrModel(artist.orEmpty(),
                                     totalPages.orEmpty(),
                                     total.orEmpty(),

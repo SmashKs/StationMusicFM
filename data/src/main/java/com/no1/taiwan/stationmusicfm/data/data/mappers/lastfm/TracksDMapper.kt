@@ -35,6 +35,9 @@ class TracksDMapper(
     private val attrMapper: AttrDMapper
 ) : TracksDataMap {
     override fun toModelFrom(data: TopTrackInfoData.TracksData) = data.run {
+        println("=================================================")
+        println(this.tracks)
+        println("=================================================")
         TrackInfoModel.TracksModel(tracks.map(trackMapper::toModelFrom),
                                    attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel())
     }
