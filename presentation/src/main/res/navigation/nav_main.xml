@@ -20,21 +20,34 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@id/frag_explore"
-        android:icon="@drawable/ic_explore_music"
-        android:title="Explore"/>
-    <item
-        android:id="@id/frag_mymusic"
-        android:icon="@drawable/ic_headset_black"
-        android:title="MyMusic"/>
-    <item
-        android:id="@id/frag_rank"
-        android:icon="@drawable/ic_library_music_black"
-        android:title="Rank"/>
-    <item
-        android:id="@id/frag_search"
-        android:icon="@drawable/ic_find_in_page_black"
-        android:title="Search"/>
-</menu>
+<navigation
+    android:id="@+id/nav_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/frag_explore">
+
+    <fragment
+        android:id="@+id/frag_explore"
+        android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreFragment"
+        android:label="Explore"
+        tools:layout="@layout/fragment_index"/>
+
+    <fragment
+        android:id="@+id/frag_mymusic"
+        android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicFragment"
+        android:label="MyMusic"
+        tools:layout="@layout/fragment_index"/>
+
+    <fragment
+        android:id="@+id/frag_rank"
+        android:name="com.no1.taiwan.stationmusicfm.features.main.rank.RankFragment"
+        android:label="Rank"
+        tools:layout="@layout/fragment_index"/>
+
+    <fragment
+        android:id="@+id/frag_search"
+        android:name="com.no1.taiwan.stationmusicfm.features.main.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_index"/>
+</navigation>

@@ -20,21 +20,20 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@id/frag_explore"
-        android:icon="@drawable/ic_explore_music"
-        android:title="Explore"/>
-    <item
-        android:id="@id/frag_mymusic"
-        android:icon="@drawable/ic_headset_black"
-        android:title="MyMusic"/>
-    <item
-        android:id="@id/frag_rank"
-        android:icon="@drawable/ic_library_music_black"
-        android:title="Rank"/>
-    <item
-        android:id="@id/frag_search"
-        android:icon="@drawable/ic_find_in_page_black"
-        android:title="Search"/>
-</menu>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.main.rank.RankFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rank"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

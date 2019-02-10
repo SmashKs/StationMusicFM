@@ -21,9 +21,24 @@
 
 package com.no1.taiwan.stationmusicfm.features.main
 
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
+import org.jetbrains.anko.find
 
 class MainActivity : BaseActivity() {
+    private val navigator by lazy { findNavController(R.id.frag_nav_main) }
+    private val bottomNavigation by lazy { find<BottomNavigationView>(R.id.bnv_navigation) }
+
+    /**
+     * For separating the huge function code in [init]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        NavigationUI.setupWithNavController(bottomNavigation, navigator)
+    }
+
     override fun provideLayoutId() = R.layout.activity_main
 }
