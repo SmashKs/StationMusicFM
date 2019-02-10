@@ -29,7 +29,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
-import com.no1.taiwan.stationmusicfm.utils.RespMutableLiveData
+import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 import kotlinx.coroutines.GlobalScope

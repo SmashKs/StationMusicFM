@@ -19,13 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils
+package com.no1.taiwan.stationmusicfm.ext.consts
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.no1.taiwan.stationmusicfm.domain.ResponseState
-
-typealias RespMutableLiveData<D> = MutableLiveData<ResponseState<D>>
-typealias RespLiveData<D> = LiveData<ResponseState<D>>
-
-//typealias AsyncCase<D, V> = DeferredUsecase<D, V>
+object Pager {
+    const val PAGE = 1
+    const val LIMIT = 30
+}

@@ -23,14 +23,15 @@ package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
+import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 
 open class BaseWithPagingParams : BaseParams() {
     companion object {
         const val PARAM_NAME_LIMIT = "limit"
         const val PARAM_NAME_PAGE = "page"
 
-        private const val PARAM_QUERY_LIMIT = 30
-        private const val PARAM_QUERY_PAGE = 1
+        private const val PARAM_QUERY_LIMIT = Pager.LIMIT
+        private const val PARAM_QUERY_PAGE = Pager.PAGE
     }
 
     open var limit = PARAM_QUERY_LIMIT

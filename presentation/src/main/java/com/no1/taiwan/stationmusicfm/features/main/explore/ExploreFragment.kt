@@ -21,11 +21,43 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
+import android.os.Bundle
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseFragment
+import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
-class ExploreFragment : BaseFragment<MainActivity>() {
+class ExploreFragment : AdvFragment<MainActivity, ExploreViewModel>() {
+    private var count = 1
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        observeNonNull(vm.topTracks) {
+            peel {
+                logw(it.tracks)
+                count++
+                if (count <= 2)
+                    vm.runTaskFetchTopTrack()
+            } happenError {
+                loge(it)
+            } doWith this@ExploreFragment
+        }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        super.rendered(savedInstanceState)
+        vm.runTaskFetchTopTrack()
+    }
+
     /**
      * Set the parentView for inflating.
      *

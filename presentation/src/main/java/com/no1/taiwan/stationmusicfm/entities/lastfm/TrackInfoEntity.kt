@@ -23,11 +23,18 @@ package com.no1.taiwan.stationmusicfm.entities.lastfm
 
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.string.trimMarginAndNewLine
 
 object TrackInfoEntity {
     data class TrackEntity(
         val streamable: CommonLastFmEntity.StreamableEntity = CommonLastFmEntity.StreamableEntity()
-    ) : BaseTrackEntity(), Entity
+    ) : BaseTrackEntity(), Entity {
+        override fun toString() = """
+            |${this::class.java.simpleName}(
+            |streamable=$streamable
+            |${super.toString()})
+            |""".trimMarginAndNewLine()
+    }
 
     data class TracksEntity(
         val tracks: List<TrackInfoEntity.TrackEntity> = emptyList(),
@@ -59,22 +66,21 @@ object TrackInfoEntity {
         var realUrl: String = DEFAULT_STR,
         var wiki: CommonLastFmEntity.WikiEntity = CommonLastFmEntity.WikiEntity()
     ) : Entity {
-        override fun toString() =
-            """
-album: $album
-attr: $attr
-artist: $artist
-duration: $duration
-images: $images
-listeners: $listeners
-match: $match
-mbid: $mbid
-name: $name
-playcount: $playcount
-topTags: $topTags
-url: $url
-realUrl: $realUrl
-wiki: $wiki
-"""
+        override fun toString() = """
+            |album: $album
+            |attr: $attr
+            |artist: $artist
+            |duration: $duration
+            |images: $images
+            |listeners: $listeners
+            |match: $match
+            |mbid: $mbid
+            |name: $name
+            |playcount: $playcount
+            |topTags: $topTags
+            |url: $url
+            |realUrl: $realUrl
+            |wiki: $wiki
+            |""".trimMarginAndNewLine()
     }
 }

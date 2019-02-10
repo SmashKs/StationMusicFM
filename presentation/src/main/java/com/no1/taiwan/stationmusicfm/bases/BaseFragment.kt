@@ -31,11 +31,17 @@ import androidx.annotation.StyleRes
 import androidx.annotation.UiThread
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleObserver
 import com.devrapid.kotlinshaver.castOrNull
+import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT
+import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.multiton
 
 /**
  * The basic fragment is for the normal activity which prepares all necessary variables or functions.
@@ -44,8 +50,8 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
     override val kodein = Kodein.lazy {
         extend(parentKodein)
         /* fragment specific bindings */
-//        import(SuperFragmentModule.fragmentModule())
-//        bind<LifecycleObserver>(FRAGMENT) with multiton { fragment: Fragment -> BusFragLifeRegister(fragment) }
+        import(SuperFragmentModule.fragmentModule())
+        bind<LifecycleObserver>(FRAGMENT) with multiton { fragment: Fragment -> BusFragLifeRegister(fragment) }
     }
     @Suppress("UNCHECKED_CAST")
     protected val parent

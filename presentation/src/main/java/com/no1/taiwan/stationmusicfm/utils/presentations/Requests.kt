@@ -23,7 +23,6 @@ package com.no1.taiwan.stationmusicfm.utils.presentations
 
 import com.devrapid.kotlinshaver.gLaunch
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
-import com.no1.taiwan.stationmusicfm.utils.RespMutableLiveData
 
 /**
  * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state
