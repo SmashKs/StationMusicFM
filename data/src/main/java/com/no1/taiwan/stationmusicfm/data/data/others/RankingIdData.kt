@@ -19,39 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.local.config
+package com.no1.taiwan.stationmusicfm.data.data.others
 
-import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.no1.taiwan.stationmusicfm.data.data.Data
 
-/**
- * The access operations to a database.
- */
-@Database(entities = [RankingIdData::class], version = 1, exportSchema = false)
-abstract class MusicDatabase : RoomDatabase() {
-    companion object {
-        @Volatile private var INSTANCE: MusicDatabase? = null
-        private const val DATABASE_NAME = "music.db"
-
-        fun getDatabase(context: Context): MusicDatabase {
-            val tempInstance = INSTANCE
-
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MusicDatabase::class.java,
-                    DATABASE_NAME
-                ).build()
-                INSTANCE = instance
-
-                return instance
-            }
-        }
-    }
-}
+@Entity(tableName = "table_ranking")
+data class RankingIdData(
+    @PrimaryKey
+    val id: Int,
+    val title: String,
+    val update: String
+) : Data

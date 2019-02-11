@@ -49,6 +49,8 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCas
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongListRespCase
 
+// MusicBank
+
 typealias FetchRankMusicReq = FetchRankMusicRespCase.Request
 typealias FetchSongListReq = FetchSongListRespCase.Request
 typealias FetchMusicReq = FetchMusicRespCase.Request
@@ -58,6 +60,8 @@ typealias FetchRankMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchR
 typealias FetchSongListCase = DeferredUsecase<CommonMusicModel.PlayListModel, FetchSongListReq>
 typealias FetchMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchMusicReq>
 typealias FetchHotListCase = DeferredUsecase<HotPlaylistModel.HotListModel, FetchHotListReq>
+
+// LastFm
 
 typealias FetchAlbumReq = FetchAlbumRespCase.Request
 typealias FetchArtistReq = FetchArtistRespCase.Request

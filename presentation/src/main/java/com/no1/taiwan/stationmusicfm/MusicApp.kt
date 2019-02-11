@@ -46,6 +46,7 @@ class MusicApp : MultiDexApplication(), KodeinAware {
 
     private val workManager by instance<WorkManager>()
     private val initRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_INIT) }
+    private val parserRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_PARSE_CHART) }
 
     init {
         appContext = this
@@ -67,6 +68,7 @@ class MusicApp : MultiDexApplication(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         workManager.enqueue(initRequest)
+        workManager.enqueue(parserRequest)
         MMKV.initialize(applicationContext)
     }
 }

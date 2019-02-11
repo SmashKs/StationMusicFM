@@ -19,39 +19,18 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.local.config
+package com.no1.taiwan.stationmusicfm.data.local.services
 
-import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.Dao
+import androidx.room.Query
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
+import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
 
-/**
- * The access operations to a database.
- */
-@Database(entities = [RankingIdData::class], version = 1, exportSchema = false)
-abstract class MusicDatabase : RoomDatabase() {
-    companion object {
-        @Volatile private var INSTANCE: MusicDatabase? = null
-        private const val DATABASE_NAME = "music.db"
-
-        fun getDatabase(context: Context): MusicDatabase {
-            val tempInstance = INSTANCE
-
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MusicDatabase::class.java,
-                    DATABASE_NAME
-                ).build()
-                INSTANCE = instance
-
-                return instance
-            }
-        }
-    }
+@Dao
+abstract class RankingDao : BaseDao<RankingIdData> {
+    /**
+     * Get all data from the Ranking table.
+     */
+    @Query("SELECT * FROM table_ranking")
+    abstract fun getTransactions(): List<RankingIdData>
 }

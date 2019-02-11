@@ -19,39 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.local.config
+package com.no1.taiwan.stationmusicfm.services.workers
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
+import androidx.work.Worker
+import androidx.work.WorkerParameters
+import com.no1.taiwan.stationmusicfm.R
 
-/**
- * The access operations to a database.
- */
-@Database(entities = [RankingIdData::class], version = 1, exportSchema = false)
-abstract class MusicDatabase : RoomDatabase() {
-    companion object {
-        @Volatile private var INSTANCE: MusicDatabase? = null
-        private const val DATABASE_NAME = "music.db"
+class RankChartParserWorker(
+    context: Context,
+    workerParams: WorkerParameters
+) : Worker(context, workerParams) {
+    override fun doWork(): Result {
+        // If there're data inside in database already, we can skip storing.
 
-        fun getDatabase(context: Context): MusicDatabase {
-            val tempInstance = INSTANCE
-
-            if (tempInstance != null) {
-                return tempInstance
+        val charts = applicationContext.resources.getStringArray(R.array.chart_rank)
+            .map {
+                val each = it.split("|")
+                Triple(each[0].toInt(), each[1], each[2])
             }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MusicDatabase::class.java,
-                    DATABASE_NAME
-                ).build()
-                INSTANCE = instance
-
-                return instance
-            }
-        }
+        // TODO(jieyi): 2019-02-11 Keep this into database.
+        return Result.success()
     }
 }
