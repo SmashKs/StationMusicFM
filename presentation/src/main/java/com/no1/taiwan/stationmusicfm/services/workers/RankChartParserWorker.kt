@@ -24,15 +24,20 @@ package com.no1.taiwan.stationmusicfm.services.workers
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
+import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
+import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
+import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
+import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 
 class RankChartParserWorker(
@@ -40,11 +45,19 @@ class RankChartParserWorker(
     workerParams: WorkerParameters
 ) : Worker(context, workerParams), KodeinAware {
     /** A Kodein Aware class must be within reach of a [Kodein] object. */
-    override val kodein by closestKodein(applicationContext)
+    override val kodein = Kodein.lazy {
+        /** bindings */
+        import(UtilModule.utilProvider(applicationContext))
+        /** usecases are bind here but the scope is depending on each layers.  */
+        import(UsecaseModule.usecaseProvider())
+        import(RepositoryModule.repositoryProvider(applicationContext))
+        import(UtilModule.dataUtilProvider())
+    }
     private val addRankIdsCase by instance<AddRankIdsCase>()
-    override
+    private val mapperPool by instance<PreziMapperPool>()
+    private val rankingMapper by lazy { cast<RankingPMapper>(mapperPool[RankingPMapper::class.java]) }
 
-    fun doWork(): Result {
+    override fun doWork(): Result {
         // If there're data inside in database already, we can skip storing.
         val charts = applicationContext.resources.getStringArray(R.array.chart_rank)
             .map {
@@ -52,7 +65,7 @@ class RankChartParserWorker(
                 RankingIdEntity(each[0].toInt(), each[1], each[2])
             }
 
-        return if (runBlocking { addRankIdsCase.exec(AddRankIdsReq()) })
+        return if (runBlocking { addRankIdsCase.exec(AddRankIdsReq(charts.map(rankingMapper::toModelFrom))) })
             Result.success()
         else
             Result.failure()

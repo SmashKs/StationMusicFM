@@ -21,8 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
 
-import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
-import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
@@ -35,8 +34,8 @@ class AddRankIdsRespCase(
     override var requestValues: AddRankIdsReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        repository.addRankings(listOf())
+        repository.addRankings(it.parameters)
     }
 
-    class Request(val parameters: Parameterable = EmptyParams()) : RequestValues
+    class Request(val parameters: List<RankingIdModel>) : RequestValues
 }

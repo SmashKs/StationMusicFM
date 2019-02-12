@@ -53,7 +53,7 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.20"
+        const val kotlinLib = "1.3.21"
         const val kotlinCoroutine = "1.1.1"
     }
 
@@ -94,7 +94,7 @@ object Versions {
      * Related Firebase lib version.
      */
     object Firebase {
-        const val core = "16.0.6"
+        const val core = "16.0.7"
         const val database = "16.0.6"
         const val auth = "16.0.3"
         const val messaging = "17.3.4"
@@ -122,7 +122,7 @@ object Versions {
         const val glide = "4.8.0"
         const val retrofit2 = "2.5.0"
         const val adapterCoroutine = "0.9.2"
-        const val okhttp3 = "3.12.1"
+        const val okhttp3 = "3.13.1"
         const val okhttpProfiler = "1.0.4"
         const val activityLauncher = "1.0.2"
     }
@@ -173,7 +173,7 @@ object Versions {
      * Related extension Plugins lib version.
      */
     object Plugin {
-        const val detekt = "1.0.0-RC12"
+        const val detekt = "1.0.0-RC13"
         const val versionUpdater = "0.20.0"
     }
 }
