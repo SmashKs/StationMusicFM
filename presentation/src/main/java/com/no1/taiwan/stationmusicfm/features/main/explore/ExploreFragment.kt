@@ -22,7 +22,6 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
@@ -38,14 +37,14 @@ class ExploreFragment : AdvFragment<MainActivity, ExploreViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.topTracks) {
             peel {
-                logd(it.tracks)
+                //                logd(it.tracks)
             } happenError {
                 loge(it)
             } doWith this@ExploreFragment
         }
         observeNonNull(vm.topArtists) {
             peel {
-                logd(it.artists)
+                //                logd(it.artists)
             } happenError {
                 loge(it)
             } doWith this@ExploreFragment

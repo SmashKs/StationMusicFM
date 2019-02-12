@@ -28,6 +28,8 @@ import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
@@ -52,12 +54,17 @@ class RankChartParserWorker(
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(applicationContext))
         import(UtilModule.dataUtilProvider())
+        import(UtilModule.presentationUtilProvider())
     }
+    private val fetchRankIdsCase by instance<FetchRankIdsCase>()
     private val addRankIdsCase by instance<AddRankIdsCase>()
     private val mapperPool by instance<PreziMapperPool>()
     private val rankingMapper by lazy { cast<RankingPMapper>(mapperPool[RankingPMapper::class.java]) }
 
     override fun doWork(): Result {
+        if (runBlocking { fetchRankIdsCase.exec(FetchRankIdsReq()) }.isNotEmpty())
+            return Result.success()
+
         // If there're data inside in database already, we can skip storing.
         val charts = applicationContext.resources.getStringArray(R.array.chart_rank)
             .map {

@@ -22,7 +22,6 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import android.content.Context
-import com.google.firebase.database.FirebaseDatabase
 import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
 import com.no1.taiwan.stationmusicfm.data.remote.RestfulApiFactory
 import com.no1.taiwan.stationmusicfm.data.remote.config.LastFmConfig
