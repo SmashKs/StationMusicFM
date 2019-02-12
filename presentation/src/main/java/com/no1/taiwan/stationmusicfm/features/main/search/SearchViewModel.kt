@@ -19,45 +19,34 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.rank
+package com.no1.taiwan.stationmusicfm.features.main.search
 
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
-import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class RankViewModel(
-    private val fetchRankMusicCase: FetchRankMusicCase,
-    private val fetchRankIdsCase: FetchRankIdsCase,
+class SearchViewModel(
+    private val fetchRankMusicCase: FetchMusicCase,
     private val mapperPool: PreziMapperPool
 ) : AutoViewModel() {
     private val _rankMusic by lazy { RespMutableLiveData<MusicInfoEntity.MusicEntity>() }
     val rankMusic: RespLiveData<MusicInfoEntity.MusicEntity> = _rankMusic
-    private val _rankIds by lazy { RespMutableLiveData<List<RankingIdEntity>>() }
-    val rankIds: RespLiveData<List<RankingIdEntity>> = _rankIds
     private val topTracksMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
     private val rankingIdMapper by lazy { cast<RankingPMapper>(mapperPool[RankingPMapper::class.java]) }
 
     fun runTaskFetchTopTrack(rankId: Int) = GlobalScope.launch {
         _rankMusic reqData { fetchRankMusicCase.execMapping(topTracksMapper, FetchRankMusicReq(RankParams(rankId))) }
-    }
-
-    fun runTaskFetchRankIds() = GlobalScope.launch {
-        _rankIds reqData { fetchRankIdsCase.execListMapping(rankingIdMapper, FetchRankIdsReq()) }
     }
 }
