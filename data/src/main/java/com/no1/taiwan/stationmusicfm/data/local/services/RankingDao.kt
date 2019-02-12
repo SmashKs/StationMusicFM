@@ -32,5 +32,5 @@ abstract class RankingDao : BaseDao<RankingIdData> {
      * Get all data from the Ranking table.
      */
     @Query("SELECT * FROM table_ranking")
-    abstract fun getTransactions(): List<RankingIdData>
+    abstract fun getRankings(): List<RankingIdData>
 }

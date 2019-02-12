@@ -19,29 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments
+package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
 
-import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntry
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
+import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
 
-/**
- * To provide the necessary objects for the specific fragments.
- */
-object SuperFragmentModule {
-    fun fragmentModule() = Kodein.Module("All Fragments") {
-        // Import all of the fragment modules.
-        import(providerViewModel())
+class AddRankIdsRespCase(
+    private val repository: MusicBankRepository
+) : AddRankIdsCase() {
+    /** Provide a common parameter variable for the children class. */
+    override var requestValues: AddRankIdsReq? = null
+
+    override suspend fun acquireCase() = attachParameter {
+        repository.addRankings(listOf())
     }
 
-    private fun providerViewModel() = Kodein.Module("Viewmodel Module") {
-        // *** ViewModel
-        bind<ViewModelEntry>().inSet() with provider {
-            ExploreViewModel::class.java to ExploreViewModel(instance(), instance(), instance())
-        }
-    }
+    class Request(val parameters: Parameterable = EmptyParams()) : RequestValues
 }

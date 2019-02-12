@@ -25,6 +25,7 @@ import android.content.Context
 import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.R
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.remote.Constants
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
@@ -126,4 +127,10 @@ class RemoteDataStore(
         putAll(lastFmAuth)
         put(Constants.LASTFM_QUERY_METHOD, method)
     }
+
+    //region UnsupportedOperationException
+    override suspend fun createRankingData(params: List<RankingIdData>) = throw UnsupportedOperationException()
+
+    override suspend fun getRankingData() = throw UnsupportedOperationException()
+    //endregion
 }

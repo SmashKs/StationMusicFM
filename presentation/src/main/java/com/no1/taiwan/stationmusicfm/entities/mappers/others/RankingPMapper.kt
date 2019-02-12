@@ -19,29 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments
+package com.no1.taiwan.stationmusicfm.entities.mappers.others
 
-import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntry
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
+import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
+import com.no1.taiwan.stationmusicfm.entities.RankingPreziMap
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 
 /**
- * To provide the necessary objects for the specific fragments.
+ * A transforming mapping between [RankingIdModel] and [RankingIdEntity].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-object SuperFragmentModule {
-    fun fragmentModule() = Kodein.Module("All Fragments") {
-        // Import all of the fragment modules.
-        import(providerViewModel())
+class RankingPMapper : RankingPreziMap {
+    override fun toEntityFrom(model: RankingIdModel) = model.run {
+        RankingIdEntity(id, title, update)
     }
 
-    private fun providerViewModel() = Kodein.Module("Viewmodel Module") {
-        // *** ViewModel
-        bind<ViewModelEntry>().inSet() with provider {
-            ExploreViewModel::class.java to ExploreViewModel(instance(), instance(), instance())
-        }
+    override fun toModelFrom(entity: RankingIdEntity) = entity.run {
+        RankingIdModel(id, title, update)
     }
 }

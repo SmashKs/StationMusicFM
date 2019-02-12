@@ -26,7 +26,9 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.HotListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MusicDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongListDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.others.RankingDMapper
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
+import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 
@@ -47,6 +49,7 @@ class MusicBankDataRepository constructor(
     private val musicMapper by lazy { digDataMapper<MusicDMapper>() }
     private val hotListMapper by lazy { digDataMapper<HotListDMapper>() }
     private val playlistMapper by lazy { digDataMapper<SongListDMapper>() }
+    private val rankingMapper by lazy { digDataMapper<RankingDMapper>() }
 
     override suspend fun fetchMusicRanking(parameters: Parameterable) =
         remote.getMusicRanking(parameters).data.run(musicMapper::toModelFrom)
@@ -59,4 +62,10 @@ class MusicBankDataRepository constructor(
 
     override suspend fun fetchSongList(parameters: Parameterable) =
         remote.getSongList(parameters).data.run(playlistMapper::toModelFrom)
+
+    override suspend fun fetchRankings() =
+        local.getRankingData().map(rankingMapper::toModelFrom)
+
+    override suspend fun addRankings(params: List<RankingIdModel>) =
+        local.createRankingData(params.map(rankingMapper::toDataFrom))
 }

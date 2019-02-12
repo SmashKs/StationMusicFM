@@ -19,29 +19,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments
+package com.no1.taiwan.stationmusicfm.entities.others
 
-import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntry
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
+import com.no1.taiwan.stationmusicfm.entities.Entity
 
-/**
- * To provide the necessary objects for the specific fragments.
- */
-object SuperFragmentModule {
-    fun fragmentModule() = Kodein.Module("All Fragments") {
-        // Import all of the fragment modules.
-        import(providerViewModel())
-    }
-
-    private fun providerViewModel() = Kodein.Module("Viewmodel Module") {
-        // *** ViewModel
-        bind<ViewModelEntry>().inSet() with provider {
-            ExploreViewModel::class.java to ExploreViewModel(instance(), instance(), instance())
-        }
-    }
-}
+data class RankingIdEntity(
+    val id: Int,
+    val title: String,
+    val update: String
+) : Entity

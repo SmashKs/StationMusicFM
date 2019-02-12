@@ -26,6 +26,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
+import com.no1.taiwan.stationmusicfm.data.local.services.RankingDao
 
 /**
  * The access operations to a database.
@@ -54,4 +55,6 @@ abstract class MusicDatabase : RoomDatabase() {
             }
         }
     }
+
+    abstract fun createRankingDao(): RankingDao
 }

@@ -30,6 +30,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopAlbumRespCase
@@ -92,3 +93,11 @@ typealias FetchTagTopAlbumCase = DeferredUsecase<CommonLastFmModel.TopAlbumsMode
 typealias FetchTagTopArtistCase = DeferredUsecase<ArtistInfoModel.ArtistsModel, FetchTagTopArtistReq>
 typealias FetchTagTopTrackCase = DeferredUsecase<TrackInfoModel.TracksModel, FetchTagTopTrackReq>
 typealias FetchTrackCase = DeferredUsecase<TrackInfoModel.TrackModel, FetchTrackReq>
+
+// Others
+
+typealias AddRankIdsReq = FetchSongListRespCase.Request
+typealias FetchRankIdsReq = FetchSongListRespCase.Request
+
+typealias AddRankIdsCase = DeferredUsecase<Boolean, AddRankIdsReq>
+typealias FetchRankIdsCase = DeferredUsecase<List<RankingIdModel>, FetchRankIdsReq>

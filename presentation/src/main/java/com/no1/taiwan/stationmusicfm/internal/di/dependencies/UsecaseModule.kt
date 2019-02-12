@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies
 
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopAlbumCase
@@ -30,6 +31,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchHotListCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarTrackCase
@@ -53,8 +55,10 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopAlbumResp
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopArtistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopTrackRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.AddRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongListRespCase
 import org.kodein.di.Kodein
@@ -72,6 +76,8 @@ object UsecaseModule {
         bind<FetchSongListCase>() with singleton { FetchSongListRespCase(instance()) }
         bind<FetchMusicCase>() with singleton { FetchMusicRespCase(instance()) }
         bind<FetchHotListCase>() with singleton { FetchHotListRespCase(instance()) }
+        bind<AddRankIdsCase>() with singleton { AddRankIdsRespCase(instance()) }
+        bind<FetchRankIdsCase>() with singleton { FetchRankIdsRespCase(instance()) }
         //endregion
 
         //region LastFm

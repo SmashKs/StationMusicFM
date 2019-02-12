@@ -19,29 +19,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments
-
-import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntry
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
+package com.no1.taiwan.stationmusicfm.domain.repositories
 
 /**
- * To provide the necessary objects for the specific fragments.
+ * This interface will be the similar to [com.no1.taiwan.stationmusicfm.data.datastores.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-object SuperFragmentModule {
-    fun fragmentModule() = Kodein.Module("All Fragments") {
-        // Import all of the fragment modules.
-        import(providerViewModel())
-    }
-
-    private fun providerViewModel() = Kodein.Module("Viewmodel Module") {
-        // *** ViewModel
-        bind<ViewModelEntry>().inSet() with provider {
-            ExploreViewModel::class.java to ExploreViewModel(instance(), instance(), instance())
-        }
-    }
-}
+interface OthersRepository

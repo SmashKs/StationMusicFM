@@ -30,6 +30,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
+import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
@@ -40,6 +41,7 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.RankChartEntity
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 
 typealias PreziMapper = Mapper<*, *>
 typealias PreziMapperPool = Map<Class<out PreziMapper>, PreziMapper>
@@ -75,3 +77,7 @@ typealias TracksPreziMap = Mapper<TrackInfoModel.TracksModel, TrackInfoEntity.Tr
 typealias TracksWithStreamablePreziMap = Mapper<TrackInfoModel.TracksWithStreamableModel, TrackInfoEntity.TracksWithStreamableEntity>
 typealias TrackWithStreamablePreziMap = Mapper<TrackInfoModel.TrackWithStreamableModel, TrackInfoEntity.TrackWithStreamableEntity>
 typealias WikiPreziMap = Mapper<CommonLastFmModel.WikiModel, CommonLastFmEntity.WikiEntity>
+
+// Others
+
+typealias RankingPreziMap = Mapper<RankingIdModel, RankingIdEntity>

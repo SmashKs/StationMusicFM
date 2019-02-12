@@ -26,6 +26,7 @@ import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.LocalDataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.RemoteDataStore
+import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
 import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.MusicBankDataRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
@@ -46,7 +47,10 @@ object RepositoryModule {
         import(ServiceModule.serviceProvider(context))
 
         bind<DataStore>(REMOTE) with singleton { RemoteDataStore(instance(), instance(), context) }
-        bind<DataStore>(LOCAL) with singleton { LocalDataStore(instance()) }
+        bind<DataStore>(LOCAL) with singleton {
+            LocalDataStore(instance<MusicDatabase>().createRankingDao(),
+                           instance())
+        }
         /** Mapper Pool for providing all data mappers */
         bind<DataMapperPool>() with singleton { instance<DataMapperEntries>().toMap() }
 

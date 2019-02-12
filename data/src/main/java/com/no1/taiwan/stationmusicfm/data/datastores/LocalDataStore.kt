@@ -21,6 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.datastores
 
+import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
+import com.no1.taiwan.stationmusicfm.data.local.services.RankingDao
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.tencent.mmkv.MMKV
 
@@ -29,8 +31,16 @@ import com.tencent.mmkv.MMKV
  * local service(Database/Local file) to access the data.
  */
 class LocalDataStore(
+    private val rankingDao: RankingDao,
     private val mmkv: MMKV
 ) : DataStore {
+    override suspend fun createRankingData(params: List<RankingIdData>): Boolean {
+        rankingDao.insert(*params.toTypedArray())
+        return true
+    }
+
+    override suspend fun getRankingData() = rankingDao.getRankings()
+
     //region UnsupportedOperationException
     override suspend fun getMusicRanking(parameterable: Parameterable) = throw UnsupportedOperationException()
 

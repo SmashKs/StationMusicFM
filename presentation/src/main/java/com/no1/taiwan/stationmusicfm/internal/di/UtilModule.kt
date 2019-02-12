@@ -53,6 +53,7 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MvDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.UserDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.others.RankingDMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumWithArtistPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
@@ -77,6 +78,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MvPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.SongListPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.SongPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.UserPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
@@ -154,6 +156,8 @@ object UtilModule {
             TracksWithStreamableDMapper::class.java to TracksWithStreamableDMapper(TrackWithStreamableDMapper(),
                                                                                    AttrDMapper())
         }
+
+        bind<DataMapperEntry>().inSet() with singleton { RankingDMapper::class.java to RankingDMapper() }
     }
 
     /**
@@ -200,5 +204,7 @@ object UtilModule {
             TracksWithStreamablePMapper::class.java to TracksWithStreamablePMapper(TrackWithStreamablePMapper(),
                                                                                    AttrPMapper())
         }
+
+        bind<PreziMapperEntry>().inSet() with singleton { RankingPMapper::class.java to RankingPMapper() }
     }
 }

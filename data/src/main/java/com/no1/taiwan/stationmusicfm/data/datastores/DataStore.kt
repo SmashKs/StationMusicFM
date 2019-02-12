@@ -37,6 +37,7 @@ import com.no1.taiwan.stationmusicfm.data.data.lastfm.TrackSimilarData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
+import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 
 /**
@@ -91,4 +92,8 @@ interface DataStore {
 
     suspend fun getTagTopTrack(parameterable: Parameterable): TopTrackInfoData
     //endregion
+
+    suspend fun createRankingData(params: List<RankingIdData>): Boolean
+
+    suspend fun getRankingData(): List<RankingIdData>
 }

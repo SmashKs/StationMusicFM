@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.internal.di
 
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
+import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
 import com.no1.taiwan.stationmusicfm.data.remote.RestfulApiFactory
 import com.no1.taiwan.stationmusicfm.data.remote.config.LastFmConfig
 import com.no1.taiwan.stationmusicfm.data.remote.config.MusicConfig
@@ -104,7 +105,7 @@ object ServiceModule {
      * To provide the necessary objects Local Implementation objects into the repository.
      */
     private fun implementationLocalProvider(context: Context) = Module("Implementation Local") {
-        //        bind<MusicDatabase>() with instance(MusicDatabase.getDatabase(context))
+        bind<MusicDatabase>() with instance(MusicDatabase.getDatabase(context))
         bind<MMKV>() with singleton { defaultMMKV(SINGLE_PROCESS_MODE, TOKEN_PUBLIC_KEY) }
     }
     //endregion
