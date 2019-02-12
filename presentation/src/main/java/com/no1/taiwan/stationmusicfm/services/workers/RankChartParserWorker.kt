@@ -25,20 +25,36 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.utils.presentations.exec
+import kotlinx.coroutines.runBlocking
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
 class RankChartParserWorker(
     context: Context,
     workerParams: WorkerParameters
-) : Worker(context, workerParams) {
-    override fun doWork(): Result {
-        // If there're data inside in database already, we can skip storing.
+) : Worker(context, workerParams), KodeinAware {
+    /** A Kodein Aware class must be within reach of a [Kodein] object. */
+    override val kodein by closestKodein(applicationContext)
+    private val addRankIdsCase by instance<AddRankIdsCase>()
+    override
 
+    fun doWork(): Result {
+        // If there're data inside in database already, we can skip storing.
         val charts = applicationContext.resources.getStringArray(R.array.chart_rank)
             .map {
                 val each = it.split("|")
-                Triple(each[0].toInt(), each[1], each[2])
+                RankingIdEntity(each[0].toInt(), each[1], each[2])
             }
-        // TODO(jieyi): 2019-02-11 Keep this into database.
-        return Result.success()
+
+        return if (runBlocking { addRankIdsCase.exec(AddRankIdsReq()) })
+            Result.success()
+        else
+            Result.failure()
     }
 }

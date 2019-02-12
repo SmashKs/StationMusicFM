@@ -45,8 +45,10 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopAlbumResp
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopArtistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopTrackRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTrackRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.AddRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongListRespCase
 
@@ -96,8 +98,8 @@ typealias FetchTrackCase = DeferredUsecase<TrackInfoModel.TrackModel, FetchTrack
 
 // Others
 
-typealias AddRankIdsReq = FetchSongListRespCase.Request
-typealias FetchRankIdsReq = FetchSongListRespCase.Request
+typealias AddRankIdsReq = AddRankIdsRespCase.Request
+typealias FetchRankIdsReq = FetchRankIdsRespCase.Request
 
 typealias AddRankIdsCase = DeferredUsecase<Boolean, AddRankIdsReq>
 typealias FetchRankIdsCase = DeferredUsecase<List<RankingIdModel>, FetchRankIdsReq>
