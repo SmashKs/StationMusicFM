@@ -23,12 +23,15 @@ package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
+import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 
 open class BaseWithPagingParams : BaseParams() {
     companion object {
         const val PARAM_NAME_LIMIT = "limit"
         const val PARAM_NAME_PAGE = "page"
+        const val PARAM_NAME_MBID = "mbid"
 
         private const val PARAM_QUERY_LIMIT = Pager.LIMIT
         private const val PARAM_QUERY_PAGE = Pager.PAGE
@@ -36,10 +39,12 @@ open class BaseWithPagingParams : BaseParams() {
 
     open var limit = PARAM_QUERY_LIMIT
     open var page = PARAM_QUERY_PAGE
+    open var mbid = DEFAULT_STR
 
     override fun toApiParam() = super.toApiParam().apply {
         page.takeIf { PARAM_QUERY_PAGE != it }?.let { put(PARAM_NAME_PAGE, it.toString()) }
         put(PARAM_NAME_LIMIT, limit.toString())
+        mbid.takeUnlessDefault { put(PARAM_NAME_MBID, it) }
     }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)

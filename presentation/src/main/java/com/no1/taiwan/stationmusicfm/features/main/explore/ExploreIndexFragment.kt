@@ -22,7 +22,9 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
+import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
@@ -44,7 +46,8 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
         }
         observeNonNull(vm.topArtists) {
             peel {
-                //                logd(it.artists)
+                findNavController().navigate(R.id.action_frag_explore_index_to_frag_explore_artist,
+                                             ExploreArtistFragment.createBundle(it.artists.first().mbid))
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment
@@ -61,8 +64,8 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
         vm.apply {
             //            if (topTracks.value.isNull())
 //                runTaskFetchTopTrack()
-//            if (topArtists.value.isNull())
-//                runTaskFetchTopArtist()
+            if (topArtists.value.isNull())
+                runTaskFetchTopArtist()
         }
     }
 

@@ -21,12 +21,53 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
+import android.os.Bundle
+import androidx.core.os.bundleOf
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
 class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
+    companion object {
+        private const val ARGUMENT_MBID = "fragment argument mbid"
+
+        fun createBundle(mbid: String) = bundleOf(ARGUMENT_MBID to mbid)
+    }
+
+    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID, DEFAULT_STR)) }
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        observeNonNull(vm.artistLiveData) {
+            peel {
+                logw(it)
+            } happenError {
+                loge(it)
+            } doWith this@ExploreArtistFragment
+        }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        super.rendered(savedInstanceState)
+        vm.runTaskFetchArtist(mbid)
+        vm.runTaskFetchTopAlbum(mbid)
+        vm.runTaskFetchSimilarArtist(mbid)
+        vm.runTaskFetchTopTrack(mbid)
+    }
+
     /**
      * Set the parentView for inflating.
      *

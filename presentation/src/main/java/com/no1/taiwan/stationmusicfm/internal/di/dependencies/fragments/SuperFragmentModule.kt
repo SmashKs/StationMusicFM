@@ -21,7 +21,11 @@
 
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments
 
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreAlbumViewModel
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreGenreViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntry
 import org.kodein.di.Kodein
@@ -48,7 +52,28 @@ object SuperFragmentModule {
                                                                        instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
+            ExploreAlbumViewModel::class.java to ExploreAlbumViewModel(instance(), instance())
+        }
+        bind<ViewModelEntry>().inSet() with provider {
+            ExploreArtistViewModel::class.java to ExploreArtistViewModel(instance(),
+                                                                         instance(),
+                                                                         instance(),
+                                                                         instance(),
+                                                                         instance())
+        }
+        bind<ViewModelEntry>().inSet() with provider {
+            ExploreGenreViewModel::class.java to ExploreGenreViewModel(instance(),
+                                                                       instance(),
+                                                                       instance(),
+                                                                       instance(),
+                                                                       instance())
+        }
+        bind<ViewModelEntry>().inSet() with provider {
+            ExploreTrackViewModel::class.java to ExploreTrackViewModel(instance(), instance(), instance())
+        }
+        bind<ViewModelEntry>().inSet() with provider {
             SearchViewModel::class.java to SearchViewModel(instance(), instance())
         }
+
     }
 }

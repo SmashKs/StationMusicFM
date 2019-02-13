@@ -24,12 +24,13 @@ package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 import com.devrapid.kotlinshaver.toInt
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.takeIfDefault
 import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 
 data class AlbumParams(
+    override var mbid: String = DEFAULT_STR,
     val albumName: String = DEFAULT_STR,
     val artistName: String = DEFAULT_STR,
-    val mbid: String = DEFAULT_STR,
     val language: String = DEFAULT_STR,
     val userName: String = DEFAULT_STR,
     val autoCorrect: Boolean = true
@@ -44,7 +45,7 @@ data class AlbumParams(
     }
 
     override fun toApiParam() = super.toApiParam().apply {
-        mbid.takeUnlessDefault { put(PARAM_NAME_MBID, it) } ?: apply {
+        mbid.takeIfDefault {
             put(PARAM_NAME_ALBUM, albumName)
             put(PARAM_NAME_ARTIST, artistName)
         }

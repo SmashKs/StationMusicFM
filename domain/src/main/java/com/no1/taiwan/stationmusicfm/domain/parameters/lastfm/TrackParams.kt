@@ -24,9 +24,11 @@ package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 import com.devrapid.kotlinshaver.toInt
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.takeIfDefault
 import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 
 data class TrackParams(
+    override var mbid: String = DEFAULT_STR,
     val trackName: String = DEFAULT_STR,
     val artistName: String = DEFAULT_STR,
     val userName: String = DEFAULT_STR,
@@ -40,10 +42,12 @@ data class TrackParams(
     }
 
     override fun toApiParam() = super.toApiParam().apply {
-        put(PARAM_NAME_TRACK, trackName)
-        artistName.takeUnlessDefault { put(PARAM_NAME_ARTIST, it) }
-        userName.takeUnlessDefault { put(PARAM_NAME_USER_NAME, it) }
-        put(PARAM_NAME_AUTO_CORRECT, autoCorrect.toInt().toString())
+        mbid.takeIfDefault {
+            put(PARAM_NAME_TRACK, trackName)
+            artistName.takeUnlessDefault { put(PARAM_NAME_ARTIST, it) }
+            userName.takeUnlessDefault { put(PARAM_NAME_USER_NAME, it) }
+            put(PARAM_NAME_AUTO_CORRECT, autoCorrect.toInt().toString())
+        }
     }
 
     override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
