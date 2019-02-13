@@ -19,17 +19,15 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
     repositories {
         google()
         jcenter()
-
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:3.4.0-beta03"
+        classpath "com.android.tools.build:gradle:3.3.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${dependencies.Versions.Kotlin.kotlinLib}"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -38,7 +36,7 @@ buildscript {
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt").version("1.0.0-RC12")
+    id("io.gitlab.arturbosch.detekt").version("1.0.0-RC13")
     id("com.github.ben-manes.versions").version("0.20.0")
 }
 
@@ -48,7 +46,7 @@ subprojects {
     }
 
     detekt {
-        toolVersion = "1.0.0-RC12"
+        toolVersion = "1.0.0-RC13"
         debug = true
         parallel = true
         input = files("src/main/java")
