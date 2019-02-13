@@ -38,6 +38,7 @@ interface MusicBankService {
     fun retrieveMusicRanking(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
 
     @GET("${RankingConfig.API_REQUEST}/search")
+    @Deprecated("Seeker Bank is better for searching more sources.")
     fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
 
     @GET("${RankingConfig.API_REQUEST}/hot_song_list")

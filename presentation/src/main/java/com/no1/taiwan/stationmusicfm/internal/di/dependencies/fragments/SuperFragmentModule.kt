@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments
 
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreViewModel
+import com.no1.taiwan.stationmusicfm.features.main.search.SearchViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntry
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -42,6 +43,9 @@ object SuperFragmentModule {
         // *** ViewModel
         bind<ViewModelEntry>().inSet() with provider {
             ExploreViewModel::class.java to ExploreViewModel(instance(), instance(), instance())
+        }
+        bind<ViewModelEntry>().inSet() with provider {
+            SearchViewModel::class.java to SearchViewModel(instance(), instance())
         }
     }
 }

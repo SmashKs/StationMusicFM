@@ -19,25 +19,19 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters.musicbank
+package com.no1.taiwan.stationmusicfm.data.remote.services
 
-import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
+import kotlinx.coroutines.Deferred
+import retrofit2.http.GET
+import retrofit2.http.QueryMap
 
-data class SrchSongParams(
-    private val query: String = DEFAULT_STR,
-    private val pageNo: Int = 0,
-    private val channelLang: String = DEFAULT_STR
-) : BaseParams() {
-    companion object {
-        const val PARAM_NAME_PAGE_NO = "page_no"
-        const val PARAM_NAME_QUERY = "query"
-        const val PARAM_NAME_CHANNEL_LANG = "channel_lang"
-    }
-
-    override fun toApiParam() = hashMapOf(
-        PARAM_NAME_QUERY to query,
-        PARAM_NAME_PAGE_NO to pageNo.toString(),
-        PARAM_NAME_CHANNEL_LANG to channelLang
-    )
+/**
+ * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
+ */
+interface SeekerBankService {
+    @GET(MusicSeekerConfig.API_REQUEST)
+    fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
 }

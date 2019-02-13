@@ -49,7 +49,7 @@ object NetModule {
         bind<Converter.Factory>() with singleton { GsonConverterFactory.create(instance()) }
         bind<CallAdapter.Factory>() with singleton { CoroutineCallAdapterFactory() }
         bind<Cache>() with singleton { Cache(context.cacheDir, CacheMaxSize /* 10 MiB */) }
-        bind<OkHttpClient>() with singleton {
+        bind<OkHttpClient.Builder>() with singleton {
             OkHttpClient.Builder()
                 .cache(instance())
                 // Keep the internet result into the cache.
@@ -57,29 +57,29 @@ object NetModule {
                     // Get the request from the chain.
                     var request = it.request()
 
-                    /*
-                    *  Leveraging the advantage of using Kotlin,
-                    *  we initialize the request and change its header depending on whether
-                    *  the device is connected to Internet or not.
-                    */
+                    /**
+                     *  Leveraging the advantage of using Kotlin,
+                     *  we initialize the request and change its header depending on whether
+                     *  the device is connected to Internet or not.
+                     */
                     request = if (hasNetwork(context) == true) {
-                        /*
-                        *  If there is Internet, get the cache that was stored 5 seconds ago.
-                        *  If the cache is older than 5 seconds, then discard it,
-                        *  and indicate an error in fetching the response.
-                        *  The 'max-age' attribute is responsible for this behavior.
-                        */
+                        /**
+                         *  If there is Internet, get the cache that was stored 5 seconds ago.
+                         *  If the cache is older than 5 seconds, then discard it,
+                         *  and indicate an error in fetching the response.
+                         *  The 'max-age' attribute is responsible for this behavior.
+                         */
                         request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
                     }
                     else {
-                        /*
-                        *  If there is no Internet, get the cache that was stored 7 days ago.
-                        *  If the cache is older than 7 days, then discard it,
-                        *  and indicate an error in fetching the response.
-                        *  The 'max-stale' attribute is responsible for this behavior.
-                        *  The 'only-if-cached' attribute indicates to not retrieve add data; fetch the cache
-                        *  only instead.
-                        */
+                        /**
+                         *  If there is no Internet, get the cache that was stored 7 days ago.
+                         *  If the cache is older than 7 days, then discard it,
+                         *  and indicate an error in fetching the response.
+                         *  The 'max-stale' attribute is responsible for this behavior.
+                         *  The 'only-if-cached' attribute indicates to not retrieve add data; fetch the cache
+                         *  only instead.
+                         */
                         request.newBuilder().header("Cache-Control",
                                                     "public, only-if-cached, max-stale=$AWeekTime").build()
                     }
@@ -90,18 +90,18 @@ object NetModule {
                 }
                 .apply {
                     if (BuildConfig.DEBUG) {
-                        addInterceptor(OkHttpProfilerInterceptor())  // For OkHttp Profiler plugins.
 //                        addInterceptor(HttpLoggingInterceptor().setLevel(BODY))  // For print to logcat.
+                        addInterceptor(OkHttpProfilerInterceptor())  // For OkHttp Profiler plugins.
                         addNetworkInterceptor(StethoInterceptor())
                     }
+                    // FIXME(jieyi): 2019-02-13 javax.net.ssl.SSLHandshakeException: Handshake failed because of the search music.
                 }
-                .build()
         }
         bind<Retrofit.Builder>() with singleton {
             Retrofit.Builder()
                 .addConverterFactory(instance())
                 .addCallAdapterFactory(instance())
-                .client(instance())
+                .client(instance<OkHttpClient.Builder>().build())
         }
     }
 }

@@ -29,6 +29,7 @@ import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.remote.Constants
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
+import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 
 /**
@@ -38,6 +39,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 class RemoteDataStore(
     private val lastFmService: LastFmService,
     private val musicBankService: MusicBankService,
+    private val seekerBankService: SeekerBankService,
     context: Context
 ) : DataStore {
     private val lastFmToken by lazy { context.getString(R.string.lastfm_api_key) }
@@ -55,7 +57,7 @@ class RemoteDataStore(
             put(BuildConfig.query2, BuildConfig.param2)
         }
 
-        return musicBankService.retrieveSearchMusic(queries).await()
+        return seekerBankService.retrieveSearchMusic(queries).await()
     }
 
     override suspend fun getHotPlaylist(parameterable: Parameterable) =

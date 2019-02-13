@@ -30,6 +30,7 @@ import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
 import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
+import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
 import com.no1.taiwan.stationmusicfm.internal.di.NetModule.netProvider
 import com.tencent.mmkv.MMKV
 import com.tencent.mmkv.MMKV.SINGLE_PROCESS_MODE
@@ -74,9 +75,9 @@ object ServiceModule {
      */
     private fun retrofitConfigProvider() = Module("Retrofit Configuration") {
         bind<LastFmConfig>() with instance(RestfulApiFactory().createLastFmConfig())
-        bind<MusicConfig>() with instance(RestfulApiFactory().createMusicConfig())
         bind<MusicSeekerConfig>() with instance(RestfulApiFactory().createMusicSeekerConfig())
         bind<RankingConfig>() with instance(RestfulApiFactory().createRankingConfig())
+        bind<MusicConfig>() with instance(RestfulApiFactory().createMusicConfig())
     }
 
     /**
@@ -94,6 +95,12 @@ object ServiceModule {
                 baseUrl(instance<RankingConfig>().apiBaseUrl)
                 build()
             }.create(MusicBankService::class.java)
+        }
+        bind<SeekerBankService>() with singleton {
+            with(instance<Retrofit.Builder>()) {
+                baseUrl(instance<MusicSeekerConfig>().apiBaseUrl)
+                build()
+            }.create(SeekerBankService::class.java)
         }
 //        bind<NewsFirebase>() with singleton { NewsFirebaseImpl(instance()) }
     }

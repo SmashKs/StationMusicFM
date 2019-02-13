@@ -24,13 +24,11 @@ package com.no1.taiwan.stationmusicfm.services.workers
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
@@ -58,8 +56,8 @@ class RankChartParserWorker(
     }
     private val fetchRankIdsCase by instance<FetchRankIdsCase>()
     private val addRankIdsCase by instance<AddRankIdsCase>()
-    private val mapperPool by instance<PreziMapperPool>()
-    private val rankingMapper by lazy { cast<RankingPMapper>(mapperPool[RankingPMapper::class.java]) }
+//    private val mapperPool by instance<PreziMapperPool>()
+//    private val rankingMapper by lazy { cast<RankingPMapper>(mapperPool[RankingPMapper::class.java]) }
 
     override fun doWork(): Result {
         if (runBlocking { fetchRankIdsCase.exec(FetchRankIdsReq()) }.isNotEmpty())
@@ -72,7 +70,7 @@ class RankChartParserWorker(
                 RankingIdEntity(each[0].toInt(), each[1], each[2])
             }
 
-        return if (runBlocking { addRankIdsCase.exec(AddRankIdsReq(charts.map(rankingMapper::toModelFrom))) })
+        return if (runBlocking { addRankIdsCase.exec(AddRankIdsReq(charts.map(RankingPMapper()::toModelFrom))) })
             Result.success()
         else
             Result.failure()
