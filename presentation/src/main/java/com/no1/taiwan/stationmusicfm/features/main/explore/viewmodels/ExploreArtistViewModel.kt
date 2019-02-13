@@ -40,6 +40,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
@@ -53,35 +54,39 @@ class ExploreArtistViewModel(
     private val fetchArtistTopTrackCase: FetchArtistTopTrackCase,
     private val mapperPool: PreziMapperPool
 ) : AutoViewModel() {
-    val artistLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistEntity>() }
-    val albumsLiveData by lazy { RespMutableLiveData<AlbumInfoEntity.TopAlbumsEntity>() }
-    val smiliarArtistsLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsEntity>() }
-    val tacksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksWithStreamableEntity>() }
+    private val _artistLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistEntity>() }
+    val artistLiveData: RespLiveData<ArtistInfoEntity.ArtistEntity> = _artistLiveData
+    private val _albumsLiveData by lazy { RespMutableLiveData<AlbumInfoEntity.TopAlbumsEntity>() }
+    val albumsLiveData: RespLiveData<AlbumInfoEntity.TopAlbumsEntity> = _albumsLiveData
+    private val _similarArtistsLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsEntity>() }
+    val similarArtistsLiveData: RespLiveData<ArtistInfoEntity.ArtistsEntity> = _similarArtistsLiveData
+    private val _tacksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksWithStreamableEntity>() }
+    val tacksLiveData: RespLiveData<TrackInfoEntity.TracksWithStreamableEntity> = _tacksLiveData
     private val artistMapper by lazy { cast<ArtistPMapper>(mapperPool[ArtistPMapper::class.java]) }
     private val topAlbumPMapper by lazy { cast<TopAlbumPMapper>(mapperPool[TopAlbumPMapper::class.java]) }
     private val artistsPMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
     private val tracksWithStreamablePMapper by lazy { cast<TracksWithStreamablePMapper>(mapperPool[TracksWithStreamablePMapper::class.java]) }
 
     fun runTaskFetchArtist(mbid: String) = GlobalScope.launch {
-        artistLiveData reqData { fetchArtistCase.execMapping(artistMapper, FetchArtistReq(ArtistParams(mbid))) }
+        _artistLiveData reqData { fetchArtistCase.execMapping(artistMapper, FetchArtistReq(ArtistParams(mbid))) }
     }
 
     fun runTaskFetchTopAlbum(mbid: String) = GlobalScope.launch {
-        albumsLiveData reqData {
+        _albumsLiveData reqData {
             fetchArtistTopAlbumCase.execMapping(topAlbumPMapper,
                                                 FetchArtistTopAlbumReq(ArtistParams(mbid)))
         }
     }
 
     fun runTaskFetchSimilarArtist(mbid: String) = GlobalScope.launch {
-        smiliarArtistsLiveData reqData {
+        _similarArtistsLiveData reqData {
             fetchSimilarArtistCase.execMapping(artistsPMapper,
                                                FetchSimilarArtistReq(ArtistParams(mbid)))
         }
     }
 
     fun runTaskFetchTopTrack(mbid: String) = GlobalScope.launch {
-        tacksLiveData reqData {
+        _tacksLiveData reqData {
             fetchArtistTopTrackCase.execMapping(tracksWithStreamablePMapper,
                                                 FetchArtistTopTrackReq(ArtistParams(mbid)))
         }
