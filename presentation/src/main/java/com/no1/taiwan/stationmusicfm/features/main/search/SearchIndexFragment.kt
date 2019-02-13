@@ -19,10 +19,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.explore
+package com.no1.taiwan.stationmusicfm.features.main.search
 
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
@@ -31,22 +33,15 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
-class ExploreFragment : AdvFragment<MainActivity, ExploreViewModel>() {
+class SearchIndexFragment : AdvFragment<MainActivity, SearchViewModel>() {
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        observeNonNull(vm.topTracks) {
+        observeNonNull(vm.musics) {
             peel {
-                //                logd(it.tracks)
+                logd(it.items)
             } happenError {
                 loge(it)
-            } doWith this@ExploreFragment
-        }
-        observeNonNull(vm.topArtists) {
-            peel {
-                //                logd(it.artists)
-            } happenError {
-                loge(it)
-            } doWith this@ExploreFragment
+            } doWith this@SearchIndexFragment
         }
     }
 
@@ -57,12 +52,8 @@ class ExploreFragment : AdvFragment<MainActivity, ExploreViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.apply {
-            //            if (topTracks.value.isNull())
-//                runTaskFetchTopTrack()
-//            if (topArtists.value.isNull())
-//                runTaskFetchTopArtist()
-        }
+        if (vm.musics.value.isNull())
+            vm.runTaskFetchTopTrack("lady gaga")
     }
 
     /**
@@ -70,5 +61,5 @@ class ExploreFragment : AdvFragment<MainActivity, ExploreViewModel>() {
      *
      * @return [LayoutRes] layout xml.
      */
-    override fun provideInflateView() = R.layout.fragment_explore
+    override fun provideInflateView() = R.layout.fragment_search_index
 }

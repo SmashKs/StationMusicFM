@@ -19,11 +19,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.explore
+package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
@@ -40,9 +41,10 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ExploreViewModel(
+class ExploreIndexViewModel(
     private val fetchChartTopTrackCase: FetchChartTopTrackCase,
     private val fetchChartTopArtistCase: FetchChartTopArtistCase,
+    private val fetchChartTopTagCase: FetchChartTopTagCase,
     private val mapperPool: PreziMapperPool
 ) : AutoViewModel() {
     private val _topTracks by lazy { RespMutableLiveData<TrackInfoEntity.TracksEntity>() }

@@ -19,17 +19,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.rank
+package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
-import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseFragment
-import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopAlbumCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopTrackCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistCase
+import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
+import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 
-class RankFragment : BaseFragment<MainActivity>() {
-    /**
-     * Set the parentView for inflating.
-     *
-     * @return [LayoutRes] layout xml.
-     */
-    override fun provideInflateView() = R.layout.fragment_search
-}
+class ExploreArtistViewModel(
+    private val fetchArtistCase: FetchArtistCase,
+    private val fetchArtistTopAlbumCase: FetchArtistTopAlbumCase,
+    private val fetchSimilarArtistCase: FetchSimilarArtistCase,
+    private val fetchArtistTopTrackCase: FetchArtistTopTrackCase,
+    private val mapperPool: PreziMapperPool
+) : AutoViewModel()
+

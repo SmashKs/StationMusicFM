@@ -19,47 +19,17 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.search
+package com.no1.taiwan.stationmusicfm.features.main.rank
 
-import android.os.Bundle
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
-import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
-import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
-class SearchFragment : AdvFragment<MainActivity, SearchViewModel>() {
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
-    override fun bindLiveData() {
-        observeNonNull(vm.musics) {
-            peel {
-                logd(it.items)
-            } happenError {
-                loge(it)
-            } doWith this@SearchFragment
-        }
-    }
-
-    /**
-     * Initialize doing some methods or actions here.
-     *
-     * @param savedInstanceState previous status.
-     */
-    override fun rendered(savedInstanceState: Bundle?) {
-        super.rendered(savedInstanceState)
-        if (vm.musics.value.isNull())
-            vm.runTaskFetchTopTrack("lady gaga")
-    }
-
+class RankDispatcherFragment : BaseFragment<MainActivity>() {
     /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.
      */
-    override fun provideInflateView() = R.layout.fragment_search
+    override fun provideInflateView() = R.layout.fragment_rank_dispatcher
 }
