@@ -21,8 +21,10 @@
 
 package com.no1.taiwan.stationmusicfm.utils.presentations
 
-import com.devrapid.kotlinshaver.gLaunch
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 /**
  * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state
@@ -48,7 +50,7 @@ fun <E, R> RespMutableLiveData<R>.reqDataMap(
  */
 infix fun <E> RespMutableLiveData<E>.reqData(usecaseRes: suspend () -> E) = preProc {
     // Fetching the data from the data layer.
-    tryResp { ResponseState.Success(usecaseRes()) }.let(this@reqData::postValue)
+    tryResp { ResponseState.Success(withContext(Dispatchers.Default) { usecaseRes() }) }.let(this@reqData::postValue)
 }
 
 infix fun <E> RespMutableLiveData<E>.reqDataWrap(usecaseRes: suspend () -> ResponseState<E>) = preProc {
@@ -59,13 +61,11 @@ infix fun <E> RespMutableLiveData<E>.reqDataWrap(usecaseRes: suspend () -> Respo
 /**
  * Pre-process does that showing the loading view.
  */
-private fun <E> RespMutableLiveData<E>.preProc(block: suspend () -> Unit) = gLaunch {
-    apply {
-        // Opening the loading view.
-        postValue(ResponseState.Loading())
-        // Fetching the data from the data layer.
-        block()
-    }
+private fun <E> RespMutableLiveData<E>.preProc(block: suspend () -> Unit) = runBlocking {
+    // Opening the loading view.
+    postValue(ResponseState.Loading())
+    // Fetching the data from the data layer.
+    block()
 }
 
 /**
