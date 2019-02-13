@@ -37,6 +37,12 @@ import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.KeyStore
+import java.security.SecureRandom
+import java.security.cert.CertificateFactory
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManagerFactory
 
 /**
  * To provide the necessary object for the internet model.
@@ -95,6 +101,34 @@ object NetModule {
                         addNetworkInterceptor(StethoInterceptor())
                     }
                     // FIXME(jieyi): 2019-02-13 javax.net.ssl.SSLHandshakeException: Handshake failed because of the search music.
+//                    val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+//                        @Throws(java.security.cert.CertificateException::class)
+//                        override fun checkClientTrusted(
+//                            x509Certificates: Array<java.security.cert.X509Certificate>,
+//                            s: String
+//                        ) {
+//                        }
+//
+//                        @Throws(java.security.cert.CertificateException::class)
+//                        override fun checkServerTrusted(
+//                            x509Certificates: Array<java.security.cert.X509Certificate>,
+//                            s: String
+//                        ) {
+//                        }
+//
+//                        override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
+//                            return arrayOf()
+//                        }
+//                    })
+//                    try {
+//                        val sc = SSLContext.getInstance("TLS")
+//                        sc.init(null, trustAllCerts, java.security.SecureRandom())
+//                        sslSocketFactory(sc.socketFactory)
+//                    }
+//                    catch (e: Exception) {
+//                        e.printStackTrace()
+//                    }
+//                    protocols(Collections.singletonList(Protocol.HTTP_1_1))
                 }
         }
         bind<Retrofit.Builder>() with singleton {
@@ -103,5 +137,35 @@ object NetModule {
                 .addCallAdapterFactory(instance())
                 .client(instance<OkHttpClient.Builder>().build())
         }
+    }
+
+    fun getSSLSocketFactory(context: Context?, certificates: IntArray): SSLSocketFactory? {
+        if (context == null) {
+            throw NullPointerException("context == null")
+        }
+
+        val certificateFactory: CertificateFactory
+        try {
+            certificateFactory = CertificateFactory.getInstance("X.509")
+            val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
+            keyStore.load(null, null)
+
+            for (i in certificates.indices) {
+                val certificate = context.resources.openRawResource(certificates[i])
+                keyStore.setCertificateEntry(i.toString(), certificateFactory.generateCertificate(certificate))
+
+                certificate.close()
+            }
+            val sslContext = SSLContext.getInstance("TLS")
+            val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+            trustManagerFactory.init(keyStore)
+            sslContext.init(null, trustManagerFactory.trustManagers, SecureRandom())
+            return sslContext.socketFactory
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return null
     }
 }

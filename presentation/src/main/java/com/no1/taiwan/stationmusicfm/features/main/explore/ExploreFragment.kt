@@ -23,7 +23,6 @@ package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
@@ -59,10 +58,10 @@ class ExploreFragment : AdvFragment<MainActivity, ExploreViewModel>() {
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (topTracks.value.isNull())
-                runTaskFetchTopTrack()
-            if (topArtists.value.isNull())
-                runTaskFetchTopArtist()
+            //            if (topTracks.value.isNull())
+//                runTaskFetchTopTrack()
+//            if (topArtists.value.isNull())
+//                runTaskFetchTopArtist()
         }
     }
 
