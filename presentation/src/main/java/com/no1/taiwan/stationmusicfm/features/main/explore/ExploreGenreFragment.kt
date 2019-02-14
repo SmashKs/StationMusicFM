@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
@@ -47,9 +48,8 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
     override fun bindLiveData() {
         observeNonNull(vm.tagInfoLiveData) {
             peel { (tag, artist, album, tracks) ->
-
             } happenError {
-
+                loge(it)
             } doWith this@ExploreGenreFragment
         }
     }
@@ -61,8 +61,10 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        if (vm.tagInfoLiveData.value.isNull())
-            vm.runTaskFetchGenreInfo(tagName)
+        vm.apply {
+            if (tagInfoLiveData.value.isNull())
+                runTaskFetchGenreInfo(tagName)
+        }
     }
 
     /**

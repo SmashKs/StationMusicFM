@@ -63,8 +63,10 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        if (vm.artistInfoLiveData.value.isNull())
-            vm.runTaskFetchArtistInfo(mbid)
+        vm.apply {
+            if (artistInfoLiveData.value.isNull())
+                runTaskFetchArtistInfo(mbid)
+        }
     }
 
     /**

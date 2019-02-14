@@ -21,11 +21,47 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.rank
 
+import android.os.Bundle
+import androidx.core.os.bundleOf
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseFragment
+import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
-class RankDetailFragment : BaseFragment<MainActivity>() {
+class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
+    companion object {
+        private const val ARGUMENT_RANK_ID = "fragment argument rank id"
+
+        fun createBundle(rankId: Int) = bundleOf(ARGUMENT_RANK_ID to rankId)
+    }
+
+    private val rankId by lazy { requireNotNull(arguments?.getInt(ARGUMENT_RANK_ID)) }
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        observeNonNull(vm.rankMusic) {
+            peel { } happenError { } doWith this@RankDetailFragment
+        }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        super.rendered(savedInstanceState)
+        vm.apply {
+            if (rankMusic.value.isNull())
+                runTaskFetchTopTrack(rankId)
+        }
+    }
+
     /**
      * Set the parentView for inflating.
      *

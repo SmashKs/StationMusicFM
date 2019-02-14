@@ -48,4 +48,3 @@ class ExploreAlbumViewModel(
         _albumLiveData reqData { fetchAlbumCase.execMapping(albumMapper, FetchAlbumReq(AlbumParams(mbid))) }
     }
 }
-
