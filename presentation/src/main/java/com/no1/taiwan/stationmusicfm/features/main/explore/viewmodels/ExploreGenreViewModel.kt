@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
 import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.TagParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagReq
@@ -40,6 +41,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
+import com.no1.taiwan.stationmusicfm.features.GenreMixInfo
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
@@ -63,30 +65,27 @@ class ExploreGenreViewModel(
     val topAlbumsLiveData: RespLiveData<AlbumInfoEntity.TopAlbumsEntity> = _topAlbumsLiveData
     private val _topTracksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksEntity>() }
     val topTracksLiveData: RespLiveData<TrackInfoEntity.TracksEntity> = _topTracksLiveData
+    private val _tagInfoLiveData by lazy { RespMutableLiveData<GenreMixInfo>() }
+    val tagInfoLiveData: RespLiveData<GenreMixInfo> = _tagInfoLiveData
     private val tagMapper by lazy { cast<TagPMapper>(mapperPool[TagPMapper::class.java]) }
     private val artistsMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
     private val albumsMapper by lazy { cast<TopAlbumPMapper>(mapperPool[TopAlbumPMapper::class.java]) }
     private val tracksMapper by lazy { cast<TracksPMapper>(mapperPool[TracksPMapper::class.java]) }
 
-    fun runTaskFetchTag(name: String) = GlobalScope.launch {
-        _tagLiveData reqData { fetchTagCase.execMapping(tagMapper, FetchTagReq(TagParams(name))) }
-    }
+    fun runTaskFetchGenreInfo(tagName: String) = GlobalScope.launch {
+        val parameters = TagParams(tagName)
+        _tagInfoLiveData reqData {
+            val tag = fetchTagCase.execMapping(tagMapper, FetchTagReq(parameters))
+            val artist = fetchTagTopArtistCase.execMapping(artistsMapper, FetchTagTopArtistReq(parameters))
+            val album = fetchTagTopAlbumCase.execMapping(albumsMapper, FetchTagTopAlbumReq(parameters))
+            val tracks = fetchTagTopTrackCase.execMapping(tracksMapper, FetchTagTopTrackReq(parameters))
+            // If success to get them assign to each livedata.
+            _tagLiveData.postValue(ResponseState.Success(tag))
+            _topArtistsLiveData.postValue(ResponseState.Success(artist))
+            _topAlbumsLiveData.postValue(ResponseState.Success(album))
+            _topTracksLiveData.postValue(ResponseState.Success(tracks))
 
-    fun runTaskFetchTopArtist(name: String) = GlobalScope.launch {
-        _topArtistsLiveData reqData {
-            fetchTagTopArtistCase.execMapping(artistsMapper, FetchTagTopArtistReq(TagParams(name)))
-        }
-    }
-
-    fun runTaskFetchTopAlbum(name: String) = GlobalScope.launch {
-        _topAlbumsLiveData reqData {
-            fetchTagTopAlbumCase.execMapping(albumsMapper, FetchTagTopAlbumReq(TagParams(name)))
-        }
-    }
-
-    fun runTaskFetchTopTrack(name: String) = GlobalScope.launch {
-        _topTracksLiveData reqData {
-            fetchTagTopTrackCase.execMapping(tracksMapper, FetchTagTopTrackReq(TagParams(name)))
+            GenreMixInfo(tag, artist, album, tracks)
         }
     }
 }

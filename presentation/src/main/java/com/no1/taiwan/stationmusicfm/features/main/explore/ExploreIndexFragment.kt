@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
@@ -35,19 +36,23 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
 class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() {
+    companion object {
+        private const val FRAGMENT_TARGET_ARTIST = "artist"
+        private const val FRAGMENT_TARGET_GENRE = "genre"
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.topTracks) {
             peel {
-                //                logd(it.tracks)
+                logd(it.tracks)
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topArtists) {
             peel {
-                findNavController().navigate(R.id.action_frag_explore_index_to_frag_explore_artist,
-                                             ExploreArtistFragment.createBundle(it.artists.first().mbid))
+                navTo(FRAGMENT_TARGET_ARTIST, it.artists.first().mbid)
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment
@@ -75,4 +80,16 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_explore_index
+
+    private fun navTo(target: String, mbidOrName: String) {
+        val (fragment, bundle) = when (target) {
+            FRAGMENT_TARGET_ARTIST ->
+                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbidOrName)
+            FRAGMENT_TARGET_GENRE ->
+                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(mbidOrName)
+            else -> throw IllegalArgumentException()
+        }
+
+        findNavController().navigate(fragment, bundle)
+    }
 }
