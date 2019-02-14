@@ -21,12 +21,22 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
+import androidx.core.os.bundleOf
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 
 class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() {
+    companion object {
+        private const val ARGUMENT_MBID = "fragment argument mbid"
+
+        fun createBundle(mbid: String) = bundleOf(ARGUMENT_MBID to mbid)
+    }
+
+    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID, DEFAULT_STR)) }
+
     /**
      * Set the parentView for inflating.
      *

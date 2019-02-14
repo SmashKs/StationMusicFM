@@ -38,6 +38,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() {
     companion object {
         private const val FRAGMENT_TARGET_ARTIST = "artist"
+        private const val FRAGMENT_TARGET_TRACK = "track"
         private const val FRAGMENT_TARGET_GENRE = "genre"
     }
 
@@ -57,6 +58,13 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
                 loge(it)
             } doWith this@ExploreIndexFragment
         }
+        observeNonNull(vm.topTags) {
+            peel {
+                logd(it)
+            } happenError {
+                loge(it)
+            } doWith this@ExploreIndexFragment
+        }
     }
 
     /**
@@ -71,6 +79,8 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
 //                runTaskFetchTopTrack()
             if (topArtists.value.isNull())
                 runTaskFetchTopArtist()
+//            if (topTags.value.isNull())
+//                runTaskFetchTopTag()
         }
     }
 
@@ -85,6 +95,8 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
         val (fragment, bundle) = when (target) {
             FRAGMENT_TARGET_ARTIST ->
                 R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbidOrName)
+            FRAGMENT_TARGET_TRACK ->
+                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbidOrName)
             FRAGMENT_TARGET_GENRE ->
                 R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(mbidOrName)
             else -> throw IllegalArgumentException()

@@ -48,9 +48,9 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     protected open val genericVMIndex = DEFAULT_INT
     /** Add the AAC [ViewModel] for each fragments. */
     @Suppress("UNCHECKED_CAST")
-    protected val vm
-        get() = vmCreateMethod.invoke(vmProvider(PROVIDER_FROM_FRAGMENT), vmConcreteClass) as? VM
-                ?: throw ClassCastException()
+    protected val vm by lazy {
+        vmCreateMethod.invoke(vmProvider(PROVIDER_FROM_FRAGMENT), vmConcreteClass) as? VM ?: throw ClassCastException()
+    }
     private val viewModelFactory by instance<ViewModelProvider.Factory>()
     /** [VM] is the first (index: 1) in the generic declare. */
     private val vmConcreteClass: Class<*>
@@ -70,8 +70,9 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
             return cast(viewmodelClass)
         }
     /** The [ViewModelProviders.of] function for obtaining a [ViewModel]. */
-    private val vmCreateMethod
-        get() = vmProvider(PROVIDER_FROM_FRAGMENT).javaClass.getMethod("get", vmConcreteClass.superclass.javaClass)
+    private val vmCreateMethod by lazy {
+        vmProvider(PROVIDER_FROM_FRAGMENT).javaClass.getMethod("get", vmConcreteClass.superclass.javaClass)
+    }
     /** Dialog loading view. */
 //    private val loadingView by lazy { LoadingDialog.getInstance(this, true) }
     /** Enable dialog loading view or use loading layout. */

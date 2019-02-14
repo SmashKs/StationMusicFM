@@ -25,12 +25,15 @@ import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
@@ -51,8 +54,11 @@ class ExploreIndexViewModel(
     val topTracks: RespLiveData<TrackInfoEntity.TracksEntity> = _topTracks
     private val _topArtists by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsEntity>() }
     val topArtists: RespLiveData<ArtistInfoEntity.ArtistsEntity> = _topArtists
+    private val _topTags by lazy { RespMutableLiveData<TagInfoEntity.TagsEntity>() }
+    val topTags: RespLiveData<TagInfoEntity.TagsEntity> = _topTags
     private val topTracksMapper by lazy { cast<TracksPMapper>(mapperPool[TracksPMapper::class.java]) }
     private val topArtistsMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
+    private val topTagsMapper by lazy { cast<TagsPMapper>(mapperPool[TagsPMapper::class.java]) }
 
     fun runTaskFetchTopTrack(limit: Int = Pager.LIMIT) = GlobalScope.launch {
         var params = FetchChartTopTrackReq()
@@ -67,8 +73,14 @@ class ExploreIndexViewModel(
         _topArtists.value?.data?.attr?.let {
             params = FetchChartTopArtistReq(autoIncreaseParams(it, limit) ?: return@launch)
         }
-        _topArtists reqData {
-            fetchChartTopArtistCase.execMapping(topArtistsMapper, params)
+        _topArtists reqData { fetchChartTopArtistCase.execMapping(topArtistsMapper, params) }
+    }
+
+    fun runTaskFetchTopTag(limit: Int = Pager.LIMIT) = GlobalScope.launch {
+        var params = FetchChartTopTagReq()
+        _topTags.value?.data?.attr?.let {
+            params = FetchChartTopTagReq(autoIncreaseParams(it, limit) ?: return@launch)
         }
+        _topTags reqData { fetchChartTopTagCase.execMapping(topTagsMapper, params) }
     }
 }

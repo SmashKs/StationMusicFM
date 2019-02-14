@@ -21,13 +21,18 @@
 
 package com.no1.taiwan.stationmusicfm.internal.di
 
+import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.ViewHolderEntry
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDiffUtil
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
+import org.kodein.di.generic.inSet
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 import org.kodein.di.generic.setBinding
 import org.kodein.di.generic.singleton
 
@@ -59,5 +64,8 @@ object RecyclerViewModule {
 
     private fun viewHolderProvider() = Module("Viewholder Module") {
         // *** ViewHolder
+        bind<ViewHolderEntry>().inSet() with provider {
+            RankingIdEntity::class.hashCode() to (R.layout.item_rank_top_header to ::TopperViewHolder)
+        }
     }
 }

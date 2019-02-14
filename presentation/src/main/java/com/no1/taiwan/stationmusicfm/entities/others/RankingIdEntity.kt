@@ -22,9 +22,13 @@
 package com.no1.taiwan.stationmusicfm.entities.others
 
 import com.no1.taiwan.stationmusicfm.entities.Entity
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
 data class RankingIdEntity(
     val id: Int,
     val title: String,
     val update: String
-) : Entity
+) : Entity, MusicMultiVisitable {
+    override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+}

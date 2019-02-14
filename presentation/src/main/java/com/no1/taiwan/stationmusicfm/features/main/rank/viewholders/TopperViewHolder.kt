@@ -19,20 +19,30 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
+package com.no1.taiwan.stationmusicfm.features.main.rank.viewholders
 
-import com.devrapid.adaptiverecyclerview.ViewTypeFactory
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import org.jetbrains.anko.find
 
-/**
- * A factory for providing the viewholder from an object data type to the recyclerview.
- */
-class MultiTypeFactory(
-    private val viewHolders: ViewHolderEntries
-) : ViewTypeFactory() {
-    override var transformMap
-        get() = viewHolders.toMap().toMutableMap()
-        set(_) = throw UnsupportedOperationException("We don't allow this method to use!")
-
-    // *** Here are the entity binding the specific hashcode. ***
-    fun type(entity: MusicMultiVisitable) = entity.javaClass.hashCode()
+class TopperViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, RankingIdEntity>(view) {
+    /**
+     * Set the views' properties.
+     *
+     * @param model a data model after input from a list.
+     * @param position the index of a list.
+     * @param adapter parent adapter.
+     */
+    override fun initView(model: RankingIdEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        itemView.apply {
+            find<TextView>(R.id.ftv_chart).text = model.title
+            find<ImageView>(R.id.aiv_thumbnail)
+        }
+    }
 }

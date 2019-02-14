@@ -20,28 +20,25 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/mcv_chart"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.main.rank.RankIndexFragment">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_topper"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/aiv_thumbnail"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:src="@mipmap/ic_launcher"/>
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_chart"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="4"
-        tools:listitem="@layout/item_rank_top_header"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_chart"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_topper"
-        tools:itemCount="4"
-        tools:listitem="@layout/item_rank_top_header"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="@dimen/md_one_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        tools:text="XXX Chart\n15 tracks"/>
+</com.google.android.material.card.MaterialCardView>

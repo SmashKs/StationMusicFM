@@ -35,7 +35,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class RankViewModel(
+class RankIndexViewModel(
     private val fetchRankIdsCase: FetchRankIdsCase,
     private val mapperPool: PreziMapperPool
 ) : AutoViewModel() {
