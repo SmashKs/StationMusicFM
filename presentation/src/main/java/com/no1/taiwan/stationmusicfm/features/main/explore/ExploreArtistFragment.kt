@@ -25,6 +25,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
@@ -46,9 +47,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        observeNonNull(vm.artistLiveData) {
-            peel {
-                logw(it)
+        observeNonNull(vm.artistInfoLiveData) {
+            peel { (artist, album, artists, tracks) ->
+                logw("artistInfoLiveData")
             } happenError {
                 loge(it)
             } doWith this@ExploreArtistFragment
@@ -62,10 +63,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.runTaskFetchArtist(mbid)
-        vm.runTaskFetchTopAlbum(mbid)
-        vm.runTaskFetchSimilarArtist(mbid)
-        vm.runTaskFetchTopTrack(mbid)
+        if (vm.artistInfoLiveData.value.isNull())
+            vm.runTaskFetchArtistInfo(mbid)
     }
 
     /**

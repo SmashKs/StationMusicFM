@@ -40,7 +40,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class ExploreIndexViewModel(
     private val fetchChartTopTrackCase: FetchChartTopTrackCase,
@@ -63,10 +62,10 @@ class ExploreIndexViewModel(
         _topTracks reqData { fetchChartTopTrackCase.execMapping(topTracksMapper, params) }
     }
 
-    fun runTaskFetchTopArtist(limit: Int = Pager.LIMIT) = runBlocking {
+    fun runTaskFetchTopArtist(limit: Int = Pager.LIMIT) = GlobalScope.launch {
         var params = FetchChartTopArtistReq()
         _topArtists.value?.data?.attr?.let {
-            params = FetchChartTopArtistReq(autoIncreaseParams(it, limit) ?: return@runBlocking)
+            params = FetchChartTopArtistReq(autoIncreaseParams(it, limit) ?: return@launch)
         }
         _topArtists reqData {
             fetchChartTopArtistCase.execMapping(topArtistsMapper, params)

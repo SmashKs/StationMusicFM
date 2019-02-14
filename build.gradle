@@ -31,12 +31,12 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${dependencies.Versions.Kotlin.kotlinLib}"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath "com.google.gms:google-services:4.2.0"
+//        classpath "com.google.gms:google-services:4.2.0"
     }
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt").version("1.0.0-RC13")
+    id("io.gitlab.arturbosch.detekt").version("1.0.0-RC12")
     id("com.github.ben-manes.versions").version("0.20.0")
 }
 
@@ -46,7 +46,7 @@ subprojects {
     }
 
     detekt {
-        toolVersion = "1.0.0-RC13"
+        toolVersion = "1.0.0-RC12"
         debug = true
         parallel = true
         input = files("src/main/java")

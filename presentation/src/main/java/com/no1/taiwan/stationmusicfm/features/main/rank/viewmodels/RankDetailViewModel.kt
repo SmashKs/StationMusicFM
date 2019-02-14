@@ -45,6 +45,8 @@ class RankDetailViewModel(
     private val topTracksMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
 
     fun runTaskFetchTopTrack(rankId: Int) = GlobalScope.launch {
-        _rankMusic reqData { fetchRankMusicCase.execMapping(topTracksMapper, FetchRankMusicReq(RankParams(rankId))) }
+        _rankMusic reqData {
+            fetchRankMusicCase.execMapping(topTracksMapper, FetchRankMusicReq(RankParams(rankId)))
+        }
     }
 }

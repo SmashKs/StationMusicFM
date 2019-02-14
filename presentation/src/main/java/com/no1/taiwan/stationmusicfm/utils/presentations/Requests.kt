@@ -22,9 +22,7 @@
 package com.no1.taiwan.stationmusicfm.utils.presentations
 
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 /**
  * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state
@@ -50,7 +48,7 @@ fun <E, R> RespMutableLiveData<R>.reqDataMap(
  */
 infix fun <E> RespMutableLiveData<E>.reqData(usecaseRes: suspend () -> E) = preProc {
     // Fetching the data from the data layer.
-    tryResp { ResponseState.Success(withContext(Dispatchers.Default) { usecaseRes() }) }.let(this@reqData::postValue)
+    tryResp { ResponseState.Success(usecaseRes()) }.let(this@reqData::postValue)
 }
 
 infix fun <E> RespMutableLiveData<E>.reqDataWrap(usecaseRes: suspend () -> ResponseState<E>) = preProc {
