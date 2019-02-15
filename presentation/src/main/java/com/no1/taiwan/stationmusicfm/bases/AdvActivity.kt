@@ -37,7 +37,7 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     protected val vm
         get() = vmCreateMethod.invoke(vmProviders, vmConcreteClass) as? VM ?: throw ClassCastException()
 
-    private val viewModelFactory by instance<ViewModelProvider.Factory>()
+    private val viewModelFactory: ViewModelProvider.Factory by instance()
     /** [VM] is the first (index: 0) in the generic declare. */
     private val vmConcreteClass
         get() = cast<Class<*>>(cast<ParameterizedType>(this::class.java.genericSuperclass).actualTypeArguments[0])

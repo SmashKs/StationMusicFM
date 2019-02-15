@@ -34,8 +34,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import com.devrapid.kotlinshaver.castOrNull
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_LONG_LIFE
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_SHORT_LIFE
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -51,12 +53,17 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
         extend(parentKodein)
         /* fragment specific bindings */
         import(SuperFragmentModule.fragmentModule())
-        bind<LifecycleObserver>(FRAGMENT) with multiton { fragment: Fragment -> BusFragLifeRegister(fragment) }
+        bind<LifecycleObserver>(FRAGMENT_BUS_SHORT_LIFE) with multiton { fragment: Fragment ->
+            BusFragLifeRegister(fragment)
+        }
+        bind<LifecycleObserver>(FRAGMENT_BUS_LONG_LIFE) with multiton { fragment: Fragment ->
+            BusFragLongerLifeRegister(fragment)
+        }
     }
     @Suppress("UNCHECKED_CAST")
     protected val parent
         get() = requireActivity() as A  // If there's no parent, forcing crashing the app.
-    protected val appContext by instance<Context>()
+    protected val appContext: Context by instance()
     private var rootView: View? = null
     private val parentKodein by closestKodein()
 

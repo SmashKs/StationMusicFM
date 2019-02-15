@@ -22,18 +22,16 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.TOPPER_ADAPTER
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -41,30 +39,23 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
-import kotlin.system.measureTimeMillis
 
 class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
-    private val linearLayout by instance<LinearLayoutManager>(LINEAR_LAYOUT_VERTICAL)
-    private val topperAdapter by instance<MusicAdapter>(TOPPER_ADAPTER)
+    private val topper2GridLayoutManager: GridLayoutManager by instance(null, 2)
+    private val chart2GridLayoutManager: GridLayoutManager by instance(null, 2)
+    private val topperAdapter: MusicAdapter by instance()
+    private val chartAdapter: MusicAdapter by instance()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        measureTimeMillis {
-            measureTimeMillis {
-                logd(System.identityHashCode(vm))
-            }.apply { logw(this) }
-            measureTimeMillis {
-                logd(System.identityHashCode(vm))
-            }.apply { logw(this) }
-            observeNonNull(vm.rankIds) {
-                peel {
-                    //                topperAdapter.append(cast(it.subList(0, 4).toMutableList()))
-                    logw(it)
-                } happenError {
-                    loge(it)
-                } doWith this@RankIndexFragment
-            }
-        }.apply { logw(this) }
+        observeNonNull(vm.rankIds) {
+            peel {
+                topperAdapter.appendList(cast(it.subList(0, 4).toMutableList()))
+                logw(topperAdapter.itemCount)
+            } happenError {
+                loge(it)
+            } doWith this@RankIndexFragment
+        }
     }
 
     /**
@@ -75,7 +66,7 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (rankIds.isNull())
+            if (rankIds.value.isNull())
                 runTaskFetchRankIds()
         }
     }
@@ -85,11 +76,18 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        logw(topperAdapter.itemCount)
         find<RecyclerView>(R.id.rv_topper).apply {
-            //            if (layoutManager.isNull())
-//                layoutManager = linearLayout
-//            if (adapter.isNull())
-//                adapter = topperAdapter
+            if (layoutManager.isNull())
+                layoutManager = topper2GridLayoutManager
+            if (adapter.isNull())
+                adapter = topperAdapter
+        }
+        find<RecyclerView>(R.id.rv_chart).apply {
+            if (layoutManager.isNull())
+                layoutManager = chart2GridLayoutManager
+            if (adapter.isNull())
+                adapter = chartAdapter
         }
     }
 

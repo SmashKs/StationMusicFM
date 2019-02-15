@@ -51,7 +51,8 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     protected val vm by lazy {
         vmCreateMethod.invoke(vmProvider(PROVIDER_FROM_FRAGMENT), vmConcreteClass) as? VM ?: throw ClassCastException()
     }
-    private val viewModelFactory by instance<ViewModelProvider.Factory>()
+    // OPTIMIZE(jieyi): 2019/02/15 In old phone here will cause frame drops.
+    private val viewModelFactory: ViewModelProvider.Factory by instance()
     /** [VM] is the first (index: 1) in the generic declare. */
     private val vmConcreteClass: Class<*>
         get() {

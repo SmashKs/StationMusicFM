@@ -25,12 +25,11 @@ package com.no1.taiwan.stationmusicfm.internal.di.tags
  * The tags for identifying the same object data type in Dependency Injection.
  */
 object ObjectLabel {
-    const val TOPPER_ADAPTER = "topper adapter"
-
     const val LINEAR_LAYOUT_VERTICAL = "vertical"
     const val LINEAR_LAYOUT_HORIZONTAL = "horizontal"
 
-    const val FRAGMENT = "fragment"
+    const val FRAGMENT_BUS_SHORT_LIFE = "fragment short life from onResume to onPause"
+    const val FRAGMENT_BUS_LONG_LIFE = "fragment long life from onStart to onDestroy"
 
     const val UTIL_DIFF_KEYWORD = "recycler diff util keyword"
 }

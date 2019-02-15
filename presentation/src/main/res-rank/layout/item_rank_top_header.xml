@@ -22,23 +22,19 @@
 
 <com.google.android.material.card.MaterialCardView
     android:id="@+id/mcv_chart"
+    style="@style/Rank.CardView.ItemRank.Top"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    tools:context=".features.main.rank.viewholders.TopperViewHolder">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/aiv_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:src="@mipmap/ic_launcher"/>
+        style="@style/Constraint.MatchParent"
+        android:scaleType="centerCrop"
+        tools:src="@tools:sample/avatars"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_chart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_marginBottom="@dimen/md_one_unit"
-        android:layout_marginStart="@dimen/md_two_unit"
-        tools:text="XXX Chart\n15 tracks"/>
+        style="@style/Rank.TextView.ItemRank"
+        tools:text="@tools:sample/lorem[2]"/>
 </com.google.android.material.card.MaterialCardView>

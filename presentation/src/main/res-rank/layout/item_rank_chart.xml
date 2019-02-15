@@ -20,34 +20,21 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<navigation
-    android:id="@+id/nav_main"
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/mcv_chart"
+    style="@style/Rank.CardView.ItemRank.Chart"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/frag_rank">
+    tools:context=".features.main.rank.viewholders.TopperViewHolder">
 
-    <fragment
-        android:id="@+id/frag_explore"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreDispatcherFragment"
-        android:label="Explore"
-        tools:layout="@layout/fragment_explore_dispatcher"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/aiv_thumbnail"
+        style="@style/Constraint.MatchParent"
+        android:scaleType="centerCrop"
+        tools:src="@tools:sample/avatars"/>
 
-    <fragment
-        android:id="@+id/frag_mymusic"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicFragment"
-        android:label="MyMusic"
-        tools:layout="@layout/fragment_index"/>
-
-    <fragment
-        android:id="@+id/frag_rank"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.rank.RankDispatcherFragment"
-        android:label="Rank"
-        tools:layout="@layout/fragment_rank_dispatcher"/>
-
-    <fragment
-        android:id="@+id/frag_search"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.search.SearchDispatcherFragment"
-        android:label="Search"
-        tools:layout="@layout/fragment_search_dispatcher"/>
-</navigation>
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_chart"
+        style="@style/Rank.TextView.ItemRank"
+        tools:text="@tools:sample/lorem[2]"/>
+</com.google.android.material.card.MaterialCardView>

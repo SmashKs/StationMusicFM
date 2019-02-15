@@ -25,7 +25,9 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.ViewHolderEntry
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDiffUtil
 import org.kodein.di.Kodein.Module
@@ -55,6 +57,9 @@ object RecyclerViewModule {
     private fun adapterProvider() = Module("Recycler View Adapter") {
         bind<MultiTypeFactory>() with singleton {
             MultiTypeFactory(instance())
+        }
+        bind<MusicAdapter>() with provider {
+            MultiTypeAdapter(mutableListOf(), instance())
         }
     }
 

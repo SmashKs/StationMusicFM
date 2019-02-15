@@ -105,7 +105,7 @@
     <!--<item name="android:windowExitAnimation">@anim/scale_exit_dialog</item>-->
     <!--</style>-->
 
-    <!-- Action Bar -->
+    <!-- START Action Bar -->
     <style name="CustomToolBar"/>
 
     <style name="View.ToolBar" parent="CustomToolBar">
@@ -124,14 +124,13 @@
         <item name="android:layout_height">@dimen/md_one_unit</item>
         <item name="android:background">@drawable/toolbar_shadow</item>
     </style>
+    <!-- END Action Bar -->
 
-    <!-- Material Button -->
+    <!-- START Material Button -->
     <style name="Btn" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">?attr/colorSecondary</item>
     </style>
-
-    <style name="Btn.keyword">
-    </style>
+    <!-- END Material Button -->
 
     <style name="FAB" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="rippleColor">#FFFFFF</item>

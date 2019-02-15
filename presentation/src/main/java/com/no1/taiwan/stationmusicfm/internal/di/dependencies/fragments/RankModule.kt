@@ -21,20 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments
 
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.TOPPER_ADAPTER
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeAdapter
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.Kodein
-import org.kodein.di.android.x.AndroidLifecycleScope
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.scoped
-import org.kodein.di.generic.singleton
 
 object RankModule {
     fun rankProvider() = Kodein.Module("fragment rank index") {
-        bind<MusicAdapter>(TOPPER_ADAPTER) with scoped(AndroidLifecycleScope).singleton {
-            MultiTypeAdapter(mutableListOf(), instance())
-        }
     }
 }
