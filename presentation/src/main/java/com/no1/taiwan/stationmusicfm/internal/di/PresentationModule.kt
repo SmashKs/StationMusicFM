@@ -19,37 +19,17 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di.dependencies.activities
+package com.no1.taiwan.stationmusicfm.internal.di
 
-import com.no1.taiwan.stationmusicfm.features.test.TestViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.PresentationModule
-import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntry
+import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
 import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import org.kodein.di.generic.setBinding
+import org.kodein.di.generic.singleton
 
-/**
- * To provide the necessary objects for the specific activities.
- */
-object SuperActivityModule {
-    fun activityModule() = Kodein.Module("All Activities") {
-        // Import all of the activity modules.
-        import(TestModule.testProvider())
-
-        /** ViewModel Set for [com.no1.taiwan.stationmusicfm.utils.viewmodel.ViewModelFactory] */
-        bind() from setBinding<ViewModelEntry>()
-
-        import(PresentationModule.kitsProvider())
-        import(providerViewModel())
-    }
-
-    private fun providerViewModel() = Kodein.Module("Activity ViewModel") {
-        // *** ViewModel
-        bind<ViewModelEntry>().inSet() with provider {
-            TestViewModel::class.java to TestViewModel(instance(), instance())
-        }
+object PresentationModule {
+    fun kitsProvider() = Kodein.Module("Presentation Util Module") {
+        /** Mapper Pool for providing all data mappers */
+        bind<PreziMapperPool>() with singleton { instance<PreziMapperEntries>().toMap() }
     }
 }

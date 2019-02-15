@@ -31,10 +31,10 @@ import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
  */
 class RankingDMapper : RankingDataMap {
     override fun toModelFrom(data: RankingIdData) = data.run {
-        RankingIdModel(id, title, update)
+        RankingIdModel(id, title, update, topTrackUri, trackNumber)
     }
 
     override fun toDataFrom(model: RankingIdModel) = model.run {
-        RankingIdData(id, title, update)
+        RankingIdData(id, title, update, topTrackUri, trackNumber)
     }
 }

@@ -26,5 +26,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.Model
 data class RankingIdModel(
     val id: Int,
     val title: String,
-    val update: String
+    val update: String,
+    val topTrackUri: String,
+    val trackNumber: Int
 ) : Model

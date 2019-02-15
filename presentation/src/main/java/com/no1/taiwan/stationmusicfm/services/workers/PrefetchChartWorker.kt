@@ -24,22 +24,38 @@ package com.no1.taiwan.stationmusicfm.services.workers
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
+import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
+import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.internal.di.PresentationModule
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
 import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
+import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
-class RankChartParserWorker(
+class PrefetchChartWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : Worker(context, workerParams), KodeinAware {
+    companion object {
+        const val ARGUMENT_DATA_ID = "argument id"
+        const val ARGUMENT_DATA_TITLE = "argument title"
+        const val ARGUMENT_DATA_UPDATE = "argument update period"
+    }
+
     /** A Kodein Aware class must be within reach of a [Kodein] object. */
     override val kodein = Kodein.lazy {
         /** bindings */
@@ -49,26 +65,28 @@ class RankChartParserWorker(
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(applicationContext))
         import(UtilModule.dataUtilProvider())
+        import(UtilModule.presentationUtilProvider())
     }
-    private val fetchRankIdsCase: FetchRankIdsCase by instance()
+    private val fetchRankMusicCase: FetchRankMusicCase by instance()
+    private val addRankIdsCase: AddRankIdsCase by instance()
+    private val mapperPool: PreziMapperPool by instance()
+    private val musicMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
+    private val rankingMapper by lazy { cast<RankingPMapper>(mapperPool[RankingPMapper::class.java]) }
+    private val id by lazy { inputData.getInt(ARGUMENT_DATA_ID, DEFAULT_INT) }
+    private val title by lazy { requireNotNull(inputData.getString(ARGUMENT_DATA_TITLE)) }
+    private val update by lazy { requireNotNull(inputData.getString(ARGUMENT_DATA_UPDATE)) }
 
     override fun doWork(): Result {
-        if (runBlocking { fetchRankIdsCase.exec(FetchRankIdsReq()) }.isNotEmpty())
-            return Result.success()
+        runBlocking {
+            val chart = fetchRankMusicCase.execMapping(musicMapper,
+                                                       FetchRankMusicReq(RankParams(id)))
+                .let {
+                    RankingIdEntity(id, title, update, it.songs.first().oriCoverUrl, it.songs.size)
+                }
 
-        // If there're data inside in database already, we can skip storing.
-//        val workers = applicationContext.resources.getStringArray(R.array.chart_rank)
-//            .map {
-//                it.split("|").toTypedArray()
-//                Triple(columns[0], columns[1], columns[2])
-//                Data.Builder()
-//                    .putString(ARGUMENT_DATA_ID, columns[0])
-//                    .putString(ARGUMENT_DATA_TITLE, columns[1])
-//                    .putString(ARGUMENT_DATA_UPDATE, columns[2])
-//                    .build()
-//                OneTimeWorkRequestBuilder<PrefetchChartWorker>().setInputData(parameter).build()
-//            }
+            addRankIdsCase.exec(AddRankIdsReq(listOf(rankingMapper.toModelFrom(chart))))
+        }
 
-        return Result.failure()
+        return Result.success()
     }
 }

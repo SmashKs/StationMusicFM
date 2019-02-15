@@ -21,9 +21,70 @@
 
 package com.no1.taiwan.stationmusicfm.features.splash
 
+import android.os.Bundle
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
+import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.services.WorkerRequestFactory
+import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker
+import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Companion.ARGUMENT_DATA_ID
+import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Companion.ARGUMENT_DATA_TITLE
+import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Companion.ARGUMENT_DATA_UPDATE
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
+import org.kodein.di.generic.instance
 
 class SplashActivity : BaseActivity() {
+    private val workManager: WorkManager by instance()
+    private val parserRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_PARSE_CHART) }
+    private var counter = 0
+    private var workersSize = 0
+
     override fun provideLayoutId() = R.layout.activity_splash
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeNonNull(workManager.getWorkInfoByIdLiveData(parserRequest.id)) {
+            if (state.isFinished) {
+                when (state) {
+                    WorkInfo.State.FAILED -> {
+                        resources.getStringArray(R.array.chart_rank)
+                            .apply { workersSize = size }
+                            .asSequence()
+                            .map { it.split("|") }  // Split the data to a list by "|".
+                            .map {
+                                Data.Builder().putInt(ARGUMENT_DATA_ID, it[0].toInt())
+                                    .putString(ARGUMENT_DATA_TITLE, it[1]).putString(ARGUMENT_DATA_UPDATE, it[2])
+                                    .build()
+                            }  // Build data for the workers' parameter.
+                            .map { OneTimeWorkRequestBuilder<PrefetchChartWorker>().setInputData(it).build() }
+                            .forEach {
+                                observeNonNull(workManager.getWorkInfoByIdLiveData(it.id)) {
+                                    if (state.isFinished) {
+                                        // TODO(jieyi): 2019/02/15 synchronized counter!!
+                                        counter++
+                                        if (counter == workersSize) {
+                                            gotoMainMusic()
+                                        }
+                                    }
+                                }
+                                workManager.enqueue(it)
+                            }
+                    }
+                    WorkInfo.State.SUCCEEDED -> gotoMainMusic()
+                    else -> toast("Something wrong with your phone, please relaunch app again.")
+                }
+            }
+        }
+    }
+
+    private fun gotoMainMusic() {
+        startActivity<MainActivity>()
+        finish()
+    }
 }

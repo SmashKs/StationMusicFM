@@ -48,8 +48,7 @@ object RepositoryModule {
 
         bind<DataStore>(REMOTE) with singleton { RemoteDataStore(instance(), instance(), instance(), context) }
         bind<DataStore>(LOCAL) with singleton {
-            LocalDataStore(instance<MusicDatabase>().createRankingDao(),
-                           instance())
+            LocalDataStore(instance<MusicDatabase>().createRankingDao(), instance())
         }
         /** Mapper Pool for providing all data mappers */
         bind<DataMapperPool>() with singleton { instance<DataMapperEntries>().toMap() }

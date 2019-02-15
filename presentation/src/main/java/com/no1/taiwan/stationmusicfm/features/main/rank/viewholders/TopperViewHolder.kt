@@ -30,13 +30,14 @@ import com.devrapid.kotlinknifer.getDisplayMetrics
 import com.devrapid.kotlinknifer.resizeView
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
 
 class TopperViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, RankingIdEntity>(view) {
     companion object {
         private const val CONST_SIZE_RATIO_WIDTH = .5
-        private const val CONST_SIZE_RATIO_HEIGHT = .6
+        private const val CONST_SIZE_RATIO_HEIGHT = .75
     }
 
     /**
@@ -53,8 +54,9 @@ class TopperViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Rankin
                 halfWidth to (halfWidth * CONST_SIZE_RATIO_HEIGHT).toInt()
             }
             resizeView(width, height)
-            find<TextView>(R.id.ftv_chart).text = model.title
-            find<ImageView>(R.id.aiv_thumbnail)
+            find<TextView>(R.id.ftv_chart).text =
+                listOf(model.title, model.update, "${model.trackNumber} tracks").joinToString("\n")
+            find<ImageView>(R.id.aiv_thumbnail).loadByAny(model.topTrackUri, context)
         }
     }
 }

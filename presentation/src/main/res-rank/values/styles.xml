@@ -47,13 +47,13 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:layout_marginBottom">@dimen/md_four_unit</item>
-        <item name="android:layout_marginEnd">@dimen/md_two_half_unit</item>
-        <item name="android:layout_marginStart">@dimen/md_two_half_unit</item>
+        <item name="android:layout_marginEnd">@dimen/md_three_unit</item>
+        <item name="android:layout_marginStart">@dimen/md_three_unit</item>
         <item name="cardCornerRadius">@dimen/md_one_unit</item>
         <item name="cardElevation">@dimen/md_two_unit</item>
         <item name="cardPreventCornerOverlap">false</item>
         <item name="layout_constraintBottom_toBottomOf">parent</item>
-        <item name="layout_constraintDimensionRatio">1:0.9</item>
+        <item name="layout_constraintDimensionRatio">1:1</item>
         <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
 

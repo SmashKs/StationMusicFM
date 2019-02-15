@@ -22,15 +22,13 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewholders
 
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
 
@@ -45,15 +43,16 @@ class ChartViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Ranking
     override fun initView(model: RankingIdForChartItem, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             // Adjust the top two items view only.
-            find<CardView>(R.id.mcv_chart).apply {
-                if (position == 0 || position == 1) {
-                    layoutParams = cast<ViewGroup.MarginLayoutParams>(layoutParams).apply {
-                        topMargin = context.resources.getDimension(R.dimen.md_two_unit).toInt()
-                    }
-                }
-            }
-            find<TextView>(R.id.ftv_chart).text = model.title
-            find<ImageView>(R.id.aiv_thumbnail)
+//            find<CardView>(R.id.mcv_chart).apply {
+//                if (position == 0 || position == 1) {
+//                    layoutParams = cast<ViewGroup.MarginLayoutParams>(layoutParams).apply {
+//                        topMargin = context.resources.getDimension(R.dimen.md_one_unit).toInt()
+//                    }
+//                }
+//            }
+            find<TextView>(R.id.ftv_chart).text =
+                listOf(model.title, model.update, "${model.trackNumber} tracks").joinToString("\n")
+            find<ImageView>(R.id.aiv_thumbnail).loadByAny(model.topTrackUri, context)
         }
     }
 }

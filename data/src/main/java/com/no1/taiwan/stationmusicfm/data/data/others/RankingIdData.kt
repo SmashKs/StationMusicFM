@@ -30,5 +30,7 @@ data class RankingIdData(
     @PrimaryKey
     val id: Int,
     val title: String,
-    val update: String
+    val update: String,
+    val topTrackUri: String,
+    val trackNumber: Int
 ) : Data

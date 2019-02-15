@@ -28,7 +28,9 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVi
 data class RankingIdEntity(
     val id: Int,
     val title: String,
-    val update: String
+    val update: String,
+    val topTrackUri: String,
+    val trackNumber: Int
 ) : Entity, MusicMultiVisitable {
     override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
 }

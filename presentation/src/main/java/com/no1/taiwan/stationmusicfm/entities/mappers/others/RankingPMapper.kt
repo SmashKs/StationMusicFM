@@ -31,10 +31,10 @@ import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
  */
 class RankingPMapper : RankingPreziMap {
     override fun toEntityFrom(model: RankingIdModel) = model.run {
-        RankingIdEntity(id, title, update)
+        RankingIdEntity(id, title, update, topTrackUri, trackNumber)
     }
 
     override fun toModelFrom(entity: RankingIdEntity) = entity.run {
-        RankingIdModel(id, title, update)
+        RankingIdModel(id, title, update, topTrackUri, trackNumber)
     }
 }

@@ -44,6 +44,9 @@
             android:exported="true"/>
         <activity
             android:name=".features.main.MainActivity">
+        </activity>
+        <activity
+            android:name=".features.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -61,6 +64,5 @@
                     android:scheme="http"/>
             </intent-filter>
         </activity>
-        <activity android:name=".features.splash.SplashActivity"/>
     </application>
 </manifest>

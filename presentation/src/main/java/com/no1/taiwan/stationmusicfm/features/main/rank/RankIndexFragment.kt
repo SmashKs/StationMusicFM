@@ -50,9 +50,10 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.rankIds) {
             peel {
+                if (it.isEmpty()) return@peel
                 topperAdapter.appendList(cast(it.subList(0, 4).toMutableList()))
                 chartAdapter.appendList(cast(it.subList(4, it.size - 1).map {
-                    RankingIdForChartItem(it.id, it.title, it.title)
+                    RankingIdForChartItem(it.id, it.title, it.update, it.topTrackUri, it.trackNumber)
                 }))
             } happenError {
                 loge(it)
