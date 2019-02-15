@@ -20,21 +20,26 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<com.google.android.material.card.MaterialCardView
-    android:id="@+id/mcv_chart"
-    style="@style/Rank.CardView.ItemRank.Chart"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".features.main.rank.viewholders.TopperViewHolder">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/aiv_thumbnail"
-        style="@style/Constraint.MatchParent"
-        android:scaleType="centerCrop"
-        tools:src="@tools:sample/avatars"/>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_chart"
+        style="@style/Rank.CardView.ItemRank.Chart"
+        tools:context=".features.main.rank.viewholders.ChartViewHolder">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/aiv_thumbnail"
+            style="@style/Constraint.MatchParent"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars"/>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_chart"
-        style="@style/Rank.TextView.ItemRank"
+        style="@style/Rank.TextView.ItemRank.Chart"
         tools:text="@tools:sample/lorem[2]"/>
-</com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_topper"
             style="@style/Rank.RecyclerView.Topper"
-            tools:itemCount="20"
+            tools:itemCount="4"
             tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/item_rank_top_header"
             tools:spanCount="2"/>
@@ -41,7 +41,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_chart"
             style="@style/Rank.RecyclerView.Chart"
-            tools:itemCount="20"
+            tools:itemCount="7"
             tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/item_rank_chart"
             tools:spanCount="2"/>

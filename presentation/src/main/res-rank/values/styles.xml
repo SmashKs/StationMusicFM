@@ -28,6 +28,7 @@
     </style>
 
     <style name="Rank.RecyclerView.Chart" parent="Constraint.Wrap.FitWidth">
+        <item name="android:overScrollMode">never</item>
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="layout_constraintTop_toBottomOf">@id/rv_topper</item>
     </style>
@@ -42,13 +43,33 @@
         <item name="cardCornerRadius">@dimen/md_zero_unit</item>
     </style>
 
-    <style name="Rank.CardView.ItemRank.Chart">
+    <style name="Rank.CardView.ItemRank.Chart" parent="Constraint.Any.MatchHorParent">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_marginBottom">@dimen/md_four_unit</item>
+        <item name="android:layout_marginEnd">@dimen/md_two_half_unit</item>
+        <item name="android:layout_marginStart">@dimen/md_two_half_unit</item>
+        <item name="cardCornerRadius">@dimen/md_one_unit</item>
+        <item name="cardElevation">@dimen/md_two_unit</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintDimensionRatio">1:0.9</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
 
-    <style name="Rank.TextView.ItemRank" parent="Constraint.Wrap">
+    <style name="Rank.TextView.ItemRank" parent="Constraint.Wrap"/>
+
+    <style name="Rank.TextView.ItemRank.Top">
         <item name="android:layout_gravity">bottom|start</item>
         <item name="android:layout_marginBottom">@dimen/md_one_unit</item>
         <item name="android:layout_marginStart">@dimen/md_two_unit</item>
+    </style>
+
+    <style name="Rank.TextView.ItemRank.Chart">
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">@id/mcv_chart</item>
+        <item name="layout_constraintStart_toStartOf">@id/mcv_chart</item>
+        <item name="layout_constraintTop_toBottomOf">@id/mcv_chart</item>
     </style>
 
 </resources>

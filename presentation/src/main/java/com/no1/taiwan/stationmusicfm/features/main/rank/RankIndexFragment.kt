@@ -25,11 +25,11 @@ import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -51,7 +51,9 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
         observeNonNull(vm.rankIds) {
             peel {
                 topperAdapter.appendList(cast(it.subList(0, 4).toMutableList()))
-                logw(topperAdapter.itemCount)
+                chartAdapter.appendList(cast(it.subList(4, it.size - 1).map {
+                    RankingIdForChartItem(it.id, it.title, it.title)
+                }))
             } happenError {
                 loge(it)
             } doWith this@RankIndexFragment
@@ -76,7 +78,6 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        logw(topperAdapter.itemCount)
         find<RecyclerView>(R.id.rv_topper).apply {
             if (layoutManager.isNull())
                 layoutManager = topper2GridLayoutManager

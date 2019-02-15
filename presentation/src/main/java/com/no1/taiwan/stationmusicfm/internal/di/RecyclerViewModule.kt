@@ -23,6 +23,8 @@ package com.no1.taiwan.stationmusicfm.internal.di
 
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
+import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeAdapter
@@ -71,6 +73,9 @@ object RecyclerViewModule {
         // *** ViewHolder
         bind<ViewHolderEntry>().inSet() with provider {
             RankingIdEntity::class.hashCode() to (R.layout.item_rank_top_header to ::TopperViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            RankingIdForChartItem::class.hashCode() to (R.layout.item_rank_chart to ::ChartViewHolder)
         }
     }
 }

@@ -43,7 +43,7 @@
     <dimen name="md_seven_unit">56dp</dimen>
     <dimen name="md_eight_half_unit">60dp</dimen>
     <dimen name="md_eight_unit">64dp</dimen>
-    <dimen name="md_none_half_unit">68dp</dimen>
+    <dimen name="md_nine_half_unit">68dp</dimen>
     <dimen name="md_nine_unit">72dp</dimen>
     <dimen name="md_ten_half_unit">76dp</dimen>
     <dimen name="md_ten_unit">80dp</dimen>
