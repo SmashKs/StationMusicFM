@@ -22,9 +22,11 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeAdapter
@@ -76,6 +78,9 @@ object RecyclerViewModule {
         }
         bind<ViewHolderEntry>().inSet() with provider {
             RankingIdForChartItem::class.hashCode() to (R.layout.item_rank_chart to ::ChartViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            CommonMusicEntity.SongEntity::class.hashCode() to (R.layout.item_rank_detail to ::RankTrackViewHolder)
         }
     }
 }

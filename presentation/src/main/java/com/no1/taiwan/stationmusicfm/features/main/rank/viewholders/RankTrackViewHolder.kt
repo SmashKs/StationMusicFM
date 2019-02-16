@@ -19,25 +19,33 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.musicbank
+package com.no1.taiwan.stationmusicfm.features.main.rank.viewholders
 
-import com.no1.taiwan.stationmusicfm.entities.Entity
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
+import org.jetbrains.anko.find
 
-data class MusicInfoEntity(
-    val status: String = DEFAULT_STR,
-    val data: MusicEntity = MusicEntity()
-) : Entity {
-    data class MusicEntity(
-        // 🔽 Only Music has.
-        val hasMore: Boolean = false,
-        val items: List<CommonMusicEntity.SongEntity> = emptyList(),
-        // 🔽 Only Rank has.
-        val timestamp: Double = 0.0,
-        val songs: List<CommonMusicEntity.SongEntity> = emptyList()
-    ) : Entity, MusicMultiVisitable {
-        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, CommonMusicEntity.SongEntity>(view) {
+    /**
+     * Set the views' properties.
+     *
+     * @param model a data model after input from a list.
+     * @param position the index of a list.
+     * @param adapter parent adapter.
+     */
+    override fun initView(model: CommonMusicEntity.SongEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        itemView.apply {
+            find<ImageView>(R.id.iv_album).loadByAny(model.oriCoverUrl)
+            find<TextView>(R.id.ftv_order).text = position.toString()
+            find<TextView>(R.id.ftv_track_name).text = model.title
+            find<TextView>(R.id.ftv_artist_name).text = model.artist
+        }
     }
 }

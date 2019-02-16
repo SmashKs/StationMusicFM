@@ -23,6 +23,8 @@ package com.no1.taiwan.stationmusicfm.entities.musicbank
 
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
 object CommonMusicEntity {
     data class UserEntity(
@@ -55,7 +57,9 @@ object CommonMusicEntity {
         val title: String = DEFAULT_STR,
         val uploader: String = DEFAULT_STR,
         val url: String = DEFAULT_STR
-    ) : Entity
+    ) : Entity, MusicMultiVisitable {
+        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+    }
 
     data class PlayListEntity(
         val commentCount: Int = 0,

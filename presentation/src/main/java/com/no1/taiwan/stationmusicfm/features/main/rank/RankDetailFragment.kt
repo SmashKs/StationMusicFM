@@ -23,15 +23,24 @@ package com.no1.taiwan.stationmusicfm.features.main.rank
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
+import org.kodein.di.generic.instance
 
 class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     companion object {
@@ -40,12 +49,18 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         fun createBundle(rankId: Int) = bundleOf(ARGUMENT_RANK_ID to rankId)
     }
 
+    private val linearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
+    private val songAdapter: MusicAdapter by instance()
     private val rankId by lazy { requireNotNull(arguments?.getInt(ARGUMENT_RANK_ID)) }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.rankMusic) {
-            peel { } happenError { } doWith this@RankDetailFragment
+            peel {
+                songAdapter.appendList(cast(it.songs))
+            } happenError {
+                loge(it)
+            } doWith this@RankDetailFragment
         }
     }
 
@@ -59,6 +74,21 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         vm.apply {
             if (rankMusic.value.isNull())
                 runTaskFetchTopTrack(rankId)
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        find<RecyclerView>(R.id.rv_songs).apply {
+            if (layoutManager.isNull())
+                layoutManager = linearLayoutManager
+            if (adapter.isNull())
+                adapter = songAdapter
+            if (itemDecorationCount == 0)
+                addItemDecoration(VerticalItemDecorator(resources.getDimension(R.dimen.md_one_half_unit).toInt()))
         }
     }
 

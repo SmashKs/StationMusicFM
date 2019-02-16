@@ -57,8 +57,8 @@ fun ImageView.loadByAny(any: Any, context: Context = gContext()) =
     glideTemplate(context) { load(any) }
 
 fun glideKaritokeOptions(
-    @DrawableRes phResource: Int = R.drawable.ic_arrow_back_black,
-    @DrawableRes erSource: Int = R.drawable.ic_arrow_back_black
+    @DrawableRes phResource: Int = R.drawable.placeholder,
+    @DrawableRes erSource: Int = R.drawable.placeholder
 ) =
     RequestOptions().apply {
         centerCrop()

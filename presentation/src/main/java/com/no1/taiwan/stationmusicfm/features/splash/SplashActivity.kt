@@ -64,6 +64,7 @@ class SplashActivity : BaseActivity() {
                             }  // Build data for the workers' parameter.
                             .map { OneTimeWorkRequestBuilder<PrefetchChartWorker>().setInputData(it).build() }
                             .forEach {
+                                // Observe all workers process.
                                 observeNonNull(workManager.getWorkInfoByIdLiveData(it.id)) {
                                     if (state.isFinished) {
                                         // TODO(jieyi): 2019/02/15 synchronized counter!!
@@ -73,6 +74,7 @@ class SplashActivity : BaseActivity() {
                                         }
                                     }
                                 }
+                                // Put them into queue for processing.
                                 workManager.enqueue(it)
                             }
                     }
