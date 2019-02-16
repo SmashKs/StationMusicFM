@@ -19,17 +19,32 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.mymusic
+package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseFragment
-import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import org.jetbrains.anko.find
 
-class MyMusicFragment : BaseFragment<MainActivity>() {
+class ExploreTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, TrackInfoEntity.TrackEntity>(view) {
     /**
-     * Set the parentView for inflating.
+     * Set the views' properties.
      *
-     * @return [LayoutRes] layout xml.
+     * @param model a data model after input from a list.
+     * @param position the index of a list.
+     * @param adapter parent adapter.
      */
-    override fun provideInflateView() = R.layout.fragment_mymusic
+    override fun initView(model: TrackInfoEntity.TrackEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        itemView.apply {
+            find<ImageView>(R.id.iv_track).loadByAny(model.images.last().text)
+            find<TextView>(R.id.ftv_track_name).text = model.name
+            find<TextView>(R.id.ftv_name)
+        }
+    }
 }

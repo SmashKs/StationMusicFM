@@ -31,8 +31,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-//        classpath 'com.android.tools.build:gradle:3.5.0-alpha04'
-        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath 'com.android.tools.build:gradle:3.5.0-alpha04'
+//        classpath 'com.android.tools.build:gradle:3.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${dependencies.Versions.Kotlin.kotlinLib}"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -67,8 +67,8 @@ subprojects {
     }
 
     tasks.whenObjectAdded { task ->
-        if (task.name == "clean" ||
-                task.name.contains("lint") ||
+        if (task.name.contains("lint") ||
+//                task.name == "clean" ||
                 task.name.contains("jacoco") ||
                 task.name.contains("lintVitalRelease") ||
                 task.name.contains("Aidl") ||

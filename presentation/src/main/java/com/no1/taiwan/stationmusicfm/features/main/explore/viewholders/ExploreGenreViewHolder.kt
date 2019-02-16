@@ -19,17 +19,25 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.mymusic
+package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 
-import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseFragment
-import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import android.view.View
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 
-class MyMusicFragment : BaseFragment<MainActivity>() {
+class ExploreGenreViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, TagInfoEntity.TagEntity>(view) {
     /**
-     * Set the parentView for inflating.
+     * Set the views' properties.
      *
-     * @return [LayoutRes] layout xml.
+     * @param model a data model after input from a list.
+     * @param position the index of a list.
+     * @param adapter parent adapter.
      */
-    override fun provideInflateView() = R.layout.fragment_mymusic
+    override fun initView(model: TagInfoEntity.TagEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        itemView.apply {
+
+        }
+    }
 }

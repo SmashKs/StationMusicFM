@@ -24,7 +24,6 @@ package com.no1.taiwan.stationmusicfm.features.main.rank
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinshaver.cast
@@ -39,7 +38,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 
 class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
@@ -82,14 +80,10 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        find<RecyclerView>(R.id.rv_songs).apply {
-            if (layoutManager.isNull())
-                layoutManager = linearLayoutManager
-            if (adapter.isNull())
-                adapter = songAdapter
-            if (itemDecorationCount == 0)
-                addItemDecoration(VerticalItemDecorator(resources.getDimension(R.dimen.md_one_half_unit).toInt()))
-        }
+        initRecyclerViewWith(R.id.rv_songs,
+                             songAdapter,
+                             linearLayoutManager,
+                             VerticalItemDecorator(resources.getDimension(R.dimen.md_one_half_unit).toInt()))
     }
 
     /**

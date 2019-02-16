@@ -22,9 +22,15 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreAtristViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
@@ -81,6 +87,15 @@ object RecyclerViewModule {
         }
         bind<ViewHolderEntry>().inSet() with provider {
             CommonMusicEntity.SongEntity::class.hashCode() to (R.layout.item_rank_detail to ::RankTrackViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            ArtistInfoEntity.ArtistEntity::class.hashCode() to (R.layout.item_explore_artist to ::ExploreAtristViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            TagInfoEntity.TagEntity::class.hashCode() to (R.layout.item_explore_genre to ::ExploreGenreViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            TrackInfoEntity.TrackEntity::class.hashCode() to (R.layout.item_explore_track to ::ExploreTrackViewHolder)
         }
     }
 }

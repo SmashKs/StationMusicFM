@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
-import com.no1.taiwan.stationmusicfm.internal.di.BaseFragment
 
 class ExploreDispatcherFragment : BaseFragment<MainActivity>() {
     /**

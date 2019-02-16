@@ -19,29 +19,31 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di
+package com.no1.taiwan.stationmusicfm.bases
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import androidx.annotation.UiThread
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinshaver.castOrNull
-import com.no1.taiwan.stationmusicfm.bases.BaseActivity
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_LONG_LIFE
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_SHORT_LIFE
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
+import org.jetbrains.anko.support.v4.find
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.closestKodein
+import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.multiton
@@ -66,7 +68,7 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
         get() = requireActivity() as A  // If there's no parent, forcing crashing the app.
     protected val appContext: Context by instance()
     private var rootView: View? = null
-    private val parentKodein by closestKodein()
+    private val parentKodein by kodein()
 
     //region Fragment lifecycle
     override fun onCreateView(
@@ -160,4 +162,21 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
      */
     @UiThread
     protected open fun actionBarTitle(): String? = null
+
+    fun initRecyclerViewWith(
+        @IdRes resRecyclerViewId: Int,
+        adapter: RecyclerView.Adapter<*>,
+        layoutManager: RecyclerView.LayoutManager,
+        decoration: RecyclerView.ItemDecoration? = null
+    ) {
+        find<RecyclerView>(resRecyclerViewId).apply {
+            if (this.layoutManager == null)
+                this.layoutManager = layoutManager
+            if (this.adapter == null)
+                this.adapter = adapter
+            if (itemDecorationCount == 0 && decoration != null)
+                addItemDecoration(decoration)
+        }
+    }
+
 }

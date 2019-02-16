@@ -32,7 +32,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.isDefault
-import com.no1.taiwan.stationmusicfm.internal.di.BaseFragment
 import org.kodein.di.generic.instance
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type

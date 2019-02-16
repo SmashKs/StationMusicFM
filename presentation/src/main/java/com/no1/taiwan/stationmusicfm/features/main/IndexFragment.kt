@@ -22,7 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main
 
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.internal.di.BaseFragment
+import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 
 class IndexFragment : BaseFragment<MainActivity>() {
     /**

@@ -24,7 +24,6 @@ package com.no1.taiwan.stationmusicfm.features.main.rank
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
@@ -42,7 +41,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 
 class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
@@ -91,18 +89,8 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        find<RecyclerView>(R.id.rv_topper).apply {
-            if (layoutManager.isNull())
-                layoutManager = topper2GridLayoutManager
-            if (adapter.isNull())
-                adapter = topperAdapter
-        }
-        find<RecyclerView>(R.id.rv_chart).apply {
-            if (layoutManager.isNull())
-                layoutManager = chart2GridLayoutManager
-            if (adapter.isNull())
-                adapter = chartAdapter
-        }
+        initRecyclerViewWith(R.id.rv_chart, chartAdapter, chart2GridLayoutManager)
+        initRecyclerViewWith(R.id.rv_topper, topperAdapter, topper2GridLayoutManager)
     }
 
     /**

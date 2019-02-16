@@ -24,11 +24,15 @@ package com.no1.taiwan.stationmusicfm.entities.lastfm
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.ext.string.trimMarginAndNewLine
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
 object TrackInfoEntity {
     data class TrackEntity(
         val streamable: CommonLastFmEntity.StreamableEntity = CommonLastFmEntity.StreamableEntity()
-    ) : BaseTrackEntity(), Entity {
+    ) : BaseTrackEntity(), Entity, MusicMultiVisitable {
+        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+
         override fun toString() = """
             |${this::class.java.simpleName}(
             |streamable=$streamable

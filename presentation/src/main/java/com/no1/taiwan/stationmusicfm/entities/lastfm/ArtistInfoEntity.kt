@@ -23,6 +23,8 @@ package com.no1.taiwan.stationmusicfm.entities.lastfm
 
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
 object ArtistInfoEntity {
     data class ArtistEntity(
@@ -39,7 +41,9 @@ object ArtistInfoEntity {
         val similars: List<ArtistEntity> = emptyList(),
         val tags: List<TagInfoEntity.TagEntity> = emptyList(),
         val bio: BioEntity = BioEntity()
-    ) : Entity
+    ) : Entity, MusicMultiVisitable {
+        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+    }
 
     data class ArtistsEntity(
         val artists: List<ArtistEntity> = emptyList(),

@@ -23,17 +23,23 @@ package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.kodein.di.generic.instance
 
 class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() {
     companion object {
@@ -42,24 +48,30 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
         private const val FRAGMENT_TARGET_GENRE = "genre"
     }
 
+    private val trackLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
+    private val artistLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
+    private val trackAdapter: MusicAdapter by instance()
+    private val artistAdapter: MusicAdapter by instance()
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.topTracks) {
             peel {
-                logd(it.tracks)
+                trackAdapter.appendList(cast(it.tracks))
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topArtists) {
             peel {
-                navTo(FRAGMENT_TARGET_ARTIST, it.artists.first().mbid)
+                artistAdapter.appendList(cast(it.artists))
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topTags) {
             peel {
+                it.tags
                 logd(it)
             } happenError {
                 loge(it)
@@ -75,13 +87,23 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            //            if (topTracks.value.isNull())
-//                runTaskFetchTopTrack()
+            if (topTracks.value.isNull())
+                runTaskFetchTopTrack()
             if (topArtists.value.isNull())
                 runTaskFetchTopArtist()
 //            if (topTags.value.isNull())
 //                runTaskFetchTopTag()
         }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        initRecyclerViewWith(R.id.rv_tracks, trackAdapter, trackLinearLayoutManager)
+        initRecyclerViewWith(R.id.rv_artists, artistAdapter, artistLinearLayoutManager)
+//        initRecyclerViewWith(R.id.rv_artists, artistAdapter, artistLinearLayoutManager)
     }
 
     /**
