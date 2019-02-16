@@ -24,10 +24,12 @@ package com.no1.taiwan.stationmusicfm.features.main.rank.viewholders
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.devrapid.kotlinknifer.getDisplayMetrics
 import com.devrapid.kotlinknifer.resizeView
+import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
@@ -57,6 +59,8 @@ class TopperViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Rankin
             find<TextView>(R.id.ftv_chart).text =
                 listOf(model.title, model.update, "${model.trackNumber} tracks").joinToString("\n")
             find<ImageView>(R.id.aiv_thumbnail).loadByAny(model.topTrackUri, context)
+            /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankIndexFragment.gotoDetailFragment] */
+            find<CardView>(R.id.mcv_chart).setOnClickListener { RxBus.get().post("rank id", model.id) }
         }
     }
 }

@@ -22,18 +22,23 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank
 
 import android.os.Bundle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
@@ -45,18 +50,25 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
     private val chart2GridLayoutManager: GridLayoutManager by instance(null, 2)
     private val topperAdapter: MusicAdapter by instance()
     private val chartAdapter: MusicAdapter by instance()
+    private var isFetchData = true
+
+    init {
+        BusFragLifeRegister(this)
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.rankIds) {
             peel {
-                if (it.isEmpty()) return@peel
+                if (it.isEmpty() || !isFetchData) return@peel
                 topperAdapter.appendList(cast(it.subList(0, 4).toMutableList()))
                 chartAdapter.appendList(cast(it.subList(4, it.size - 1).map {
                     RankingIdForChartItem(it.id, it.title, it.update, it.topTrackUri, it.trackNumber)
                 }))
             } happenError {
                 loge(it)
+            } finally {
+                isFetchData = false
             } doWith this@RankIndexFragment
         }
     }
@@ -69,7 +81,7 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (rankIds.value.isNull())
+            if (rankIds.value.isNull() && isFetchData)
                 runTaskFetchRankIds()
         }
     }
@@ -99,4 +111,15 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_rank_index
+
+    /**
+     * @event_from[com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder.initView]
+     * @event_from[com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder.initView]
+     * @param rankId rank id.
+     */
+    @Subscribe(tags = [Tag("rank id")])
+    fun gotoDetailFragment(rankId: Number) {
+        findNavController().navigate(R.id.action_frag_rank_index_to_frag_rank_detail,
+                                     RankDetailFragment.createBundle(rankId.toInt()))
+    }
 }

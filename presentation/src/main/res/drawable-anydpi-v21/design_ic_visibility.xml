@@ -20,27 +20,14 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <string-array name="chart_rank">
-        <item>30002|Hito-Chinese|Tuesday</item>
-        <item>30001|Billboard charts|Wednesday</item>
-        <item>30004|UK charts|Tuesday</item>
-        <item>30005|Oricon Japan|Wednesday</item>
-        <item>30006|Korea M-net|Tuesday</item>
-        <!-- 🚫 Channel V's tracks are always one only -->
-        <!--<item>30007|Channel V Chinese|Monday</item>-->
-        <!--<item>30008|Channel V US, UK|Monday</item>-->
-        <!--<item>30009|Channel V JP, KOR|Monday</item>-->
-        <!-- 🚫 `10` & `15` are the same as `13` & `14` -->
-        <!--<item>30010|Chinese single song|Friday</item>-->
-        <!--<item>30015|China Hip-Pop|Friday</item>-->
-        <item>30013|Chinese TOP (HK, TW)|Monday</item>
-        <item>30014|Chinese TOP (China)|Monday</item>
-        <item>30012|HK charts|Friday</item>
-        <item>30016|Beatport Electronics|Friday</item>
-        <item>31000|Chinese|Everyday</item>
-        <item>31001|US|Everyday</item>
-        <item>31002|J-POP|Everyday</item>
-        <item>31003|K-POP|Everyday</item>
-    </string-array>
-</resources>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0">
+
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="@string/path_password_eye"/>
+</vector>

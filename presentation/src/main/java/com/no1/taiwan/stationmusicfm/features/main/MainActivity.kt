@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.features.main
 
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
@@ -37,7 +38,17 @@ class MainActivity : BaseActivity() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        NavigationUI.setupWithNavController(bottomNavigation, navigator)
+        // Set the listener of selecting a menu item.
+        bottomNavigation.apply {
+            setupWithNavController(navigator)
+            setOnNavigationItemSelectedListener {
+                // Avoid the reselect.
+                if (it.itemId == selectedItemId) return@setOnNavigationItemSelectedListener false
+
+                // Reassign to bottom navigation view.
+                NavigationUI.onNavDestinationSelected(it, navigator)
+            }
+        }
     }
 
     override fun provideLayoutId() = R.layout.activity_main

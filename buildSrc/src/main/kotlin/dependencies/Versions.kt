@@ -87,7 +87,7 @@ object Versions {
      * Related dependency injection lib version.
      */
     object DI {
-        const val kodein = "6.0.1"
+        const val kodein = "6.1.0"
     }
 
     /**
@@ -149,7 +149,7 @@ object Versions {
      * Related Android UI lib version.
      */
     object Ui {
-        const val material = "1.1.0-alpha02"
+        const val material = "1.1.0-alpha03"
         const val dialog = "1.0.6"
     }
 
