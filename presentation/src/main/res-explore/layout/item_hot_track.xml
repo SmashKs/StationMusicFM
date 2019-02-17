@@ -29,7 +29,7 @@
     android:layout_height="wrap_content">
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_album_name"
+        android:id="@+id/ftv_track_name"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_gravity="start"

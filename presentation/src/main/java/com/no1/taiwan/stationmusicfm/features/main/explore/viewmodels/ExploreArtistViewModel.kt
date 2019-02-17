@@ -62,8 +62,8 @@ class ExploreArtistViewModel(
     val albumsLiveData: RespLiveData<AlbumInfoEntity.TopAlbumsEntity> = _albumsLiveData
     private val _similarArtistsLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsEntity>() }
     val similarArtistsLiveData: RespLiveData<ArtistInfoEntity.ArtistsEntity> = _similarArtistsLiveData
-    private val _tacksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksWithStreamableEntity>() }
-    val tacksLiveData: RespLiveData<TrackInfoEntity.TracksWithStreamableEntity> = _tacksLiveData
+    private val _tracksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksWithStreamableEntity>() }
+    val tracksLiveData: RespLiveData<TrackInfoEntity.TracksWithStreamableEntity> = _tracksLiveData
     private val _artistInfoLiveData by lazy { RespMutableLiveData<ArtistMixInfo>() }
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
     private val artistMapper by lazy { cast<ArtistPMapper>(mapperPool[ArtistPMapper::class.java]) }
@@ -84,7 +84,7 @@ class ExploreArtistViewModel(
             _artistLiveData.postValue(ResponseState.Success(artist))
             _albumsLiveData.postValue(ResponseState.Success(album))
             _similarArtistsLiveData.postValue(ResponseState.Success(similarArtist))
-            _tacksLiveData.postValue(ResponseState.Success(tracks))
+            _tracksLiveData.postValue(ResponseState.Success(tracks))
 
             ArtistMixInfo(artist, album, similarArtist, tracks)
         }

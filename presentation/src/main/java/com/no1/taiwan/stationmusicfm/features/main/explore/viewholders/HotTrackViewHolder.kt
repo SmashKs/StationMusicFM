@@ -22,10 +22,13 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 
 import android.view.View
+import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import org.jetbrains.anko.find
 
 class HotTrackViewHolder(
     view: View
@@ -43,6 +46,7 @@ class HotTrackViewHolder(
         adapter: AdaptiveAdapter<*, *, *>
     ) {
         itemView.apply {
+            find<TextView>(R.id.ftv_track_name).text = "${position + 1} ${model.name}"
         }
     }
 }
