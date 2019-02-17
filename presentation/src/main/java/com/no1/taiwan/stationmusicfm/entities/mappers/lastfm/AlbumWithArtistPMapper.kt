@@ -30,15 +30,40 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class AlbumWithArtistPMapper(
-    private val artistMapper: ArtistPMapper
+    private val artistMapper: ArtistPMapper,
+    private val attrMapper: AttrPMapper,
+    private val imageMapper: ImagePMapper,
+    private val tagMapper: TagPMapper,
+    private val trackMapper: TrackPMapper,
+    private val wikiMapper: WikiPMapper
 ) : AlbumWithArtistPreziMap {
     override fun toEntityFrom(model: AlbumInfoModel.AlbumWithArtistModel) = model.run {
-        AlbumInfoEntity.AlbumWithArtistEntity(artist.let(artistMapper::toEntityFrom),
-                                              playCount,
-                                              index)
+        AlbumInfoEntity.AlbumWithArtistEntity(artist.let(artistMapper::toEntityFrom), playCount, index).apply {
+            attr = model.attr.let(attrMapper::toEntityFrom)
+            images = model.images.map(imageMapper::toEntityFrom)
+            listeners = model.listeners
+            mbid = model.mbid
+            name = model.name
+            tags = model.tags.map(tagMapper::toEntityFrom)
+            title = model.title
+            tracks = model.tracks.map(trackMapper::toEntityFrom)
+            url = model.url
+            wiki = model.wiki.let(wikiMapper::toEntityFrom)
+        }
     }
 
     override fun toModelFrom(entity: AlbumInfoEntity.AlbumWithArtistEntity) = entity.run {
-        AlbumInfoModel.AlbumWithArtistModel(artistMapper.toModelFrom(artist), playCount, index)
+        AlbumInfoModel.AlbumWithArtistModel(artistMapper.toModelFrom(artist), playCount, index).apply {
+            attr = attrMapper.toModelFrom(entity.attr)
+            images = entity.images.map(imageMapper::toModelFrom)
+            listeners = entity.listeners
+            mbid = entity.mbid
+            name = entity.name
+            tags = entity.tags.map(tagMapper::toModelFrom)
+            title = entity.title
+            tracks = entity.tracks.map(trackMapper::toModelFrom)
+            url = entity.url
+            wiki = wikiMapper.toModelFrom(entity.wiki)
+        }
     }
 }

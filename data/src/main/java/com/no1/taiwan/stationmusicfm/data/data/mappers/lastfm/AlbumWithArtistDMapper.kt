@@ -23,23 +23,53 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm
 
 import com.no1.taiwan.stationmusicfm.data.data.AlbumWithArtistDataMap
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.TopTrackInfoData
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.AlbumInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 
 /**
  * A transforming mapping between [AlbumInfoData.AlbumWithArtistData] and [AlbumInfoModel.AlbumWithArtistModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class AlbumWithArtistDMapper(
-    private val artistMapper: ArtistDMapper
+    private val artistMapper: ArtistDMapper,
+    private val attrMapper: AttrDMapper,
+    private val imageMapper: ImageDMapper,
+    private val tagMapper: TagDMapper,
+    private val trackMapper: TrackDMapper,
+    private val wikiMapper: WikiDMapper
 ) : AlbumWithArtistDataMap {
     override fun toModelFrom(data: AlbumInfoData.AlbumWithArtistData) = data.run {
         AlbumInfoModel.AlbumWithArtistModel(artist?.let(artistMapper::toModelFrom) ?: ArtistInfoModel.ArtistModel(),
                                             playCount.orEmpty(),
-                                            index)
+                                            index).apply {
+            attr = data.attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel()
+            images = data.images?.map(imageMapper::toModelFrom).orEmpty()
+            listeners = data.listeners.orEmpty()
+            mbid = data.mbid.orEmpty()
+            name = data.name.orEmpty()
+            tags = data.tags?.tags?.map(tagMapper::toModelFrom).orEmpty()
+            title = data.title.orEmpty()
+            tracks = data.tracks?.tracks?.map(trackMapper::toModelFrom).orEmpty()
+            url = data.url.orEmpty()
+            wiki = data.wiki?.let(wikiMapper::toModelFrom) ?: CommonLastFmModel.WikiModel()
+        }
     }
 
     override fun toDataFrom(model: AlbumInfoModel.AlbumWithArtistModel) = model.run {
-        AlbumInfoData.AlbumWithArtistData(artistMapper.toDataFrom(artist), playCount, index)
+        AlbumInfoData.AlbumWithArtistData(artistMapper.toDataFrom(artist), playCount, index).apply {
+            attr = attrMapper.toDataFrom(model.attr)
+            images = model.images.map(imageMapper::toDataFrom)
+            listeners = model.listeners
+            mbid = model.mbid
+            name = model.name
+            tags = CommonLastFmData.TagsData(model.tags.map(tagMapper::toDataFrom), null)
+            title = model.title
+            tracks = TopTrackInfoData.TracksData(model.tracks.map(trackMapper::toDataFrom), null)
+            url = model.url
+            wiki = wikiMapper.toDataFrom(model.wiki)
+        }
     }
 }

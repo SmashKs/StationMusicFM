@@ -139,6 +139,12 @@ object UtilModule {
                                        tagMapper,
                                        WikiDMapper())
         val albumMapper = AlbumDMapper(AttrDMapper(), ImageDMapper(), tagMapper, trackMapper, WikiDMapper())
+        val trackWithStreamableMapper = TrackWithStreamableDMapper(albumMapper,
+                                                                   artistMapper,
+                                                                   AttrDMapper(),
+                                                                   ImageDMapper(),
+                                                                   tagMapper,
+                                                                   WikiDMapper())
         bind<DataMapperEntry>().inSet() with singleton { AlbumDMapper::class.java to albumMapper }
         bind<DataMapperEntry>().inSet() with singleton { ArtistDMapper::class.java to artistMapper }
         bind<DataMapperEntry>().inSet() with singleton {
@@ -149,14 +155,19 @@ object UtilModule {
             TagsDMapper::class.java to TagsDMapper(tagMapper, AttrDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            TopAlbumDMapper::class.java to TopAlbumDMapper(AlbumWithArtistDMapper(artistMapper), AttrDMapper())
+            TopAlbumDMapper::class.java to TopAlbumDMapper(AlbumWithArtistDMapper(artistMapper,
+                                                                                  AttrDMapper(),
+                                                                                  ImageDMapper(),
+                                                                                  tagMapper,
+                                                                                  trackMapper,
+                                                                                  WikiDMapper()), AttrDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton { TrackDMapper::class.java to trackMapper }
         bind<DataMapperEntry>().inSet() with singleton {
             TracksDMapper::class.java to TracksDMapper(trackMapper, AttrDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            TracksWithStreamableDMapper::class.java to TracksWithStreamableDMapper(TrackWithStreamableDMapper(),
+            TracksWithStreamableDMapper::class.java to TracksWithStreamableDMapper(trackWithStreamableMapper,
                                                                                    AttrDMapper())
         }
 
@@ -187,6 +198,12 @@ object UtilModule {
                                        tagMapper,
                                        WikiPMapper())
         val albumMapper = AlbumPMapper(AttrPMapper(), ImagePMapper(), tagMapper, trackMapper, WikiPMapper())
+        val trackWithStreamableMapper = TrackWithStreamablePMapper(albumMapper,
+                                                                   artistMapper,
+                                                                   AttrPMapper(),
+                                                                   ImagePMapper(),
+                                                                   tagMapper,
+                                                                   WikiPMapper())
         bind<PreziMapperEntry>().inSet() with singleton { AlbumPMapper::class.java to albumMapper }
         bind<PreziMapperEntry>().inSet() with singleton { ArtistPMapper::class.java to artistMapper }
         bind<PreziMapperEntry>().inSet() with singleton {
@@ -197,14 +214,19 @@ object UtilModule {
             TagsPMapper::class.java to TagsPMapper(tagMapper, AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            TopAlbumPMapper::class.java to TopAlbumPMapper(AlbumWithArtistPMapper(artistMapper), AttrPMapper())
+            TopAlbumPMapper::class.java to TopAlbumPMapper(AlbumWithArtistPMapper(artistMapper,
+                                                                                  AttrPMapper(),
+                                                                                  ImagePMapper(),
+                                                                                  tagMapper,
+                                                                                  trackMapper,
+                                                                                  WikiPMapper()), AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton { TrackPMapper::class.java to trackMapper }
         bind<PreziMapperEntry>().inSet() with singleton {
             TracksPMapper::class.java to TracksPMapper(trackMapper, AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            TracksWithStreamablePMapper::class.java to TracksWithStreamablePMapper(TrackWithStreamablePMapper(),
+            TracksWithStreamablePMapper::class.java to TracksWithStreamablePMapper(trackWithStreamableMapper,
                                                                                    AttrPMapper())
         }
 

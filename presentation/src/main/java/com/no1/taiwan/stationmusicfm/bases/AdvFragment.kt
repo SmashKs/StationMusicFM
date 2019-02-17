@@ -46,10 +46,11 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     }
 
     protected open val genericVMIndex = DEFAULT_INT
+    protected open val viewmodelProviderSource = PROVIDER_FROM_FRAGMENT
     /** Add the AAC [ViewModel] for each fragments. */
     @Suppress("UNCHECKED_CAST")
     protected val vm by lazy {
-        vmCreateMethod.invoke(vmProvider(PROVIDER_FROM_FRAGMENT), vmConcreteClass) as? VM ?: throw ClassCastException()
+        vmCreateMethod.invoke(vmProvider(viewmodelProviderSource), vmConcreteClass) as? VM ?: throw ClassCastException()
     }
     // OPTIMIZE(jieyi): 2019/02/15 In old phone here will cause frame drops.
     private val viewModelFactory: ViewModelProvider.Factory by instance()
@@ -72,7 +73,7 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
         }
     /** The [ViewModelProviders.of] function for obtaining a [ViewModel]. */
     private val vmCreateMethod by lazy {
-        vmProvider(PROVIDER_FROM_FRAGMENT).javaClass.getMethod("get", vmConcreteClass.superclass.javaClass)
+        vmProvider(viewmodelProviderSource).javaClass.getMethod("get", vmConcreteClass.superclass.javaClass)
     }
     /** Dialog loading view. */
 //    private val loadingView by lazy { LoadingDialog.getInstance(this, true) }

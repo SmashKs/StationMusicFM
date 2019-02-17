@@ -27,7 +27,6 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.viewpager.widget.ViewPager
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.isNull
 import com.google.android.material.tabs.TabLayout
 import com.no1.taiwan.stationmusicfm.R
@@ -53,9 +52,10 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         fun createBundle(mbid: String) = bundleOf(ARGUMENT_MBID to mbid)
     }
 
+    override val viewmodelProviderSource get() = PROVIDER_FROM_ACTIVITY
     private val adapterFragments by lazy {
-        listOf(PagerTrackFragment(),
-               PagerAlbumFragment(),
+        listOf(PagerAlbumFragment(),
+               PagerTrackFragment(),
                PagerSimilarArtistFragment())
     }
     private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID, DEFAULT_STR)) }
@@ -64,7 +64,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     override fun bindLiveData() {
         observeNonNull(vm.artistInfoLiveData) {
             peel { (artist, album, artists, tracks) ->
-                logw("artistInfoLiveData")
             } happenError {
                 loge(it)
             } doWith this@ExploreArtistFragment

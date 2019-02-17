@@ -29,12 +29,49 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
  * A transforming mapping between [TrackInfoModel.TrackWithStreamableModel] and [TrackInfoEntity.TrackWithStreamableEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class TrackWithStreamablePMapper : TrackWithStreamablePreziMap {
+class TrackWithStreamablePMapper(
+    private val albumMapper: AlbumPMapper,
+    private val artistMapper: ArtistPMapper,
+    private val attrMapper: AttrPMapper,
+    private val imageMapper: ImagePMapper,
+    private val tagMapper: TagPMapper,
+    private val wikiMapper: WikiPMapper
+) : TrackWithStreamablePreziMap {
     override fun toEntityFrom(model: TrackInfoModel.TrackWithStreamableModel) = model.run {
-        TrackInfoEntity.TrackWithStreamableEntity(streamable)
+        TrackInfoEntity.TrackWithStreamableEntity(streamable).apply {
+            album = model.album.let(albumMapper::toEntityFrom)
+            attr = model.attr.let(attrMapper::toEntityFrom)
+            artist = model.artist.let(artistMapper::toEntityFrom)
+            duration = model.duration
+            images = model.images.map(imageMapper::toEntityFrom)
+            listeners = model.listeners
+            match = model.match
+            mbid = model.mbid
+            name = model.name
+            playcount = model.playcount
+            topTags = model.topTags.map(tagMapper::toEntityFrom)
+            url = model.url
+            realUrl = model.realUrl
+            wiki = model.wiki.let(wikiMapper::toEntityFrom)
+        }
     }
 
     override fun toModelFrom(entity: TrackInfoEntity.TrackWithStreamableEntity) = entity.run {
-        TrackInfoModel.TrackWithStreamableModel(streamable)
+        TrackInfoModel.TrackWithStreamableModel(streamable).apply {
+            album = entity.album.let(albumMapper::toModelFrom)
+            attr = entity.attr.let(attrMapper::toModelFrom)
+            artist = entity.artist.let(artistMapper::toModelFrom)
+            duration = entity.duration
+            images = entity.images.map(imageMapper::toModelFrom)
+            listeners = entity.listeners
+            match = entity.match
+            mbid = entity.mbid
+            name = entity.name
+            playcount = entity.playcount
+            topTags = entity.topTags.map(tagMapper::toModelFrom)
+            url = entity.url
+            realUrl = entity.realUrl
+            wiki = entity.wiki.let(wikiMapper::toModelFrom)
+        }
     }
 }

@@ -21,11 +21,46 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers
 
+import androidx.recyclerview.widget.GridLayoutManager
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseFragment
+import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.finally
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.kodein.di.generic.instance
 
-class PagerAlbumFragment : BaseFragment<MainActivity>() {
+class PagerAlbumFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
+    override val viewmodelProviderSource get() = PROVIDER_FROM_ACTIVITY
+    private val gridLayoutManager: GridLayoutManager by instance(null, 2)
+    private val adapter: MusicAdapter by instance()
+    private var isFetching = true
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        super.bindLiveData()
+        observeNonNull(vm.albumsLiveData) {
+            peel {
+                if (it.albums.isNotEmpty() && isFetching)
+                    adapter.appendList(cast(it.albums))
+            } finally {
+                isFetching = false
+            } doWith this@PagerAlbumFragment
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        initRecyclerViewWith(R.id.rv_hot_album, adapter, gridLayoutManager)
+    }
+
     /**
      * Set the parentView for inflating.
      *

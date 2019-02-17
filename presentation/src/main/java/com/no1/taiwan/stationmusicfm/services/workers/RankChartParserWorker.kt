@@ -53,21 +53,9 @@ class RankChartParserWorker(
     private val fetchRankIdsCase: FetchRankIdsCase by instance()
 
     override fun doWork(): Result {
+        // If there're data inside in database already, we can skip storing.
         if (runBlocking { fetchRankIdsCase.exec(FetchRankIdsReq()) }.isNotEmpty())
             return Result.success()
-
-        // If there're data inside in database already, we can skip storing.
-//        val workers = applicationContext.resources.getStringArray(R.array.chart_rank)
-//            .map {
-//                it.split("|").toTypedArray()
-//                Triple(columns[0], columns[1], columns[2])
-//                Data.Builder()
-//                    .putString(ARGUMENT_DATA_ID, columns[0])
-//                    .putString(ARGUMENT_DATA_TITLE, columns[1])
-//                    .putString(ARGUMENT_DATA_UPDATE, columns[2])
-//                    .build()
-//                OneTimeWorkRequestBuilder<PrefetchChartWorker>().setInputData(parameter).build()
-//            }
 
         return Result.failure()
     }

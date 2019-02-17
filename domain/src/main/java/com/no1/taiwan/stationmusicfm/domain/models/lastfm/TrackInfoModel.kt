@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.string.trimMarginAndNewLine
 
 object TrackInfoModel {
     data class TrackModel(
@@ -59,22 +60,20 @@ object TrackInfoModel {
         var realUrl: String = DEFAULT_STR,
         var wiki: CommonLastFmModel.WikiModel = CommonLastFmModel.WikiModel()
     ) : Model {
-        override fun toString() =
-            """
-album: $album
-attr: $attr
-artist: $artist
-duration: $duration
-images: $images
-listeners: $listeners
-match: $match
-mbid: $mbid
-name: $name
-playcount: $playcount
-topTags: $topTags
-url: $url
-realUrl: $realUrl
-wiki: $wiki
-"""
+        override fun toString() = """
+            |album: $album
+            |attr: $attr
+            |artist: $artist
+            |duration: $duration
+            |images: $images
+            |listeners: $listeners
+            |match: $match
+            |mbid: $mbid
+            |name: $name
+            |playcount: $playcount
+            |topTags: $topTags
+            |url: $url
+            |realUrl: $realUrl
+            |wiki: $wiki""".trimMarginAndNewLine()
     }
 }
