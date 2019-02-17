@@ -29,7 +29,6 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
@@ -38,17 +37,15 @@ class PagerAlbumFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     override val viewmodelProviderSource get() = PROVIDER_FROM_ACTIVITY
     private val gridLayoutManager: GridLayoutManager by instance(null, 2)
     private val adapter: MusicAdapter by instance()
-    private var isFetching = true
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()
         observeNonNull(vm.albumsLiveData) {
             peel {
-                if (it.albums.isNotEmpty() && isFetching)
-                    adapter.appendList(cast(it.albums))
-            } finally {
-                isFetching = false
+                if (it.albums.isEmpty()) return@peel
+                // FIXME(jieyi): 2019-02-17 Here's a bug for displaying old list.
+                adapter.replaceWholeList(cast(it.albums))
             } doWith this@PagerAlbumFragment
         }
     }

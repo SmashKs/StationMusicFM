@@ -30,7 +30,6 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArt
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
@@ -39,18 +38,13 @@ class PagerTrackFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     override val viewmodelProviderSource get() = PROVIDER_FROM_ACTIVITY
     private val linearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
-    private var isFetching = true
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()
         observeNonNull(vm.tracksLiveData) {
             peel {
-                it.tracks.takeIf { it.isNotEmpty() && isFetching }?.let {
-                    adapter.appendList(cast(it))
-                }
-            } finally {
-                isFetching = false
+                adapter.replaceWholeList(cast(it.tracks))
             } doWith this@PagerTrackFragment
         }
     }

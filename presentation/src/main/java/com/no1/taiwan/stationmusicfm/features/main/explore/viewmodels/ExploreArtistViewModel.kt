@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
+import androidx.lifecycle.MutableLiveData
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
@@ -71,6 +72,9 @@ class ExploreArtistViewModel(
     private val artistsPMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
     private val tracksWithStreamablePMapper by lazy { cast<TracksWithStreamablePMapper>(mapperPool[TracksWithStreamablePMapper::class.java]) }
 
+    private val _lastFindMbid by lazy { MutableLiveData<String>() }
+    val lastFindMbid get() = _lastFindMbid.value
+
     fun runTaskFetchArtistInfo(mbid: String) = GlobalScope.launch {
         val parameters = ArtistParams(mbid)
         _artistInfoLiveData reqData {
@@ -85,6 +89,7 @@ class ExploreArtistViewModel(
             _albumsLiveData.postValue(ResponseState.Success(album))
             _similarArtistsLiveData.postValue(ResponseState.Success(similarArtist))
             _tracksLiveData.postValue(ResponseState.Success(tracks))
+            _lastFindMbid.postValue(mbid)
 
             ArtistMixInfo(artist, album, similarArtist, tracks)
         }

@@ -59,6 +59,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                PagerSimilarArtistFragment())
     }
     private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID, DEFAULT_STR)) }
+    private var isFirstTime = true
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -66,6 +67,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
             peel { (artist, album, artists, tracks) ->
             } happenError {
                 loge(it)
+            } happenError {
+                isFirstTime = false
             } doWith this@ExploreArtistFragment
         }
     }
@@ -78,7 +81,11 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (artistInfoLiveData.value.isNull())
+            // 1. `artistInfoLiveData.value.isNull()` is for avoiding the back fragment again and search it.
+            if (artistInfoLiveData.value.isNull() ||
+                // 2. `mbid != vm.lastFindMbid` is for avoiding searching the same artist.
+                // 3. `isFirstTime` is for the first time open this fragment.
+                (mbid != vm.lastFindMbid && isFirstTime))
                 runTaskFetchArtistInfo(mbid)
         }
     }
