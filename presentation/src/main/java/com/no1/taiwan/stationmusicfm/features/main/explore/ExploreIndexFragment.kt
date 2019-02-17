@@ -24,18 +24,22 @@ package com.no1.taiwan.stationmusicfm.features.main.explore
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
@@ -52,29 +56,44 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
     private val artistLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
     private val trackAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
+    private var isFetchArtist = true
+    private var isFetchTrack = true
+    private var isFetchTag = true
+
+    init {
+        BusFragLifeRegister(this)
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.topTracks) {
             peel {
-                trackAdapter.appendList(cast(it.tracks))
+                if (isFetchTrack)
+                    trackAdapter.appendList(cast(it.tracks))
             } happenError {
                 loge(it)
+            } finally {
+                isFetchTrack = false
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topArtists) {
             peel {
-                artistAdapter.appendList(cast(it.artists))
+                if (isFetchArtist)
+                    artistAdapter.appendList(cast(it.artists))
             } happenError {
                 loge(it)
+            } finally {
+                isFetchArtist = false
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topTags) {
             peel {
-                it.tags
-                logd(it)
+                if (isFetchTag)
+                    it.tags
             } happenError {
                 loge(it)
+            } finally {
+                isFetchTag = false
             } doWith this@ExploreIndexFragment
         }
     }
@@ -112,6 +131,14 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_explore_index
+
+    @Subscribe(tags = [Tag("goto detail fragment")])
+    fun gotoNextDetailFragment(params: AnyParameters) {
+        val target = cast<String>(params["target"])
+        val mbidOrName = cast<String>(params["mbid or name"])
+
+        navTo(target, mbidOrName)
+    }
 
     private fun navTo(target: String, mbidOrName: String) {
         val (fragment, bundle) = when (target) {

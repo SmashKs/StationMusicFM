@@ -28,7 +28,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
-import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreAtristViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
@@ -89,7 +89,7 @@ object RecyclerViewModule {
             CommonMusicEntity.SongEntity::class.hashCode() to (R.layout.item_rank_detail to ::RankTrackViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            ArtistInfoEntity.ArtistEntity::class.hashCode() to (R.layout.item_explore_artist to ::ExploreAtristViewHolder)
+            ArtistInfoEntity.ArtistEntity::class.hashCode() to (R.layout.item_explore_artist to ::ExploreArtistViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
             TagInfoEntity.TagEntity::class.hashCode() to (R.layout.item_explore_genre to ::ExploreGenreViewHolder)

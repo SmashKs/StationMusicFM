@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.no1.taiwan.stationmusicfm.R
@@ -45,6 +46,12 @@ class ExploreTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, 
             find<ImageView>(R.id.iv_track).loadByAny(model.images.last().text)
             find<TextView>(R.id.ftv_track_name).text = model.name
             find<TextView>(R.id.ftv_name)
+            find<CardView>(R.id.mcv_track).setOnClickListener {
+                com.hwangjr.rxbus.RxBus.get().post("goto detail fragment", kotlin.collections.hashMapOf(
+                    "target" to "artist",
+                    "mbid or name" to model.mbid
+                ))
+            }
         }
     }
 }
