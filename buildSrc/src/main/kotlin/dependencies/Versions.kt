@@ -63,6 +63,7 @@ object Versions {
     object ViewComponent {
         const val adaptiveRecyclerView = "1.0.7"
         const val shapeOfView = "1.4.7"
+        const val realtimeBlur = "1.1.2"
     }
 
     /**

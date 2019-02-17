@@ -20,29 +20,31 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       xmlns:tools="http://schemas.android.com/tools"
-       tools:context=".features.main.explore.ExploreArtistFragment"
-       tools:showIn="@layout/fragment_explore_artist">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".features.main.explore.ExploreArtistFragment"
+    tools:showIn="@layout/fragment_explore_artist">
 
-    <com.github.florent37.shapeofview.shapes.DiagonalView
-        android:id="@+id/sov_thumbnail"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_artist_backdrop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
+        android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="1:0.6"
         app:layout_constraintTop_toTopOf="parent"
-        app:shape_diagonal_angle="10"
-        app:shape_diagonal_position="bottom">
+        tools:src="@tools:sample/avatars"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_artist_backdrop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"/>
-    </com.github.florent37.shapeofview.shapes.DiagonalView>
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
+        app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
+        app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop"
+        app:layout_constraintStart_toStartOf="@id/iv_artist_backdrop"
+        app:layout_constraintTop_toTopOf="@id/iv_artist_backdrop"
+        app:realtimeBlurRadius="20dp"
+        app:realtimeOverlayColor="#11000000"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_artist_name"
@@ -60,7 +62,7 @@
         android:layout_marginBottom="@dimen/md_three_unit"
         android:layout_marginEnd="@dimen/md_two_unit"
         android:layout_marginStart="@dimen/md_two_unit"
-        app:layout_constraintBottom_toBottomOf="@id/sov_thumbnail"
+        app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
         tools:text="@tools:sample/lorem[4]"/>
 
     <com.github.florent37.shapeofview.shapes.CircleView
@@ -68,8 +70,8 @@
         android:layout_height="@dimen/md_ten_unit"
         android:layout_marginBottom="@dimen/md_three_unit"
         android:layout_marginEnd="@dimen/md_three_unit"
-        app:layout_constraintBottom_toBottomOf="@id/sov_thumbnail"
-        app:layout_constraintEnd_toEndOf="@id/sov_thumbnail">
+        app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
+        app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_artist_thumbnail"

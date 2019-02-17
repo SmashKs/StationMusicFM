@@ -140,6 +140,7 @@ object Deps {
         const val idlingEspresso = "androidx.test.espresso:espresso-idling-resource:${Versions.Test.espresso}"
 
         const val shapeOfView = "com.github.florent37:shapeofview:${Versions.ViewComponent.shapeOfView}"
+        const val realtimeBlur = "com.github.mmin18:realtimeblurview:${Versions.ViewComponent.realtimeBlur}"
     }
 
     /**

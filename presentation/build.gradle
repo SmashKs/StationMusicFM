@@ -34,6 +34,8 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true
+        renderscriptTargetApi = dependencies.Versions.Android.minSdk
+        renderscriptSupportModeEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -171,6 +173,7 @@ dependencies {
 
     //region Third-party view components
     implementation(dependencies.Deps.Presentation.shapeOfView)
+    implementation(dependencies.Deps.Presentation.realtimeBlur)
     //endregion
 
     //region Debug

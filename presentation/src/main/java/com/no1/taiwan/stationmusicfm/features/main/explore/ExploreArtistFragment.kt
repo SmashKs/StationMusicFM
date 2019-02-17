@@ -70,6 +70,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 find<ImageView>(R.id.iv_artist_backdrop).loadByAny(artist.images.last().text)
                 find<ImageView>(R.id.iv_artist_thumbnail).loadByAny(artist.images.last().text)
                 find<TextView>(R.id.ftv_artist_name).text = artist.name
+                find<TextView>(R.id.ftv_tags).text = artist.tags.map { it.name }.joinToString("\n")
             } happenError {
                 loge(it)
             } happenError {
