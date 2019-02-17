@@ -22,19 +22,29 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.viewpager.widget.ViewPager
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.isNull
+import com.google.android.material.tabs.TabLayout
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerAlbumFragment
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerSimilarArtistFragment
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import org.jetbrains.anko.find
+import org.jetbrains.anko.support.v4.find
 
 class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     companion object {
@@ -43,6 +53,11 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         fun createBundle(mbid: String) = bundleOf(ARGUMENT_MBID to mbid)
     }
 
+    private val adapterFragments by lazy {
+        listOf(PagerTrackFragment(),
+               PagerAlbumFragment(),
+               PagerSimilarArtistFragment())
+    }
     private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID, DEFAULT_STR)) }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -70,9 +85,29 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     }
 
     /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        find<ViewPager>(R.id.vp_container).also {
+            it.adapter = SimpleFragmentPagerAdapter(childFragmentManager, adapterFragments)
+            find<TabLayout>(R.id.tl_category).apply {
+                setupWithViewPager(it)
+                repeat(tabCount) { getTabAt(it)?.customView = getTabView(it) }
+            }
+        }
+    }
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_explore_artist
+
+    private fun getTabView(position: Int) = LayoutInflater.from(parent)
+        .inflate(R.layout.tabitem_introduction, null)
+        .apply {
+            this.find<TextView>(R.id.ftv_title).text = resources.getStringArray(R.array.artist_detail_column)[position]
+        }
 }

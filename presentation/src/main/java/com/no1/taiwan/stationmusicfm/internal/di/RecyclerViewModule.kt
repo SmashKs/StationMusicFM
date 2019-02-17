@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
@@ -31,6 +32,8 @@ import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotAlbumViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
@@ -97,5 +100,15 @@ object RecyclerViewModule {
         bind<ViewHolderEntry>().inSet() with provider {
             TrackInfoEntity.TrackEntity::class.hashCode() to (R.layout.item_explore_track to ::ExploreTrackViewHolder)
         }
+        bind<ViewHolderEntry>().inSet() with provider {
+            AlbumInfoEntity.AlbumWithArtistEntity::class.hashCode() to (R.layout.item_hot_album to ::HotAlbumViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            TrackInfoEntity.TrackWithStreamableEntity::class.hashCode() to (R.layout.item_hot_track to ::HotTrackViewHolder)
+        }
+        // FIXME(jieyi): 2019-02-17 There're the same entity.
+//        bind<ViewHolderEntry>().inSet() with provider {
+//            ArtistInfoEntity.ArtistEntity::class.hashCode() to (R.layout.item_similar_artist to ::SimilarArtistViewHolder)
+//        }
     }
 }

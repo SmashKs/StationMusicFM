@@ -52,7 +52,9 @@ object TrackInfoEntity {
 
     data class TrackWithStreamableEntity(
         val streamable: String = DEFAULT_STR
-    ) : BaseTrackEntity(), Entity
+    ) : BaseTrackEntity(), Entity, MusicMultiVisitable {
+        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+    }
 
     open class BaseTrackEntity(
         var album: AlbumInfoEntity.AlbumEntity = AlbumInfoEntity.AlbumEntity(),
