@@ -28,14 +28,15 @@
     android:layout_height="match_parent"
     tools:context=".features.main.explore.ExploreArtistFragment">
 
+    <include layout="@layout/merge_artist_header"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_category"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/md_seven_unit"
-        android:minHeight="?actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="@dimen/md_five_unit"
+        app:layout_constraintTop_toBottomOf="@id/sov_thumbnail"
         app:tabIndicatorColor="@color/colorAccent"
-        app:tabIndicatorHeight="2dp"
+        app:tabIndicatorHeight="1dp"
         app:tabSelectedTextColor="@color/colorAccent"
         app:tabTextColor="@color/colorAccent">
 

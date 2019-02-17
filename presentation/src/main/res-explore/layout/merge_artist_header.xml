@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2019 The Smash Ks Open Project
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is furnished
+  ~ to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  ~ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+  ~ PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  ~ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       tools:context=".features.main.explore.ExploreArtistFragment"
+       tools:showIn="@layout/fragment_explore_artist">
+
+    <com.github.florent37.shapeofview.shapes.DiagonalView
+        android:id="@+id/sov_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        app:layout_constraintDimensionRatio="1:0.6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shape_diagonal_angle="10"
+        app:shape_diagonal_position="bottom">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_artist_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars"/>
+    </com.github.florent37.shapeofview.shapes.DiagonalView>
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_artist_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        app:layout_constraintBottom_toTopOf="@id/ftv_tags"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/md_three_unit"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        app:layout_constraintBottom_toBottomOf="@id/sov_thumbnail"
+        tools:text="@tools:sample/lorem[4]"/>
+
+    <com.github.florent37.shapeofview.shapes.CircleView
+        android:layout_width="@dimen/md_ten_unit"
+        android:layout_height="@dimen/md_ten_unit"
+        android:layout_marginBottom="@dimen/md_three_unit"
+        android:layout_marginEnd="@dimen/md_three_unit"
+        app:layout_constraintBottom_toBottomOf="@id/sov_thumbnail"
+        app:layout_constraintEnd_toEndOf="@id/sov_thumbnail">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_artist_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:src="@tools:sample/avatars"/>
+    </com.github.florent37.shapeofview.shapes.CircleView>
+</merge>

@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.viewpager.widget.ViewPager
@@ -39,6 +40,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerSimil
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -65,6 +67,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     override fun bindLiveData() {
         observeNonNull(vm.artistInfoLiveData) {
             peel { (artist, album, artists, tracks) ->
+                find<ImageView>(R.id.iv_artist_backdrop).loadByAny(artist.images.last().text)
+                find<ImageView>(R.id.iv_artist_thumbnail).loadByAny(artist.images.last().text)
+                find<TextView>(R.id.ftv_artist_name).text = artist.name
             } happenError {
                 loge(it)
             } happenError {
