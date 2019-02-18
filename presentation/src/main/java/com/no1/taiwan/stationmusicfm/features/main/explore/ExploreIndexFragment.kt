@@ -52,9 +52,9 @@ import org.kodein.di.generic.instance
 
 class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() {
     companion object {
-        private const val FRAGMENT_TARGET_ARTIST = "artist"
-        private const val FRAGMENT_TARGET_TRACK = "track"
-        private const val FRAGMENT_TARGET_GENRE = "genre"
+        const val FRAGMENT_TARGET_ARTIST = "artist"
+        const val FRAGMENT_TARGET_TRACK = "track"
+        const val FRAGMENT_TARGET_GENRE = "genre"
     }
 
     private val trackLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
@@ -153,11 +153,11 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
 
     private fun navTo(target: String, mbid: String, artistName: String) {
         val (fragment, bundle) = when (target) {
+            FRAGMENT_TARGET_TRACK ->
+                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbid)
             FRAGMENT_TARGET_ARTIST ->
                 R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbid,
                                                                                                             artistName)
-            FRAGMENT_TARGET_TRACK ->
-                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbid)
             FRAGMENT_TARGET_GENRE ->
                 R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(mbid)
             else -> throw IllegalArgumentException()
