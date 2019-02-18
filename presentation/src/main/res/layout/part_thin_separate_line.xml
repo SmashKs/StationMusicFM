@@ -20,20 +20,10 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <!-- Customize Font Text View -->
-    <declare-styleable name="FontTextView">
-        <attr name="textFont" format="string"/>
-    </declare-styleable>
-
-    <!-- Customize Separate Line -->
-    <declare-styleable name="SeparateLineWithTitle">
-        <attr name="sltTitle" format="string"/>
-        <attr name="sltTitleSize" format="dimension"/>
-        <attr name="sltTitleColor" format="color"/>
-        <attr name="sltTextFont" format="string"/>
-        <attr name="sltBetween" format="dimension"/>
-        <attr name="sltLineColor" format="color"/>
-        <attr name="sltLineHeight" format="dimension"/>
-    </declare-styleable>
-</resources>
+<View
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginEnd="@dimen/md_two_unit"
+    android:layout_marginStart="@dimen/md_two_unit"
+    android:background="#AEAEAE"/>

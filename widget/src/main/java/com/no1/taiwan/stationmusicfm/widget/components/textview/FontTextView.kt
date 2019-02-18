@@ -41,5 +41,11 @@ class FontTextView @JvmOverloads constructor(
                 typeface = Typeface.createFromAsset(context.assets, "fonts/$it")
             }
         }.recycle()
+
+        includeFontPadding = false
+    }
+
+    fun setFont(fonts: String) {
+        typeface = Typeface.createFromAsset(context.assets, "fonts/$fonts")
     }
 }

@@ -22,15 +22,11 @@
 package com.no1.taiwan.stationmusicfm.features.test
 
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logw
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvActivity
-import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
 class TestActivity : AdvActivity<TestViewModel>() {
-    override fun provideLayoutId() = R.layout.activity_main
+    override fun provideLayoutId() = R.layout.activity_test
 
     /**
      * Initialize doing some methods and actions.
@@ -38,10 +34,5 @@ class TestActivity : AdvActivity<TestViewModel>() {
      * @param savedInstanceState previous state after this activity was destroyed.
      */
     override fun init(savedInstanceState: Bundle?) {
-        observeNonNull(vm.ld) {
-            logw(this)
-            peel { logw(it) } doWith this@TestActivity
-        }
-        vm.testFetching()
     }
 }

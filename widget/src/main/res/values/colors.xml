@@ -21,19 +21,5 @@
   -->
 
 <resources>
-    <!-- Customize Font Text View -->
-    <declare-styleable name="FontTextView">
-        <attr name="textFont" format="string"/>
-    </declare-styleable>
-
-    <!-- Customize Separate Line -->
-    <declare-styleable name="SeparateLineWithTitle">
-        <attr name="sltTitle" format="string"/>
-        <attr name="sltTitleSize" format="dimension"/>
-        <attr name="sltTitleColor" format="color"/>
-        <attr name="sltTextFont" format="string"/>
-        <attr name="sltBetween" format="dimension"/>
-        <attr name="sltLineColor" format="color"/>
-        <attr name="sltLineHeight" format="dimension"/>
-    </declare-styleable>
+    <color name="transparent">#00000000</color>
 </resources>
