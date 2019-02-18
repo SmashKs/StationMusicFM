@@ -75,8 +75,8 @@ class ExploreArtistViewModel(
     private val _lastFindMbid by lazy { MutableLiveData<String>() }
     val lastFindMbid get() = _lastFindMbid.value
 
-    fun runTaskFetchArtistInfo(mbid: String) = GlobalScope.launch {
-        val parameters = ArtistParams(mbid)
+    fun runTaskFetchArtistInfo(mbid: String, name: String) = GlobalScope.launch {
+        val parameters = ArtistParams(mbid, name)
         _artistInfoLiveData reqData {
             val artist = fetchArtistCase.execMapping(artistMapper, FetchArtistReq(parameters))
             val album = fetchArtistTopAlbumCase.execMapping(topAlbumPMapper, FetchArtistTopAlbumReq(parameters))

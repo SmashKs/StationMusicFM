@@ -30,6 +30,7 @@ import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_EVENT
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
@@ -56,7 +57,7 @@ class ChartViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Ranking
                 listOf(model.title, model.update, "${model.trackNumber} tracks").joinToString("\n")
             find<ImageView>(R.id.aiv_thumbnail).loadByAny(model.topTrackUri, context)
             /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankIndexFragment.gotoDetailFragment] */
-            find<CardView>(R.id.mcv_chart).setOnClickListener { RxBus.get().post("rank id", model.id) }
+            find<CardView>(R.id.mcv_chart).setOnClickListener { RxBus.get().post(TAG_RANK_EVENT, model.id) }
         }
     }
 }

@@ -2,12 +2,15 @@
   <dictionary name="jieyi">
     <words>
       <w>kodein</w>
+      <w>lastfm</w>
       <w>livedata</w>
       <w>mbid</w>
       <w>noninfringement</w>
       <w>prezi</w>
+      <w>stationmusicfm</w>
       <w>streamable</w>
       <w>usecases</w>
+      <w>viewholders</w>
     </words>
   </dictionary>
 </component>

@@ -32,10 +32,10 @@ import com.devrapid.kotlinshaver.isNull
 import com.google.android.material.tabs.TabLayout
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerAlbumFragment
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerBioFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerSimilarArtistFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
@@ -50,17 +50,21 @@ import org.jetbrains.anko.support.v4.find
 class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     companion object {
         private const val ARGUMENT_MBID = "fragment argument mbid"
+        private const val ARGUMENT_ARTIST_NAME = "fragment argument artist name"
 
-        fun createBundle(mbid: String) = bundleOf(ARGUMENT_MBID to mbid)
+        fun createBundle(mbid: String, name: String) = bundleOf(ARGUMENT_MBID to mbid,
+                                                                ARGUMENT_ARTIST_NAME to name)
     }
 
     override val viewmodelProviderSource get() = PROVIDER_FROM_ACTIVITY
     private val adapterFragments by lazy {
-        listOf(PagerAlbumFragment(),
+        listOf(PagerBioFragment(),
+               PagerAlbumFragment(),
                PagerTrackFragment(),
                PagerSimilarArtistFragment())
     }
-    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID, DEFAULT_STR)) }
+    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID)) }
+    private val artistName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
     private var isFirstTime = true
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -92,7 +96,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 // 2. `mbid != vm.lastFindMbid` is for avoiding searching the same artist.
                 // 3. `isFirstTime` is for the first time open this fragment.
                 (mbid != vm.lastFindMbid && isFirstTime))
-                runTaskFetchArtistInfo(mbid)
+                runTaskFetchArtistInfo(mbid, artistName)
         }
     }
 

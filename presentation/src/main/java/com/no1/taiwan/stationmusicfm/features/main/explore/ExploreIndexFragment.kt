@@ -26,6 +26,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -36,6 +37,10 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_MBID
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -132,22 +137,29 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
      */
     override fun provideInflateView() = R.layout.fragment_explore_index
 
-    @Subscribe(tags = [Tag("goto detail fragment")])
+    /**
+     * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder.initView]
+     * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder.initView]
+     * @param params
+     */
+    @Subscribe(tags = [Tag(TAG_TO_DETAIL)])
     fun gotoNextDetailFragment(params: AnyParameters) {
-        val target = cast<String>(params["target"])
-        val mbidOrName = cast<String>(params["mbid or name"])
+        val target = cast<String>(params[PARAMS_TO_DETAIL_TARGET])
+        val mbid = castOrNull<String>(params[PARAMS_TO_DETAIL_MBID]).orEmpty()
+        val name = castOrNull<String>(params[PARAMS_TO_DETAIL_NAME]).orEmpty()
 
-        navTo(target, mbidOrName)
+        navTo(target, mbid, name)
     }
 
-    private fun navTo(target: String, mbidOrName: String) {
+    private fun navTo(target: String, mbid: String, artistName: String) {
         val (fragment, bundle) = when (target) {
             FRAGMENT_TARGET_ARTIST ->
-                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbidOrName)
+                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbid,
+                                                                                                            artistName)
             FRAGMENT_TARGET_TRACK ->
-                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbidOrName)
+                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbid)
             FRAGMENT_TARGET_GENRE ->
-                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(mbidOrName)
+                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(mbid)
             else -> throw IllegalArgumentException()
         }
 

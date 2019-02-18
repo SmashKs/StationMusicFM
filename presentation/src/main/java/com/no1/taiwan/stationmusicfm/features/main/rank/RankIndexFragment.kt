@@ -34,6 +34,7 @@ import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_EVENT
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -105,7 +106,7 @@ class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
      * @event_from[com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder.initView]
      * @param rankId rank id.
      */
-    @Subscribe(tags = [Tag("rank id")])
+    @Subscribe(tags = [Tag(TAG_RANK_EVENT)])
     fun gotoDetailFragment(rankId: Number) {
         findNavController().navigate(R.id.action_frag_rank_index_to_frag_rank_detail,
                                      RankDetailFragment.createBundle(rankId.toInt()))

@@ -27,8 +27,12 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_MBID
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
@@ -47,10 +51,9 @@ class ExploreTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, 
             find<TextView>(R.id.ftv_track_name).text = model.name
             find<TextView>(R.id.ftv_name)
             find<CardView>(R.id.mcv_track).setOnClickListener {
-                com.hwangjr.rxbus.RxBus.get().post("goto detail fragment", kotlin.collections.hashMapOf(
-                    "target" to "artist",
-                    "mbid or name" to model.mbid
-                ))
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
+                RxBus.get().post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to "artist",
+                                                          PARAMS_TO_DETAIL_MBID to model.mbid))
             }
         }
     }
