@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
         android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:0.6"
+        app:layout_constraintDimensionRatio="1:0.66"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars"/>
 
@@ -43,35 +43,39 @@
         app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop"
         app:layout_constraintStart_toStartOf="@id/iv_artist_backdrop"
         app:layout_constraintTop_toTopOf="@id/iv_artist_backdrop"
-        app:realtimeBlurRadius="20dp"
-        app:realtimeOverlayColor="#11000000"/>
+        app:realtimeBlurRadius="15dp"
+        app:realtimeOverlayColor="#22000000"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_artist_name"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/md_two_unit"
         android:layout_marginStart="@dimen/md_two_unit"
         app:layout_constraintBottom_toTopOf="@id/ftv_tags"
+        app:layout_constraintEnd_toStartOf="@id/sov_thumbnail"
+        app:layout_constraintStart_toStartOf="@id/iv_artist_backdrop"
         tools:text="@tools:sample/full_names"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_tags"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/md_three_unit"
-        android:layout_marginEnd="@dimen/md_two_unit"
-        android:layout_marginStart="@dimen/md_two_unit"
         app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
+        app:layout_constraintEnd_toEndOf="@id/ftv_artist_name"
+        app:layout_constraintStart_toStartOf="@id/ftv_artist_name"
         tools:text="@tools:sample/lorem[4]"/>
 
     <com.github.florent37.shapeofview.shapes.CircleView
+        android:id="@+id/sov_thumbnail"
         android:layout_width="@dimen/md_ten_unit"
         android:layout_height="@dimen/md_ten_unit"
-        android:layout_marginBottom="@dimen/md_three_unit"
         android:layout_marginEnd="@dimen/md_three_unit"
         app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
-        app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop">
+        app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop"
+        app:layout_constraintTop_toTopOf="@id/iv_artist_backdrop"
+        app:layout_constraintVertical_bias=".66">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_artist_thumbnail"
