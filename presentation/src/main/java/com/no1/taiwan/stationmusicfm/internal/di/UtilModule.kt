@@ -71,8 +71,10 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TrackPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TrackTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TrackWithStreamablePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.WikiPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.HotListPMapper
@@ -199,6 +201,13 @@ object UtilModule {
                                        StreamPMapper(),
                                        tagMapper,
                                        WikiPMapper())
+        val trackTypeGenre = TrackTypeGenrePMapper(artistMapper,
+                                                   AttrPMapper(),
+                                                   ImagePMapper(),
+                                                   StreamPMapper(),
+                                                   tagMapper,
+                                                   trackMapper,
+                                                   WikiPMapper())
         val albumMapper = AlbumPMapper(AttrPMapper(), ImagePMapper(), tagMapper, trackMapper, WikiPMapper())
         val trackWithStreamableMapper = TrackWithStreamablePMapper(albumMapper,
                                                                    artistMapper,
@@ -233,6 +242,9 @@ object UtilModule {
                 WikiPMapper()), AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton { TrackPMapper::class.java to trackMapper }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            TracksTypeGenrePMapper::class.java to TracksTypeGenrePMapper(trackTypeGenre, AttrPMapper())
+        }
         bind<PreziMapperEntry>().inSet() with singleton {
             TracksPMapper::class.java to TracksPMapper(trackMapper, AttrPMapper())
         }

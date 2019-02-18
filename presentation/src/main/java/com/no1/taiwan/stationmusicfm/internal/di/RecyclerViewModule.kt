@@ -35,6 +35,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGe
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotAlbumViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.TrackOfGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
@@ -113,6 +114,9 @@ object RecyclerViewModule {
 //        }
         bind<ViewHolderEntry>().inSet() with provider {
             AlbumInfoEntity.AlbumWithArtistTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_album to ::AlbumOfGenreViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            TrackInfoEntity.TrackTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_track to ::TrackOfGenreViewHolder)
         }
     }
 }

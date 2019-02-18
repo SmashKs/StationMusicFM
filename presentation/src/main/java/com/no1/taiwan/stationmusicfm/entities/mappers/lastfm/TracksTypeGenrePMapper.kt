@@ -19,13 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import Quadruple
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.entities.TracksTypeGenrePreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 
-typealias ArtistMixInfo = Quadruple<ArtistInfoEntity.ArtistEntity, AlbumInfoEntity.TopAlbumsEntity, ArtistInfoEntity.ArtistsEntity, TrackInfoEntity.TracksWithStreamableEntity>
-typealias GenreMixInfo = Quadruple<TagInfoEntity.TagEntity, ArtistInfoEntity.ArtistsEntity, AlbumInfoEntity.TopAlbumsEntity, TrackInfoEntity.TracksTypeGenreEntity>
+/**
+ * A transforming mapping between [TrackInfoModel.TracksModel] and [TrackInfoEntity.TracksEntity].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class TracksTypeGenrePMapper(
+    private val trackTypeGenreMapper: TrackTypeGenrePMapper,
+    private val attrMapper: AttrPMapper
+) : TracksTypeGenrePreziMap {
+    override fun toEntityFrom(model: TrackInfoModel.TracksModel) = model.run {
+        TrackInfoEntity.TracksTypeGenreEntity(tracks.map(trackTypeGenreMapper::toEntityFrom),
+                                              attr.let(attrMapper::toEntityFrom))
+    }
+
+    override fun toModelFrom(entity: TrackInfoEntity.TracksTypeGenreEntity) = throw UnsupportedOperationException()
+}

@@ -28,8 +28,8 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFac
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
 object TrackInfoEntity {
-    data class TrackEntity(
-        val streamable: CommonLastFmEntity.StreamableEntity = CommonLastFmEntity.StreamableEntity()
+    open class TrackEntity(
+        var streamable: CommonLastFmEntity.StreamableEntity = CommonLastFmEntity.StreamableEntity()
     ) : BaseTrackEntity(), Entity, MusicMultiVisitable {
         override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
 
@@ -39,6 +39,18 @@ object TrackInfoEntity {
             |${super.toString()})
             |""".trimMarginAndNewLine()
     }
+
+    /**
+     * The same as [TrackEntity] but this is for others viewholder type.
+     */
+    class TrackTypeGenreEntity : TrackEntity() {
+        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+    }
+
+    data class TracksTypeGenreEntity(
+        val tracks: List<TrackInfoEntity.TrackTypeGenreEntity> = emptyList(),
+        val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
+    ) : Entity
 
     data class TracksEntity(
         val tracks: List<TrackInfoEntity.TrackEntity> = emptyList(),
