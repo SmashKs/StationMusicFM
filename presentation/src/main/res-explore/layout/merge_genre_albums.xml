@@ -20,11 +20,11 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       xmlns:tools="http://schemas.android.com/tools"
-       tools:showIn="@layout/fragment_explore_genre">
-
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_explore_genre">
 
     <com.no1.taiwan.stationmusicfm.widget.components.separate.SeparateLineWithTitle
         android:id="@+id/fontTextView6"

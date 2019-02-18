@@ -36,8 +36,8 @@
 
         <include layout="@layout/merge_genre_albums"/>
 
-        <include layout="@layout/merge_genre_artists"/>
-
         <include layout="@layout/merge_genre_tracks"/>
+
+        <include layout="@layout/merge_genre_artists"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
