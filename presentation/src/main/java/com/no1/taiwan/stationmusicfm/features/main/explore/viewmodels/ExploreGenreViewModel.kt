@@ -38,7 +38,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
 import com.no1.taiwan.stationmusicfm.features.GenreMixInfo
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
@@ -68,7 +68,7 @@ class ExploreGenreViewModel(
     val tagInfoLiveData: RespLiveData<GenreMixInfo> = _tagInfoLiveData
     private val tagMapper by lazy { cast<TagPMapper>(mapperPool[TagPMapper::class.java]) }
     private val artistsMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
-    private val albumsMapper by lazy { cast<TopAlbumPMapper>(mapperPool[TopAlbumPMapper::class.java]) }
+    private val albumsMapper by lazy { cast<TopAlbumTypeGenrePMapper>(mapperPool[TopAlbumTypeGenrePMapper::class.java]) }
     private val tracksMapper by lazy { cast<TracksPMapper>(mapperPool[TracksPMapper::class.java]) }
 
     fun runTaskFetchGenreInfo(tagName: String) = GlobalScope.launch {

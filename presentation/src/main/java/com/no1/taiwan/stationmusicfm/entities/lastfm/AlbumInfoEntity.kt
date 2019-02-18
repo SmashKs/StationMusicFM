@@ -45,10 +45,10 @@ object AlbumInfoEntity {
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 
-    data class AlbumWithArtistEntity(
-        val artist: ArtistInfoEntity.ArtistEntity = ArtistInfoEntity.ArtistEntity(),
-        val playCount: String = DEFAULT_STR,
-        val index: Int = 0
+    open class AlbumWithArtistEntity(
+        var artist: ArtistInfoEntity.ArtistEntity = ArtistInfoEntity.ArtistEntity(),
+        var playCount: String = DEFAULT_STR,
+        var index: Int = 0
     ) : BaseAlbumEntity(), Entity, MusicMultiVisitable {
         override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
         override fun toString() = """
@@ -58,6 +58,13 @@ object AlbumInfoEntity {
             |index=$index
             |${super.toString()})
             |""".trimMarginAndNewLine()
+    }
+
+    /**
+     * The same as [AlbumWithArtistEntity] but this is for others viewholder type.
+     */
+    class AlbumWithArtistTypeGenreEntity : AlbumWithArtistEntity() {
+        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
     }
 
     open class BaseAlbumEntity(

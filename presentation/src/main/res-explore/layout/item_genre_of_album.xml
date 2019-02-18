@@ -36,14 +36,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_track"
+            android:id="@+id/iv_album_thumbnail"
             android:layout_width="96dp"
             android:layout_height="96dp"
             tools:src="@tools:sample/avatars"/>
     </com.github.florent37.shapeofview.shapes.CircleView>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_track_name"
+        android:id="@+id/ftv_album_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -56,13 +56,4 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/ftv_track_name"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="https://www.uplabs.com/"
-        tools:layout_editor_absoluteX="1012dp"
-        tools:layout_editor_absoluteY="0dp"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

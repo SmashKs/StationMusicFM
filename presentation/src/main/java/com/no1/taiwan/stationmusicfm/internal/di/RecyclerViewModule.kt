@@ -29,6 +29,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.AlbumOfGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder
@@ -110,5 +111,8 @@ object RecyclerViewModule {
 //        bind<ViewHolderEntry>().inSet() with provider {
 //            ArtistInfoEntity.ArtistEntity::class.hashCode() to (R.layout.item_similar_artist to ::SimilarArtistViewHolder)
 //        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            AlbumInfoEntity.AlbumWithArtistTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_album to ::AlbumOfGenreViewHolder)
+        }
     }
 }

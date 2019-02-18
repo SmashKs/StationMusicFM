@@ -61,6 +61,7 @@ typealias UserPreziMap = Mapper<CommonMusicModel.UserModel, CommonMusicEntity.Us
 
 typealias AlbumPreziMap = Mapper<AlbumInfoModel.AlbumModel, AlbumInfoEntity.AlbumEntity>
 typealias AlbumWithArtistPreziMap = Mapper<AlbumInfoModel.AlbumWithArtistModel, AlbumInfoEntity.AlbumWithArtistEntity>
+typealias AlbumWithArtistTypeGenrePreziMap = Mapper<AlbumInfoModel.AlbumWithArtistModel, AlbumInfoEntity.AlbumWithArtistTypeGenreEntity>
 typealias ArtistPreziMap = Mapper<ArtistInfoModel.ArtistModel, ArtistInfoEntity.ArtistEntity>
 typealias ArtistsPreziMap = Mapper<ArtistInfoModel.ArtistsModel, ArtistInfoEntity.ArtistsEntity>
 typealias AttrPreziMap = Mapper<CommonLastFmModel.AttrModel, CommonLastFmEntity.AttrEntity>
