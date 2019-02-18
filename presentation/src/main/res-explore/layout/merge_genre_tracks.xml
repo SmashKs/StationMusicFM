@@ -20,24 +20,28 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.main.explore.ExploreGenreFragment">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       tools:showIn="@layout/fragment_explore_genre">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.no1.taiwan.stationmusicfm.widget.components.separate.SeparateLineWithTitle
+        android:id="@+id/fontTextView8"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".features.main.explore.ExploreGenreFragment">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_artists"
+        tools:sltTitle="Tracks"/>
 
-        <include layout="@layout/merge_genre_description"/>
-
-        <include layout="@layout/merge_genre_albums"/>
-
-        <include layout="@layout/merge_genre_artists"/>
-
-        <include layout="@layout/merge_genre_tracks"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tracks"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fontTextView8"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_genre_of_track"/>
+</merge>

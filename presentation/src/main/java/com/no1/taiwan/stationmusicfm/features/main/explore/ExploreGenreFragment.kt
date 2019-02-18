@@ -22,18 +22,28 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
+import androidx.core.text.toSpannable
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreGenreViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
+import org.kodein.di.generic.instance
 
 class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() {
     companion object {
@@ -42,12 +52,22 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
         fun createBundle(tagName: String) = bundleOf(ARGUMENT_TAG_NAME to tagName)
     }
 
+    private val albumLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
+    private val artistLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
+    private val trackLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
+    private val albumAdapter: MusicAdapter by instance()
+    private val artistAdapter: MusicAdapter by instance()
+    private val trackAdapter: MusicAdapter by instance()
     private val tagName by lazy { requireNotNull(arguments?.getString(ARGUMENT_TAG_NAME, DEFAULT_STR)) }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.tagInfoLiveData) {
             peel { (tag, artist, album, tracks) ->
+                find<TextView>(R.id.ftv_genre_about).text = tag.wiki.content.parseAsHtml().toSpannable()
+                albumAdapter.appendList(cast(album.albums))
+                artistAdapter.appendList(cast(artist.artists))
+                trackAdapter.appendList(cast(tracks.tracks))
             } happenError {
                 loge(it)
             } doWith this@ExploreGenreFragment
@@ -65,6 +85,16 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
             if (tagInfoLiveData.value.isNull())
                 runTaskFetchGenreInfo(tagName)
         }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        initRecyclerViewWith(R.id.rv_albums, albumAdapter, albumLinearLayoutManager)
+        initRecyclerViewWith(R.id.rv_artists, artistAdapter, artistLinearLayoutManager)
+        initRecyclerViewWith(R.id.rv_tracks, trackAdapter, trackLinearLayoutManager)
     }
 
     /**
