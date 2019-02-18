@@ -32,7 +32,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntries
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.activities.SuperActivityModule
 import com.no1.taiwan.stationmusicfm.widget.components.viewmodel.ViewModelFactory
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
+import org.kodein.di.android.kodein
 import org.kodein.di.android.retainedKodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -55,7 +55,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
             ViewModelFactory(instance(), instance<ViewModelEntries>().toMap().toMutableMap())
         }
     }
-    private val parentKodein by closestKodein()
+    private val parentKodein by kodein()
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {

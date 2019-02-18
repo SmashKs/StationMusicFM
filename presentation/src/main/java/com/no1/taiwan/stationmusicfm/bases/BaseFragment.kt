@@ -41,8 +41,8 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_S
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
 import org.jetbrains.anko.support.v4.find
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.android.subKodein
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -52,8 +52,7 @@ import org.kodein.di.generic.multiton
  * The basic fragment is for the normal activity which prepares all necessary variables or functions.
  */
 abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
-    override val kodein = Kodein.lazy {
-        extend(parentKodein)
+    override val kodein by subKodein(kodein()) {
         /* fragment specific bindings */
         import(SuperFragmentModule.fragmentModule())
         bind<LifecycleObserver>(FRAGMENT_BUS_SHORT_LIFE) with multiton { fragment: Fragment ->
@@ -68,7 +67,6 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
         get() = requireActivity() as A  // If there's no parent, forcing crashing the app.
     protected val appContext: Context by instance()
     private var rootView: View? = null
-    private val parentKodein by kodein()
 
     //region Fragment lifecycle
     override fun onCreateView(
