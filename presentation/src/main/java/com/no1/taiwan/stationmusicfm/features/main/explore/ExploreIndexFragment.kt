@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
@@ -59,8 +60,10 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
 
     private val trackLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
     private val artistLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
+    private val genre3GirdLayoutManager: GridLayoutManager by instance(null, 3)
     private val trackAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
+    private val genreAdapter: MusicAdapter by instance()
     private var isFetchArtist = true
     private var isFetchTrack = true
     private var isFetchTag = true
@@ -94,7 +97,7 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
         observeNonNull(vm.topTags) {
             peel {
                 if (isFetchTag)
-                    it.tags
+                    genreAdapter.appendList(cast(it.tags))
             } happenError {
                 loge(it)
             } finally {
@@ -115,8 +118,8 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
                 runTaskFetchTopTrack()
             if (topArtists.value.isNull())
                 runTaskFetchTopArtist()
-//            if (topTags.value.isNull())
-//                runTaskFetchTopTag()
+            if (topTags.value.isNull())
+                runTaskFetchTopTag()
         }
     }
 
@@ -127,7 +130,7 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
         super.viewComponentBinding()
         initRecyclerViewWith(R.id.rv_tracks, trackAdapter, trackLinearLayoutManager)
         initRecyclerViewWith(R.id.rv_artists, artistAdapter, artistLinearLayoutManager)
-//        initRecyclerViewWith(R.id.rv_artists, artistAdapter, artistLinearLayoutManager)
+        initRecyclerViewWith(R.id.rv_genres, genreAdapter, genre3GirdLayoutManager)
     }
 
     /**
@@ -151,15 +154,14 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
         navTo(target, mbid, name)
     }
 
-    private fun navTo(target: String, mbid: String, artistName: String) {
+    private fun navTo(target: String, mbid: String, name: String) {
         val (fragment, bundle) = when (target) {
             FRAGMENT_TARGET_TRACK ->
                 R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbid)
             FRAGMENT_TARGET_ARTIST ->
-                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbid,
-                                                                                                            artistName)
+                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbid, name)
             FRAGMENT_TARGET_GENRE ->
-                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(mbid)
+                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(name)
             else -> throw IllegalArgumentException()
         }
 

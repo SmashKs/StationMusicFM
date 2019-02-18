@@ -22,10 +22,18 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 
 import android.view.View
+import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.hwangjr.rxbus.RxBus
+import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
+import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.Companion.FRAGMENT_TARGET_GENRE
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import org.jetbrains.anko.find
 
 class ExploreGenreViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, TagInfoEntity.TagEntity>(view) {
     /**
@@ -37,7 +45,12 @@ class ExploreGenreViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, 
      */
     override fun initView(model: TagInfoEntity.TagEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
-
+            find<TextView>(R.id.ftv_genre).text = model.name
+            setOnClickListener {
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
+                RxBus.get().post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_GENRE,
+                                                          PARAMS_TO_DETAIL_NAME to model.name))
+            }
         }
     }
 }

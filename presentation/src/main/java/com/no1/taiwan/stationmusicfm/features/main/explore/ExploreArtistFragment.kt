@@ -46,6 +46,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
+import org.kodein.di.generic.instance
 
 class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     companion object {
@@ -57,6 +58,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     }
 
     override val viewmodelProviderSource get() = PROVIDER_FROM_ACTIVITY
+    private val inflater: LayoutInflater by instance()
     private val adapterFragments by lazy {
         listOf(PagerBioFragment(),
                PagerAlbumFragment(),
@@ -121,9 +123,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      */
     override fun provideInflateView() = R.layout.fragment_explore_artist
 
-    private fun getTabView(position: Int) = LayoutInflater.from(parent)
-        .inflate(R.layout.tabitem_introduction, null)
-        .apply {
-            this.find<TextView>(R.id.ftv_title).text = resources.getStringArray(R.array.artist_detail_column)[position]
-        }
+    private fun getTabView(position: Int) = inflater.inflate(R.layout.tabitem_introduction, null).apply {
+        this.find<TextView>(R.id.ftv_title).text = resources.getStringArray(R.array.artist_detail_column)[position]
+    }
 }
