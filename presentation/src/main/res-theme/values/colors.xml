@@ -25,16 +25,17 @@
     <color name="colorPrimaryV1">#584E67</color>
     <color name="colorPrimaryLightV1">#857A95</color>
     <color name="colorPrimaryDarkV1">#2F263C</color>
+    <color name="colorPrimaryTextV1">#15192C</color>
     <color name="colorAccentV1">@color/colorSecondaryV1</color>
     <color name="colorSecondaryV1">#EDD494</color>
     <color name="colorSecondaryLightV1">#FFFFC5</color>
     <color name="colorSecondaryDarkV1">#B9A365</color>
-    <color name="colorPrimaryTextV1">#FFFFFF</color>
-    <color name="colorSecondaryTextV1">#4B3659</color>
-    <color name="colorNavigationBarV1">@color/colorSecondaryTextV1</color>
+    <color name="colorSecondaryTextV1">#FFFFFF</color>
+    <color name="colorNavigationBarV1">#4B3659</color>
     <color name="colorBackgroundV1">#DDDDDD</color>
 
     <color name="transparent">#00000000</color>
 
     <color name="colorDivider">#BDBDBD</color>
+
 </resources>

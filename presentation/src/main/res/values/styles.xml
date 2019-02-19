@@ -135,4 +135,12 @@
     <style name="FAB" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="rippleColor">#FFFFFF</item>
     </style>
+
+    <!-- START TextView -->
+    <style name="MusicTextView" parent="Constraint.Wrap.FitWidth">
+        <item name="android:layout_marginStart">@dimen/md_two_unit</item>
+        <item name="android:layout_marginEnd">@dimen/md_two_unit</item>
+        <item name="textFont">santio_regular.otf</item>
+    </style>
+    <!-- END TextView -->
 </resources>

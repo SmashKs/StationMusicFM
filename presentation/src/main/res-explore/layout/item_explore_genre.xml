@@ -22,10 +22,9 @@
 
 <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
     android:id="@+id/ftv_genre"
-    style="@style/Constraint.Wrap"
+    style="@style/MusicTextView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/md_two_unit"
     tools:context=".features.main.explore.viewholders.ExploreGenreViewHolder"
     tools:text="@tools:sample/lorem[3]">
 
