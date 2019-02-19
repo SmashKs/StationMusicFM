@@ -42,6 +42,6 @@
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_chart"
         style="@style/Rank.TextView.ItemRank.Chart"
-        android:layout_marginTop="@dimen/md_one_unit"
+        android:gravity="center"
         tools:text="@tools:sample/lorem[2]"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

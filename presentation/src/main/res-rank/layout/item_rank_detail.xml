@@ -49,20 +49,19 @@
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_order"
+        style="@style/MusicTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/md_one_unit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/sov_album"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1"/>
+        tools:text="@tools:sample/us_zipcodes[1]"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_track_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/md_two_unit"
+        style="@style/MusicTextView.AnyWidth"
         app:layout_constraintBottom_toTopOf="@id/ftv_artist_name"
+        app:layout_constraintEnd_toStartOf="@id/ftv_duration"
         app:layout_constraintStart_toEndOf="@id/ftv_order"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
@@ -70,11 +69,31 @@
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_artist_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/MusicTextView.Sub.AnyWidth"
         android:layout_marginTop="@dimen/md_one_half_unit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/ftv_track_name"
+        app:layout_constraintEnd_toStartOf="@id/ftv_duration"
+        app:layout_constraintStart_toEndOf="@id/ftv_order"
         app:layout_constraintTop_toBottomOf="@id/ftv_track_name"
         tools:text="@tools:sample/full_names"/>
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_duration"
+        style="@style/MusicTextView"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_play"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/date/mmddyy"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        android:src="@drawable/ic_arrow_right_black"
+        android:tint="@color/colorPrimaryTextV1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

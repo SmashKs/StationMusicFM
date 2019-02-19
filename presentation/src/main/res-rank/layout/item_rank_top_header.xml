@@ -36,5 +36,7 @@
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_chart"
         style="@style/Rank.TextView.ItemRank.Top"
+        android:layout_width="match_parent"
+        android:textColor="?themeTextColorSecondary"
         tools:text="@tools:sample/lorem[2]"/>
 </com.google.android.material.card.MaterialCardView>

@@ -57,7 +57,7 @@
         <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
 
-    <style name="Rank.TextView.ItemRank" parent="Constraint.Wrap"/>
+    <style name="Rank.TextView.ItemRank" parent="MusicTextView.AnyWidth"/>
 
     <style name="Rank.TextView.ItemRank.Top">
         <item name="android:layout_gravity">bottom|start</item>
@@ -66,6 +66,7 @@
     </style>
 
     <style name="Rank.TextView.ItemRank.Chart">
+        <item name="android:layout_marginTop">@dimen/md_one_unit</item>
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="layout_constraintEnd_toEndOf">@id/mcv_chart</item>
         <item name="layout_constraintStart_toStartOf">@id/mcv_chart</item>
