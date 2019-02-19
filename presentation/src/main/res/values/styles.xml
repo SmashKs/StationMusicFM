@@ -137,10 +137,45 @@
     </style>
 
     <!-- START TextView -->
-    <style name="MusicTextView" parent="Constraint.Wrap.FitWidth">
+    <style name="MusicTextView">
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/md_two_unit</item>
         <item name="android:layout_marginEnd">@dimen/md_two_unit</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="textFont">santio_regular.otf</item>
+    </style>
+    <!-- Normal -->
+    <style name="MusicTextView.FitWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="MusicTextView.AnyWidth">
+        <item name="android:layout_width">@dimen/md_zero_unit</item>
+    </style>
+    <!-- Bold -->
+    <style name="MusicTextView.Bold">
+        <item name="textFont">santio_bold.otf</item>
+    </style>
+
+    <style name="MusicTextView.Bold.FitWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="MusicTextView.Bold.AnyWidth">
+        <item name="android:layout_width">@dimen/md_zero_unit</item>
+    </style>
+    <!-- Sub -->
+    <style name="MusicTextView.Sub">
+        <item name="android:textSize">@dimen/text_size_sub</item>
+        <item name="android:textColor">@color/kashmir_blue</item>
+    </style>
+
+    <style name="MusicTextView.Sub.FitWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="MusicTextView.Sub.AnyWidth">
+        <item name="android:layout_width">@dimen/md_zero_unit</item>
     </style>
     <!-- END TextView -->
 </resources>

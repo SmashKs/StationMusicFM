@@ -47,4 +47,9 @@
     <dimen name="md_nine_unit">72dp</dimen>
     <dimen name="md_ten_half_unit">76dp</dimen>
     <dimen name="md_ten_unit">80dp</dimen>
+
+    <!-- Text View Size -->
+    <dimen name="text_size_normal">14sp</dimen>
+    <dimen name="text_size_sub">12dp</dimen>
+    <dimen name="text_size_title">17.6sp</dimen>
 </resources>

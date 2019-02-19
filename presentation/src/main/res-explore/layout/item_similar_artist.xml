@@ -30,6 +30,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mcv_artist"
         style="@style/Constraint.Wrap"
+        android:layout_gravity="center"
         android:clickable="true"
         android:focusable="true"
         app:cardElevation="@dimen/md_one_unit"

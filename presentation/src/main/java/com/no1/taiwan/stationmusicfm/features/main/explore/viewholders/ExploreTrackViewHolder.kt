@@ -50,7 +50,7 @@ class ExploreTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, 
         itemView.apply {
             find<ImageView>(R.id.iv_track).loadByAny(model.images.last().text)
             find<TextView>(R.id.ftv_track_name).text = model.name
-            find<TextView>(R.id.ftv_name)
+            find<TextView>(R.id.ftv_name).text = model.artist.name
             find<CardView>(R.id.mcv_track).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
                 RxBus.get().post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_TRACK,

@@ -48,10 +48,9 @@
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_artist_name"
-        android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/md_two_unit"
-        android:layout_marginStart="@dimen/md_two_unit"
+        style="@style/MusicTextView.Bold.AnyWidth"
+        android:textColor="?themeTextColorSecondary"
+        android:textSize="@dimen/text_size_title"
         app:layout_constraintBottom_toTopOf="@id/ftv_tags"
         app:layout_constraintEnd_toStartOf="@id/sov_thumbnail"
         app:layout_constraintStart_toStartOf="@id/iv_artist_backdrop"
@@ -62,6 +61,7 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/md_three_unit"
+        android:textColor="?themeTextColorSecondary"
         app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
         app:layout_constraintEnd_toEndOf="@id/ftv_artist_name"
         app:layout_constraintStart_toStartOf="@id/ftv_artist_name"

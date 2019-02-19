@@ -28,9 +28,8 @@
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#123232"
+        style="@style/MusicTextView.FitWidth"
+        android:layout_margin="@dimen/md_zero_unit"
+        android:gravity="center"
         tools:text="Introduction"/>
 </FrameLayout>
