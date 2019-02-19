@@ -38,7 +38,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
-import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsSimilarPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
 import com.no1.taiwan.stationmusicfm.features.ArtistMixInfo
@@ -61,15 +61,15 @@ class ExploreArtistViewModel(
     val artistLiveData: RespLiveData<ArtistInfoEntity.ArtistEntity> = _artistLiveData
     private val _albumsLiveData by lazy { RespMutableLiveData<AlbumInfoEntity.TopAlbumsEntity>() }
     val albumsLiveData: RespLiveData<AlbumInfoEntity.TopAlbumsEntity> = _albumsLiveData
-    private val _similarArtistsLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsEntity>() }
-    val similarArtistsLiveData: RespLiveData<ArtistInfoEntity.ArtistsEntity> = _similarArtistsLiveData
+    private val _similarArtistsLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsSimilarEntity>() }
+    val similarArtistsLiveData: RespLiveData<ArtistInfoEntity.ArtistsSimilarEntity> = _similarArtistsLiveData
     private val _tracksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksWithStreamableEntity>() }
     val tracksLiveData: RespLiveData<TrackInfoEntity.TracksWithStreamableEntity> = _tracksLiveData
     private val _artistInfoLiveData by lazy { RespMutableLiveData<ArtistMixInfo>() }
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
     private val artistMapper by lazy { cast<ArtistPMapper>(mapperPool[ArtistPMapper::class.java]) }
     private val topAlbumPMapper by lazy { cast<TopAlbumPMapper>(mapperPool[TopAlbumPMapper::class.java]) }
-    private val artistsPMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
+    private val artistsSimilarPMapper by lazy { cast<ArtistsSimilarPMapper>(mapperPool[ArtistsSimilarPMapper::class.java]) }
     private val tracksWithStreamablePMapper by lazy { cast<TracksWithStreamablePMapper>(mapperPool[TracksWithStreamablePMapper::class.java]) }
 
     private val _lastFindMbid by lazy { MutableLiveData<String>() }
@@ -81,7 +81,7 @@ class ExploreArtistViewModel(
             val artist = fetchArtistCase.execMapping(artistMapper, FetchArtistReq(parameters))
             val album = fetchArtistTopAlbumCase.execMapping(topAlbumPMapper, FetchArtistTopAlbumReq(parameters))
             val similarArtist =
-                fetchSimilarArtistCase.execMapping(artistsPMapper, FetchSimilarArtistReq(parameters))
+                fetchSimilarArtistCase.execMapping(artistsSimilarPMapper, FetchSimilarArtistReq(parameters))
             val tracks =
                 fetchArtistTopTrackCase.execMapping(tracksWithStreamablePMapper, FetchArtistTopTrackReq(parameters))
             // If success to get them assign to each livedata.

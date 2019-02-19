@@ -35,6 +35,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGe
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotAlbumViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.SimilarArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.TrackOfGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
@@ -108,10 +109,9 @@ object RecyclerViewModule {
         bind<ViewHolderEntry>().inSet() with provider {
             TrackInfoEntity.TrackWithStreamableEntity::class.hashCode() to (R.layout.item_hot_track to ::HotTrackViewHolder)
         }
-        // FIXME(jieyi): 2019-02-17 There're the same entity.
-//        bind<ViewHolderEntry>().inSet() with provider {
-//            ArtistInfoEntity.ArtistEntity::class.hashCode() to (R.layout.item_similar_artist to ::SimilarArtistViewHolder)
-//        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            ArtistInfoEntity.ArtistSimilarEntity::class.hashCode() to (R.layout.item_similar_artist to ::SimilarArtistViewHolder)
+        }
         bind<ViewHolderEntry>().inSet() with provider {
             AlbumInfoEntity.AlbumWithArtistTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_album to ::AlbumOfGenreViewHolder)
         }

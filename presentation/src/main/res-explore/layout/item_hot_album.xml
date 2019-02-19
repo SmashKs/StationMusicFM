@@ -29,7 +29,8 @@
     android:clickable="true"
     android:focusable="true"
     app:cardElevation="@dimen/md_one_unit"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    tools:context=".features.main.explore.viewholders.HotAlbumViewHolder">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"

@@ -27,26 +27,38 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFac
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
 object ArtistInfoEntity {
-    data class ArtistEntity(
-        val name: String = DEFAULT_STR,
-        val mbid: String = DEFAULT_STR,
-        val match: String = DEFAULT_STR,
-        val url: String = DEFAULT_STR,
-        val images: List<CommonLastFmEntity.ImageEntity> = emptyList(),
-        val streamable: String = DEFAULT_STR,
-        val listeners: String = DEFAULT_STR,
-        val onTour: String = DEFAULT_STR,
-        val playCount: String = DEFAULT_STR,
-        val stats: StatsEntity = StatsEntity(),
-        val similars: List<ArtistEntity> = emptyList(),
-        val tags: List<TagInfoEntity.TagEntity> = emptyList(),
-        val bio: BioEntity = BioEntity()
+    open class ArtistEntity(
+        var name: String = DEFAULT_STR,
+        var mbid: String = DEFAULT_STR,
+        var match: String = DEFAULT_STR,
+        var url: String = DEFAULT_STR,
+        var images: List<CommonLastFmEntity.ImageEntity> = emptyList(),
+        var streamable: String = DEFAULT_STR,
+        var listeners: String = DEFAULT_STR,
+        var onTour: String = DEFAULT_STR,
+        var playCount: String = DEFAULT_STR,
+        var stats: StatsEntity = StatsEntity(),
+        var similars: List<ArtistEntity> = emptyList(),
+        var tags: List<TagInfoEntity.TagEntity> = emptyList(),
+        var bio: BioEntity = BioEntity()
     ) : Entity, MusicMultiVisitable {
         override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
     }
 
     data class ArtistsEntity(
         val artists: List<ArtistEntity> = emptyList(),
+        val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
+    ) : Entity
+
+    /**
+     * The same as [ArtistEntity] but this is for others viewholder type.
+     */
+    class ArtistSimilarEntity : ArtistEntity() {
+        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+    }
+
+    data class ArtistsSimilarEntity(
+        val artists: List<ArtistSimilarEntity> = emptyList(),
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 

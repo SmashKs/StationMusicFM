@@ -19,36 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
-import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.entities.ArtistsSimilarPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
-import org.jetbrains.anko.find
 
-class SimilarArtistViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, ArtistInfoEntity.ArtistSimilarEntity>(
-    view) {
-    /**
-     * Set the views' properties.
-     *
-     * @param model a data model after input from a list.
-     * @param position the index of a list.
-     * @param adapter parent adapter.
-     */
-    override fun initView(
-        model: ArtistInfoEntity.ArtistSimilarEntity,
-        position: Int,
-        adapter: AdaptiveAdapter<*, *, *>
-    ) {
-        itemView.apply {
-            find<ImageView>(R.id.iv_artist).loadByAny(model.images.last().text)
-            find<TextView>(R.id.ftv_artist_name).text = model.name
-        }
+/**
+ * A transforming mapping between [ArtistInfoModel.ArtistsModel] and [ArtistInfoEntity.ArtistsSimilarEntity].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class ArtistsSimilarPMapper(
+    private val artistSimilarMapper: ArtistSimilarPMapper,
+    private val attrMapper: AttrPMapper
+) : ArtistsSimilarPreziMap {
+    override fun toEntityFrom(model: ArtistInfoModel.ArtistsModel) = model.run {
+        ArtistInfoEntity.ArtistsSimilarEntity(artists.map(artistSimilarMapper::toEntityFrom),
+                                              attr.let { attrMapper.toEntityFrom(it) })
     }
+
+    override fun toModelFrom(entity: ArtistInfoEntity.ArtistsSimilarEntity) = throw UnsupportedOperationException()
 }

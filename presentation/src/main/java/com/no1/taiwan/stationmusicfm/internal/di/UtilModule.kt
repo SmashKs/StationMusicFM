@@ -59,7 +59,9 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumWithArtistPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumWithArtistTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistSimilarPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsSimilarPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AttrPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.BioPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ImagePMapper
@@ -195,6 +197,7 @@ object UtilModule {
         val tagMapper = TagPMapper(WikiPMapper())
         val bioMapper = BioPMapper(LinkPMapper())
         val artistMapper = ArtistPMapper(bioMapper, ImagePMapper(), StatsPMapper(), tagMapper)
+        val artistSimilarMapper = ArtistSimilarPMapper(bioMapper, ImagePMapper(), StatsPMapper(), tagMapper)
         val trackMapper = TrackPMapper(artistMapper,
                                        AttrPMapper(),
                                        ImagePMapper(),
@@ -219,6 +222,9 @@ object UtilModule {
         bind<PreziMapperEntry>().inSet() with singleton { ArtistPMapper::class.java to artistMapper }
         bind<PreziMapperEntry>().inSet() with singleton {
             ArtistsPMapper::class.java to ArtistsPMapper(artistMapper, AttrPMapper())
+        }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            ArtistsSimilarPMapper::class.java to ArtistsSimilarPMapper(artistSimilarMapper, AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton { TagPMapper::class.java to tagMapper }
         bind<PreziMapperEntry>().inSet() with singleton {

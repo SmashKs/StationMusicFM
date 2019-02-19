@@ -32,7 +32,8 @@
     android:elevation="@dimen/md_one_half_unit"
     android:focusable="true"
     app:cardCornerRadius="@dimen/md_one_half_unit"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    tools:context=".features.main.explore.viewholders.ExploreTrackViewHolder">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

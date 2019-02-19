@@ -26,7 +26,7 @@ import com.no1.taiwan.stationmusicfm.entities.TracksTypeGenrePreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 
 /**
- * A transforming mapping between [TrackInfoModel.TracksModel] and [TrackInfoEntity.TracksEntity].
+ * A transforming mapping between [TrackInfoModel.TracksModel] and [TrackInfoEntity.TracksTypeGenreEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class TracksTypeGenrePMapper(

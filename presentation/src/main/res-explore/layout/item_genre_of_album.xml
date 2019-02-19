@@ -25,7 +25,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="120dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".features.main.explore.viewholders.AlbumOfGenreViewHolder">
 
     <com.github.florent37.shapeofview.shapes.CircleView
         android:id="@+id/sov_track"

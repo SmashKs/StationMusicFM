@@ -26,7 +26,7 @@ import com.no1.taiwan.stationmusicfm.entities.AlbumWithArtistTypeGenrePreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 
 /**
- * A transforming mapping between [AlbumInfoModel.AlbumWithArtistModel] and [AlbumInfoEntity.AlbumWithArtistEntity].
+ * A transforming mapping between [AlbumInfoModel.AlbumWithArtistModel] and [AlbumInfoEntity.AlbumWithArtistTypeGenreEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class AlbumWithArtistTypeGenrePMapper(
