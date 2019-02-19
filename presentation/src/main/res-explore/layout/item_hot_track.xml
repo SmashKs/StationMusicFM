@@ -31,22 +31,23 @@
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_track_name"
-        android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
+        style="@style/MusicTextView.AnyWidth"
         android:layout_marginBottom="@dimen/md_one_unit"
-        android:layout_marginEnd="@dimen/md_one_unit"
-        android:layout_marginStart="@dimen/md_one_unit"
-        android:layout_marginTop="@dimen/md_one_unit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ib_option"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/ib_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="@dimen/md_one_unit"
+        android:src="@drawable/ic_play_circle_outline_black"
+        android:tint="?themeTextColorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

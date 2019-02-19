@@ -49,6 +49,7 @@
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_artist_name"
         style="@style/MusicTextView.Bold.AnyWidth"
+        android:layout_marginBottom="@dimen/md_two_unit"
         android:textColor="?themeTextColorSecondary"
         android:textSize="@dimen/text_size_title"
         app:layout_constraintBottom_toTopOf="@id/ftv_tags"
@@ -69,8 +70,8 @@
 
     <com.github.florent37.shapeofview.shapes.CircleView
         android:id="@+id/sov_thumbnail"
-        android:layout_width="@dimen/md_ten_unit"
-        android:layout_height="@dimen/md_ten_unit"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_marginEnd="@dimen/md_three_unit"
         app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
         app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop"

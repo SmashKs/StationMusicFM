@@ -45,8 +45,8 @@
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_album_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/MusicTextView.FitWidth"
+        android:layout_marginTop="@dimen/md_one_unit"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/sov_track"
         tools:text="@tools:sample/lorem[1]"/>

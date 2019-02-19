@@ -20,22 +20,9 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-            android:id="@+id/ftv_bio"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/md_two_unit"
-            android:fontFamily="@font/cambay"
-            tools:text="@tools:sample/lorem[100]"/>
-    </FrameLayout>
-</androidx.core.widget.NestedScrollView>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/cambay</item>
+        <item>@font/cambay_bold</item>
+    </array>
+</resources>

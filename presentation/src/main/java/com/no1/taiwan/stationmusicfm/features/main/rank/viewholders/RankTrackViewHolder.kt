@@ -44,7 +44,7 @@ class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Com
     override fun initView(model: CommonMusicEntity.SongEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<ImageView>(R.id.iv_album).loadByAny(model.oriCoverUrl)
-            find<TextView>(R.id.ftv_order).text = position.toString()
+            find<TextView>(R.id.ftv_order).text = (position + 1).toString()
             find<TextView>(R.id.ftv_track_name).text = model.title
             find<TextView>(R.id.ftv_artist_name).text = model.artist
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()

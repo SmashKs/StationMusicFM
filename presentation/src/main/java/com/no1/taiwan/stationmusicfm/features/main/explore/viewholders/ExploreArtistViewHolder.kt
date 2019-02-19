@@ -27,6 +27,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.devrapid.kotlinknifer.DrawableDirectionConst.DRAWABLE_DIRECTION_START
+import com.devrapid.kotlinknifer.addDrawable
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
@@ -51,7 +53,14 @@ class ExploreArtistViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory,
         itemView.apply {
             find<ImageView>(R.id.iv_artist).loadByAny(model.images.last().text)
             find<TextView>(R.id.ftv_artist_name).text = model.name
-            find<TextView>(R.id.ftv_favorite).text = model.listeners
+            find<TextView>(R.id.ftv_favorite).apply {
+                addDrawable(R.drawable.ic_heart_black,
+                            resources.getColor(R.color.colorPrimaryTextV1),
+                            DRAWABLE_DIRECTION_START,
+                            .5f,
+                            .5f)
+                text = model.listeners
+            }
             find<CardView>(R.id.mcv_artist).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
                 RxBus.get().post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_ARTIST,

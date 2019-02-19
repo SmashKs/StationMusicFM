@@ -37,12 +37,12 @@
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_artist"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/md_zero_unit"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintTop_toTopOf="parent"
@@ -50,13 +50,8 @@
 
             <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
                 android:id="@+id/ftv_artist_name"
-                android:layout_width="@dimen/md_zero_unit"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginBottom="@dimen/md_one_unit"
-                android:layout_marginEnd="@dimen/md_one_unit"
-                android:layout_marginStart="@dimen/md_one_unit"
-                android:layout_marginTop="@dimen/md_one_unit"
+                style="@style/MusicTextView.AnyWidth"
+                android:layout_margin="@dimen/md_one_unit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

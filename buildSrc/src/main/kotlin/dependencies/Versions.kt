@@ -73,8 +73,8 @@ object Versions {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
         const val ktx = "1.1.0-alpha04"
-        const val kinfer = "2.1.4"
-        const val shaver = "1.1.4"
+        const val kinfer = "2.1.5"
+        const val shaver = "1.1.5"
     }
 
     object AndroidArchitectureComponent {
