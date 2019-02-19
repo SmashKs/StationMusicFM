@@ -24,16 +24,19 @@ package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
 
-class SimilarArtistViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, ArtistInfoEntity.ArtistSimilarEntity>(
-    view) {
+class SimilarArtistViewHolder(
+    view: View
+) : AdaptiveViewHolder<MultiTypeFactory, ArtistInfoEntity.ArtistSimilarEntity>(view) {
     /**
      * Set the views' properties.
      *
@@ -49,6 +52,11 @@ class SimilarArtistViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory,
         itemView.apply {
             find<ImageView>(R.id.iv_artist).loadByAny(model.images.last().text)
             find<TextView>(R.id.ftv_artist_name).text = model.name
+            find<CardView>(R.id.mcv_similar_artist).setOnClickListener {
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.navToNextOfMe] */
+                RxBus.get().post("similar artist click", hashMapOf("artist name" to model.name,
+                                                                   "artist mbid" to model.mbid))
+            }
         }
     }
 }

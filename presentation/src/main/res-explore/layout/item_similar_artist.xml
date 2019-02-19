@@ -28,7 +28,7 @@
     tools:context=".features.main.explore.viewholders.SimilarArtistViewHolder">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/mcv_artist"
+        android:id="@+id/mcv_similar_artist"
         style="@style/Constraint.Wrap"
         android:layout_gravity="center"
         android:clickable="true"

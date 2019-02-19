@@ -28,10 +28,14 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.viewpager.widget.ViewPager
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.isNull
 import com.google.android.material.tabs.TabLayout
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerAlbumFragment
@@ -39,6 +43,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerBioFr
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerSimilarArtistFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
+import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -68,6 +73,10 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID)) }
     private val artistName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
     private var isFirstTime = true
+
+    init {
+        BusFragLongerLifeRegister(this)
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -125,5 +134,17 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
 
     private fun getTabView(position: Int) = inflater.inflate(R.layout.tabitem_introduction, null).apply {
         this.find<TextView>(R.id.ftv_title).text = resources.getStringArray(R.array.artist_detail_column)[position]
+    }
+
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.SimilarArtistViewHolder.initView]
+     * @param params AnyParameters
+     */
+    @Subscribe(tags = [Tag("similar artist click")])
+    fun navToNextOfMe(params: AnyParameters) {
+        val name = requireNotNull(params["artist name"])
+        val mbid = requireNotNull(params["artist mbid"])
+
+        logw(name, mbid)
     }
 }
