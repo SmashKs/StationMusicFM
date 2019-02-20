@@ -26,6 +26,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.UiThread
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -43,10 +44,12 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     companion object {
         const val PROVIDER_FROM_ACTIVITY = 0x1
         const val PROVIDER_FROM_FRAGMENT = 0x2
+        const val PROVIDER_FROM_CUSTOM_FRAGMENT = 0x3
     }
 
     protected open val genericVMIndex = DEFAULT_INT
     protected open val viewmodelProviderSource = PROVIDER_FROM_FRAGMENT
+    protected open val viewmodelProviderFragment: Fragment? = null
     /** Add the AAC [ViewModel] for each fragments. */
     @Suppress("UNCHECKED_CAST")
     protected val vm by lazy {
@@ -119,6 +122,10 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     protected fun vmProvider(providerFrom: Int) = when (providerFrom) {
         PROVIDER_FROM_ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)
         PROVIDER_FROM_FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)
+        PROVIDER_FROM_CUSTOM_FRAGMENT -> if (viewmodelProviderFragment != null)
+            ViewModelProviders.of(requireNotNull(viewmodelProviderFragment), viewModelFactory)
+        else
+            ViewModelProviders.of(this, viewModelFactory)
         else -> throw IllegalArgumentException()
     }
 

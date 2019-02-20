@@ -159,7 +159,9 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
             FRAGMENT_TARGET_TRACK ->
                 R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbid)
             FRAGMENT_TARGET_ARTIST ->
-                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbid, name)
+                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbid,
+                                                                                                            name,
+                                                                                                            PROVIDER_FROM_ACTIVITY)
             FRAGMENT_TARGET_GENRE ->
                 R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(name)
             else -> throw IllegalArgumentException()

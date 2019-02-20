@@ -21,24 +21,13 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers
 
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.AdvFragment
-import com.no1.taiwan.stationmusicfm.features.main.MainActivity
-import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import org.kodein.di.generic.instance
 
-class PagerTrackFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
-    override val viewmodelProviderSource get() = PROVIDER_FROM_ACTIVITY
-    private val linearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
-    private val adapter: MusicAdapter by instance()
-
+class PagerTrackFragment : BasePagerFragment() {
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()

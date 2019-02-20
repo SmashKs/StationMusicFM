@@ -26,16 +26,16 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.isNull
 import com.google.android.material.tabs.TabLayout
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
-import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.domain.Parameters
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerAlbumFragment
@@ -43,7 +43,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerBioFr
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerSimilarArtistFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
-import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -51,31 +51,38 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
+import org.jetbrains.anko.support.v4.withArguments
 import org.kodein.di.generic.instance
 
 class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     companion object {
+        const val ARGUMENT_VM_DEPENDENT = "fragment argument view model provider source"
         private const val ARGUMENT_MBID = "fragment argument mbid"
         private const val ARGUMENT_ARTIST_NAME = "fragment argument artist name"
 
-        fun createBundle(mbid: String, name: String) = bundleOf(ARGUMENT_MBID to mbid,
-                                                                ARGUMENT_ARTIST_NAME to name)
+        fun createBundle(mbid: String, name: String, vmProvider: Int) = bundleOf(ARGUMENT_MBID to mbid,
+                                                                                 ARGUMENT_ARTIST_NAME to name,
+                                                                                 ARGUMENT_VM_DEPENDENT to vmProvider)
     }
 
-    override val viewmodelProviderSource get() = PROVIDER_FROM_ACTIVITY
-    private val inflater: LayoutInflater by instance()
-    private val adapterFragments by lazy {
-        listOf(PagerBioFragment(),
-               PagerAlbumFragment(),
-               PagerTrackFragment(),
-               PagerSimilarArtistFragment())
-    }
+    // ViewModel's lifecycle will be itself when open a new same fragment.
+    override val viewmodelProviderSource get() = vmProviderSource
+    //region Parameter
+    private val vmProviderSource by lazy { requireNotNull(arguments?.getInt(ARGUMENT_VM_DEPENDENT)) }
     private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID)) }
     private val artistName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
+    //endregion
+    private val inflater: LayoutInflater by instance()
+    private val adapterFragments by lazy {
+        listOf(PagerBioFragment().withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource),
+               PagerAlbumFragment().withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource),
+               PagerTrackFragment().withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource),
+               PagerSimilarArtistFragment().withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource))
+    }
     private var isFirstTime = true
 
     init {
-        BusFragLongerLifeRegister(this)
+        BusFragLifeRegister(this)
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -141,10 +148,11 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      * @param params AnyParameters
      */
     @Subscribe(tags = [Tag("similar artist click")])
-    fun navToNextOfMe(params: AnyParameters) {
+    fun navToNextOfMe(params: Parameters) {
         val name = requireNotNull(params["artist name"])
         val mbid = requireNotNull(params["artist mbid"])
 
-        logw(name, mbid)
+        findNavController().navigate(R.id.action_frag_explore_artist_self,
+                                     ExploreArtistFragment.createBundle(mbid, name, PROVIDER_FROM_CUSTOM_FRAGMENT))
     }
 }
