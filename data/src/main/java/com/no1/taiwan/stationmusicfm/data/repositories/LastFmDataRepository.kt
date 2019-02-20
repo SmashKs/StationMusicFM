@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.data.repositories
 import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AlbumDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistPhotosDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistsDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TagDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TagsDMapper
@@ -59,6 +60,7 @@ class LastFmDataRepository constructor(
     private val trackMapper by lazy { digDataMapper<TrackDMapper>() }
     private val tracksMapper by lazy { digDataMapper<TracksDMapper>() }
     private val tracksWithStreamableMapper by lazy { digDataMapper<TracksWithStreamableDMapper>() }
+    private val artistPhotosMapper by lazy { digDataMapper<ArtistPhotosDMapper>() }
 
     override suspend fun fetchAlbum(parameters: Parameterable) =
         remote.getAlbumInfo(parameters).album?.run(albumMapper::toModelFrom) ?: throw EmptyException()
@@ -74,6 +76,9 @@ class LastFmDataRepository constructor(
 
     override suspend fun fetchSimilarArtistInfo(parameters: Parameterable) =
         remote.getSimilarArtistInfo(parameters).similarArtist.run(artistsMapper::toModelFrom)
+
+    override suspend fun fetchArtistPhotoInfo(parameters: Parameterable) =
+        remote.getArtistPhotosInfo(parameters).run(artistPhotosMapper::toModelFrom)
 
     override suspend fun fetchTrack(parameters: Parameterable) =
         remote.getTrackInfo(parameters).track?.run(trackMapper::toModelFrom) ?: throw EmptyException()

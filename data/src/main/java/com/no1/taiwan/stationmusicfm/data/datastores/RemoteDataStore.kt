@@ -22,11 +22,13 @@
 package com.no1.taiwan.stationmusicfm.data.datastores
 
 import android.content.Context
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.R
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.remote.Constants
+import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmExtraService
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
@@ -38,6 +40,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
  */
 class RemoteDataStore(
     private val lastFmService: LastFmService,
+    private val lastFmExtraService: LastFmExtraService,
     private val musicBankService: MusicBankService,
     private val seekerBankService: SeekerBankService,
     context: Context
@@ -87,6 +90,12 @@ class RemoteDataStore(
     override suspend fun getSimilarArtistInfo(parameterable: Parameterable) =
         lastFmService.retrieveSimilarArtistInfo(combineLastFmQuery(parameterable.toApiParam(),
                                                                    Constants.LASTFM_PARAM_ARTIST_GET_SIMILAR)).await()
+
+    override suspend fun getArtistPhotosInfo(parameterable: Parameterable) = let {
+        val artistName = cast<String>(parameterable.toApiAnyParam()["artist name"])
+        val page = cast<Int>(parameterable.toApiAnyParam()["page"])
+        lastFmExtraService.retrieveArtistPhotosInfo(artistName, page).await()
+    }
 
     override suspend fun getTrackInfo(parameterable: Parameterable) =
         lastFmService.retrieveTrackInfo(combineLastFmQuery(parameterable.toApiParam(),

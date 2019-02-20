@@ -33,6 +33,8 @@ import com.google.gson.GsonBuilder
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AlbumDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AlbumWithArtistDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistPhotoDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistPhotosDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistsDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AttrDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.BioDMapper
@@ -178,6 +180,9 @@ object UtilModule {
         }
 
         bind<DataMapperEntry>().inSet() with singleton { RankingDMapper::class.java to RankingDMapper() }
+        bind<DataMapperEntry>().inSet() with singleton {
+            ArtistPhotosDMapper::class.java to ArtistPhotosDMapper(ArtistPhotoDMapper())
+        }
     }
 
     /**

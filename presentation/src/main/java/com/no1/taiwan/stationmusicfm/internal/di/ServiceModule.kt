@@ -28,9 +28,11 @@ import com.no1.taiwan.stationmusicfm.data.remote.config.LastFmConfig
 import com.no1.taiwan.stationmusicfm.data.remote.config.MusicConfig
 import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
 import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
+import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmExtraService
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
+import com.no1.taiwan.stationmusicfm.data.remote.v1.LastFmExtraImpl
 import com.no1.taiwan.stationmusicfm.internal.di.NetModule.netProvider
 import com.tencent.mmkv.MMKV
 import com.tencent.mmkv.MMKV.SINGLE_PROCESS_MODE
@@ -90,6 +92,7 @@ object ServiceModule {
                 build()
             }.create(LastFmService::class.java)
         }
+        bind<LastFmExtraService>() with instance(LastFmExtraImpl())
         bind<MusicBankService>() with singleton {
             with(instance<Retrofit.Builder>()) {
                 baseUrl(instance<RankingConfig>().apiBaseUrl)

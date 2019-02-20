@@ -46,6 +46,16 @@ object ArtistInfoModel {
         val attr: CommonLastFmModel.AttrModel = CommonLastFmModel.AttrModel()
     ) : Model
 
+    data class ArtistPhotoModel(
+        val url: String = DEFAULT_STR,
+        val hashCode: String = DEFAULT_STR
+    ) : Model
+
+    data class ArtistPhotosModel(
+        val photos: List<ArtistPhotoModel> = emptyList(),
+        val hasNext: Boolean = false
+    ) : Model
+
     data class BioModel(
         val link: LinkModel = LinkModel(),
         val published: String = DEFAULT_STR,

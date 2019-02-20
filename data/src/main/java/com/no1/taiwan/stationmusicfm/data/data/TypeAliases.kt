@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.data.data
 
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistPhotosData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistTopTrackInfoData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.CommonLastFmData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.TagInfoData
@@ -66,6 +67,8 @@ typealias AlbumDataMap = Mapper<AlbumInfoData.AlbumData, AlbumInfoModel.AlbumMod
 typealias AlbumWithArtistDataMap = Mapper<AlbumInfoData.AlbumWithArtistData, AlbumInfoModel.AlbumWithArtistModel>
 typealias ArtistDataMap = Mapper<ArtistInfoData.ArtistData, ArtistInfoModel.ArtistModel>
 typealias ArtistsDataMap = Mapper<TopArtistInfoData.ArtistsData, ArtistInfoModel.ArtistsModel>
+typealias ArtistPhotoDataMap = Mapper<ArtistPhotosData.ArtistPhotoData, ArtistInfoModel.ArtistPhotoModel>
+typealias ArtistPhotosDataMap = Mapper<ArtistPhotosData, ArtistInfoModel.ArtistPhotosModel>
 typealias AttrDataMap = Mapper<CommonLastFmData.AttrData, CommonLastFmModel.AttrModel>
 typealias BioDataMap = Mapper<ArtistInfoData.BioData, ArtistInfoModel.BioModel>
 typealias ImageDataMap = Mapper<CommonLastFmData.ImageData, CommonLastFmModel.ImageModel>

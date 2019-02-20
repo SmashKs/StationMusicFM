@@ -45,6 +45,8 @@ interface LastFmRepository {
     suspend fun fetchArtistTopTrack(parameters: Parameterable): TrackInfoModel.TracksWithStreamableModel
 
     suspend fun fetchSimilarArtistInfo(parameters: Parameterable): ArtistInfoModel.ArtistsModel
+
+    suspend fun fetchArtistPhotoInfo(parameters: Parameterable): ArtistInfoModel.ArtistPhotosModel
     //endregion
 
     //region TrackModel

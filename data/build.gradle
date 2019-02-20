@@ -94,6 +94,7 @@ dependencies {
     kapt(dependencies.Deps.Data.roomAnnotation)
     implementation(dependencies.Deps.Data.room)
     implementation(dependencies.Deps.Data.mmkv)
+    implementation(dependencies.Deps.Data.jsoup)
 
     //region Internet & ImageData loading
     implementation(dependencies.Deps.Data.retrofit2)

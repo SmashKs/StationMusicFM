@@ -60,6 +60,8 @@ class LocalDataStore(
 
     override suspend fun getSimilarArtistInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
 
+    override suspend fun getArtistPhotosInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+
     override suspend fun getTrackInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
 
     override suspend fun getSimilarTrackInfo(parameterable: Parameterable) = throw UnsupportedOperationException()

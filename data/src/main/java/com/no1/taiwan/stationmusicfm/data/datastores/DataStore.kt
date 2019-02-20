@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.data.datastores
 
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.AlbumInfoData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistInfoData
+import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistPhotosData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistSimilarData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistTopAlbumInfoData
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistTopTrackInfoData
@@ -67,6 +68,8 @@ interface DataStore {
     suspend fun getArtistTopTrack(parameterable: Parameterable): ArtistTopTrackInfoData
 
     suspend fun getSimilarArtistInfo(parameterable: Parameterable): ArtistSimilarData
+
+    suspend fun getArtistPhotosInfo(parameterable: Parameterable): ArtistPhotosData
     //endregion
 
     //region TrackData

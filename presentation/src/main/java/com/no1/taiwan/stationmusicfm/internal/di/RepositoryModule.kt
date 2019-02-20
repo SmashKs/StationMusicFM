@@ -46,7 +46,13 @@ object RepositoryModule {
         // The necessary providers are from the service provider.
         import(ServiceModule.serviceProvider(context))
 
-        bind<DataStore>(REMOTE) with singleton { RemoteDataStore(instance(), instance(), instance(), context) }
+        bind<DataStore>(REMOTE) with singleton {
+            RemoteDataStore(instance(),
+                            instance(),
+                            instance(),
+                            instance(),
+                            context)
+        }
         bind<DataStore>(LOCAL) with singleton {
             LocalDataStore(instance<MusicDatabase>().createRankingDao(), instance())
         }

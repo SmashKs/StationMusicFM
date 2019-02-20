@@ -126,6 +126,7 @@ object Versions {
         const val okhttp3 = "3.13.1"
         const val okhttpProfiler = "1.0.4"
         const val activityLauncher = "1.0.2"
+        const val jsoup = "1.11.3"
     }
 
     /**

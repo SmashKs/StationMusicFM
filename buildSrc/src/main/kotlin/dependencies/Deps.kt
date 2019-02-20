@@ -103,6 +103,7 @@ object Deps {
         const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.Network.okhttp3}"
 
         const val glide = "com.github.bumptech.glide:glide:${Versions.Network.glide}"
+        const val jsoup = "org.jsoup:jsoup:${Versions.Network.jsoup}"
 
         const val mmkv = "com.tencent:mmkv:${Versions.Database.mmkv}"
 
@@ -184,6 +185,8 @@ object Deps {
         const val firebaseDB = Presentation.firebaseDB
         // MMKV
         const val mmkv = Presentation.mmkv
+        // Jsoup
+        const val jsoup = Presentation.jsoup
 
         const val appcompat = Presentation.appcompat
     }
