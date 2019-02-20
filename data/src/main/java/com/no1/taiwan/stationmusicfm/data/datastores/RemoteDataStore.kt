@@ -33,6 +33,8 @@ import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.BaseWithPagingParams
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct
@@ -92,8 +94,8 @@ class RemoteDataStore(
                                                                    Constants.LASTFM_PARAM_ARTIST_GET_SIMILAR)).await()
 
     override suspend fun getArtistPhotosInfo(parameterable: Parameterable) = let {
-        val artistName = cast<String>(parameterable.toApiAnyParam()["artist name"])
-        val page = cast<Int>(parameterable.toApiAnyParam()["page"])
+        val artistName = cast<String>(parameterable.toApiAnyParam()[ArtistParams.PARAM_NAME_ARTIST])
+        val page = cast<Int>(parameterable.toApiAnyParam()[BaseWithPagingParams.PARAM_NAME_PAGE])
         lastFmExtraService.retrieveArtistPhotosInfo(artistName, page).await()
     }
 

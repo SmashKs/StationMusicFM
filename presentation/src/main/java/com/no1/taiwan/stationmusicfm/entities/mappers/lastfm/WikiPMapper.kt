@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
  */
 class WikiPMapper : WikiPreziMap {
     override fun toEntityFrom(model: CommonLastFmModel.WikiModel) = model.run {
-        CommonLastFmEntity.WikiEntity(published.orEmpty(), summary.orEmpty(), content.orEmpty())
+        CommonLastFmEntity.WikiEntity(published, summary, content)
     }
 
     override fun toModelFrom(entity: CommonLastFmEntity.WikiEntity) = entity.run {

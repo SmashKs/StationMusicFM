@@ -19,33 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
+package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.devrapid.kotlinshaver.toInt
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
-import com.no1.taiwan.stationmusicfm.ext.takeIfDefault
+import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
+import com.no1.taiwan.stationmusicfm.entities.ArtistPhotosPreziMap
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 
-data class ArtistParams(
-    override var mbid: String = DEFAULT_STR,
-    val artistName: String = DEFAULT_STR,
-    val autoCorrect: Boolean = true  // TopAlbums, TopTracks, Similar
-) : BaseWithPagingParams() {
-    companion object {
-        const val PARAM_NAME_ARTIST = "artist"
-        const val PARAM_NAME_AUTO_CORRECT = "autocorrect"
+/**
+ * A transforming mapping between [ArtistInfoEntity.PhotosEntity] and [ArtistInfoModel.ArtistPhotosModel].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class ArtistPhotosPMapper(
+    private val artistPhotoMapper: ArtistPhotoPMapper
+) : ArtistPhotosPreziMap {
+    override fun toEntityFrom(model: ArtistInfoModel.ArtistPhotosModel) = model.run {
+        ArtistInfoEntity.PhotosEntity(photos.map(artistPhotoMapper::toEntityFrom), hasNext)
     }
 
-    override fun toApiParam() = super.toApiParam().apply {
-        mbid.takeIfDefault {
-            put(PARAM_NAME_ARTIST, artistName)
-            put(PARAM_NAME_AUTO_CORRECT, autoCorrect.toInt().toString())
-        }
-    }
-
-    override fun toApiAnyParam() = super.toApiAnyParam().apply {
-        mbid.takeIfDefault {
-            put(PARAM_NAME_ARTIST, artistName)
-            put(PARAM_NAME_AUTO_CORRECT, autoCorrect)
-        }
+    override fun toModelFrom(entity: ArtistInfoEntity.PhotosEntity) = entity.run {
+        ArtistInfoModel.ArtistPhotosModel(photos.map(artistPhotoMapper::toModelFrom), hasNext)
     }
 }

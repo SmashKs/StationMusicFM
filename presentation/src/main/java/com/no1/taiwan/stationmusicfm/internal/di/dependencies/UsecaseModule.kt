@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.internal.di.dependencies
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistCase
@@ -42,6 +43,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistPhotoRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopAlbumRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopTrackRespCase
@@ -83,6 +85,7 @@ object UsecaseModule {
         //region LastFm
         bind<FetchAlbumCase>() with singleton { FetchAlbumRespCase(instance()) }
         bind<FetchArtistCase>() with singleton { FetchArtistRespCase(instance()) }
+        bind<FetchArtistPhotoCase>() with singleton { FetchArtistPhotoRespCase(instance()) }
         bind<FetchArtistTopAlbumCase>() with singleton { FetchArtistTopAlbumRespCase(instance()) }
         bind<FetchArtistTopTrackCase>() with singleton { FetchArtistTopTrackRespCase(instance()) }
         bind<FetchChartTopArtistCase>() with singleton { FetchChartTopArtistRespCase(instance()) }

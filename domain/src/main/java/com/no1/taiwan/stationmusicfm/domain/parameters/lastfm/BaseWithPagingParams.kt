@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
-import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
@@ -47,5 +46,9 @@ open class BaseWithPagingParams : BaseParams() {
         mbid.takeUnlessDefault { put(PARAM_NAME_MBID, it) }
     }
 
-    override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
+    override fun toApiAnyParam() = super.toApiAnyParam().apply {
+        put(PARAM_NAME_PAGE, page)
+        put(PARAM_NAME_LIMIT, limit)
+        mbid.takeUnlessDefault { put(PARAM_NAME_MBID, it) }
+    }
 }

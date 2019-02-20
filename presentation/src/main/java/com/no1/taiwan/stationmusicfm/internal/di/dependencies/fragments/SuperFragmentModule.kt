@@ -62,6 +62,7 @@ object SuperFragmentModule {
                                                                          instance(),
                                                                          instance(),
                                                                          instance(),
+                                                                         instance(),
                                                                          instance())
         }
         bind<ViewModelEntry>().inSet() with provider {

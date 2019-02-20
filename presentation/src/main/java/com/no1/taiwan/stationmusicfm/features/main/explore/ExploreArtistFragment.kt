@@ -47,6 +47,7 @@ import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import org.jetbrains.anko.find
@@ -95,7 +96,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 find<TextView>(R.id.ftv_tags).text = artist.tags.map { it.name }.joinToString("\n")
             } happenError {
                 loge(it)
-            } happenError {
+            } finally {
                 isFirstTime = false
             } doWith this@ExploreArtistFragment
         }
@@ -115,6 +116,10 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 // 3. `isFirstTime` is for the first time open this fragment.
                 (mbid != vm.lastFindMbid && isFirstTime))
                 runTaskFetchArtistInfo(mbid, artistName)
+            // Pre-load the photos.
+            if (vm.photosLiveData.value.isNull()) {
+                vm.runTaskFetchArtistPhoto(artistName)
+            }
         }
     }
 
@@ -139,7 +144,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         super.componentListenersBinding()
         find<ImageView>(R.id.iv_artist_backdrop).setOnClickListener {
             findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
-                                         ExplorePhotosFragment.createBundle(vm.artistLiveData.value?.data?.name.orEmpty()))
+                                         ExplorePhotosFragment.createBundle(vm.artistLiveData.value?.data?.name.orEmpty(),
+                                                                            vm.photosLiveData.value?.data?.photos.orEmpty()))
         }
     }
 

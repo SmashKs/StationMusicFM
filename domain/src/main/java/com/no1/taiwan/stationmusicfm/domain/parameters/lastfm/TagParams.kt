@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
-import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
@@ -40,5 +39,8 @@ data class TagParams(
         language.takeUnlessDefault { put(PARAM_NAME_LANG, it) }
     }
 
-    override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
+    override fun toApiAnyParam() = super.toApiAnyParam().apply {
+        put(PARAM_NAME_TAG, tagName)
+        language.takeUnlessDefault { put(PARAM_NAME_LANG, it) }
+    }
 }

@@ -21,10 +21,12 @@
 
 package com.no1.taiwan.stationmusicfm.entities.lastfm
 
+import android.os.Parcelable
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
+import kotlinx.android.parcel.Parcelize
 
 object ArtistInfoEntity {
     open class ArtistEntity(
@@ -62,10 +64,16 @@ object ArtistInfoEntity {
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 
+    data class PhotosEntity(
+        val photos: List<PhotoEntity> = emptyList(),
+        val hasNext: Boolean = false
+    ) : Entity
+
+    @Parcelize
     data class PhotoEntity(
         val url: String = DEFAULT_STR,
         val hashCode: String = DEFAULT_STR
-    ) : Entity, MusicMultiVisitable {
+    ) : Entity, Parcelable, MusicMultiVisitable {
         override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
     }
 

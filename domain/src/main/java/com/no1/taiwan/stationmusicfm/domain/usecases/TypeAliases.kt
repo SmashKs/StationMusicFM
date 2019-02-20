@@ -32,6 +32,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistPhotoRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopAlbumRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistTopTrackRespCase
@@ -68,6 +69,7 @@ typealias FetchHotListCase = DeferredUsecase<HotPlaylistModel.HotListModel, Fetc
 
 typealias FetchAlbumReq = FetchAlbumRespCase.Request
 typealias FetchArtistReq = FetchArtistRespCase.Request
+typealias FetchArtistPhotoReq = FetchArtistPhotoRespCase.Request
 typealias FetchArtistTopAlbumReq = FetchArtistTopAlbumRespCase.Request
 typealias FetchArtistTopTrackReq = FetchArtistTopTrackRespCase.Request
 typealias FetchChartTopArtistReq = FetchChartTopArtistRespCase.Request
@@ -83,6 +85,7 @@ typealias FetchTrackReq = FetchTrackRespCase.Request
 
 typealias FetchAlbumCase = DeferredUsecase<AlbumInfoModel.AlbumModel, FetchAlbumReq>
 typealias FetchArtistCase = DeferredUsecase<ArtistInfoModel.ArtistModel, FetchArtistReq>
+typealias FetchArtistPhotoCase = DeferredUsecase<ArtistInfoModel.ArtistPhotosModel, FetchArtistPhotoReq>
 typealias FetchArtistTopAlbumCase = DeferredUsecase<CommonLastFmModel.TopAlbumsModel, FetchArtistTopAlbumReq>
 typealias FetchArtistTopTrackCase = DeferredUsecase<TrackInfoModel.TracksWithStreamableModel, FetchArtistTopTrackReq>
 typealias FetchChartTopArtistCase = DeferredUsecase<ArtistInfoModel.ArtistsModel, FetchChartTopArtistReq>

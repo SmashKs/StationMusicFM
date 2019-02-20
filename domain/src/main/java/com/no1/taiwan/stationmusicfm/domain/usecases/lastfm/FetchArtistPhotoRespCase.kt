@@ -19,33 +19,25 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
+package com.no1.taiwan.stationmusicfm.domain.usecases.lastfm
 
-import com.devrapid.kotlinshaver.toInt
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
-import com.no1.taiwan.stationmusicfm.ext.takeIfDefault
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
+import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
+import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoReq
 
-data class ArtistParams(
-    override var mbid: String = DEFAULT_STR,
-    val artistName: String = DEFAULT_STR,
-    val autoCorrect: Boolean = true  // TopAlbums, TopTracks, Similar
-) : BaseWithPagingParams() {
-    companion object {
-        const val PARAM_NAME_ARTIST = "artist"
-        const val PARAM_NAME_AUTO_CORRECT = "autocorrect"
-    }
+class FetchArtistPhotoRespCase(
+    private val repository: LastFmRepository
+) : FetchArtistPhotoCase() {
+    /** Provide a common parameter variable for the children class. */
+    override var requestValues: FetchArtistPhotoReq? = null
 
-    override fun toApiParam() = super.toApiParam().apply {
-        mbid.takeIfDefault {
-            put(PARAM_NAME_ARTIST, artistName)
-            put(PARAM_NAME_AUTO_CORRECT, autoCorrect.toInt().toString())
+    override suspend fun acquireCase() = attachParameter {
+        repository.fetchArtistPhotoInfo(it.parameters).apply {
         }
     }
 
-    override fun toApiAnyParam() = super.toApiAnyParam().apply {
-        mbid.takeIfDefault {
-            put(PARAM_NAME_ARTIST, artistName)
-            put(PARAM_NAME_AUTO_CORRECT, autoCorrect)
-        }
-    }
+    class Request(val parameters: Parameterable = ArtistParams()) : RequestValues
 }

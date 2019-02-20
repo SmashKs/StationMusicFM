@@ -22,7 +22,6 @@
 package com.no1.taiwan.stationmusicfm.domain.parameters.lastfm
 
 import com.devrapid.kotlinshaver.toInt
-import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.ext.takeIfDefault
 import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
@@ -54,5 +53,13 @@ data class AlbumParams(
         put(PARAM_NAME_AUTO_CORRECT, autoCorrect.toInt().toString())
     }
 
-    override fun toApiAnyParam(): AnyParameters = hashMapOf(PARAM_NAME_FORMAT to format)
+    override fun toApiAnyParam() = super.toApiAnyParam().apply {
+        mbid.takeIfDefault {
+            put(PARAM_NAME_ALBUM, albumName)
+            put(PARAM_NAME_ARTIST, artistName)
+        }
+        language.takeUnlessDefault { put(PARAM_NAME_LANG, it) }
+        userName.takeUnlessDefault { put(PARAM_NAME_USERNAME, it) }
+        put(PARAM_NAME_AUTO_CORRECT, autoCorrect)
+    }
 }

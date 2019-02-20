@@ -61,6 +61,8 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumWithArtistPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumWithArtistTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPhotoPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPhotosPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistSimilarPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsSimilarPMapper
@@ -263,7 +265,9 @@ object UtilModule {
             TracksWithStreamablePMapper::class.java to TracksWithStreamablePMapper(trackWithStreamableMapper,
                                                                                    AttrPMapper())
         }
-
         bind<PreziMapperEntry>().inSet() with singleton { RankingPMapper::class.java to RankingPMapper() }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            ArtistPhotosPMapper::class.java to ArtistPhotosPMapper(ArtistPhotoPMapper())
+        }
     }
 }

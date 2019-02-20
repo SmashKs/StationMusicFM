@@ -26,6 +26,8 @@ import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopAlbumReq
@@ -38,6 +40,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPhotosPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsSimilarPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
@@ -55,6 +58,7 @@ class ExploreArtistViewModel(
     private val fetchArtistTopAlbumCase: FetchArtistTopAlbumCase,
     private val fetchSimilarArtistCase: FetchSimilarArtistCase,
     private val fetchArtistTopTrackCase: FetchArtistTopTrackCase,
+    private val fetchArtistPhotoCase: FetchArtistPhotoCase,
     private val mapperPool: PreziMapperPool
 ) : AutoViewModel() {
     private val _artistLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistEntity>() }
@@ -67,10 +71,13 @@ class ExploreArtistViewModel(
     val tracksLiveData: RespLiveData<TrackInfoEntity.TracksWithStreamableEntity> = _tracksLiveData
     private val _artistInfoLiveData by lazy { RespMutableLiveData<ArtistMixInfo>() }
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
+    private val _photosLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.PhotosEntity>() }
+    val photosLiveData: RespLiveData<ArtistInfoEntity.PhotosEntity> = _photosLiveData
     private val artistMapper by lazy { cast<ArtistPMapper>(mapperPool[ArtistPMapper::class.java]) }
-    private val topAlbumPMapper by lazy { cast<TopAlbumPMapper>(mapperPool[TopAlbumPMapper::class.java]) }
-    private val artistsSimilarPMapper by lazy { cast<ArtistsSimilarPMapper>(mapperPool[ArtistsSimilarPMapper::class.java]) }
-    private val tracksWithStreamablePMapper by lazy { cast<TracksWithStreamablePMapper>(mapperPool[TracksWithStreamablePMapper::class.java]) }
+    private val topAlbumMapper by lazy { cast<TopAlbumPMapper>(mapperPool[TopAlbumPMapper::class.java]) }
+    private val artistsSimilarMapper by lazy { cast<ArtistsSimilarPMapper>(mapperPool[ArtistsSimilarPMapper::class.java]) }
+    private val tracksWithStreamableMapper by lazy { cast<TracksWithStreamablePMapper>(mapperPool[TracksWithStreamablePMapper::class.java]) }
+    private val photosMapper by lazy { cast<ArtistPhotosPMapper>(mapperPool[ArtistPhotosPMapper::class.java]) }
 
     private val _lastFindMbid by lazy { MutableLiveData<String>() }
     val lastFindMbid get() = _lastFindMbid.value
@@ -79,11 +86,11 @@ class ExploreArtistViewModel(
         val parameters = ArtistParams(mbid, name)
         _artistInfoLiveData reqData {
             val artist = fetchArtistCase.execMapping(artistMapper, FetchArtistReq(parameters))
-            val album = fetchArtistTopAlbumCase.execMapping(topAlbumPMapper, FetchArtistTopAlbumReq(parameters))
+            val album = fetchArtistTopAlbumCase.execMapping(topAlbumMapper, FetchArtistTopAlbumReq(parameters))
             val similarArtist =
-                fetchSimilarArtistCase.execMapping(artistsSimilarPMapper, FetchSimilarArtistReq(parameters))
+                fetchSimilarArtistCase.execMapping(artistsSimilarMapper, FetchSimilarArtistReq(parameters))
             val tracks =
-                fetchArtistTopTrackCase.execMapping(tracksWithStreamablePMapper, FetchArtistTopTrackReq(parameters))
+                fetchArtistTopTrackCase.execMapping(tracksWithStreamableMapper, FetchArtistTopTrackReq(parameters))
             // If success to get them assign to each livedata.
             _artistLiveData.postValue(ResponseState.Success(artist))
             _albumsLiveData.postValue(ResponseState.Success(album))
@@ -92,6 +99,12 @@ class ExploreArtistViewModel(
             _lastFindMbid.postValue(mbid)
 
             ArtistMixInfo(artist, album, similarArtist, tracks)
+        }
+    }
+
+    fun runTaskFetchArtistPhoto(artistName: String) = GlobalScope.launch {
+        _photosLiveData reqData {
+            fetchArtistPhotoCase.execMapping(photosMapper, FetchArtistPhotoReq(ArtistParams(artistName = artistName)))
         }
     }
 }
