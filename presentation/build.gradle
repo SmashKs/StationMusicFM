@@ -92,6 +92,8 @@ dependencies {
     implementation(project(":widget"))
     implementation(project(":ext"))
 
+    implementation("org.jsoup:jsoup:1.11.3")
+
     //region Kotlin
     implementation(dependencies.Deps.Global.kotlin)
     implementation(dependencies.Deps.Global.coroutine)

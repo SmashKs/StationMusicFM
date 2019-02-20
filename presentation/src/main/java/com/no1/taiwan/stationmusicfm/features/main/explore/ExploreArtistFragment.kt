@@ -133,6 +133,17 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     }
 
     /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        super.componentListenersBinding()
+        find<ImageView>(R.id.iv_artist_backdrop).setOnClickListener {
+            findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
+                                         ExplorePhotosFragment.createBundle(vm.artistLiveData.value?.data?.name.orEmpty()))
+        }
+    }
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.

@@ -62,6 +62,13 @@ object ArtistInfoEntity {
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 
+    data class PhotoEntity(
+        val url: String = DEFAULT_STR,
+        val hashCode: String = DEFAULT_STR
+    ) : Entity, MusicMultiVisitable {
+        override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+    }
+
     data class BioEntity(
         val link: LinkEntity = LinkEntity(),
         val published: String = DEFAULT_STR,

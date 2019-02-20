@@ -32,6 +32,7 @@ import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.AlbumOfGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExplorePhotoViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotAlbumViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder
@@ -102,6 +103,9 @@ object RecyclerViewModule {
         }
         bind<ViewHolderEntry>().inSet() with provider {
             TrackInfoEntity.TrackEntity::class.hashCode() to (R.layout.item_explore_track to ::ExploreTrackViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            ArtistInfoEntity.PhotoEntity::class.hashCode() to (R.layout.item_explore_photo to ::ExplorePhotoViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
             AlbumInfoEntity.AlbumWithArtistEntity::class.hashCode() to (R.layout.item_hot_album to ::HotAlbumViewHolder)

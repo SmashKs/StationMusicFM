@@ -19,40 +19,29 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.test
+package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 
-import android.os.Bundle
-import com.devrapid.kotlinknifer.logw
+import android.view.View
+import android.widget.ImageView
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.AdvActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import org.jetbrains.anko.find
 
-class TestActivity : AdvActivity<TestViewModel>() {
-    override fun provideLayoutId() = R.layout.activity_test
-
+class ExplorePhotoViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, ArtistInfoEntity.PhotoEntity>(view) {
     /**
-     * Initialize doing some methods and actions.
+     * Set the views' properties.
      *
-     * @param savedInstanceState previous state after this activity was destroyed.
+     * @param model a data model after input from a list.
+     * @param position the index of a list.
+     * @param adapter parent adapter.
      */
-    override fun init(savedInstanceState: Bundle?) {
-        GlobalScope.launch {
-            val name = "Iggy+Azalea"
-            val page = 1
-            val doc = Jsoup.connect("https://www.last.fm/music/$name/+images?page=$page").get()
-            doc.select("ul.image-list").select("li").map {
-                it.select("img.image-list-image").attr("src")
-            }.map {
-                it.split("/").last()
-            }.map {
-                "https://lastfm-img2.akamaized.net/i/u/770x0/$it.jpg"
-            }.forEach {
-                logw(it)
-            }
-            val hasNext = doc.select("li.pagination-next").select("a").toString().isNotBlank()
-            logw(hasNext)
+    override fun initView(model: ArtistInfoEntity.PhotoEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        itemView.apply {
+            find<ImageView>(R.id.iv_photo_thumbnail).loadByAny(model.url)
         }
     }
 }
