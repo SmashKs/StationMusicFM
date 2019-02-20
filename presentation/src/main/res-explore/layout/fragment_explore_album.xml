@@ -20,20 +20,84 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.main.explore.ExploreAlbumFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Explore"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".features.main.explore.ExploreAlbumFragment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_album_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/md_zero_unit"
+            app:layout_constraintDimensionRatio="1:0.7"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars"/>
+
+        <com.github.florent37.shapeofview.shapes.CircleView
+            android:id="@+id/sov_artist_icon"
+            android:layout_width="96dp"
+            android:layout_height="@dimen/md_zero_unit"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_album_backdrop"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_album_backdrop">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:src="@tools:sample/avatars"/>
+        </com.github.florent37.shapeofview.shapes.CircleView>
+
+        <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+            android:id="@+id/ftv_tags"
+            style="@style/MusicTextView.AnyWidth"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_album_backdrop"
+            app:layout_constraintEnd_toStartOf="@+id/sov_artist_icon"
+            app:layout_constraintStart_toStartOf="@+id/iv_album_backdrop"
+            app:layout_constraintTop_toBottomOf="@+id/iv_album_backdrop"
+            tools:text="@tools:sample/lorem[3]"/>
+
+        <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+            android:id="@+id/ftv_published_at"
+            style="@style/MusicTextView.AnyWidth"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_album_backdrop"
+            app:layout_constraintEnd_toEndOf="@+id/iv_album_backdrop"
+            app:layout_constraintStart_toEndOf="@+id/sov_artist_icon"
+            app:layout_constraintTop_toBottomOf="@+id/iv_album_backdrop"
+            tools:text="@tools:sample/date/mmddyy"/>
+
+        <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+            android:id="@+id/ftv_album_name"
+            style="@style/MusicTextView.FitWidth"
+            android:layout_marginTop="@dimen/md_one_unit"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/sov_artist_icon"
+            tools:text="@tools:sample/full_names"/>
+
+
+        <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+            android:id="@+id/ftv_album_wiki"
+            style="@style/MusicTextView.FitWidth"
+            android:layout_marginTop="@dimen/md_two_unit"
+            app:layout_constraintTop_toBottomOf="@id/ftv_album_name"
+            tools:text="@tools:sample/lorem/random[100]"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_tracks_of_album"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ftv_album_wiki"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_hot_track"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

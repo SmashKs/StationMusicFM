@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop"
         app:layout_constraintStart_toStartOf="@id/iv_artist_backdrop"
         app:layout_constraintTop_toTopOf="@id/iv_artist_backdrop"
-        app:realtimeBlurRadius="15dp"
+        app:realtimeBlurRadius="8dp"
         app:realtimeOverlayColor="#22000000"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
