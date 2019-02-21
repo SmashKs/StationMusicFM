@@ -19,33 +19,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.components.textview
+package com.no1.taiwan.stationmusicfm.widget.components.typeface
 
 import android.content.Context
-import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
-import com.no1.taiwan.stationmusicfm.widget.R
-import com.no1.taiwan.stationmusicfm.widget.components.typeface.TypeFaceProvider
+import android.graphics.Typeface
+import java.util.Hashtable
 
-/**
- * It's able to set a font from imported resource font.
- */
-class FontTextView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : AppCompatTextView(context, attrs, defStyleAttr) {
-    init {
-        context.obtainStyledAttributes(attrs, R.styleable.FontTextView, defStyleAttr, 0).also {
-            it.getString(R.styleable.FontTextView_textFont)?.let {
-                typeface = TypeFaceProvider.getTypeFace(context, it)
-            }
-        }.recycle()
+object TypeFaceProvider {
+    private const val TYPEFACE_FOLDER = "fonts"
+    private const val TYPEFACE_EXTENSION = ".ttf"
 
-        includeFontPadding = false
-    }
+    private val typeFaces = Hashtable<String, Typeface>(6)
 
-    fun setFont(fonts: String) {
-        typeface = TypeFaceProvider.getTypeFace(context, fonts)
+    fun getTypeFace(context: Context, fileName: String): Typeface {
+        var tempTypeface = typeFaces[fileName]
+
+        if (tempTypeface == null) {
+            val fontPath = "$TYPEFACE_FOLDER/$fileName"
+            tempTypeface = Typeface.createFromAsset(context.assets, fontPath)
+            typeFaces[fileName] = tempTypeface
+        }
+
+        return requireNotNull(tempTypeface)
     }
 }

@@ -35,6 +35,7 @@ import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Compan
 import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Companion.ARGUMENT_DATA_TITLE
 import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Companion.ARGUMENT_DATA_UPDATE
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.widget.components.typeface.TypeFaceProvider
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.kodein.di.generic.instance
@@ -49,6 +50,10 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Preload the typeface.
+        listOf("santio_regular.otf")
+            .forEach { TypeFaceProvider.getTypeFace(applicationContext, it) }
+
         observeNonNull(workManager.getWorkInfoByIdLiveData(parserRequest.id)) {
             if (state.isFinished) {
                 when (state) {

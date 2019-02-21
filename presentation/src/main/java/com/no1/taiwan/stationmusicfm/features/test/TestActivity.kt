@@ -21,16 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.features.test
 
-import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
 import android.os.Bundle
-import android.widget.ImageView
-import com.devrapid.kotlinknifer.toBitmap
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvActivity
-import com.no1.taiwan.stationmusicfm.utils.bitmap.decorateGradientMask
-import org.jetbrains.anko.find
 
 class TestActivity : AdvActivity<TestViewModel>() {
     override fun provideLayoutId() = R.layout.activity_test
@@ -41,15 +34,5 @@ class TestActivity : AdvActivity<TestViewModel>() {
      * @param savedInstanceState previous state after this activity was destroyed.
      */
     override fun init(savedInstanceState: Bundle?) {
-        val shaderA = LinearGradient(0f,
-                                     0f,
-                                     0f,
-                                     R.drawable.lady_gaga.toBitmap(this).height.toFloat() - 100,
-                                     Color.BLACK,
-                                     Color.TRANSPARENT,
-                                     Shader.TileMode.CLAMP)
-        val res = R.drawable.lady_gaga.toBitmap(this).decorateGradientMask(shaderA)
-
-        find<ImageView>(R.id.iv_pic).setImageBitmap(res)
     }
 }
