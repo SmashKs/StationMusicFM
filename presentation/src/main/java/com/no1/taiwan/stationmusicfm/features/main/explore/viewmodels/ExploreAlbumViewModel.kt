@@ -44,7 +44,9 @@ class ExploreAlbumViewModel(
     val albumLiveData: RespLiveData<AlbumInfoEntity.AlbumEntity> = _albumLiveData
     private val albumMapper by lazy { cast<AlbumPMapper>(mapperPool[AlbumPMapper::class.java]) }
 
-    fun runTaskFetchAlbum(mbid: String) = GlobalScope.launch {
-        _albumLiveData reqData { fetchAlbumCase.execMapping(albumMapper, FetchAlbumReq(AlbumParams(mbid))) }
+    fun runTaskFetchAlbum(mbid: String, albumName: String, artistName: String) = GlobalScope.launch {
+        _albumLiveData reqData {
+            fetchAlbumCase.execMapping(albumMapper, FetchAlbumReq(AlbumParams(mbid, albumName, artistName)))
+        }
     }
 }

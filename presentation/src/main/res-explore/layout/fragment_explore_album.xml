@@ -29,7 +29,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".features.main.explore.ExploreAlbumFragment">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -84,13 +84,12 @@
             app:layout_constraintTop_toBottomOf="@+id/sov_artist_icon"
             tools:text="@tools:sample/full_names"/>
 
-
         <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
             android:id="@+id/ftv_album_wiki"
             style="@style/MusicTextView.FitWidth"
             android:layout_marginTop="@dimen/md_two_unit"
             app:layout_constraintTop_toBottomOf="@id/ftv_album_name"
-            tools:text="@tools:sample/lorem/random[100]"/>
+            tools:text="@tools:sample/lorem/random"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_tracks_of_album"

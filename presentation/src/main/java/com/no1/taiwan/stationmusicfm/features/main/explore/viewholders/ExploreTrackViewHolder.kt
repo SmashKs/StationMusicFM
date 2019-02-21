@@ -48,7 +48,9 @@ class ExploreTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, 
      */
     override fun initView(model: TrackInfoEntity.TrackEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
-            find<ImageView>(R.id.iv_track).loadByAny(model.images.last().text)
+            model.images.takeIf { it.isNotEmpty() }?.let {
+                find<ImageView>(R.id.iv_track).loadByAny(it.last().text)
+            }
             find<TextView>(R.id.ftv_track_name).text = model.name
             find<TextView>(R.id.ftv_name).text = model.artist.name
             find<CardView>(R.id.mcv_track).setOnClickListener {
