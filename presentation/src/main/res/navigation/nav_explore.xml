@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_frag_explore_artist_to_frag_explore_photo"
             app:destination="@id/frag_explore_photo"/>
+        <action
+            android:id="@+id/action_frag_explore_artist_to_frag_explore_album"
+            app:destination="@id/frag_explore_album"/>
     </fragment>
 
     <fragment

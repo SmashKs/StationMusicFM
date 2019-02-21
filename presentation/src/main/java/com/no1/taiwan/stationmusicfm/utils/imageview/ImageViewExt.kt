@@ -35,6 +35,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
@@ -98,6 +99,23 @@ fun ImageView.loadAnyByInternetListener(
 
         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
             readyBlock?.invoke(resource, transition)
+        }
+    })
+
+fun ImageView.loadAnyDecorator(
+    uri: Any,
+    context: Context = gContext(),
+    afterDecorated: ((bitmap: Bitmap, transition: Transition<in Bitmap>?) -> Unit)? = null,
+    beforeDecorate: ((bitmap: Bitmap, transition: Transition<in Bitmap>?) -> Bitmap)? = null
+) = Glide.with(context)
+    .asBitmap()
+    .load(uri)
+    .apply(glideKaritokeOptions())
+    .into(object : BitmapImageViewTarget(this) {
+        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+            val decorated = beforeDecorate?.invoke(resource, transition)
+            super.onResourceReady(decorated ?: resource, transition)
+            afterDecorated?.invoke(resource, transition)
         }
     })
 

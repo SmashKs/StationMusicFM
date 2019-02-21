@@ -21,13 +21,16 @@
 
 package com.no1.taiwan.stationmusicfm.features.test
 
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.os.Bundle
-import com.devrapid.kotlinknifer.logw
+import android.widget.ImageView
+import com.devrapid.kotlinknifer.toBitmap
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
+import com.no1.taiwan.stationmusicfm.utils.bitmap.decorateGradientMask
+import org.jetbrains.anko.find
 
 class TestActivity : AdvActivity<TestViewModel>() {
     override fun provideLayoutId() = R.layout.activity_test
@@ -38,21 +41,15 @@ class TestActivity : AdvActivity<TestViewModel>() {
      * @param savedInstanceState previous state after this activity was destroyed.
      */
     override fun init(savedInstanceState: Bundle?) {
-        GlobalScope.launch {
-            val name = "Iggy+Azalea"
-            val page = 1
-            val doc = Jsoup.connect("https://www.last.fm/music/$name/+images?page=$page").get()
-            doc.select("ul.image-list").select("li").map {
-                it.select("img.image-list-image").attr("src")
-            }.map {
-                it.split("/").last()
-            }.map {
-                "https://lastfm-img2.akamaized.net/i/u/770x0/$it.jpg"
-            }.forEach {
-                logw(it)
-            }
-            val hasNext = doc.select("li.pagination-next").select("a").toString().isNotBlank()
-            logw(hasNext)
-        }
+        val shaderA = LinearGradient(0f,
+                                     0f,
+                                     0f,
+                                     R.drawable.lady_gaga.toBitmap(this).height.toFloat() - 100,
+                                     Color.BLACK,
+                                     Color.TRANSPARENT,
+                                     Shader.TileMode.CLAMP)
+        val res = R.drawable.lady_gaga.toBitmap(this).decorateGradientMask(shaderA)
+
+        find<ImageView>(R.id.iv_pic).setImageBitmap(res)
     }
 }

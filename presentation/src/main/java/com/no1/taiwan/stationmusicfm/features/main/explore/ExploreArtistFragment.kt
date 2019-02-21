@@ -43,6 +43,12 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerBioFr
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerSimilarArtistFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_ALBUM_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_ALBUM_URI
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_SIMILAR_ARTIST
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
@@ -164,12 +170,31 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.SimilarArtistViewHolder.initView]
      * @param params AnyParameters
      */
-    @Subscribe(tags = [Tag("similar artist click")])
+    @Subscribe(tags = [Tag(TAG_TO_SIMILAR_ARTIST)])
     fun navToNextOfMe(params: Parameters) {
-        val name = requireNotNull(params["artist name"])
-        val mbid = requireNotNull(params["artist mbid"])
+        val name = requireNotNull(params[PARAMS_COMMON_ARTIST_NAME])
+        val mbid = requireNotNull(params[PARAMS_COMMON_MBID])
 
         findNavController().navigate(R.id.action_frag_explore_artist_self,
                                      ExploreArtistFragment.createBundle(mbid, name, PROVIDER_FROM_CUSTOM_FRAGMENT))
+    }
+
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotAlbumViewHolder.initView]
+     * @param params Parameters
+     */
+    @Subscribe(tags = [Tag(TAG_TO_ALBUM)])
+    fun navToAlbumDetail(params: Parameters) {
+        val mbid = requireNotNull(params[PARAMS_COMMON_MBID])
+        val albumName = requireNotNull(params[PARAMS_TO_ALBUM_ALBUM_NAME])
+        val albumUri = requireNotNull(params[PARAMS_TO_ALBUM_ALBUM_URI])
+        val artistName = requireNotNull(params[PARAMS_COMMON_ARTIST_NAME])
+
+        findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_album,
+                                     ExploreAlbumFragment.createBundle(mbid,
+                                                                       artistName,
+                                                                       albumName,
+                                                                       albumUri,
+                                                                       vm.artistLiveData.value?.data?.images?.last()?.text.orEmpty()))
     }
 }

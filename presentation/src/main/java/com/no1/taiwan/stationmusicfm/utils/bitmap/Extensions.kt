@@ -19,24 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils
+package com.no1.taiwan.stationmusicfm.utils.bitmap
 
-object RxBusConstant {
-    object Tag {
-        const val TAG_RANK_EVENT = "rank id"
-        const val TAG_TO_DETAIL = "goto detail fragment"
-        const val TAG_TO_ALBUM = "goto album detail fragment"
-        const val TAG_TO_SIMILAR_ARTIST = "goto similar artist fragment"
+import android.graphics.Bitmap
+import android.graphics.BitmapShader
+import android.graphics.Canvas
+import android.graphics.ComposeShader
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.Shader
+
+fun Bitmap.decorateGradientMask(shaderDst: Shader): Bitmap {
+    val res = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(res)
+    // Create the source shader bitmap.
+    val shaderSrc = BitmapShader(this, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+
+    val paint = Paint().apply {
+        shader = ComposeShader(shaderDst, shaderSrc, PorterDuff.Mode.SRC_IN)
     }
+    canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
 
-    object Parameter {
-        const val PARAMS_COMMON_MBID = "mbid"
-        const val PARAMS_COMMON_ARTIST_NAME = "artist name"
-
-        const val PARAMS_TO_DETAIL_TARGET = "target"
-        const val PARAMS_TO_DETAIL_NAME = "name"
-
-        const val PARAMS_TO_ALBUM_ALBUM_NAME = "album name"
-        const val PARAMS_TO_ALBUM_ALBUM_URI = "album uri"
-    }
+    return res
 }

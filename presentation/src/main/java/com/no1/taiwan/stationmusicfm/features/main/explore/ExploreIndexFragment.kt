@@ -38,7 +38,7 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_MBID
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
@@ -148,7 +148,7 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
     @Subscribe(tags = [Tag(TAG_TO_DETAIL)])
     fun gotoNextDetailFragment(params: AnyParameters) {
         val target = cast<String>(params[PARAMS_TO_DETAIL_TARGET])
-        val mbid = castOrNull<String>(params[PARAMS_TO_DETAIL_MBID]).orEmpty()
+        val mbid = castOrNull<String>(params[PARAMS_COMMON_MBID]).orEmpty()
         val name = castOrNull<String>(params[PARAMS_TO_DETAIL_NAME]).orEmpty()
 
         navTo(target, mbid, name)
