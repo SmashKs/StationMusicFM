@@ -39,11 +39,12 @@ import com.no1.taiwan.stationmusicfm.widget.components.typeface.TypeFaceProvider
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.kodein.di.generic.instance
+import java.util.concurrent.atomic.AtomicInteger
 
 class SplashActivity : BaseActivity() {
     private val workManager: WorkManager by instance()
     private val parserRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_PARSE_CHART) }
-    private var counter = 0
+    private var counter = AtomicInteger(0)
     private var workersSize = 0
 
     override fun provideLayoutId() = R.layout.activity_splash
@@ -72,9 +73,8 @@ class SplashActivity : BaseActivity() {
                                 // Observe all workers process.
                                 observeNonNull(workManager.getWorkInfoByIdLiveData(it.id)) {
                                     if (state.isFinished) {
-                                        // TODO(jieyi): 2019/02/15 synchronized counter!!
-                                        counter++
-                                        if (counter == workersSize) {
+                                        counter.incrementAndGet()
+                                        if (counter.get() == workersSize) {
                                             gotoMainMusic()
                                         }
                                     }

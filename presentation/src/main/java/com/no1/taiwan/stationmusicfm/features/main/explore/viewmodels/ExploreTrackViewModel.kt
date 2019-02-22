@@ -55,8 +55,8 @@ class ExploreTrackViewModel(
     private val trackMapper by lazy { cast<TrackPMapper>(mapperPool[TrackPMapper::class.java]) }
     private val tracksMapper by lazy { cast<TracksPMapper>(mapperPool[TracksPMapper::class.java]) }
 
-    fun runTaskFetchTrack(mbid: String) = GlobalScope.launch {
-        val parameters = TrackParams(mbid)
+    fun runTaskFetchTrack(mbid: String, artistName: String, trackName: String) = GlobalScope.launch {
+        val parameters = TrackParams(mbid, trackName, artistName)
         _trackInfoLiveData reqData {
             val track = fetchTrackCase.execMapping(trackMapper, FetchTrackReq(parameters))
             val similarTracks = fetchSimilarTrackCase.execMapping(tracksMapper, FetchSimilarTrackReq(parameters))

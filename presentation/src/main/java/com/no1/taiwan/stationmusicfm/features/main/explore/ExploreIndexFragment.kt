@@ -38,9 +38,11 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_GENRE_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -143,27 +145,32 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
     /**
      * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder.initView]
      * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder.initView]
+     * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder.initView]
      * @param params
      */
     @Subscribe(tags = [Tag(TAG_TO_DETAIL)])
     fun gotoNextDetailFragment(params: AnyParameters) {
         val target = cast<String>(params[PARAMS_TO_DETAIL_TARGET])
         val mbid = castOrNull<String>(params[PARAMS_COMMON_MBID]).orEmpty()
-        val name = castOrNull<String>(params[PARAMS_TO_DETAIL_NAME]).orEmpty()
+        val artistName = castOrNull<String>(params[PARAMS_COMMON_ARTIST_NAME]).orEmpty()
+        val trackName = castOrNull<String>(params[PARAMS_TO_TRACK_NAME]).orEmpty()
+        val genreName = castOrNull<String>(params[PARAMS_TO_GENRE_NAME]).orEmpty()
 
-        navTo(target, mbid, name)
+        navTo(target, mbid, artistName, trackName, genreName)
     }
 
-    private fun navTo(target: String, mbid: String, name: String) {
+    private fun navTo(target: String, mbid: String, artistName: String, trackName: String, genreName: String) {
         val (fragment, bundle) = when (target) {
             FRAGMENT_TARGET_TRACK ->
-                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbid)
+                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbid,
+                                                                                                          artistName,
+                                                                                                          trackName)
             FRAGMENT_TARGET_ARTIST ->
                 R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbid,
-                                                                                                            name,
+                                                                                                            artistName,
                                                                                                             PROVIDER_FROM_ACTIVITY)
             FRAGMENT_TARGET_GENRE ->
-                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(name)
+                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(genreName)
             else -> throw IllegalArgumentException()
         }
 

@@ -45,8 +45,8 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrack
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_ALBUM_NAME
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_ALBUM_URI
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_SIMILAR_ARTIST
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
@@ -186,8 +186,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     @Subscribe(tags = [Tag(TAG_TO_ALBUM)])
     fun navToAlbumDetail(params: Parameters) {
         val mbid = requireNotNull(params[PARAMS_COMMON_MBID])
-        val albumName = requireNotNull(params[PARAMS_TO_ALBUM_ALBUM_NAME])
-        val albumUri = requireNotNull(params[PARAMS_TO_ALBUM_ALBUM_URI])
+        val albumName = requireNotNull(params[PARAMS_TO_ALBUM_NAME])
+        val albumUri = requireNotNull(params[PARAMS_TO_ALBUM_URI])
         val artistName = requireNotNull(params[PARAMS_COMMON_ARTIST_NAME])
 
         findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_album,

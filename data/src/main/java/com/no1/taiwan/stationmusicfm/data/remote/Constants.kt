@@ -30,7 +30,7 @@ object Constants {
     const val LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS = "artist.getTopAlbums"
     const val LASTFM_PARAM_ARTIST_GET_TOP_TRACKS = "artist.getTopTracks"
     const val LASTFM_PARAM_ARTIST_GET_SIMILAR = "artist.getSimilar"
-    const val LASTFM_PARAM_TRACK_INFO = "track.info"
+    const val LASTFM_PARAM_TRACK_INFO = "track.getInfo"
     const val LASTFM_PARAM_TRACK_GET_SIMILAR = "track.getSimilar"
     const val LASTFM_PARAM_CHART_GET_TOP_TRACKS = "chart.getTopTracks"
     const val LASTFM_PARAM_CHART_GET_TOP_ARTISTS = "chart.getTopArtists"

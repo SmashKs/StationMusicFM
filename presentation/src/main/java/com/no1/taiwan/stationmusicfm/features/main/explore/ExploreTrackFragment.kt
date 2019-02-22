@@ -21,21 +21,67 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
+import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
+import androidx.core.text.toSpannable
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import org.jetbrains.anko.support.v4.find
 
 class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() {
     companion object {
         private const val ARGUMENT_MBID = "fragment argument mbid"
+        private const val ARGUMENT_ARTIST_NAME = "fragment argument artist name"
+        private const val ARGUMENT_TRACK_NAME = "fragment argument track name"
 
-        fun createBundle(mbid: String) = bundleOf(ARGUMENT_MBID to mbid)
+        fun createBundle(mbid: String, artistName: String, trackName: String) = bundleOf(ARGUMENT_MBID to mbid,
+                                                                                         ARGUMENT_ARTIST_NAME to artistName,
+                                                                                         ARGUMENT_TRACK_NAME to trackName)
     }
 
-    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID, DEFAULT_STR)) }
+    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID)) }
+    private val artistName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
+    private val trackName by lazy { requireNotNull(arguments?.getString(ARGUMENT_TRACK_NAME)) }
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        observeNonNull(vm.trackInfoLiveData) {
+            peel { (track, similarTracks) ->
+                find<TextView>(R.id.ftv_track_name).text = track.name
+                find<TextView>(R.id.ftv_track_wiki).text = track.wiki.summary.parseAsHtml().toSpannable()
+                track.album.images.takeIf { it.isNotEmpty() }?.let {
+                    find<ImageView>(R.id.iv_track_backdrop).loadByAny(it.last().text)
+                }
+            } happenError {
+                loge(it)
+            } doWith this@ExploreTrackFragment
+        }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        super.rendered(savedInstanceState)
+        vm.apply {
+            if (trackInfoLiveData.value.isNull())
+                runTaskFetchTrack(mbid, artistName, trackName)
+        }
+    }
 
     /**
      * Set the parentView for inflating.

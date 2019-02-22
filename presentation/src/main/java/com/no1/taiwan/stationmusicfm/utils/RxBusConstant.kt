@@ -34,9 +34,12 @@ object RxBusConstant {
         const val PARAMS_COMMON_ARTIST_NAME = "artist name"
 
         const val PARAMS_TO_DETAIL_TARGET = "target"
-        const val PARAMS_TO_DETAIL_NAME = "name"
 
-        const val PARAMS_TO_ALBUM_ALBUM_NAME = "album name"
-        const val PARAMS_TO_ALBUM_ALBUM_URI = "album uri"
+        const val PARAMS_TO_GENRE_NAME = "genre name"
+
+        const val PARAMS_TO_ALBUM_NAME = "album name"
+        const val PARAMS_TO_ALBUM_URI = "album uri"
+
+        const val PARAMS_TO_TRACK_NAME = "track name"
     }
 }
