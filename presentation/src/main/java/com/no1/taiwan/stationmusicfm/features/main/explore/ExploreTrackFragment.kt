@@ -21,6 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -34,7 +37,8 @@ import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
+import com.no1.taiwan.stationmusicfm.utils.bitmap.decorateGradientMask
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -62,7 +66,11 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
                 find<TextView>(R.id.ftv_track_name).text = track.name
                 find<TextView>(R.id.ftv_track_wiki).text = track.wiki.summary.parseAsHtml().toSpannable()
                 track.album.images.takeIf { it.isNotEmpty() }?.let {
-                    find<ImageView>(R.id.iv_track_backdrop).loadByAny(it.last().text)
+                    find<ImageView>(R.id.iv_track_backdrop).loadAnyDecorator(it.last().text) { bitmap, _ ->
+                        val shader = LinearGradient(0f, 0f, 0f, bitmap.height.toFloat(),
+                                                    Color.TRANSPARENT, Color.BLACK, Shader.TileMode.CLAMP)
+                        bitmap.decorateGradientMask(shader)
+                    }
                 }
             } happenError {
                 loge(it)

@@ -30,9 +30,11 @@ import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
@@ -41,6 +43,9 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.utils.resoureces.gContext
+
+@GlideModule
+class MusicGlideModule : AppGlideModule()
 
 fun ImageView.loadByString(str: String, context: Context = gContext()) =
     glideTemplate(context) { load(str) }
@@ -57,7 +62,7 @@ fun ImageView.loadByDrawable(drawable: Drawable, context: Context = gContext()) 
 fun ImageView.loadByAny(any: Any, context: Context = gContext()) =
     glideTemplate(context) { load(any) }
 
-fun glideKaritokeOptions(
+fun glideMusicOptions(
     @DrawableRes phResource: Int = R.drawable.placeholder,
     @DrawableRes erSource: Int = R.drawable.placeholder
 ) =
@@ -74,7 +79,7 @@ fun ImageView.glideTemplate(
     block: RequestBuilder<Bitmap>.() -> RequestBuilder<Bitmap>
 ) = Glide.with(context)
     .asBitmap()
-    .apply(glideKaritokeOptions())
+    .apply(glideMusicOptions())
     .block()
     .into(this)
 
@@ -87,7 +92,7 @@ fun ImageView.loadAnyByInternetListener(
 ) = Glide.with(context)
     .asBitmap()
     .load(uri)
-    .apply(glideKaritokeOptions())
+    .apply(glideMusicOptions())
     .into(object : CustomViewTarget<ImageView, Bitmap>(this) {
         override fun onLoadFailed(errorDrawable: Drawable?) {
             failBlock?.invoke(errorDrawable)
@@ -110,7 +115,7 @@ fun ImageView.loadAnyDecorator(
 ) = Glide.with(context)
     .asBitmap()
     .load(uri)
-    .apply(glideKaritokeOptions())
+    .apply(glideMusicOptions())
     .into(object : BitmapImageViewTarget(this) {
         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
             val decorated = beforeDecorate?.invoke(resource, transition)
@@ -127,7 +132,7 @@ fun ImageView.loadAnyWithListener(
 ) = Glide.with(context)
     .asBitmap()
     .load(uri)
-    .apply(glideKaritokeOptions())
+    .apply(glideMusicOptions())
     .listener(object : RequestListener<Bitmap> {
         override fun onLoadFailed(
             e: GlideException?,
