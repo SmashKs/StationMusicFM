@@ -57,6 +57,7 @@ class ExploreTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, 
             find<TextView>(R.id.ftv_name).text = model.artist.name
             find<CardView>(R.id.mcv_track).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment.gotoTrackDetailFragment] */
                 RxBus.get().post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_TRACK,
                                                           PARAMS_COMMON_MBID to model.mbid,
                                                           PARAMS_COMMON_ARTIST_NAME to model.artist.name,

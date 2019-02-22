@@ -26,14 +26,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_URI
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
 
-class AlbumOfGenreViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, AlbumInfoEntity.AlbumWithArtistTypeGenreEntity>(
-    view) {
+class AlbumOfGenreViewHolder(
+    view: View
+) : AdaptiveViewHolder<MultiTypeFactory, AlbumInfoEntity.AlbumWithArtistTypeGenreEntity>(view) {
     /**
      * Set the views' properties.
      *
@@ -49,6 +56,14 @@ class AlbumOfGenreViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, 
         itemView.apply {
             find<ImageView>(R.id.iv_album_thumbnail).loadByAny(model.images.last().text)
             find<TextView>(R.id.ftv_album_name).text = model.name
+            find<View>(R.id.cl_album).setOnClickListener {
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreGenreFragment.navToAlbumDetail] */
+                RxBus.get().post(TAG_TO_ALBUM, hashMapOf(PARAMS_COMMON_MBID to model.mbid,
+                                                         PARAMS_TO_ALBUM_NAME to model.name,
+                                                         PARAMS_TO_ALBUM_URI to model.images.last().text,
+                                                         PARAMS_COMMON_ARTIST_NAME to model.artist.name,
+                                                         "uri" to model.artist.images.takeIf { it.isNotEmpty() }?.last()?.text.orEmpty()))
+            }
         }
     }
 }

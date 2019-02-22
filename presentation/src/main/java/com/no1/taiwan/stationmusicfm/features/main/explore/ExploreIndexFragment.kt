@@ -143,9 +143,9 @@ class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() 
     override fun provideInflateView() = R.layout.fragment_explore_index
 
     /**
-     * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder.initView]
-     * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder.initView]
-     * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder.initView]
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder.initView]
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder.initView]
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder.initView]
      * @param params
      */
     @Subscribe(tags = [Tag(TAG_TO_DETAIL)])

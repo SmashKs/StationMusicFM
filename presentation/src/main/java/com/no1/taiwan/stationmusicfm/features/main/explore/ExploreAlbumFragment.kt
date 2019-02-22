@@ -28,16 +28,26 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.isNull
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreAlbumViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
+import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.bitmap.decorateGradientMask
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
@@ -77,6 +87,10 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
     private val artistThumbUri by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_THUMB_URI)) }
     private val linearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
+
+    init {
+        BusFragLifeRegister(this)
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -126,4 +140,18 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_explore_album
+
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder.initView]
+     * @param params
+     */
+    @Subscribe(tags = [Tag(TAG_TO_DETAIL)])
+    fun gotoTrackDetailFragment(params: AnyParameters) {
+        val mbid = castOrNull<String>(params[PARAMS_COMMON_MBID]).orEmpty()
+        val artistName = castOrNull<String>(params[PARAMS_COMMON_ARTIST_NAME]).orEmpty()
+        val trackName = castOrNull<String>(params[PARAMS_TO_TRACK_NAME]).orEmpty()
+
+        findNavController().navigate(R.id.action_frag_explore_album_to_frag_explore_track,
+                                     ExploreTrackFragment.createBundle(mbid, artistName, trackName))
+    }
 }

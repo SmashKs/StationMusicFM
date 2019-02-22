@@ -73,13 +73,20 @@
         <action
             android:id="@+id/action_frag_explore_tag_to_frag_explore_album"
             app:destination="@id/frag_explore_album"/>
+        <action
+            android:id="@+id/action_frag_explore_tag_to_frag_explore_track"
+            app:destination="@id/frag_explore_track"/>
     </fragment>
 
     <fragment
         android:id="@+id/frag_explore_album"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment"
         android:label="Explore"
-        tools:layout="@layout/fragment_explore_album"/>
+        tools:layout="@layout/fragment_explore_album">
+        <action
+            android:id="@+id/action_frag_explore_album_to_frag_explore_track"
+            app:destination="@id/frag_explore_track"/>
+    </fragment>
 
     <fragment
         android:id="@+id/frag_explore_photo"
