@@ -21,14 +21,32 @@
 
 package com.no1.taiwan.stationmusicfm.features.main
 
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseFragment
+import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import org.jetbrains.anko.findOptional
 
-class IndexFragment : BaseFragment<MainActivity>() {
+abstract class IndexFragment<VM : ViewModel> : AdvFragment<MainActivity, VM>() {
     /**
-     * Set the parentView for inflating.
-     *
-     * @return [LayoutRes] layout xml.
+     * For separating the huge function code in [rendered]. Initialize all view components here.
      */
-    override fun provideInflateView() = R.layout.fragment_index
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        parent.let {
+            // Set the action from the customized.
+//            it.setSupportActionBar(it.find(R.id.tb_header))
+            // Start from this navigation controller.
+            it.setupActionBarWithNavController(findNavController())
+        }
+    }
+
+    /**
+     * Provide action bar object for pre-setting.
+     *
+     * @return [Toolbar] action bar object.
+     */
+    override fun provideActionBarResource() = parent.findOptional<Toolbar>(R.id.tb_header)
 }

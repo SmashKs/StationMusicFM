@@ -31,10 +31,15 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import androidx.annotation.UiThread
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.changeColor
+import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.castOrNull
+import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_LONG_LIFE
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_SHORT_LIFE
@@ -67,6 +72,10 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
         get() = requireActivity() as A  // If there's no parent, forcing crashing the app.
     protected val appContext: Context by instance()
     private var rootView: View? = null
+    // Set action bar's back icon color into all fragments are inheriting advFragment.
+    private val backDrawable by lazy {
+        R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(resources.getColor(R.color.colorPrimaryTextV1))
+    }
 
     //region Fragment lifecycle
     override fun onCreateView(
@@ -102,9 +111,6 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set the title into the support action bar.
-//        parent.setSupportActionBar(findOptional(R.id.tb_header))
-        actionBarTitle()?.let { parent.supportActionBar?.title = it }
         // Before setting.
         viewComponentBinding()
         componentListenersBinding()
@@ -128,7 +134,16 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     @UiThread
-    protected open fun viewComponentBinding() = Unit
+    protected open fun viewComponentBinding() {
+        if (this is IndexFragment<*> && parent.supportActionBar == null) {
+            // Set the title into the support action bar.
+            parent.setSupportActionBar(provideActionBarResource())
+        }
+        parent.supportActionBar?.let { actionbar ->
+            actionBarTitle()?.let(actionbar::setTitle)
+            actionbar.setHomeAsUpIndicator(backDrawable)
+        }
+    }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
@@ -160,6 +175,14 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
      */
     @UiThread
     protected open fun actionBarTitle(): String? = null
+
+    /**
+     * Provide action bar object for pre-setting.
+     *
+     * @return [Toolbar] action bar object.
+     */
+    @UiThread
+    protected open fun provideActionBarResource(): Toolbar? = null
 
     fun initRecyclerViewWith(
         @IdRes resRecyclerViewId: Int,

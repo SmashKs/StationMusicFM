@@ -80,6 +80,11 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+//        // Set action bar's back icon color into all fragments are inheriting advfragment.
+//        val backDrawable = R.drawable.ic_arrow_back_black
+//            .toDrawable(parent)
+//            .changeColor(resources.getColor(R.color.colorPrimaryTextV1))
+//        parent.supportActionBar?.setHomeAsUpIndicator(backDrawable)
         initRecyclerViewWith(R.id.rv_songs,
                              songAdapter,
                              linearLayoutManager,

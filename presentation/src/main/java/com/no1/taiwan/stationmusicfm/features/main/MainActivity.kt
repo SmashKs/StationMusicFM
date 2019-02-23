@@ -21,7 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.features.main
 
+import android.view.MenuItem
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,6 +33,12 @@ import org.jetbrains.anko.find
 
 class MainActivity : BaseActivity() {
     private val navigator by lazy { findNavController(R.id.frag_nav_main) }
+    private val fragmentIndexNavigator
+        get() = supportFragmentManager
+            .fragments.first()  // Activity's navFragment
+            .childFragmentManager.fragments.first()  // DispatcherFragment
+            .childFragmentManager.fragments.first()  // DispatcherFragment's navFragment
+            .findNavController()
     private val bottomNavigation by lazy { find<BottomNavigationView>(R.id.bnv_navigation) }
 
     /**
@@ -52,4 +60,10 @@ class MainActivity : BaseActivity() {
     }
 
     override fun provideLayoutId() = R.layout.activity_main
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> fragmentIndexNavigator.navigateUp()
+        else -> super.onOptionsItemSelected(item)
+    }
+
 }

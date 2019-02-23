@@ -32,9 +32,8 @@ import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
-import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
@@ -53,7 +52,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
 
-class ExploreIndexFragment : AdvFragment<MainActivity, ExploreIndexViewModel>() {
+class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
     companion object {
         const val FRAGMENT_TARGET_ARTIST = "artist"
         const val FRAGMENT_TARGET_TRACK = "track"

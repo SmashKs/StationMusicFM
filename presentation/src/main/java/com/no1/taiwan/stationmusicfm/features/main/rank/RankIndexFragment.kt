@@ -30,9 +30,8 @@ import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
-import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_EVENT
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
@@ -44,7 +43,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
 
-class RankIndexFragment : AdvFragment<MainActivity, RankIndexViewModel>() {
+class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
     private val topper2GridLayoutManager: GridLayoutManager by instance(null, 2)
     private val chart2GridLayoutManager: GridLayoutManager by instance(null, 2)
     private val topperAdapter: MusicAdapter by instance()

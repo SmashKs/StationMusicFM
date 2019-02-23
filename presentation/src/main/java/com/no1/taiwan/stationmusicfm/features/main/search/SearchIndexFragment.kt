@@ -26,14 +26,13 @@ import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.AdvFragment
-import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
-class SearchIndexFragment : AdvFragment<MainActivity, SearchViewModel>() {
+class SearchIndexFragment : IndexFragment<SearchViewModel>() {
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
