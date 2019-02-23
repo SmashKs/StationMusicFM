@@ -40,6 +40,9 @@ class MainActivity : BaseActivity() {
             .childFragmentManager.fragments.first()  // DispatcherFragment's navFragment
             .findNavController()
     private val bottomNavigation by lazy { find<BottomNavigationView>(R.id.bnv_navigation) }
+    private val indexFragmentIds by lazy {
+        listOf(R.id.frag_explore_index, R.id.frag_mymusic, R.id.frag_rank_index, R.id.frag_search_index)
+    }
 
     /**
      * For separating the huge function code in [init]. Initialize all view components here.
@@ -66,4 +69,11 @@ class MainActivity : BaseActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        if (fragmentIndexNavigator.currentDestination?.id in indexFragmentIds) {
+            finish()
+            return
+        }
+        super.onBackPressed()
+    }
 }
