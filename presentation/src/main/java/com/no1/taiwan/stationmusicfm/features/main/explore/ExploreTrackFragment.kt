@@ -30,19 +30,24 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.core.text.toSpannable
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.bitmap.decorateGradientMask
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
+import org.kodein.di.generic.instance
 
 class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() {
     companion object {
@@ -55,6 +60,8 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
                                                                                          ARGUMENT_TRACK_NAME to trackName)
     }
 
+    private val linearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
+    private val adapter: MusicAdapter by instance()
     private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID)) }
     private val artistName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
     private val trackName by lazy { requireNotNull(arguments?.getString(ARGUMENT_TRACK_NAME)) }
@@ -72,6 +79,7 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
                         bitmap.decorateGradientMask(shader)
                     }
                 }
+                adapter.appendList(cast(similarTracks.tracks))
             } happenError {
                 loge(it)
             } doWith this@ExploreTrackFragment
@@ -89,6 +97,14 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
             if (trackInfoLiveData.value.isNull())
                 runTaskFetchTrack(mbid, artistName, trackName)
         }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        initRecyclerViewWith(R.id.rv_similar_tracks, adapter, linearLayoutManager)
     }
 
     /**

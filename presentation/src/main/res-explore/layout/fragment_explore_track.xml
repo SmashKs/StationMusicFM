@@ -64,5 +64,6 @@
         android:id="@+id/rv_similar_tracks"
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_track_backdrop"
         app:layout_constraintTop_toBottomOf="@id/ftv_track_wiki"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
