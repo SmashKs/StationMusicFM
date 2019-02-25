@@ -44,7 +44,7 @@ class PagerSimilarArtistFragment : BasePagerFragment() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_similar_artists, adapter, grid2LayoutManager)
+        initRecyclerViewWith(R.id.rv_similar_artists, adapter, girdLayoutManager())
     }
 
     /**

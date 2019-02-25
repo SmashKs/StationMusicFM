@@ -39,6 +39,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     companion object {
@@ -47,7 +48,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         fun createBundle(rankId: Int) = bundleOf(ARGUMENT_RANK_ID to rankId)
     }
 
-    private val linearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val songAdapter: MusicAdapter by instance()
     private val rankId by lazy { requireNotNull(arguments?.getInt(ARGUMENT_RANK_ID)) }
 
@@ -80,14 +81,9 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-//        // Set action bar's back icon color into all fragments are inheriting advfragment.
-//        val backDrawable = R.drawable.ic_arrow_back_black
-//            .toDrawable(parent)
-//            .changeColor(resources.getColor(R.color.colorPrimaryTextV1))
-//        parent.supportActionBar?.setHomeAsUpIndicator(backDrawable)
         initRecyclerViewWith(R.id.rv_songs,
                              songAdapter,
-                             linearLayoutManager,
+                             linearLayoutManager(),
                              VerticalItemDecorator(resources.getDimension(R.dimen.md_one_half_unit).toInt()))
     }
 

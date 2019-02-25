@@ -43,7 +43,7 @@ class PagerTrackFragment : BasePagerFragment() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_hot_track, adapter, linearLayoutManager)
+        initRecyclerViewWith(R.id.rv_hot_track, adapter, linearLayoutManager())
     }
 
     /**

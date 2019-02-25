@@ -25,6 +25,7 @@
         <emptyLine />
       </value>
     </option>
+    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="true" />
     <option name="HTML_ATTRIBUTE_WRAP" value="0" />
     <option name="HTML_ELEMENTS_TO_INSERT_NEW_LINE_BEFORE" value="div,p,form,h1,h2,h3,html,body,thead,tbody,tfoot,li" />
     <option name="HTML_DO_NOT_INDENT_CHILDREN_OF" value="" />

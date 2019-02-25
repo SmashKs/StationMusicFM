@@ -58,6 +58,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() {
     companion object {
@@ -85,7 +86,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
     private val albumName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ALBUM_NAME)) }
     private val albumThumbUri by lazy { requireNotNull(arguments?.getString(ARGUMENT_ALBUM_THUMB_URI)) }
     private val artistThumbUri by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_THUMB_URI)) }
-    private val linearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
 
     init {
@@ -124,7 +125,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_tracks_of_album, adapter, linearLayoutManager)
+        initRecyclerViewWith(R.id.rv_tracks_of_album, adapter, linearLayoutManager())
         find<ImageView>(R.id.iv_artist_icon).loadByAny(artistThumbUri, parent)
         find<TextView>(R.id.ftv_album_name).text = albumName
         find<ImageView>(R.id.iv_album_backdrop).loadAnyDecorator(albumThumbUri) { bitmap, _ ->

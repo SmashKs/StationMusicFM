@@ -37,7 +37,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.toDrawable
-import com.devrapid.kotlinshaver.castOrNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
@@ -93,13 +92,18 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
             inflater.cloneInContext(contextThemeWrapper)
         } ?: inflater
 
+        //region FIXED: Because of using jetpack with MVVM architecture, so we don't need this one for keeping old view.
+        //              If we're still keeping the old view, it will cause when phone rotates the view will crashing.
         // FIXED: https://www.zybuluo.com/kimo/note/255244
-        // inflate the layout using the cloned inflater, not default inflater
-        rootView ?: let { rootView = localInflater.inflate(provideInflateView(), null) }
-        val parent = castOrNull<ViewGroup>(rootView?.parent)
-        parent?.removeView(rootView)
+        // inflate the layout using the cloned inflater, not default inflater.
+//        rootView ?: let {
+//        rootView = localInflater.inflate(provideInflateView(), null)
+//        }
+//        val parent = castOrNull<ViewGroup>(rootView?.parent)
+//        parent?.removeView(rootView)
+        //endregion
 
-        return rootView
+        return localInflater.inflate(provideInflateView(), null)
     }
 
     /**
@@ -191,12 +195,9 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
         decoration: RecyclerView.ItemDecoration? = null
     ) {
         find<RecyclerView>(resRecyclerViewId).apply {
-            if (this.layoutManager == null)
-                this.layoutManager = layoutManager
-            if (this.adapter == null)
-                this.adapter = adapter
-            if (itemDecorationCount == 0 && decoration != null)
-                addItemDecoration(decoration)
+            this.layoutManager = layoutManager
+            this.adapter = adapter
+            decoration?.let(::addItemDecoration)
         }
     }
 

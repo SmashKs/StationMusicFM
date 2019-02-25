@@ -27,9 +27,10 @@ import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.Companion.ARGUMENT_VM_DEPENDENT
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 abstract class BasePagerFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     // Follow the parent fragment's viewmodel.
@@ -37,8 +38,8 @@ abstract class BasePagerFragment : AdvFragment<MainActivity, ExploreArtistViewMo
     // Always get parent fragment's lifecycle for providing a viewmodel.
     override val viewmodelProviderFragment get() = requireParentFragment()
 
-    protected val grid2LayoutManager: GridLayoutManager by instance(null, 2)
-    protected val linearLayoutManager: LinearLayoutManager by instance(ObjectLabel.LINEAR_LAYOUT_VERTICAL)
+    protected val girdLayoutManager: () -> GridLayoutManager by provider(null, 2)
+    protected val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     protected val adapter: MusicAdapter by instance()
 
     //region Parameter

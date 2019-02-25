@@ -42,10 +42,10 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
-    private val topper2GridLayoutManager: GridLayoutManager by instance(null, 2)
-    private val chart2GridLayoutManager: GridLayoutManager by instance(null, 2)
+    private val gridLayoutManager: () -> GridLayoutManager by provider(null, 2)
     private val topperAdapter: MusicAdapter by instance()
     private val chartAdapter: MusicAdapter by instance()
     private var isFetchData = true
@@ -89,8 +89,8 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_chart, chartAdapter, chart2GridLayoutManager)
-        initRecyclerViewWith(R.id.rv_topper, topperAdapter, topper2GridLayoutManager)
+        initRecyclerViewWith(R.id.rv_chart, chartAdapter, gridLayoutManager())
+        initRecyclerViewWith(R.id.rv_topper, topperAdapter, gridLayoutManager())
     }
 
     /**

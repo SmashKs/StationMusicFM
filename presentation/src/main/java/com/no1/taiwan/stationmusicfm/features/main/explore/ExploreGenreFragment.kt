@@ -58,6 +58,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() {
     companion object {
@@ -66,9 +67,8 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
         fun createBundle(tagName: String) = bundleOf(ARGUMENT_TAG_NAME to tagName)
     }
 
-    private val albumLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
-    private val artistLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
-    private val trackLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
+    private val verLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
+    private val horLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
     private val albumAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
     private val trackAdapter: MusicAdapter by instance()
@@ -110,9 +110,9 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_albums, albumAdapter, albumLinearLayoutManager)
-        initRecyclerViewWith(R.id.rv_artists, artistAdapter, artistLinearLayoutManager)
-        initRecyclerViewWith(R.id.rv_tracks, trackAdapter, trackLinearLayoutManager)
+        initRecyclerViewWith(R.id.rv_albums, albumAdapter, horLinearLayoutManager())
+        initRecyclerViewWith(R.id.rv_artists, artistAdapter, horLinearLayoutManager())
+        initRecyclerViewWith(R.id.rv_tracks, trackAdapter, verLinearLayoutManager())
     }
 
     /**

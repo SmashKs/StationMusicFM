@@ -45,7 +45,7 @@ class PagerAlbumFragment : BasePagerFragment() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_hot_album, adapter, grid2LayoutManager)
+        initRecyclerViewWith(R.id.rv_hot_album, adapter, girdLayoutManager())
     }
 
     /**

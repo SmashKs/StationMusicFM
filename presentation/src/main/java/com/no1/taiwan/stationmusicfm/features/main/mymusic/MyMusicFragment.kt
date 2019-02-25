@@ -21,11 +21,18 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
+import android.os.Bundle
+import com.devrapid.kotlinknifer.logw
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 
 class MyMusicFragment : BaseFragment<MainActivity>() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        logw("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    }
+
     /**
      * Set the parentView for inflating.
      *

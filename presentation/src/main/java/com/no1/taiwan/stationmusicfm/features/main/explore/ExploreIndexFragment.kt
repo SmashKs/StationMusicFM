@@ -51,6 +51,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
     companion object {
@@ -59,9 +60,9 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
         const val FRAGMENT_TARGET_GENRE = "genre"
     }
 
-    private val trackLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_VERTICAL)
-    private val artistLinearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
-    private val genre3GirdLayoutManager: GridLayoutManager by instance(null, 3)
+    private val verLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
+    private val horLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
+    private val girdLayoutManager: () -> GridLayoutManager by provider(null, 3)
     private val trackAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
     private val genreAdapter: MusicAdapter by instance()
@@ -129,9 +130,9 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_tracks, trackAdapter, trackLinearLayoutManager)
-        initRecyclerViewWith(R.id.rv_artists, artistAdapter, artistLinearLayoutManager)
-        initRecyclerViewWith(R.id.rv_genres, genreAdapter, genre3GirdLayoutManager)
+        initRecyclerViewWith(R.id.rv_tracks, trackAdapter, verLinearLayoutManager())
+        initRecyclerViewWith(R.id.rv_artists, artistAdapter, horLinearLayoutManager())
+        initRecyclerViewWith(R.id.rv_genres, genreAdapter, girdLayoutManager())
     }
 
     /**

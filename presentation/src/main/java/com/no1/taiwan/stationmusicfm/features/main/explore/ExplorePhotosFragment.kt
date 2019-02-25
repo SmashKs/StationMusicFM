@@ -30,6 +30,7 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class ExplorePhotosFragment : BaseFragment<MainActivity>() {
     companion object {
@@ -41,7 +42,7 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
                      ARGUMENT_ARTIST_PHOTOS to list)
     }
 
-    private val linearLayoutManager: LinearLayoutManager by instance(LINEAR_LAYOUT_HORIZONTAL)
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
     private val adapter: MusicAdapter by instance()
     private val name by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
     private val preloadList by lazy {
@@ -55,7 +56,7 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
         super.viewComponentBinding()
         // Preload from the previous fragment.
         adapter.appendList(preloadList.toMutableList())
-        initRecyclerViewWith(R.id.rv_photos, adapter, linearLayoutManager)
+        initRecyclerViewWith(R.id.rv_photos, adapter, linearLayoutManager())
     }
 
     /**
