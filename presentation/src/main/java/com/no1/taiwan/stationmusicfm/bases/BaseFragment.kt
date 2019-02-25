@@ -38,7 +38,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.toDrawable
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_LONG_LIFE
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_SHORT_LIFE
@@ -73,7 +72,7 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
     protected val appContext: Context by instance()
     private var rootView: View? = null
     // Set action bar's back icon color into all fragments are inheriting advFragment.
-    private val backDrawable by lazy {
+    protected val backDrawable by lazy {
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(resources.getColor(R.color.colorPrimaryTextV1))
     }
 
@@ -142,13 +141,14 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
      */
     @UiThread
     protected open fun viewComponentBinding() {
-        if (this is IndexFragment<*> && parent.supportActionBar == null) {
+        if (parent.supportActionBar == null) {
             // Set the title into the support action bar.
             parent.setSupportActionBar(provideActionBarResource())
         }
-        parent.supportActionBar?.let { actionbar ->
-            actionBarTitle()?.let(actionbar::setTitle)
-            actionbar.setHomeAsUpIndicator(backDrawable)
+        parent.supportActionBar?.apply {
+            actionBarTitle()?.let(this::setTitle)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(backDrawable)
         }
     }
 

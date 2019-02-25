@@ -21,13 +21,10 @@
 
 package com.no1.taiwan.stationmusicfm.features.main
 
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
-import org.jetbrains.anko.findOptional
 
 abstract class IndexFragment<VM : ViewModel> : AdvFragment<MainActivity, VM>() {
     /**
@@ -35,18 +32,7 @@ abstract class IndexFragment<VM : ViewModel> : AdvFragment<MainActivity, VM>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.let {
-            // Set the action from the customized.
-//            it.setSupportActionBar(it.find(R.id.tb_header))
-            // Start from this navigation controller.
-            it.setupActionBarWithNavController(findNavController())
-        }
+        // Start from this navigation controller.
+        parent.setupActionBarWithNavController(findNavController())
     }
-
-    /**
-     * Provide action bar object for pre-setting.
-     *
-     * @return [Toolbar] action bar object.
-     */
-    override fun provideActionBarResource() = parent.findOptional<Toolbar>(R.id.tb_header)
 }

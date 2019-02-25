@@ -26,13 +26,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.UiThread
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.isDefault
+import org.jetbrains.anko.findOptional
 import org.kodein.di.generic.instance
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -118,6 +121,14 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     @UiThread
     protected open fun bindLiveData() = Unit
+
+    /**
+     * Provide action bar object for pre-setting. This app's default action bar is base on
+     * [androidx.appcompat.app.ActionBar] [R.id.tb_header].
+     *
+     * @return [Toolbar] action bar object.
+     */
+    override fun provideActionBarResource() = parent.findOptional<Toolbar>(R.id.tb_header)
 
     protected fun vmProvider(providerFrom: Int) = when (providerFrom) {
         PROVIDER_FROM_ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)
