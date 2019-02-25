@@ -30,10 +30,13 @@ import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_EVENT
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_TITLE
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_RANK_ID
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -103,11 +106,14 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
     /**
      * @event_from[com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder.initView]
      * @event_from[com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder.initView]
-     * @param rankId rank id.
+     * @param params
      */
-    @Subscribe(tags = [Tag(TAG_RANK_EVENT)])
-    fun gotoDetailFragment(rankId: Number) {
+    @Subscribe(tags = [Tag(TAG_RANK_DETAIL)])
+    fun gotoDetailFragment(params: AnyParameters) {
+        val rankId = cast<Int>(params[PARAMS_TO_RANK_ID])
+        val titleOfChart = cast<String>(params[PARAMS_COMMON_TITLE])
+
         findNavController().navigate(R.id.action_frag_rank_index_to_frag_rank_detail,
-                                     RankDetailFragment.createBundle(rankId.toInt()))
+                                     RankDetailFragment.createBundle(rankId, titleOfChart))
     }
 }

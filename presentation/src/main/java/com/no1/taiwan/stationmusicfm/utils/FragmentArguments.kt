@@ -21,28 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.utils
 
-object RxBusConstant {
-    object Tag {
-        const val TAG_RANK_DETAIL = "rank detail"
-        const val TAG_TO_DETAIL = "goto detail fragment"
-        const val TAG_TO_ALBUM = "goto album detail fragment"
-        const val TAG_TO_SIMILAR_ARTIST = "goto similar artist fragment"
-    }
-
-    object Parameter {
-        const val PARAMS_COMMON_TITLE = "title"
-        const val PARAMS_COMMON_MBID = "mbid"
-        const val PARAMS_COMMON_ARTIST_NAME = "artist name"
-
-        const val PARAMS_TO_DETAIL_TARGET = "target"
-
-        const val PARAMS_TO_GENRE_NAME = "genre name"
-
-        const val PARAMS_TO_ALBUM_NAME = "album name"
-        const val PARAMS_TO_ALBUM_URI = "album uri"
-
-        const val PARAMS_TO_TRACK_NAME = "track name"
-
-        const val PARAMS_TO_RANK_ID = "rank id"
-    }
+object FragmentArguments {
+    const val COMMON_TITLE = "fragment argument title"
 }

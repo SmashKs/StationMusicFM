@@ -33,6 +33,7 @@ import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -45,7 +46,8 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     companion object {
         private const val ARGUMENT_RANK_ID = "fragment argument rank id"
 
-        fun createBundle(rankId: Int) = bundleOf(ARGUMENT_RANK_ID to rankId)
+        fun createBundle(rankId: Int, title: String) = bundleOf(ARGUMENT_RANK_ID to rankId,
+                                                                FragmentArguments.COMMON_TITLE to title)
     }
 
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
