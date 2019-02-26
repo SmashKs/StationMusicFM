@@ -29,10 +29,10 @@
     tools:context=".features.main.search.SearchIndexFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search_histories"
+        android:id="@+id/rv_results"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="20"
-        tools:listitem="@layout/item_search_history"/>
+        tools:listitem="@layout/item_search_result"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

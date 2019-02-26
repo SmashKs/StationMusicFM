@@ -37,7 +37,7 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
             peel {
-                logd(it.items)
+                logd(it.items.size)
             } happenError {
                 loge(it)
             } doWith this@SearchIndexFragment
