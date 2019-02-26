@@ -23,13 +23,16 @@ package com.no1.taiwan.stationmusicfm.features.main
 
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.devrapid.kotlinshaver.cast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
+import com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment
 import org.jetbrains.anko.find
 
 class MainActivity : BaseActivity() {
@@ -44,7 +47,7 @@ class MainActivity : BaseActivity() {
     private val indexFragmentIds by lazy {
         listOf(R.id.frag_explore_index, R.id.frag_mymusic, R.id.frag_rank_index, R.id.frag_search_index)
     }
-    lateinit var searchItem: MenuItem
+    var searchItem: MenuItem? = null
 
     /**
      * For separating the huge function code in [init]. Initialize all view components here.
@@ -69,7 +72,21 @@ class MainActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.action_bar_menu, menu)
         searchItem = menu.findItem(R.id.menu_search)
-        searchItem.isVisible = true
+        val sv = cast<SearchView>(searchItem?.actionView)
+        sv.queryHint = "a keyword of artist, album, tracks..."
+        searchItem?.isVisible = true
+        sv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchItem?.collapseActionView()
+                fragmentIndexNavigator.navigate(R.id.action_frag_search_index_to_frag_search_result,
+                                                SearchResultFragment.createBundle(query))
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return true
+            }
+        })
         return super.onCreateOptionsMenu(menu)
     }
 

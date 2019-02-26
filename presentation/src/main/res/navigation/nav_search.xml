@@ -31,5 +31,15 @@
         android:id="@+id/frag_search_index"
         android:name="com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search_index"/>
+        tools:layout="@layout/fragment_search_index">
+        <action
+            android:id="@+id/action_frag_search_index_to_frag_search_result"
+            app:destination="@id/frag_search_result"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/frag_search_result"
+        android:name="com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment"
+        android:label="Result"
+        tools:layout="@layout/fragment_search_result"/>
 </navigation>
