@@ -61,7 +61,7 @@ object Versions {
      * Related view component lib version.
      */
     object ViewComponent {
-        const val adaptiveRecyclerView = "1.0.7"
+        const val adaptiveRecyclerView = "1.0.9"
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.1.2"
     }
@@ -98,7 +98,7 @@ object Versions {
         const val core = "16.0.7"
         const val database = "16.0.6"
         const val auth = "16.0.3"
-        const val messaging = "17.3.4"
+        const val messaging = "17.4.0"
 
         const val googleService = "4.2.0"
     }
@@ -112,7 +112,7 @@ object Versions {
      */
     object Database {
         const val debug = "1.5.0"
-        const val debugDb = "1.0.4"
+        const val debugDb = "1.0.5"
         const val mmkv = "1.0.17"
     }
 
@@ -120,7 +120,7 @@ object Versions {
      * Related network lib version.
      */
     object Network {
-        const val glide = "4.8.0"
+        const val glide = "4.9.0"
         const val retrofit2 = "2.5.0"
         const val adapterCoroutine = "0.9.2"
         const val okhttp3 = "3.13.1"
@@ -163,19 +163,19 @@ object Versions {
         const val assertK = "0.13"
         const val runner = "1.1.1"
         const val espresso = "3.1.1"
-        const val kakao = "1.4.0"
+        const val kakao = "2.0.0"
         const val powerMockito = "1.7.4"
         const val mockitoKotlin = "2.1.0"
         const val mockitoAndroid = "2.23.0"
         const val mockk = "v1.8.9.kotlin13"
-        const val byteBuddy = "1.9.8"
+        const val byteBuddy = "1.9.10"
     }
 
     /**
      * Related extension Plugins lib version.
      */
     object Plugin {
-        const val detekt = "1.0.0-RC13"
+        const val detekt = "1.0.0-RC14"
         const val versionUpdater = "0.20.0"
     }
 }
