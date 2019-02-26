@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.features.main
 
+import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -43,6 +44,7 @@ class MainActivity : BaseActivity() {
     private val indexFragmentIds by lazy {
         listOf(R.id.frag_explore_index, R.id.frag_mymusic, R.id.frag_rank_index, R.id.frag_search_index)
     }
+    lateinit var searchItem: MenuItem
 
     /**
      * For separating the huge function code in [init]. Initialize all view components here.
@@ -63,6 +65,13 @@ class MainActivity : BaseActivity() {
     }
 
     override fun provideLayoutId() = R.layout.activity_main
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.action_bar_menu, menu)
+        searchItem = menu.findItem(R.id.menu_search)
+        searchItem.isVisible = true
+        return super.onCreateOptionsMenu(menu)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> fragmentIndexNavigator.navigateUp()
