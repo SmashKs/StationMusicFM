@@ -100,6 +100,7 @@ object Deps {
         const val retrofit2 = Data.retrofit2
         const val retrofit2Gson = Data.retrofit2ConverterGson
         const val retrofit2Courtine = Data.retrofit2AdapterCoroutine
+        const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Network.okhttp3}"
         const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.Network.okhttp3}"
 
         const val glide = "com.github.bumptech.glide:glide:${Versions.Network.glide}"

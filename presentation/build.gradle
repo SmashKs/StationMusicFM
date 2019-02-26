@@ -137,6 +137,7 @@ dependencies {
     implementation(dependencies.Deps.Presentation.retrofit2Courtine) {
         exclude(group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-core")
     }
+    implementation(dependencies.Deps.Presentation.okhttp)
     implementation(dependencies.Deps.Presentation.okhttpLogging)
     implementation(dependencies.Deps.Presentation.glide)
     implementation(dependencies.Deps.GlobalDebug.okHttpProfiler)
