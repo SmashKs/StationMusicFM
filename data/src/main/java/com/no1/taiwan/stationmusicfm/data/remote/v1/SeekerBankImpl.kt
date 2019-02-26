@@ -19,18 +19,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di.tags
+package com.no1.taiwan.stationmusicfm.data.remote.v1
 
-/**
- * The tags for separating the same provided data type. Also, using a string to individual
- * them.
- */
-object InstanceTag {
-    const val REMOTE = "news di remote"
-    const val LOCAL = "news di local"
+import com.google.gson.Gson
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
+import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import okhttp3.HttpUrl
+import org.jsoup.Jsoup
 
-    const val RETROFIT = "retrofit implementation"
-    const val JSOUP = "jsoup implementation"
+class SeekerBankImpl : SeekerBankService {
+    override fun retrieveSearchMusic(queries: Map<String, String>): Deferred<MusicInfoData> {
+        val domainUrl = "${MusicSeekerConfig().apiBaseUrl}${MusicSeekerConfig.API_REQUEST}"
+        val httpUrl = HttpUrl.parse(domainUrl)?.newBuilder()?.apply {
+            queries.forEach { (k, v) -> addQueryParameter(k, v) }
+        }?.build()
 
-    const val ML_LABEL = "machine learning for labeling"
+        val doc = Jsoup.connect(httpUrl.toString()).get()
+
+        return GlobalScope.async { Gson().fromJson<MusicInfoData>(doc.text(), MusicInfoData::class.java) }
+    }
 }

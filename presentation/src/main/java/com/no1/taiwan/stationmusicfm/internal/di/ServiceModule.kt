@@ -33,7 +33,10 @@ import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
 import com.no1.taiwan.stationmusicfm.data.remote.v1.LastFmExtraImpl
+import com.no1.taiwan.stationmusicfm.data.remote.v1.SeekerBankImpl
 import com.no1.taiwan.stationmusicfm.internal.di.NetModule.netProvider
+import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.JSOUP
+import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.RETROFIT
 import com.tencent.mmkv.MMKV
 import com.tencent.mmkv.MMKV.SINGLE_PROCESS_MODE
 import com.tencent.mmkv.MMKV.defaultMMKV
@@ -99,12 +102,13 @@ object ServiceModule {
                 build()
             }.create(MusicBankService::class.java)
         }
-        bind<SeekerBankService>() with singleton {
+        bind<SeekerBankService>(RETROFIT) with singleton {
             with(instance<Retrofit.Builder>()) {
                 baseUrl(instance<MusicSeekerConfig>().apiBaseUrl)
                 build()
             }.create(SeekerBankService::class.java)
         }
+        bind<SeekerBankService>(JSOUP) with instance(SeekerBankImpl())
 //        bind<NewsFirebase>() with singleton { NewsFirebaseImpl(instance()) }
     }
     //endregion

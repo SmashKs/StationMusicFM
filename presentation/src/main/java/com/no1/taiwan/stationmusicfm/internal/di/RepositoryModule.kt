@@ -31,6 +31,7 @@ import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.MusicBankDataRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
+import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.JSOUP
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.LOCAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.REMOTE
 import org.kodein.di.Kodein.Module
@@ -50,7 +51,7 @@ object RepositoryModule {
             RemoteDataStore(instance(),
                             instance(),
                             instance(),
-                            instance(),
+                            instance(JSOUP),
                             context)
         }
         bind<DataStore>(LOCAL) with singleton {
