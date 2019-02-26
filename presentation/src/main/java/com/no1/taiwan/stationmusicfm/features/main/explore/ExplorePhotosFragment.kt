@@ -28,6 +28,7 @@ import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
+import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -44,10 +45,8 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
 
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
     private val adapter: MusicAdapter by instance()
-    private val name by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
-    private val preloadList by lazy {
-        requireNotNull(arguments?.getParcelableArrayList<ArtistInfoEntity.PhotoEntity>(ARGUMENT_ARTIST_PHOTOS))
-    }
+    private val name by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
+    private val preloadList by extraNotNull<ArrayList<ArtistInfoEntity.PhotoEntity>>(ARGUMENT_ARTIST_PHOTOS)
 
     /**
      * For separating the huge function code in [rendered]. Initialize all view components here.

@@ -41,9 +41,10 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_LONG_LIFE
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_SHORT_LIFE
-import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
+import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.bundle.extra
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.subKodein
@@ -76,7 +77,7 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(resources.getColor(R.color.colorPrimaryTextV1))
     }
 
-    private val actionTitle by lazy { arguments?.getString(FragmentArguments.COMMON_TITLE) }
+    private val actionTitle by extra<String>(COMMON_TITLE)
 
     //region Fragment lifecycle
     override fun onCreateView(

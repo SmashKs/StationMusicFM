@@ -51,6 +51,7 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_SIMILAR_ARTIST
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.finally
@@ -75,9 +76,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     // ViewModel's lifecycle will be itself when open a new same fragment.
     override val viewmodelProviderSource get() = vmProviderSource
     //region Parameter
-    private val vmProviderSource by lazy { requireNotNull(arguments?.getInt(ARGUMENT_VM_DEPENDENT)) }
-    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID)) }
-    private val artistName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
+    private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
+    private val mbid by extraNotNull<String>(ARGUMENT_MBID)
+    private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     //endregion
     private val inflater: LayoutInflater by instance()
     private val adapterFragments by lazy {

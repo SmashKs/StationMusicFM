@@ -28,6 +28,7 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.Companion.ARGUMENT_VM_DEPENDENT
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -43,6 +44,6 @@ abstract class BasePagerFragment : AdvFragment<MainActivity, ExploreArtistViewMo
     protected val adapter: MusicAdapter by instance()
 
     //region Parameter
-    private val vmProviderSource by lazy { requireNotNull(arguments?.getInt(ARGUMENT_VM_DEPENDENT)) }
+    private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     //endregion
 }

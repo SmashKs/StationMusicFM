@@ -41,6 +41,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTra
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.bitmap.decorateGradientMask
+import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -63,9 +64,9 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
 
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
-    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID)) }
-    private val artistName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
-    private val trackName by lazy { requireNotNull(arguments?.getString(ARGUMENT_TRACK_NAME)) }
+    private val mbid by extraNotNull<String>(ARGUMENT_MBID)
+    private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
+    private val trackName by extraNotNull<String>(ARGUMENT_TRACK_NAME)
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {

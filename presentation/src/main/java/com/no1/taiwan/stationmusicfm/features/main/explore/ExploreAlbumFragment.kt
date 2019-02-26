@@ -50,6 +50,7 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.bitmap.decorateGradientMask
+import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -81,11 +82,13 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
                      ARGUMENT_ARTIST_THUMB_URI to artistThumbUri)
     }
 
-    private val mbid by lazy { requireNotNull(arguments?.getString(ARGUMENT_MBID)) }
-    private val artistName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_NAME)) }
-    private val albumName by lazy { requireNotNull(arguments?.getString(ARGUMENT_ALBUM_NAME)) }
-    private val albumThumbUri by lazy { requireNotNull(arguments?.getString(ARGUMENT_ALBUM_THUMB_URI)) }
-    private val artistThumbUri by lazy { requireNotNull(arguments?.getString(ARGUMENT_ARTIST_THUMB_URI)) }
+    //region Parameter
+    private val mbid by extraNotNull<String>(ARGUMENT_MBID)
+    private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
+    private val albumName by extraNotNull<String>(ARGUMENT_ALBUM_NAME)
+    private val albumThumbUri by extraNotNull<String>(ARGUMENT_ALBUM_THUMB_URI)
+    private val artistThumbUri by extraNotNull<String>(ARGUMENT_ARTIST_THUMB_URI)
+    //endregion
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
 

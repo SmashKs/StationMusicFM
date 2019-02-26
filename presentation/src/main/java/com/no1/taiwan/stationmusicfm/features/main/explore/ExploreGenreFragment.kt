@@ -38,7 +38,6 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.domain.Parameters
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreGenreViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
@@ -52,6 +51,7 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -72,7 +72,7 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
     private val albumAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
     private val trackAdapter: MusicAdapter by instance()
-    private val tagName by lazy { requireNotNull(arguments?.getString(ARGUMENT_TAG_NAME, DEFAULT_STR)) }
+    private val tagName by extraNotNull<String>(ARGUMENT_TAG_NAME)
 
     init {
         BusFragLifeRegister(this)

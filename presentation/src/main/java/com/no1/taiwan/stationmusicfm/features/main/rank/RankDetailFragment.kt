@@ -35,6 +35,7 @@ import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailVie
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -52,7 +53,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
 
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val songAdapter: MusicAdapter by instance()
-    private val rankId by lazy { requireNotNull(arguments?.getInt(ARGUMENT_RANK_ID)) }
+    private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
