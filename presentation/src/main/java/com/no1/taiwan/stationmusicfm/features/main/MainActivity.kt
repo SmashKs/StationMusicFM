@@ -32,17 +32,20 @@ import com.devrapid.kotlinshaver.cast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
+import com.no1.taiwan.stationmusicfm.features.main.search.SearchCommonOperations
+import com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment
 import org.jetbrains.anko.find
 
 class MainActivity : BaseActivity() {
     private val navigator by lazy { findNavController(R.id.frag_nav_main) }
-    private val fragmentIndexNavigator
+    private val currentFragment
         get() = supportFragmentManager
             .fragments.first()  // Activity's navFragment
-            .childFragmentManager.fragments.first()  // DispatcherFragment
-            .childFragmentManager.fragments.first()  // DispatcherFragment's navFragment
-            .findNavController()
+            .childFragmentManager.fragments.first()  // Dispatcher Fragment
+            .childFragmentManager.fragments.first()  // Dispatcher Fragment's navFragment
+            .childFragmentManager.fragments.first()  // Current Fragment
+    private val fragmentIndexNavigator get() = currentFragment.findNavController()
     private val bottomNavigation by lazy { find<BottomNavigationView>(R.id.bnv_navigation) }
     private val indexFragmentIds by lazy {
         listOf(R.id.frag_explore_index, R.id.frag_mymusic, R.id.frag_rank_index, R.id.frag_search_index)
@@ -72,21 +75,8 @@ class MainActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.action_bar_menu, menu)
         searchItem = menu.findItem(R.id.menu_search)
-        val sv = cast<SearchView>(searchItem?.actionView)
-        sv.queryHint = "a keyword of artist, album, tracks..."
         searchItem?.isVisible = true
-        sv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                searchItem?.collapseActionView()
-                fragmentIndexNavigator.navigate(R.id.action_frag_search_index_to_frag_search_result,
-                                                SearchResultFragment.createBundle(query))
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                return true
-            }
-        })
+        searchViewSetting()
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -101,5 +91,35 @@ class MainActivity : BaseActivity() {
             return
         }
         super.onBackPressed()
+    }
+
+    private fun searchViewSetting() {
+        cast<SearchView>(searchItem?.actionView).apply {
+            queryHint = "a keyword of artist, album, tracks..."
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    searchItem?.collapseActionView()
+
+                    when (currentFragment) {
+                        is SearchIndexFragment -> fragmentIndexNavigator.navigate(R.id.action_frag_search_index_to_frag_search_result)
+                        is SearchResultFragment -> cast<SearchResultFragment>(currentFragment).searchMusicBy(query)
+                    }
+
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    if (newText.isBlank()) return true
+                    (currentFragment as? SearchCommonOperations)?.keepKeywordIntoViewModel(newText)
+                    return true
+                }
+            })
+            setOnQueryTextFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    val queried = (currentFragment as? SearchCommonOperations)?.getKeptKeyword()
+                    cast<SearchView>(v).setQuery(queried.toString(), false)
+                }
+            }
+        }
     }
 }

@@ -54,6 +54,7 @@ class SearchViewModel(
     val keyword = MutableLiveData<String>(DEFAULT_STR)
 
     fun runTaskSearchMusic(keyword: String) = GlobalScope.launch {
+        this@SearchViewModel.keyword.postValue(keyword)
         _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(keyword))) }
     }
 }

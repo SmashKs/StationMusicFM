@@ -38,7 +38,9 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
-class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>() {
+class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), SearchCommonOperations {
+    override val viewmodelProviderSource get() = PROVIDER_FROM_CUSTOM_FRAGMENT
+    override val viewmodelProviderFragment get() = requireParentFragment()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
 
@@ -46,6 +48,9 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
             peel {
+                if (it.items.isEmpty()) {
+                    return@peel
+                }
                 adapter.replaceWholeList(cast(it.items))
             } happenError {
                 loge(it)
@@ -77,4 +82,10 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>() {
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_search_index
+
+    override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
+
+    override fun getKeptKeyword() = vm.keyword.value.orEmpty()
+
+    fun searchMusicBy(keyword: String) = vm.runTaskSearchMusic(keyword)
 }

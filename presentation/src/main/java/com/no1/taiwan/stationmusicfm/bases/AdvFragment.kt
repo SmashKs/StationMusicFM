@@ -52,6 +52,7 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
 
     protected open val genericVMIndex = DEFAULT_INT
     protected open val viewmodelProviderSource = PROVIDER_FROM_FRAGMENT
+    /** Only [viewmodelProviderSource] is [PROVIDER_FROM_CUSTOM_FRAGMENT] needs to set. */
     protected open val viewmodelProviderFragment: Fragment? = null
     /** Add the AAC [ViewModel] for each fragments. */
     @Suppress("UNCHECKED_CAST")

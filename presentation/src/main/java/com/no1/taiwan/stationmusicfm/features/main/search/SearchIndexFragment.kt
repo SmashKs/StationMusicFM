@@ -31,11 +31,16 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 
-class SearchIndexFragment : IndexFragment<SearchViewModel>() {
+class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperations {
+    override val viewmodelProviderSource get() = PROVIDER_FROM_CUSTOM_FRAGMENT
+    override val viewmodelProviderFragment get() = requireParentFragment()
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
             peel {
+                if (it.items.isEmpty()) {
+                    return@peel
+                }
                 logd(it.items.size)
             } happenError {
                 loge(it)
@@ -49,4 +54,8 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>() {
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_search_index
+
+    override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
+
+    override fun getKeptKeyword() = vm.keyword.value.orEmpty()
 }
