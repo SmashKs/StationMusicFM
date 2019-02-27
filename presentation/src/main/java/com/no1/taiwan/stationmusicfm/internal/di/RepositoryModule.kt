@@ -55,7 +55,9 @@ object RepositoryModule {
                             context)
         }
         bind<DataStore>(LOCAL) with singleton {
-            LocalDataStore(instance<MusicDatabase>().createRankingDao(), instance())
+            LocalDataStore(instance<MusicDatabase>().createRankingDao(),
+                           instance<MusicDatabase>().createSearchHistoryDao(),
+                           instance())
         }
         /** Mapper Pool for providing all data mappers */
         bind<DataMapperPool>() with singleton { instance<DataMapperEntries>().toMap() }

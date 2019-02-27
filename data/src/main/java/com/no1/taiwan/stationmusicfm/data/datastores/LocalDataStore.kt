@@ -22,9 +22,12 @@
 package com.no1.taiwan.stationmusicfm.data.datastores
 
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
+import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
 import com.no1.taiwan.stationmusicfm.data.local.services.RankingDao
+import com.no1.taiwan.stationmusicfm.data.local.services.SearchingHistoryDao
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.tencent.mmkv.MMKV
+import java.util.Date
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
@@ -32,14 +35,36 @@ import com.tencent.mmkv.MMKV
  */
 class LocalDataStore(
     private val rankingDao: RankingDao,
+    private val searchingHistoryDao: SearchingHistoryDao,
     private val mmkv: MMKV
 ) : DataStore {
-    override suspend fun createRankingData(params: List<RankingIdData>): Boolean {
+    //region Ranking
+    override suspend fun createRankingData(params: List<RankingIdData>) = tryWrapper {
         rankingDao.insert(*params.toTypedArray())
-        return true
     }
 
     override suspend fun getRankingData() = rankingDao.getRankings()
+
+    override suspend fun modifyRankingData(rankingIdData: RankingIdData) = tryWrapper {
+        rankingDao.replace(rankingIdData)
+    }
+    //endregion
+
+    //region Search History
+    override suspend fun createSearchHistory(keyword: String) = tryWrapper {
+        searchingHistoryDao.insert(SearchHistoryData(0, keyword, Date()))
+    }
+
+    override suspend fun getSearchHistories(limit: Int) = searchingHistoryDao.getHistories(limit)
+
+    override suspend fun removeSearchHistory(keyword: String) = tryWrapper {
+        searchingHistoryDao.releaseBy(keyword)
+    }
+
+    override suspend fun removeSearchHistory(searchHistoryData: SearchHistoryData) = tryWrapper {
+        searchingHistoryDao.release(searchHistoryData)
+    }
+    //endregion
 
     //region UnsupportedOperationException
     override suspend fun getMusicRanking(parameterable: Parameterable) = throw UnsupportedOperationException()
@@ -80,4 +105,15 @@ class LocalDataStore(
 
     override suspend fun getTagTopTrack(parameterable: Parameterable) = throw UnsupportedOperationException()
     //endregion
+
+    private fun tryWrapper(tryBlock: () -> Unit): Boolean {
+        try {
+            tryBlock()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+        return true
+    }
 }

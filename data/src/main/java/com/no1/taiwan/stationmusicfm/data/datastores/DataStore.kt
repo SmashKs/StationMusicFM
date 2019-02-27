@@ -39,6 +39,7 @@ import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
+import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 
 /**
@@ -56,11 +57,11 @@ interface DataStore {
     suspend fun getSongList(parameterable: Parameterable): SongListInfoData
     //endregion
 
-    //region AlbumData
+    //region Album Data
     suspend fun getAlbumInfo(parameterable: Parameterable): AlbumInfoData
     //endregion
 
-    //region ArtistData
+    //region Artist Data
     suspend fun getArtistInfo(parameterable: Parameterable): ArtistInfoData
 
     suspend fun getArtistTopAlbum(parameterable: Parameterable): ArtistTopAlbumInfoData
@@ -72,7 +73,7 @@ interface DataStore {
     suspend fun getArtistPhotosInfo(parameterable: Parameterable): ArtistPhotosData
     //endregion
 
-    //region TrackData
+    //region Track Data
     suspend fun getTrackInfo(parameterable: Parameterable): TrackInfoData
 
     suspend fun getSimilarTrackInfo(parameterable: Parameterable): TrackSimilarData
@@ -86,7 +87,7 @@ interface DataStore {
     suspend fun getChartTopTag(parameterable: Parameterable): TopTagInfoData
     //endregion
 
-    //region TagData
+    //region Tag Data
     suspend fun getTagInfo(parameterable: Parameterable): TagInfoData
 
     suspend fun getTagTopAlbum(parameterable: Parameterable): TopAlbumInfoData
@@ -96,7 +97,21 @@ interface DataStore {
     suspend fun getTagTopTrack(parameterable: Parameterable): TopTrackInfoData
     //endregion
 
+    //region Ranking
     suspend fun createRankingData(params: List<RankingIdData>): Boolean
 
     suspend fun getRankingData(): List<RankingIdData>
+
+    suspend fun modifyRankingData(rankingIdData: RankingIdData): Boolean
+    //endregion
+
+    //region Search History
+    suspend fun createSearchHistory(keyword: String): Boolean
+
+    suspend fun getSearchHistories(limit: Int): List<SearchHistoryData>
+
+    suspend fun removeSearchHistory(keyword: String): Boolean
+
+    suspend fun removeSearchHistory(searchHistoryData: SearchHistoryData): Boolean
+    //endregion
 }

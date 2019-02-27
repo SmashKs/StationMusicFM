@@ -27,6 +27,7 @@ import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.R
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
+import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
 import com.no1.taiwan.stationmusicfm.data.remote.Constants
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmExtraService
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
@@ -144,6 +145,18 @@ class RemoteDataStore(
     //region UnsupportedOperationException
     override suspend fun createRankingData(params: List<RankingIdData>) = throw UnsupportedOperationException()
 
-    override suspend fun getRankingData() = throw UnsupportedOperationException()
+    override suspend fun getRankingData(): List<RankingIdData> = throw UnsupportedOperationException()
+
+    override suspend fun modifyRankingData(rankingIdData: RankingIdData): Boolean =
+        throw UnsupportedOperationException()
+
+    override suspend fun createSearchHistory(keyword: String) = throw UnsupportedOperationException()
+
+    override suspend fun getSearchHistories(limit: Int) = throw UnsupportedOperationException()
+
+    override suspend fun removeSearchHistory(keyword: String) = throw UnsupportedOperationException()
+
+    override suspend fun removeSearchHistory(searchHistoryData: SearchHistoryData) =
+        throw UnsupportedOperationException()
     //endregion
 }
