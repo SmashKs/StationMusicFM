@@ -19,34 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.search
+package com.no1.taiwan.stationmusicfm.features.main.search.viewholders
 
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.loge
-import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
-import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
-import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
-import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import android.view.View
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 
-class SearchIndexFragment : IndexFragment<SearchViewModel>() {
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
-    override fun bindLiveData() {
-        observeNonNull(vm.musics) {
-            peel {
-                logd(it.items.size)
-            } happenError {
-                loge(it)
-            } doWith this@SearchIndexFragment
-        }
-    }
-
+class SearchHistoryViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, SearchHistoryEntity>(view) {
     /**
-     * Set the parentView for inflating.
+     * Set the views' properties.
      *
-     * @return [LayoutRes] layout xml.
+     * @param model a data model after input from a list.
+     * @param position the index of a list.
+     * @param adapter parent adapter.
      */
-    override fun provideInflateView() = R.layout.fragment_search_index
+    override fun initView(model: SearchHistoryEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    }
 }

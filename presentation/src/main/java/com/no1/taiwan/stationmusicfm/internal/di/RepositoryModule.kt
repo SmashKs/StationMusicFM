@@ -31,6 +31,7 @@ import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.MusicBankDataRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
+import com.no1.taiwan.stationmusicfm.domain.repositories.OthersRepository
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.JSOUP
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.LOCAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.REMOTE
@@ -63,6 +64,9 @@ object RepositoryModule {
         bind<DataMapperPool>() with singleton { instance<DataMapperEntries>().toMap() }
 
         // Repositories into mapper
+        bind<OthersRepository>() with singleton {
+            object : OthersRepository {}
+        }
         bind<LastFmRepository>() with singleton {
             LastFmDataRepository(instance(LOCAL), instance(REMOTE), instance())
         }

@@ -22,10 +22,14 @@
 package com.no1.taiwan.stationmusicfm.entities.others
 
 import com.no1.taiwan.stationmusicfm.entities.Entity
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 import java.util.Date
 
 data class SearchHistoryEntity(
     val id: Int,
     val keyword: String,
     val update: Date
-) : Entity
+) : Entity, MusicMultiVisitable {
+    override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+}

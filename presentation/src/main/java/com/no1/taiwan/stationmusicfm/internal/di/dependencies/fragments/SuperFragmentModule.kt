@@ -28,7 +28,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreInd
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
-import com.no1.taiwan.stationmusicfm.features.main.search.SearchViewModel
+import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntry
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -76,7 +76,7 @@ object SuperFragmentModule {
             ExploreTrackViewModel::class.java to ExploreTrackViewModel(instance(), instance(), instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            SearchViewModel::class.java to SearchViewModel(instance(), instance())
+            SearchViewModel::class.java to SearchViewModel(instance(), instance(), instance(), instance(), instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
             RankIndexViewModel::class.java to RankIndexViewModel(instance(), instance())

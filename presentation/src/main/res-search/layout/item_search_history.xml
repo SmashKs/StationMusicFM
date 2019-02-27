@@ -25,7 +25,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".features.main.search.viewholders.SearchHistoryViewHolder">
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_history"

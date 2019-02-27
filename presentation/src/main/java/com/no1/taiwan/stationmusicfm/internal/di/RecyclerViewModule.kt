@@ -29,6 +29,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
+import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.AlbumOfGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder
@@ -41,6 +42,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.TrackOfGe
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.search.viewholders.SearchHistoryViewHolder
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
@@ -121,6 +123,9 @@ object RecyclerViewModule {
         }
         bind<ViewHolderEntry>().inSet() with provider {
             TrackInfoEntity.TrackTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_track to ::TrackOfGenreViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            SearchHistoryEntity::class.hashCode() to (R.layout.item_search_history to ::SearchHistoryViewHolder)
         }
     }
 }

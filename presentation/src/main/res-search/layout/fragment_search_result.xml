@@ -34,5 +34,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="20"
-        tools:listitem="@layout/item_search_result"/>
+        tools:listitem="@layout/item_rank_detail"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

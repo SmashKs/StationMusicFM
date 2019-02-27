@@ -21,23 +21,54 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.search
 
-import androidx.core.os.bundleOf
+import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
-import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
+import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>() {
-    companion object {
-        private const val FRAGMENT_ARGUMENT_KEYWORD = "fragment argument keyword"
-
-        fun createBundle(keyword: String) = bundleOf(FRAGMENT_ARGUMENT_KEYWORD to keyword)
-    }
-
-    private val keyword by extraNotNull<String>(FRAGMENT_ARGUMENT_KEYWORD)
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
+    private val adapter: MusicAdapter by instance()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
+        observeNonNull(vm.musics) {
+            peel {
+                adapter.replaceWholeList(cast(it.items))
+            } happenError {
+                loge(it)
+            } doWith this@SearchResultFragment
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        initRecyclerViewWith(R.id.rv_musics, adapter, linearLayoutManager())
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        super.rendered(savedInstanceState)
+        vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
     }
 
     /**

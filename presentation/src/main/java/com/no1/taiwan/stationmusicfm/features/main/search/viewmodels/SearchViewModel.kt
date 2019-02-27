@@ -19,15 +19,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.search
+package com.no1.taiwan.stationmusicfm.features.main.search.viewmodels
 
+import androidx.lifecycle.MutableLiveData
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SrchSongParams
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistoryCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistoriesCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistoriesCase
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
@@ -38,13 +43,17 @@ import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val fetchMusicCase: FetchMusicCase,
+    private val addSearchHistoryCase: AddSearchHistoryCase,
+    private val deleteSearchHistoriesCase: DeleteSearchHistoriesCase,
+    private val fetchSearchHistoriesCase: FetchSearchHistoriesCase,
     private val mapperPool: PreziMapperPool
 ) : AutoViewModel() {
     private val _musics by lazy { RespMutableLiveData<MusicInfoEntity.MusicEntity>() }
     val musics: RespLiveData<MusicInfoEntity.MusicEntity> = _musics
     private val musicMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
+    val keyword = MutableLiveData<String>(DEFAULT_STR)
 
-    fun runTaskFetchTopTrack(keyword: String) = GlobalScope.launch {
+    fun runTaskSearchMusic(keyword: String) = GlobalScope.launch {
         _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(keyword))) }
     }
 }
