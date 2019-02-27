@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 import com.no1.taiwan.stationmusicfm.entities.TrackTypeGenrePreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
@@ -63,5 +64,5 @@ class TrackTypeGenrePMapper(
         }
     }
 
-    override fun toModelFrom(entity: TrackInfoEntity.TrackTypeGenreEntity) = throw UnsupportedOperationException()
+    override fun toModelFrom(entity: TrackInfoEntity.TrackTypeGenreEntity) = UnsupportedOperation()
 }

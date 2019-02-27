@@ -22,6 +22,8 @@
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies
 
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistoryCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistoriesCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoCase
@@ -34,14 +36,18 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchHotListCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistoriesCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarTrackCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongListCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistoryRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistoryRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistoriesRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistPhotoRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
@@ -62,7 +68,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespC
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongListRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -75,7 +81,7 @@ object UsecaseModule {
     fun usecaseProvider() = Kodein.Module("Use Cases") {
         //region For Fragments
         bind<FetchRankMusicCase>() with singleton { FetchRankMusicRespCase(instance()) }
-        bind<FetchSongListCase>() with singleton { FetchSongListRespCase(instance()) }
+        bind<FetchSongsCase>() with singleton { FetchSongsRespCase(instance()) }
         bind<FetchMusicCase>() with singleton { FetchMusicRespCase(instance()) }
         bind<FetchHotListCase>() with singleton { FetchHotListRespCase(instance()) }
         bind<AddRankIdsCase>() with singleton { AddRankIdsRespCase(instance()) }
@@ -99,5 +105,9 @@ object UsecaseModule {
         bind<FetchTagTopTrackCase>() with singleton { FetchTagTopTrackRespCase(instance()) }
         bind<FetchTrackCase>() with singleton { FetchTrackRespCase(instance()) }
         //endregion
+
+        bind<AddSearchHistoryCase>() with singleton { AddSearchHistoryRespCase(instance()) }
+        bind<DeleteSearchHistoriesCase>() with singleton { DeleteSearchHistoryRespCase(instance()) }
+        bind<FetchSearchHistoriesCase>() with singleton { FetchSearchHistoriesRespCase(instance()) }
     }
 }

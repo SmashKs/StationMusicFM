@@ -27,9 +27,9 @@ import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.no1.taiwan.stationmusicfm.internal.di.RecyclerViewModule
-import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntries
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.activities.SuperActivityModule
+import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
 import com.no1.taiwan.stationmusicfm.widget.components.viewmodel.ViewModelFactory
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -46,7 +46,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
         extend(parentKodein)
 //        import(appProvider())
         /** activities or fragments */
-        import(UtilModule.presentationUtilProvider())
+        import(PresentationMapperModule.presentationUtilProvider())
         import(RecyclerViewModule.recyclerViewProvider())
         /* activity specific bindings */
         import(SuperActivityModule.activityModule())

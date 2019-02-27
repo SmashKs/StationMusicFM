@@ -39,6 +39,8 @@ import com.no1.taiwan.stationmusicfm.internal.di.PresentationModule
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
 import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
+import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
+import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import kotlinx.coroutines.runBlocking
@@ -64,8 +66,8 @@ class PrefetchChartWorker(
         /** usecases are bind here but the scope is depending on each layers.  */
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(applicationContext))
-        import(UtilModule.dataUtilProvider())
-        import(UtilModule.presentationUtilProvider())
+        import(DataMapperModule.dataUtilProvider())
+        import(PresentationMapperModule.presentationUtilProvider())
     }
     private val fetchRankMusicCase: FetchRankMusicCase by instance()
     private val addRankIdsCase: AddRankIdsCase by instance()

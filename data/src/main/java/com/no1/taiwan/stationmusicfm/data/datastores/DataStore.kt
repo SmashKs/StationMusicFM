@@ -106,12 +106,10 @@ interface DataStore {
     //endregion
 
     //region Search History
-    suspend fun createSearchHistory(keyword: String): Boolean
+    suspend fun createSearchHistory(parameterable: Parameterable): Boolean
 
-    suspend fun getSearchHistories(limit: Int): List<SearchHistoryData>
+    suspend fun getSearchHistories(parameterable: Parameterable): List<SearchHistoryData>
 
-    suspend fun removeSearchHistory(keyword: String): Boolean
-
-    suspend fun removeSearchHistory(searchHistoryData: SearchHistoryData): Boolean
+    suspend fun removeSearchHistory(parameterable: Parameterable): Boolean
     //endregion
 }

@@ -19,24 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
+package com.no1.taiwan.stationmusicfm.domain.usecases.history
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
-import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SongListParams
-import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
+import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams
+import com.no1.taiwan.stationmusicfm.domain.repositories.OthersRepository
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistoryCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistoryReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongListCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongListReq
 
-class FetchSongListRespCase(
-    private val repository: MusicBankRepository
-) : FetchSongListCase() {
+class AddSearchHistoryRespCase(
+    private val repository: OthersRepository
+) : AddSearchHistoryCase() {
     /** Provide a common parameter variable for the children class. */
-    override var requestValues: FetchSongListReq? = null
+    override var requestValues: AddSearchHistoryReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        repository.fetchSongList(it.parameters)
+        TODO()
     }
 
-    class Request(val parameters: Parameterable = SongListParams()) : RequestValues
+    class Request(val parameters: Parameterable = SearchHistParams()) : RequestValues
 }

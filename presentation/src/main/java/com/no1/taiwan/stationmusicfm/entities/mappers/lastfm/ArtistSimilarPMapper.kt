@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
+import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 import com.no1.taiwan.stationmusicfm.entities.ArtistSimilarPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
@@ -53,5 +54,5 @@ class ArtistSimilarPMapper(
         }
     }
 
-    override fun toModelFrom(entity: ArtistInfoEntity.ArtistSimilarEntity) = throw UnsupportedOperationException()
+    override fun toModelFrom(entity: ArtistInfoEntity.ArtistSimilarEntity) = UnsupportedOperation()
 }

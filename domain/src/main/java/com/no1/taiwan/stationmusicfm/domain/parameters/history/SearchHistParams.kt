@@ -19,25 +19,32 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
+package com.no1.taiwan.stationmusicfm.domain.parameters.history
 
 import com.no1.taiwan.stationmusicfm.UnsupportedOperation
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
-import com.no1.taiwan.stationmusicfm.entities.TopAlbumPreziMap
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 
-/**
- * A transforming mapping between [CommonLastFmModel.TopAlbumsModel] and [AlbumInfoEntity.TopAlbumsEntity].
- * The different layers have their own data objects, the objects should transform and fit each layers.
- */
-class TopAlbumTypeGenrePMapper(
-    private val albumWithArtistTypeGenrePMapper: AlbumWithArtistTypeGenrePMapper,
-    private val attrMapper: AttrPMapper
-) : TopAlbumPreziMap {
-    override fun toEntityFrom(model: CommonLastFmModel.TopAlbumsModel) = model.run {
-        AlbumInfoEntity.TopAlbumsEntity(albums.map(albumWithArtistTypeGenrePMapper::toEntityFrom),
-                                        attr.let(attrMapper::toEntityFrom))
+data class SearchHistParams(
+    val keyword: String = DEFAULT_STR,
+    val limit: Int = Pager.LIMIT,
+    val model: SearchHistoryModel? = null
+) : Parameterable {
+    companion object {
+        const val PARAM_NAME_KEYWORD = "keyword"
+        const val PARAM_NAME_LIMIT = "limit"
+        const val PARAM_NAME_KEYWORD_MODEL = "model"
     }
 
-    override fun toModelFrom(entity: AlbumInfoEntity.TopAlbumsEntity) = UnsupportedOperation()
+    override fun toApiParam() = UnsupportedOperation()
+
+    override fun toApiAnyParam() = HashMap<String, Any>().apply {
+        if (model != null)
+            put(PARAM_NAME_KEYWORD_MODEL, model)
+        else
+            put(PARAM_NAME_KEYWORD, keyword)
+        put(PARAM_NAME_LIMIT, limit)
+    }
 }

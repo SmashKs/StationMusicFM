@@ -21,11 +21,19 @@
 
 package com.no1.taiwan.stationmusicfm.data.datastores
 
+import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.castOrNull
+import com.no1.taiwan.stationmusicfm.UnsupportedOperation
+import com.no1.taiwan.stationmusicfm.data.data.mappers.others.SearchHistoryDMapper
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
 import com.no1.taiwan.stationmusicfm.data.local.services.RankingDao
 import com.no1.taiwan.stationmusicfm.data.local.services.SearchingHistoryDao
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.Companion.PARAM_NAME_KEYWORD
+import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.Companion.PARAM_NAME_KEYWORD_MODEL
+import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.Companion.PARAM_NAME_LIMIT
 import com.tencent.mmkv.MMKV
 import java.util.Date
 
@@ -51,59 +59,68 @@ class LocalDataStore(
     //endregion
 
     //region Search History
-    override suspend fun createSearchHistory(keyword: String) = tryWrapper {
-        searchingHistoryDao.insert(SearchHistoryData(0, keyword, Date()))
+    override suspend fun createSearchHistory(parameterable: Parameterable) = tryWrapper {
+        val keyword = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD])
+        val data = SearchHistoryData(0, keyword, Date())
+        searchingHistoryDao.insert(data)
     }
 
-    override suspend fun getSearchHistories(limit: Int) = searchingHistoryDao.getHistories(limit)
-
-    override suspend fun removeSearchHistory(keyword: String) = tryWrapper {
-        searchingHistoryDao.releaseBy(keyword)
+    override suspend fun getSearchHistories(parameterable: Parameterable): List<SearchHistoryData> {
+        val limit = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_LIMIT])
+        return searchingHistoryDao.getHistories(limit)
     }
 
-    override suspend fun removeSearchHistory(searchHistoryData: SearchHistoryData) = tryWrapper {
-        searchingHistoryDao.release(searchHistoryData)
+    override suspend fun removeSearchHistory(parameterable: Parameterable) = tryWrapper {
+        val data = castOrNull<SearchHistoryModel>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD_MODEL])
+            ?.let(SearchHistoryDMapper()::toDataFrom)
+
+        if (data != null)
+            searchingHistoryDao.release(data)
+        else {
+            val keyword = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD])
+            searchingHistoryDao.releaseBy(keyword)
+        }
     }
     //endregion
 
     //region UnsupportedOperationException
-    override suspend fun getMusicRanking(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getMusicRanking(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getMusic(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getMusic(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getHotPlaylist(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getHotPlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getSongList(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getSongList(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getAlbumInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getAlbumInfo(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getArtistInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getArtistInfo(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getArtistTopAlbum(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getArtistTopAlbum(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getArtistTopTrack(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getArtistTopTrack(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getSimilarArtistInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getSimilarArtistInfo(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getArtistPhotosInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getArtistPhotosInfo(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getTrackInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getTrackInfo(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getSimilarTrackInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getSimilarTrackInfo(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getChartTopTrack(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getChartTopTrack(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getChartTopArtist(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getChartTopArtist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getChartTopTag(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getChartTopTag(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getTagInfo(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getTagInfo(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getTagTopAlbum(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getTagTopAlbum(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getTagTopArtist(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getTagTopArtist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getTagTopTrack(parameterable: Parameterable) = throw UnsupportedOperationException()
+    override suspend fun getTagTopTrack(parameterable: Parameterable) = UnsupportedOperation()
     //endregion
 
     private fun tryWrapper(tryBlock: () -> Unit): Boolean {

@@ -19,25 +19,13 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
+package com.no1.taiwan.stationmusicfm.entities.others
 
-import com.no1.taiwan.stationmusicfm.UnsupportedOperation
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
-import com.no1.taiwan.stationmusicfm.entities.TopAlbumPreziMap
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.Entity
+import java.util.Date
 
-/**
- * A transforming mapping between [CommonLastFmModel.TopAlbumsModel] and [AlbumInfoEntity.TopAlbumsEntity].
- * The different layers have their own data objects, the objects should transform and fit each layers.
- */
-class TopAlbumTypeGenrePMapper(
-    private val albumWithArtistTypeGenrePMapper: AlbumWithArtistTypeGenrePMapper,
-    private val attrMapper: AttrPMapper
-) : TopAlbumPreziMap {
-    override fun toEntityFrom(model: CommonLastFmModel.TopAlbumsModel) = model.run {
-        AlbumInfoEntity.TopAlbumsEntity(albums.map(albumWithArtistTypeGenrePMapper::toEntityFrom),
-                                        attr.let(attrMapper::toEntityFrom))
-    }
-
-    override fun toModelFrom(entity: AlbumInfoEntity.TopAlbumsEntity) = UnsupportedOperation()
-}
+data class SearchHistoryEntity(
+    val id: Int,
+    val keyword: String,
+    val update: Date
+) : Entity

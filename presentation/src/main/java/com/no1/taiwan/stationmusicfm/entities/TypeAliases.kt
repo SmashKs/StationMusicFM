@@ -31,6 +31,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
@@ -42,6 +43,7 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.RankChartEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 
 typealias PreziMapper = Mapper<*, *>
 typealias PreziMapperPool = Map<Class<out PreziMapper>, PreziMapper>
@@ -88,3 +90,4 @@ typealias WikiPreziMap = Mapper<CommonLastFmModel.WikiModel, CommonLastFmEntity.
 // Others
 
 typealias RankingPreziMap = Mapper<RankingIdModel, RankingIdEntity>
+typealias SearchHistoryPreziMap = Mapper<SearchHistoryModel, SearchHistoryEntity>

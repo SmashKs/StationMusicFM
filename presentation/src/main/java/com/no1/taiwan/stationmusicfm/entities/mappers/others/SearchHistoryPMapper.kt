@@ -19,25 +19,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
+package com.no1.taiwan.stationmusicfm.entities.mappers.others
 
-import com.no1.taiwan.stationmusicfm.UnsupportedOperation
-import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
-import com.no1.taiwan.stationmusicfm.entities.TopAlbumPreziMap
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
+import com.no1.taiwan.stationmusicfm.entities.SearchHistoryPreziMap
+import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 
 /**
- * A transforming mapping between [CommonLastFmModel.TopAlbumsModel] and [AlbumInfoEntity.TopAlbumsEntity].
+ * A transforming mapping between [SearchHistoryModel] and [SearchHistoryEntity].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-class TopAlbumTypeGenrePMapper(
-    private val albumWithArtistTypeGenrePMapper: AlbumWithArtistTypeGenrePMapper,
-    private val attrMapper: AttrPMapper
-) : TopAlbumPreziMap {
-    override fun toEntityFrom(model: CommonLastFmModel.TopAlbumsModel) = model.run {
-        AlbumInfoEntity.TopAlbumsEntity(albums.map(albumWithArtistTypeGenrePMapper::toEntityFrom),
-                                        attr.let(attrMapper::toEntityFrom))
+class SearchHistoryPMapper : SearchHistoryPreziMap {
+    override fun toEntityFrom(model: SearchHistoryModel) = model.run {
+        SearchHistoryEntity(id, keyword, update)
     }
 
-    override fun toModelFrom(entity: AlbumInfoEntity.TopAlbumsEntity) = UnsupportedOperation()
+    override fun toModelFrom(entity: SearchHistoryEntity) = entity.run {
+        SearchHistoryModel(id, keyword, update)
+    }
 }

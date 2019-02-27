@@ -31,6 +31,10 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistoryRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistoryRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistoriesRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistPhotoRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
@@ -51,17 +55,17 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespC
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongListRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
 
 // MusicBank
 
 typealias FetchRankMusicReq = FetchRankMusicRespCase.Request
-typealias FetchSongListReq = FetchSongListRespCase.Request
+typealias FetchSongsReq = FetchSongsRespCase.Request
 typealias FetchMusicReq = FetchMusicRespCase.Request
 typealias FetchHotListReq = FetchHotListRespCase.Request
 
 typealias FetchRankMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchRankMusicReq>
-typealias FetchSongListCase = DeferredUsecase<CommonMusicModel.PlayListModel, FetchSongListReq>
+typealias FetchSongsCase = DeferredUsecase<CommonMusicModel.PlayListModel, FetchSongsReq>
 typealias FetchMusicCase = DeferredUsecase<MusicInfoModel.MusicModel, FetchMusicReq>
 typealias FetchHotListCase = DeferredUsecase<HotPlaylistModel.HotListModel, FetchHotListReq>
 
@@ -103,6 +107,12 @@ typealias FetchTrackCase = DeferredUsecase<TrackInfoModel.TrackModel, FetchTrack
 
 typealias AddRankIdsReq = AddRankIdsRespCase.Request
 typealias FetchRankIdsReq = FetchRankIdsRespCase.Request
+typealias AddSearchHistoryReq = AddSearchHistoryRespCase.Request
+typealias DeleteSearchHistoriesReq = DeleteSearchHistoryRespCase.Request
+typealias FetchSearchHistoriesReq = FetchSearchHistoriesRespCase.Request
 
 typealias AddRankIdsCase = DeferredUsecase<Boolean, AddRankIdsReq>
 typealias FetchRankIdsCase = DeferredUsecase<List<RankingIdModel>, FetchRankIdsReq>
+typealias AddSearchHistoryCase = DeferredUsecase<Boolean, AddSearchHistoryReq>
+typealias DeleteSearchHistoriesCase = DeferredUsecase<Boolean, DeleteSearchHistoriesReq>
+typealias FetchSearchHistoriesCase = DeferredUsecase<List<SearchHistoryModel>, FetchSearchHistoriesReq>
