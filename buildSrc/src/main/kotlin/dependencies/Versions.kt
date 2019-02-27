@@ -73,8 +73,8 @@ object Versions {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
         const val ktx = "1.1.0-alpha04"
-        const val kinfer = "2.1.5"
-        const val shaver = "1.1.5"
+        const val kinfer = "2.1.7"
+        const val shaver = "1.1.7"
     }
 
     object AndroidArchitectureComponent {
@@ -96,7 +96,7 @@ object Versions {
      */
     object Firebase {
         const val core = "16.0.7"
-        const val database = "16.0.6"
+        const val database = "16.1.0"
         const val auth = "16.0.3"
         const val messaging = "17.4.0"
 
