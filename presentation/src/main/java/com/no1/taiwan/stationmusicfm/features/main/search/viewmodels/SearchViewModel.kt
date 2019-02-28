@@ -24,11 +24,11 @@ package com.no1.taiwan.stationmusicfm.features.main.search.viewmodels
 import androidx.lifecycle.MutableLiveData
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SrchSongParams
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistoryCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistoriesCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicReq
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistoriesCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsCase
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
@@ -43,9 +43,9 @@ import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val fetchMusicCase: FetchMusicCase,
-    private val addSearchHistoryCase: AddSearchHistoryCase,
-    private val deleteSearchHistoriesCase: DeleteSearchHistoriesCase,
-    private val fetchSearchHistoriesCase: FetchSearchHistoriesCase,
+    private val addSearchHistoryCase: AddSearchHistCase,
+    private val deleteSearchHistoriesCase: DeleteSearchHistCase,
+    private val fetchSearchHistoriesCase: FetchSearchHistsCase,
     private val mapperPool: PreziMapperPool
 ) : AutoViewModel() {
     private val _musics by lazy { RespMutableLiveData<MusicInfoEntity.MusicEntity>() }

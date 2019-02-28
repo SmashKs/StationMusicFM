@@ -47,7 +47,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
-import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
 
 typealias DataMapper = Mapper<*, *>
 typealias DataMapperPool = Map<Class<out DataMapper>, DataMapper>
@@ -89,4 +89,4 @@ typealias WikiDataMap = Mapper<CommonLastFmData.WikiData, CommonLastFmModel.Wiki
 // Others
 
 typealias RankingDataMap = Mapper<RankingIdData, RankingIdModel>
-typealias SearchHistoryDataMap = Mapper<SearchHistoryData, SearchHistoryModel>
+typealias SearchHistoryDataMap = Mapper<SearchHistoryData, SearchHistModel>

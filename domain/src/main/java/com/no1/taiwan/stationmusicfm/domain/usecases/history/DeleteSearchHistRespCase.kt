@@ -23,16 +23,16 @@ package com.no1.taiwan.stationmusicfm.domain.usecases.history
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams
-import com.no1.taiwan.stationmusicfm.domain.repositories.OthersRepository
+import com.no1.taiwan.stationmusicfm.domain.repositories.HistoryRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistoriesCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistoriesReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistReq
 
-class FetchSearchHistoriesRespCase(
-    private val repository: OthersRepository
-) : FetchSearchHistoriesCase() {
+class DeleteSearchHistRespCase(
+    private val repository: HistoryRepository
+) : DeleteSearchHistCase() {
     /** Provide a common parameter variable for the children class. */
-    override var requestValues: FetchSearchHistoriesReq? = null
+    override var requestValues: DeleteSearchHistReq? = null
 
     override suspend fun acquireCase() = attachParameter {
         TODO()

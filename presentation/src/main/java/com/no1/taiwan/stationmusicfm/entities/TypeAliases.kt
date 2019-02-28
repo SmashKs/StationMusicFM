@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.RankChartModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
-import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
@@ -90,4 +90,4 @@ typealias WikiPreziMap = Mapper<CommonLastFmModel.WikiModel, CommonLastFmEntity.
 // Others
 
 typealias RankingPreziMap = Mapper<RankingIdModel, RankingIdEntity>
-typealias SearchHistoryPreziMap = Mapper<SearchHistoryModel, SearchHistoryEntity>
+typealias SearchHistoryPreziMap = Mapper<SearchHistModel, SearchHistoryEntity>

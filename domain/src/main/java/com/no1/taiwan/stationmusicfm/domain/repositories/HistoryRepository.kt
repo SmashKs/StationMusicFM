@@ -19,24 +19,19 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.usecases.history
+package com.no1.taiwan.stationmusicfm.domain.repositories
 
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
-import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams
-import com.no1.taiwan.stationmusicfm.domain.repositories.OthersRepository
-import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
-import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistoriesCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistoriesReq
 
-class DeleteSearchHistoryRespCase(
-    private val repository: OthersRepository
-) : DeleteSearchHistoriesCase() {
-    /** Provide a common parameter variable for the children class. */
-    override var requestValues: DeleteSearchHistoriesReq? = null
+/**
+ * This interface will be the similar to [com.no1.taiwan.stationmusicfm.data.datastores.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
+ */
+interface HistoryRepository {
+    suspend fun addSearchHistory(parameters: Parameterable): Boolean
 
-    override suspend fun acquireCase() = attachParameter {
-        TODO()
-    }
+    suspend fun fetchSearchHistories(parameters: Parameterable): List<SearchHistModel>
 
-    class Request(val parameters: Parameterable = SearchHistParams()) : RequestValues
+    suspend fun deleteSearchHistory(parameters: Parameterable): Boolean
 }

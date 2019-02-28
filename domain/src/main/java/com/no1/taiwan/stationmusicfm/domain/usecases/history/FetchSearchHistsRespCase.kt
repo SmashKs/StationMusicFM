@@ -19,22 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers.others
+package com.no1.taiwan.stationmusicfm.domain.usecases.history
 
-import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
-import com.no1.taiwan.stationmusicfm.entities.SearchHistoryPreziMap
-import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams
+import com.no1.taiwan.stationmusicfm.domain.repositories.HistoryRepository
+import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsReq
 
-/**
- * A transforming mapping between [SearchHistModel] and [SearchHistoryEntity].
- * The different layers have their own data objects, the objects should transform and fit each layers.
- */
-class SearchHistoryPMapper : SearchHistoryPreziMap {
-    override fun toEntityFrom(model: SearchHistModel) = model.run {
-        SearchHistoryEntity(id, keyword, update)
+class FetchSearchHistsRespCase(
+    private val repository: HistoryRepository
+) : FetchSearchHistsCase() {
+    /** Provide a common parameter variable for the children class. */
+    override var requestValues: FetchSearchHistsReq? = null
+
+    override suspend fun acquireCase() = attachParameter {
+        TODO()
     }
 
-    override fun toModelFrom(entity: SearchHistoryEntity) = entity.run {
-        SearchHistModel(id, keyword, update)
-    }
+    class Request(val parameters: Parameterable = SearchHistParams()) : RequestValues
 }

@@ -45,4 +45,6 @@ interface MusicBankRepository {
     suspend fun fetchRankings(): List<RankingIdModel>
 
     suspend fun addRankings(params: List<RankingIdModel>): Boolean
+
+    suspend fun updateRanking(rankingIdModel: RankingIdModel): Boolean
 }

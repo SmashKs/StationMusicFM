@@ -31,10 +31,10 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
-import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
-import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistoryRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistoryRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistoriesRespCase
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistPhotoRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
@@ -107,12 +107,12 @@ typealias FetchTrackCase = DeferredUsecase<TrackInfoModel.TrackModel, FetchTrack
 
 typealias AddRankIdsReq = AddRankIdsRespCase.Request
 typealias FetchRankIdsReq = FetchRankIdsRespCase.Request
-typealias AddSearchHistoryReq = AddSearchHistoryRespCase.Request
-typealias DeleteSearchHistoriesReq = DeleteSearchHistoryRespCase.Request
-typealias FetchSearchHistoriesReq = FetchSearchHistoriesRespCase.Request
+typealias AddSearchHistReq = AddSearchHistRespCase.Request
+typealias DeleteSearchHistReq = DeleteSearchHistRespCase.Request
+typealias FetchSearchHistsReq = FetchSearchHistsRespCase.Request
 
 typealias AddRankIdsCase = DeferredUsecase<Boolean, AddRankIdsReq>
 typealias FetchRankIdsCase = DeferredUsecase<List<RankingIdModel>, FetchRankIdsReq>
-typealias AddSearchHistoryCase = DeferredUsecase<Boolean, AddSearchHistoryReq>
-typealias DeleteSearchHistoriesCase = DeferredUsecase<Boolean, DeleteSearchHistoriesReq>
-typealias FetchSearchHistoriesCase = DeferredUsecase<List<SearchHistoryModel>, FetchSearchHistoriesReq>
+typealias AddSearchHistCase = DeferredUsecase<Boolean, AddSearchHistReq>
+typealias DeleteSearchHistCase = DeferredUsecase<Boolean, DeleteSearchHistReq>
+typealias FetchSearchHistsCase = DeferredUsecase<List<SearchHistModel>, FetchSearchHistsReq>

@@ -19,22 +19,26 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.mappers.others
+package com.no1.taiwan.stationmusicfm.data.repositories
 
-import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
-import com.no1.taiwan.stationmusicfm.entities.SearchHistoryPreziMap
-import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
+import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
+import com.no1.taiwan.stationmusicfm.data.data.mappers.others.SearchHistoryDMapper
+import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.repositories.HistoryRepository
 
-/**
- * A transforming mapping between [SearchHistModel] and [SearchHistoryEntity].
- * The different layers have their own data objects, the objects should transform and fit each layers.
- */
-class SearchHistoryPMapper : SearchHistoryPreziMap {
-    override fun toEntityFrom(model: SearchHistModel) = model.run {
-        SearchHistoryEntity(id, keyword, update)
-    }
+class HistoryDataRepository(
+    private val local: DataStore,
+    mapperPool: DataMapperPool
+) : BaseRepository(mapperPool), HistoryRepository {
+    private val searchHistMapper by lazy { digDataMapper<SearchHistoryDMapper>() }
 
-    override fun toModelFrom(entity: SearchHistoryEntity) = entity.run {
-        SearchHistModel(id, keyword, update)
-    }
+    override suspend fun addSearchHistory(parameters: Parameterable) =
+        local.createSearchHistory(parameters)
+
+    override suspend fun fetchSearchHistories(parameters: Parameterable) =
+        local.getSearchHistories(parameters).map(searchHistMapper::toModelFrom)
+
+    override suspend fun deleteSearchHistory(parameters: Parameterable) =
+        local.removeSearchHistory(parameters)
 }

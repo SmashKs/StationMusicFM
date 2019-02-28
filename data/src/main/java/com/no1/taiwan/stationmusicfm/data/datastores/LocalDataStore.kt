@@ -29,7 +29,7 @@ import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
 import com.no1.taiwan.stationmusicfm.data.local.services.RankingDao
 import com.no1.taiwan.stationmusicfm.data.local.services.SearchingHistoryDao
-import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.Companion.PARAM_NAME_KEYWORD
 import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.Companion.PARAM_NAME_KEYWORD_MODEL
@@ -71,7 +71,7 @@ class LocalDataStore(
     }
 
     override suspend fun removeSearchHistory(parameterable: Parameterable) = tryWrapper {
-        val data = castOrNull<SearchHistoryModel>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD_MODEL])
+        val data = castOrNull<SearchHistModel>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD_MODEL])
             ?.let(SearchHistoryDMapper()::toDataFrom)
 
         if (data != null)

@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies
 
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistoryCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistoriesCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoCase
@@ -36,7 +36,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchHotListCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistoriesCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSongsCase
@@ -45,9 +45,9 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistoryRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistoryRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistoriesRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistPhotoRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchArtistRespCase
@@ -106,8 +106,8 @@ object UsecaseModule {
         bind<FetchTrackCase>() with singleton { FetchTrackRespCase(instance()) }
         //endregion
 
-        bind<AddSearchHistoryCase>() with singleton { AddSearchHistoryRespCase(instance()) }
-        bind<DeleteSearchHistoriesCase>() with singleton { DeleteSearchHistoryRespCase(instance()) }
-        bind<FetchSearchHistoriesCase>() with singleton { FetchSearchHistoriesRespCase(instance()) }
+        bind<AddSearchHistCase>() with singleton { AddSearchHistRespCase(instance()) }
+        bind<DeleteSearchHistCase>() with singleton { DeleteSearchHistRespCase(instance()) }
+        bind<FetchSearchHistsCase>() with singleton { FetchSearchHistsRespCase(instance()) }
     }
 }

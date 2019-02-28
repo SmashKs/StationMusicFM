@@ -23,18 +23,18 @@ package com.no1.taiwan.stationmusicfm.data.data.mappers.others
 
 import com.no1.taiwan.stationmusicfm.data.data.SearchHistoryDataMap
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
-import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistoryModel
+import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
 
 /**
- * A transforming mapping between [SearchHistoryData] and [SearchHistoryModel].
+ * A transforming mapping between [SearchHistoryData] and [SearchHistModel].
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class SearchHistoryDMapper : SearchHistoryDataMap {
     override fun toModelFrom(data: SearchHistoryData) = data.run {
-        SearchHistoryModel(id, keyword, update)
+        SearchHistModel(id, keyword, update)
     }
 
-    override fun toDataFrom(model: SearchHistoryModel) = model.run {
+    override fun toDataFrom(model: SearchHistModel) = model.run {
         SearchHistoryData(id, keyword, update)
     }
 }

@@ -27,8 +27,10 @@ import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.LocalDataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.RemoteDataStore
 import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
+import com.no1.taiwan.stationmusicfm.data.repositories.HistoryDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.MusicBankDataRepository
+import com.no1.taiwan.stationmusicfm.domain.repositories.HistoryRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.OthersRepository
@@ -66,6 +68,9 @@ object RepositoryModule {
         // Repositories into mapper
         bind<OthersRepository>() with singleton {
             object : OthersRepository {}
+        }
+        bind<HistoryRepository>() with singleton {
+            HistoryDataRepository(instance(LOCAL), instance())
         }
         bind<LastFmRepository>() with singleton {
             LastFmDataRepository(instance(LOCAL), instance(REMOTE), instance())
