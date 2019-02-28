@@ -28,6 +28,7 @@ import androidx.core.text.parseAsHtml
 import androidx.core.text.toSpannable
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.castOrNull
@@ -51,7 +52,6 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel

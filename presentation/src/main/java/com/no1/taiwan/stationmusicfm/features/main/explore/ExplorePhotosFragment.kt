@@ -23,12 +23,12 @@ package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.extraNotNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
-import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance

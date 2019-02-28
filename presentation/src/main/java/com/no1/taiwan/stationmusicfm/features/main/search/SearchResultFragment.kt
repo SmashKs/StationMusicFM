@@ -25,6 +25,8 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.obtainViewStub
+import com.devrapid.kotlinknifer.showViewStub
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
@@ -35,8 +37,6 @@ import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
-import com.no1.taiwan.stationmusicfm.utils.viewstub.obtainViewStub
-import com.no1.taiwan.stationmusicfm.utils.viewstub.showViewStub
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance

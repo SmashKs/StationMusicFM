@@ -31,6 +31,8 @@ import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.core.text.toSpannable
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.decorateGradientMask
+import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
@@ -40,8 +42,6 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.bitmap.decorateGradientMask
-import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError

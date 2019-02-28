@@ -21,9 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.domain.models.lastfm
 
+import com.devrapid.kotlinshaver.trimMarginAndNewLine
 import com.no1.taiwan.stationmusicfm.domain.models.Model
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
-import com.no1.taiwan.stationmusicfm.ext.string.trimMarginAndNewLine
 
 object TrackInfoModel {
     data class TrackModel(

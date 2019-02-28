@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.features.main.rank
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinshaver.cast
@@ -35,7 +36,6 @@ import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailVie
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel

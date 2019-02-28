@@ -35,6 +35,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.changeColor
+import com.devrapid.kotlinknifer.extra
 import com.devrapid.kotlinknifer.toDrawable
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
@@ -43,7 +44,6 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_S
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
-import com.no1.taiwan.stationmusicfm.utils.bundle.extra
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.subKodein
 import org.kodein.di.android.x.kodein

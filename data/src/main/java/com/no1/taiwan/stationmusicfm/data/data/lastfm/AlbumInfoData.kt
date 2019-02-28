@@ -21,9 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.lastfm
 
+import com.devrapid.kotlinshaver.trimMarginAndNewLine
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
-import com.no1.taiwan.stationmusicfm.ext.string.trimMarginAndNewLine
 
 data class AlbumInfoData(
     val album: AlbumData?

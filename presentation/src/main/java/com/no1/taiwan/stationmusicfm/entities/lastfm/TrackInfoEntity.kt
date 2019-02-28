@@ -21,9 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.entities.lastfm
 
+import com.devrapid.kotlinshaver.trimMarginAndNewLine
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
-import com.no1.taiwan.stationmusicfm.ext.string.trimMarginAndNewLine
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
