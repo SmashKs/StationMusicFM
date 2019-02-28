@@ -40,6 +40,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -84,7 +85,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_songs,
+        initRecyclerViewWith(find(R.id.rv_songs),
                              songAdapter,
                              linearLayoutManager(),
                              VerticalItemDecorator(resources.getDimension(R.dimen.md_one_half_unit).toInt()))

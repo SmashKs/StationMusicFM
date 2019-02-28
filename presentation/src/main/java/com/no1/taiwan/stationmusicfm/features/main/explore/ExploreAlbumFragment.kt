@@ -128,7 +128,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_tracks_of_album, adapter, linearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_tracks_of_album), adapter, linearLayoutManager())
         find<ImageView>(R.id.iv_artist_icon).loadByAny(artistThumbUri, parent)
         find<TextView>(R.id.ftv_album_name).text = albumName
         find<ImageView>(R.id.iv_album_backdrop).loadAnyDecorator(albumThumbUri) { bitmap, _ ->

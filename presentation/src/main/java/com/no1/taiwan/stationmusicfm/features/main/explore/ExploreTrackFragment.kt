@@ -106,7 +106,7 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_similar_tracks, adapter, linearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_similar_tracks), adapter, linearLayoutManager())
     }
 
     /**

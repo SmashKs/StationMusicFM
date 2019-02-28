@@ -50,6 +50,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -130,9 +131,9 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_tracks, trackAdapter, verLinearLayoutManager())
-        initRecyclerViewWith(R.id.rv_artists, artistAdapter, horLinearLayoutManager())
-        initRecyclerViewWith(R.id.rv_genres, genreAdapter, girdLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_tracks), trackAdapter, verLinearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_artists), artistAdapter, horLinearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_genres), genreAdapter, girdLayoutManager())
     }
 
     /**

@@ -20,23 +20,14 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    style="@style/Constraint.MatchParent"
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_results"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".features.main.search.SearchResultFragment">
-
-    <ViewStub
-        android:id="@+id/vs_no_result"
-        style="@style/Constraint.MatchParent"
-        android:inflatedId="@+id/v_no_result"
-        android:layout="@layout/stub_no_result"
-        tools:visibility="visible"/>
-
-    <ViewStub
-        android:id="@+id/vs_result"
-        style="@style/Constraint.MatchParent"
-        android:inflatedId="@+id/v_result"
-        android:layout="@layout/stub_search_result"
-        tools:visibility="visible"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:itemCount="20"
+    tools:listitem="@layout/item_rank_detail"
+    tools:showIn="@layout/fragment_search_result"/>

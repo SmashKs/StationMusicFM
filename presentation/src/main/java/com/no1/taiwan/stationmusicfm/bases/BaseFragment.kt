@@ -26,7 +26,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import androidx.annotation.UiThread
@@ -45,7 +44,6 @@ import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.bundle.extra
-import org.jetbrains.anko.support.v4.find
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.subKodein
 import org.kodein.di.android.x.kodein
@@ -193,12 +191,12 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
     protected open fun provideActionBarResource(): Toolbar? = null
 
     fun initRecyclerViewWith(
-        @IdRes resRecyclerViewId: Int,
+        recyclerView: RecyclerView,
         adapter: RecyclerView.Adapter<*>,
         layoutManager: RecyclerView.LayoutManager,
         decoration: RecyclerView.ItemDecoration? = null
     ) {
-        find<RecyclerView>(resRecyclerViewId).apply {
+        recyclerView.apply {
             this.layoutManager = layoutManager
             this.adapter = adapter
             decoration?.let(::addItemDecoration)

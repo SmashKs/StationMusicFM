@@ -44,6 +44,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -92,8 +93,8 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_chart, chartAdapter, gridLayoutManager())
-        initRecyclerViewWith(R.id.rv_topper, topperAdapter, gridLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_chart), chartAdapter, gridLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_topper), topperAdapter, gridLayoutManager())
     }
 
     /**

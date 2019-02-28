@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.features.main.search
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
@@ -34,7 +35,10 @@ import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.utils.viewstub.obtainViewStub
+import com.no1.taiwan.stationmusicfm.utils.viewstub.showViewStub
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -43,27 +47,24 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     override val viewmodelProviderFragment get() = requireParentFragment()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
+    private var isFirstComing = true
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
             peel {
                 if (it.items.isEmpty()) {
+                    switchStub(false)
                     return@peel
                 }
+                switchStub(true)
                 adapter.replaceWholeList(cast(it.items))
+                if (isFirstComing)
+                    initRecyclerViewWith(find(R.id.v_result), adapter, linearLayoutManager())
             } happenError {
                 loge(it)
             } doWith this@SearchResultFragment
         }
-    }
-
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
-    override fun viewComponentBinding() {
-        super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_musics, adapter, linearLayoutManager())
     }
 
     /**
@@ -81,11 +82,22 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
      *
      * @return [LayoutRes] layout xml.
      */
-    override fun provideInflateView() = R.layout.fragment_search_index
+    override fun provideInflateView() = R.layout.fragment_search_result
 
     override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
 
     override fun getKeptKeyword() = vm.keyword.value.orEmpty()
 
     fun searchMusicBy(keyword: String) = vm.runTaskSearchMusic(keyword)
+
+    private fun switchStub(isResult: Boolean) {
+        if (isResult) {
+            showViewStub(R.id.vs_result, R.id.v_result)
+            obtainViewStub(R.id.vs_no_result, R.id.v_no_result).gone()
+        }
+        else {
+            showViewStub(R.id.vs_no_result, R.id.v_no_result)
+            obtainViewStub(R.id.vs_result, R.id.v_result).gone()
+        }
+    }
 }

@@ -30,6 +30,7 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.utils.bundle.extraNotNull
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -55,7 +56,7 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
         super.viewComponentBinding()
         // Preload from the previous fragment.
         adapter.appendList(preloadList.toMutableList())
-        initRecyclerViewWith(R.id.rv_photos, adapter, linearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_photos), adapter, linearLayoutManager())
     }
 
     /**

@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.data.remote.v1
 
 import com.google.gson.Gson
+import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
 import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
@@ -37,6 +38,10 @@ class SeekerBankImpl : SeekerBankService {
         val httpUrl = HttpUrl.parse(domainUrl)?.newBuilder()?.apply {
             queries.forEach { (k, v) -> addQueryParameter(k, v) }
         }?.build()
+
+        if (BuildConfig.DEBUG) {
+            println(httpUrl.toString())
+        }
 
         val doc = Jsoup.connect(httpUrl.toString()).get()
 

@@ -26,6 +26,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import org.jetbrains.anko.support.v4.find
 
 class PagerAlbumFragment : BasePagerFragment() {
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -45,7 +46,7 @@ class PagerAlbumFragment : BasePagerFragment() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(R.id.rv_hot_album, adapter, girdLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_hot_album), adapter, girdLayoutManager())
     }
 
     /**
