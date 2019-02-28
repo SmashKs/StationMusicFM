@@ -29,6 +29,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
 import com.no1.taiwan.stationmusicfm.services.WorkerRequestFactory
+import com.no1.taiwan.stationmusicfm.utils.delegate.MmkvPrefs
 import com.tencent.mmkv.MMKV
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -71,5 +72,6 @@ class MusicApp : MultiDexApplication(), KodeinAware {
         workManager.enqueue(initRequest)
         workManager.enqueue(parserRequest)
         MMKV.initialize(applicationContext)
+        MmkvPrefs.setPrefSettings()
     }
 }
