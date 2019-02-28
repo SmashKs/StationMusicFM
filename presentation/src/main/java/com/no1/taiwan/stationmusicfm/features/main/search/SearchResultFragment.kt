@@ -59,8 +59,10 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 }
                 switchStub(true)
                 adapter.replaceWholeList(cast(it.items))
-                if (isFirstComing)
+                if (isFirstComing) {
                     initRecyclerViewWith(find(R.id.v_result), adapter, linearLayoutManager())
+                    isFirstComing = false
+                }
             } happenError {
                 loge(it)
             } doWith this@SearchResultFragment
@@ -83,6 +85,12 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_search_result
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        // It needs to reset again when phone rotated the screen.
+        isFirstComing = true
+    }
 
     override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
 
