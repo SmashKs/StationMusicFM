@@ -38,6 +38,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.SeparateLineDecoration
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -60,7 +61,10 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 switchStub(true)
                 adapter.replaceWholeList(cast(it.items))
                 if (isFirstComing) {
-                    initRecyclerViewWith(find(R.id.v_result), adapter, linearLayoutManager())
+                    initRecyclerViewWith(find(R.id.v_result),
+                                         adapter,
+                                         linearLayoutManager(),
+                                         SeparateLineDecoration(requireContext()))
                     isFirstComing = false
                 }
             } happenError {

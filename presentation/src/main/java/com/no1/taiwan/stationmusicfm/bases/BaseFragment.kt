@@ -83,6 +83,7 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
     //region Fragment lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically
         job = Job()
     }
 

@@ -79,7 +79,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     override fun onDestroy() {
         super.onDestroy()
         uninit()
-        // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically
+        // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically.
         job.cancel()
     }
     //endregion

@@ -21,6 +21,7 @@
   -->
 
 <resources>
-    <color name="transparent">#00000000</color>
-    <color name="shark">#1F2532</color>
+    <dimen name="one_dp">1dp</dimen>
+    <dimen name="md_one_unit">8dp</dimen>
+    <dimen name="md_two_unit">16dp</dimen>
 </resources>
