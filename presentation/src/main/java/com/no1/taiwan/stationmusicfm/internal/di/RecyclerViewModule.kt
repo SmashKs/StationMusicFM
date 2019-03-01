@@ -22,11 +22,16 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.AlbumWithArtistEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.AlbumWithArtistTypeGenreEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistSimilarEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity.TagEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackTypeGenreEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
@@ -74,12 +79,8 @@ object RecyclerViewModule {
     }
 
     private fun adapterProvider() = Module("Recycler View Adapter") {
-        bind<MultiTypeFactory>() with singleton {
-            MultiTypeFactory(instance())
-        }
-        bind<MusicAdapter>() with provider {
-            MultiTypeAdapter(mutableListOf(), instance())
-        }
+        bind<MultiTypeFactory>() with singleton { MultiTypeFactory(instance()) }
+        bind<MusicAdapter>() with provider { MultiTypeAdapter(instance()) }
     }
 
     private fun diffUtilProvider() = Module("Recycler View DiffUtil") {
@@ -95,34 +96,34 @@ object RecyclerViewModule {
             RankingIdForChartItem::class.hashCode() to (R.layout.item_rank_chart to ::ChartViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            CommonMusicEntity.SongEntity::class.hashCode() to (R.layout.item_rank_detail to ::RankTrackViewHolder)
+            SongEntity::class.hashCode() to (R.layout.item_rank_detail to ::RankTrackViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            ArtistInfoEntity.ArtistEntity::class.hashCode() to (R.layout.item_explore_artist to ::ExploreArtistViewHolder)
+            ArtistEntity::class.hashCode() to (R.layout.item_explore_artist to ::ExploreArtistViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            TagInfoEntity.TagEntity::class.hashCode() to (R.layout.item_explore_genre to ::ExploreGenreViewHolder)
+            TagEntity::class.hashCode() to (R.layout.item_explore_genre to ::ExploreGenreViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            TrackInfoEntity.TrackEntity::class.hashCode() to (R.layout.item_explore_track to ::ExploreTrackViewHolder)
+            TrackEntity::class.hashCode() to (R.layout.item_explore_track to ::ExploreTrackViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            ArtistInfoEntity.PhotoEntity::class.hashCode() to (R.layout.item_explore_photo to ::ExplorePhotoViewHolder)
+            PhotoEntity::class.hashCode() to (R.layout.item_explore_photo to ::ExplorePhotoViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            AlbumInfoEntity.AlbumWithArtistEntity::class.hashCode() to (R.layout.item_hot_album to ::HotAlbumViewHolder)
+            AlbumWithArtistEntity::class.hashCode() to (R.layout.item_hot_album to ::HotAlbumViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            TrackInfoEntity.TrackWithStreamableEntity::class.hashCode() to (R.layout.item_hot_track to ::HotTrackViewHolder)
+            TrackWithStreamableEntity::class.hashCode() to (R.layout.item_hot_track to ::HotTrackViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            ArtistInfoEntity.ArtistSimilarEntity::class.hashCode() to (R.layout.item_similar_artist to ::SimilarArtistViewHolder)
+            ArtistSimilarEntity::class.hashCode() to (R.layout.item_similar_artist to ::SimilarArtistViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            AlbumInfoEntity.AlbumWithArtistTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_album to ::AlbumOfGenreViewHolder)
+            AlbumWithArtistTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_album to ::AlbumOfGenreViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            TrackInfoEntity.TrackTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_track to ::TrackOfGenreViewHolder)
+            TrackTypeGenreEntity::class.hashCode() to (R.layout.item_genre_of_track to ::TrackOfGenreViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
             SearchHistoryEntity::class.hashCode() to (R.layout.item_search_history to ::SearchHistoryViewHolder)

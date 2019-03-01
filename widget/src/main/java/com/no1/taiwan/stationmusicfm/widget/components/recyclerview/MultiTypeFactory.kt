@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
 
 import com.devrapid.adaptiverecyclerview.ViewTypeFactory
+import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 
 /**
  * A factory for providing the viewholder from an object data type to the recyclerview.
@@ -31,7 +32,7 @@ class MultiTypeFactory(
 ) : ViewTypeFactory() {
     override var transformMap
         get() = viewHolders.toMap().toMutableMap()
-        set(_) = throw UnsupportedOperationException("We don't allow this method to use!")
+        set(_) = UnsupportedOperation("We don't allow this method to use!")
 
     // *** Here are the entity binding the specific hashcode. ***
     fun type(entity: MusicMultiVisitable) = entity.javaClass.hashCode()

@@ -33,6 +33,7 @@ import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmExtraService
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmService
 import com.no1.taiwan.stationmusicfm.data.remote.services.MusicBankService
 import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
+import com.no1.taiwan.stationmusicfm.domain.Fields
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.BaseWithPagingParams
@@ -137,7 +138,7 @@ class RemoteDataStore(
                                                              Constants.LASTFM_PARAM_TAG_GET_TOP_TRACKS)).await()
     //endregion
 
-    private fun combineLastFmQuery(query: HashMap<String, String>, method: String) = query.apply {
+    private fun combineLastFmQuery(query: Fields, method: String) = query.apply {
         putAll(lastFmAuth)
         put(Constants.LASTFM_QUERY_METHOD, method)
     }

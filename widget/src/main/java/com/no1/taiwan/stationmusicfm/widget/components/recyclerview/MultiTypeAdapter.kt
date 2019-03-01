@@ -22,7 +22,7 @@
 package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
 
 import android.view.ViewGroup
-import com.devrapid.adaptiverecyclerview.AdaptiveDiffUtil
+import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.AdapterItemTouchHelper
 
@@ -31,13 +31,16 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.Adap
  * a lots similar boilerplate adapters.
  */
 open class MultiTypeAdapter(
-    override var dataList: MultiData,
     override var typeFactory: MultiTypeFactory,
-    private val externalDiffUtil: AdaptiveDiffUtil<MultiTypeFactory, MusicMultiVisitable>? = null
+    private val externalDiffUtil: MusicDiffUtil? = null
 ) : MusicAdapter(), AdapterItemTouchHelper {
-    override var diffUtil: AdaptiveDiffUtil<MultiTypeFactory, MusicMultiVisitable>
+    override var dataList = mutableListOf<MusicMultiVisitable>()
+        set(value) {
+            field = value.toMutableList()
+        }
+    override var diffUtil: MusicDiffUtil
         get() = externalDiffUtil ?: super.diffUtil
-        set(_) = throw UnsupportedOperationException("We don't allow this method to use!")
+        set(_) = UnsupportedOperation("We don't allow this method to use!")
     protected var viewType = DEFAULT_INT
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {

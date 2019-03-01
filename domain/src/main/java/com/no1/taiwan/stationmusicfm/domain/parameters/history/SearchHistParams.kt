@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.domain.parameters.history
 
 import com.no1.taiwan.stationmusicfm.UnsupportedOperation
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
@@ -40,7 +41,7 @@ data class SearchHistParams(
 
     override fun toApiParam() = UnsupportedOperation()
 
-    override fun toApiAnyParam() = HashMap<String, Any>().apply {
+    override fun toApiAnyParam() = AnyParameters().apply {
         if (model != null)
             put(PARAM_NAME_KEYWORD_MODEL, model)
         else
