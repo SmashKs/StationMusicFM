@@ -61,6 +61,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         observeNonNull(vm.rankMusic) {
             peel {
                 songAdapter.appendList(cast(it.songs))
+                vm.runTaskUpdateRankItem(rankId, it.songs.first().oriCoverUrl, it.songs.size)
             } happenError {
                 loge(it)
             } doWith this@RankDetailFragment

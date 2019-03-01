@@ -19,30 +19,23 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters.musicbank
+package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
 
-import com.no1.taiwan.stationmusicfm.domain.parameters.BaseParams
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
+import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
+import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
+import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemReq
 
-data class RankParams(
-    private val rankId: Int = DEFAULT_INT,
-    private val topTrackUri: String = DEFAULT_STR,
-    private val numberOfTrack: Int = DEFAULT_INT
-) : BaseParams() {
-    companion object {
-        const val PARAM_NAME_RANK_ID = "rank_id"
-        const val PARAM_NAME_TOP_TRACK_URI = "top track uri"
-        const val PARAM_NAME_NUMBER_OF_TRACK = "number of track"
+class UpdateRankItemRespCase(
+    private val repository: MusicBankRepository
+) : UpdateRankItemCase() {
+    /** Provide a common parameter variable for the children class. */
+    override var requestValues: UpdateRankItemReq? = null
+
+    override suspend fun acquireCase() = attachParameter {
+        repository.updateRanking(it.parameters)
     }
 
-    override fun toApiParam() = hashMapOf(
-        PARAM_NAME_RANK_ID to rankId.toString(),
-        PARAM_NAME_TOP_TRACK_URI to topTrackUri,
-        PARAM_NAME_NUMBER_OF_TRACK to numberOfTrack.toString())
-
-    override fun toApiAnyParam() = hashMapOf(
-        PARAM_NAME_RANK_ID to rankId,
-        PARAM_NAME_TOP_TRACK_URI to topTrackUri,
-        PARAM_NAME_NUMBER_OF_TRACK to numberOfTrack)
+    class Request(val parameters: RankParams) : RequestValues
 }

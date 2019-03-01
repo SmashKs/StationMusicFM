@@ -34,6 +34,9 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.Companion.PARAM_NAME_KEYWORD
 import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.Companion.PARAM_NAME_KEYWORD_MODEL
 import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.Companion.PARAM_NAME_LIMIT
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Companion.PARAM_NAME_NUMBER_OF_TRACK
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Companion.PARAM_NAME_RANK_ID
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Companion.PARAM_NAME_TOP_TRACK_URI
 import com.tencent.mmkv.MMKV
 import java.util.Date
 
@@ -53,8 +56,11 @@ class LocalDataStore(
 
     override suspend fun getRankingData() = rankingDao.getRankings()
 
-    override suspend fun modifyRankingData(rankingIdData: RankingIdData) = tryWrapper {
-        rankingDao.replace(rankingIdData)
+    override suspend fun modifyRankingData(parameterable: Parameterable) = tryWrapper {
+        val id = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_RANK_ID])
+        val uri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_TOP_TRACK_URI])
+        val number = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_NUMBER_OF_TRACK])
+        rankingDao.replaceBy(id, uri, number)
     }
     //endregion
 

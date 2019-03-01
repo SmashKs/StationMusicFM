@@ -56,6 +56,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCas
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.UpdateRankItemRespCase
 
 // MusicBank
 
@@ -110,9 +111,11 @@ typealias FetchRankIdsReq = FetchRankIdsRespCase.Request
 typealias AddSearchHistReq = AddSearchHistRespCase.Request
 typealias DeleteSearchHistReq = DeleteSearchHistRespCase.Request
 typealias FetchSearchHistsReq = FetchSearchHistsRespCase.Request
+typealias UpdateRankItemReq = UpdateRankItemRespCase.Request
 
 typealias AddRankIdsCase = DeferredUsecase<Boolean, AddRankIdsReq>
 typealias FetchRankIdsCase = DeferredUsecase<List<RankingIdModel>, FetchRankIdsReq>
 typealias AddSearchHistCase = DeferredUsecase<Boolean, AddSearchHistReq>
 typealias DeleteSearchHistCase = DeferredUsecase<Boolean, DeleteSearchHistReq>
 typealias FetchSearchHistsCase = DeferredUsecase<List<SearchHistModel>, FetchSearchHistsReq>
+typealias UpdateRankItemCase = DeferredUsecase<Boolean, UpdateRankItemReq>

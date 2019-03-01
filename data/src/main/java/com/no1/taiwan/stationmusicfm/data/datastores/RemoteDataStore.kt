@@ -148,7 +148,7 @@ class RemoteDataStore(
 
     override suspend fun getRankingData(): List<RankingIdData> = UnsupportedOperation()
 
-    override suspend fun modifyRankingData(rankingIdData: RankingIdData) = UnsupportedOperation()
+    override suspend fun modifyRankingData(parameterable: Parameterable) = UnsupportedOperation()
 
     override suspend fun createSearchHistory(parameterable: Parameterable) = UnsupportedOperation()
 

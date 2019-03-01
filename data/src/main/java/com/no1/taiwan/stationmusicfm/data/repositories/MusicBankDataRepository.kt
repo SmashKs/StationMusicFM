@@ -69,6 +69,6 @@ class MusicBankDataRepository constructor(
     override suspend fun addRankings(params: List<RankingIdModel>) =
         local.createRankingData(params.map(rankingMapper::toDataFrom))
 
-    override suspend fun updateRanking(rankingIdModel: RankingIdModel) =
-        local.modifyRankingData(rankingMapper.toDataFrom(rankingIdModel))
+    override suspend fun updateRanking(parameters: Parameterable) =
+        local.modifyRankingData(parameters)
 }

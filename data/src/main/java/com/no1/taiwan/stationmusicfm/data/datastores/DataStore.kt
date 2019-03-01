@@ -102,7 +102,7 @@ interface DataStore {
 
     suspend fun getRankingData(): List<RankingIdData>
 
-    suspend fun modifyRankingData(rankingIdData: RankingIdData): Boolean
+    suspend fun modifyRankingData(parameterable: Parameterable): Boolean
     //endregion
 
     //region Search History

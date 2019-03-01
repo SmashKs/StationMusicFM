@@ -45,6 +45,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistsRespCase
@@ -69,6 +70,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCas
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.UpdateRankItemRespCase
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -86,6 +88,7 @@ object UsecaseModule {
         bind<FetchHotListCase>() with singleton { FetchHotListRespCase(instance()) }
         bind<AddRankIdsCase>() with singleton { AddRankIdsRespCase(instance()) }
         bind<FetchRankIdsCase>() with singleton { FetchRankIdsRespCase(instance()) }
+        bind<UpdateRankItemCase>() with singleton { UpdateRankItemRespCase(instance()) }
         //endregion
 
         //region LastFm
