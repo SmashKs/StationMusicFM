@@ -29,6 +29,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url = "http://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
 //        classpath 'com.android.tools.build:gradle:3.5.0-alpha05'
@@ -89,9 +90,9 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-
         // required to find the project's artifacts
         maven { url = "https://dl.bintray.com/pokk/maven" }
+        maven { url = "http://dl.bintray.com/kotlin/kotlin-eap" }
     }
 }
 

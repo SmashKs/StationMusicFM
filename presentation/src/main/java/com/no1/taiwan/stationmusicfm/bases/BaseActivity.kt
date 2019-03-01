@@ -31,6 +31,9 @@ import com.no1.taiwan.stationmusicfm.internal.di.ViewModelEntries
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.activities.SuperActivityModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
 import com.no1.taiwan.stationmusicfm.widget.components.viewmodel.ViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.android.retainedKodein
@@ -41,7 +44,9 @@ import org.kodein.di.generic.provider
 /**
  * The basic activity is for the normal activity which prepares all necessary variables or functions.
  */
-abstract class BaseActivity : AppCompatActivity(), KodeinAware {
+abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
+    /** Context of this scope.*/
+    override val coroutineContext get() = Dispatchers.Main + job
     override val kodein by retainedKodein {
         extend(parentKodein)
 //        import(appProvider())
@@ -56,13 +61,16 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
         }
     }
     private val parentKodein by kodein()
+    private lateinit var job: Job
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        job = Job()
+        // Pre-set the view components.
         preSetContentView()
         setContentView(provideLayoutId())
-        // Pre-set the view components.
+        // Post-set the view components.
         viewComponentBinding()
         componentListenersBinding()
         init(savedInstanceState)
@@ -71,6 +79,8 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
     override fun onDestroy() {
         super.onDestroy()
         uninit()
+        // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically
+        job.cancel()
     }
     //endregion
 
@@ -86,7 +96,13 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
     protected open fun init(savedInstanceState: Bundle?) = Unit
 
     /**
-     * For separating the huge function code in [init]. Initialize all view components here.
+     * For separating the huge function code in [init]. Initialize all view components here before [setContentView].
+     */
+    @UiThread
+    protected open fun preSetContentView() = Unit
+
+    /**
+     * For separating the huge function code in [init]. Initialize all view components here after [setContentView].
      */
     @UiThread
     protected open fun viewComponentBinding() = Unit
@@ -97,9 +113,9 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
     @UiThread
     protected open fun componentListenersBinding() = Unit
 
+    /**
+     * Uninit the data or deconstruct objects.
+     */
     @UiThread
     protected open fun uninit() = Unit
-
-    @UiThread
-    protected open fun preSetContentView() = Unit
 }

@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.bases
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +35,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.extra
+import com.devrapid.kotlinknifer.getColor
 import com.devrapid.kotlinknifer.toDrawable
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFragmentModule
@@ -44,17 +44,19 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_S
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.subKodein
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
 import org.kodein.di.generic.multiton
 
 /**
  * The basic fragment is for the normal activity which prepares all necessary variables or functions.
  */
-abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
+abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, CoroutineScope {
     override val kodein by subKodein(kodein()) {
         /* fragment specific bindings */
         import(SuperFragmentModule.fragmentModule())
@@ -65,24 +67,26 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
             BusFragLongerLifeRegister(fragment)
         }
     }
+    /** Context of this scope.*/
+    override val coroutineContext get() = Dispatchers.Main + job
+    private lateinit var job: Job
     @Suppress("UNCHECKED_CAST")
     protected val parent
         get() = requireActivity() as A  // If there's no parent, forcing crashing the app.
-    protected val appContext: Context by instance()
-    private var rootView: View? = null
     // Set action bar's back icon color into all fragments are inheriting advFragment.
     protected val backDrawable by lazy {
-        R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(resources.getColor(R.color.colorPrimaryTextV1))
+        R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(getColor(R.color.colorPrimaryTextV1))
     }
 
     private val actionTitle by extra<String>(COMMON_TITLE)
 
     //region Fragment lifecycle
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        job = Job()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Keep the instance data.
         retainInstance = true
 
@@ -115,7 +119,6 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // Before setting.
         viewComponentBinding()
         componentListenersBinding()
@@ -123,6 +126,11 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
         rendered(savedInstanceState)
         // When the fragment has base_layout uid, it'll attach the function of hiding soft keyboard.
 //        view.findOptional<View>(R.id.base_layout)?.clickedThenHideKeyboard()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        job.cancel()
     }
     //endregion
 
@@ -202,5 +210,4 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware {
             decoration?.let(::addItemDecoration)
         }
     }
-
 }
