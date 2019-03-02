@@ -35,7 +35,7 @@ class FetchSearchHistsRespCase(
     override var requestValues: FetchSearchHistsReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        TODO()
+        repository.fetchSearchHistories(it.parameters)
     }
 
     class Request(val parameters: Parameterable = SearchHistParams()) : RequestValues

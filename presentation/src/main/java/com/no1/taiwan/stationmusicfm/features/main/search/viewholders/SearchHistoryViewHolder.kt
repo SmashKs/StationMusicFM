@@ -22,10 +22,13 @@
 package com.no1.taiwan.stationmusicfm.features.main.search.viewholders
 
 import android.view.View
+import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import org.jetbrains.anko.find
 
 class SearchHistoryViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, SearchHistoryEntity>(view) {
     /**
@@ -36,5 +39,8 @@ class SearchHistoryViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory,
      * @param adapter parent adapter.
      */
     override fun initView(model: SearchHistoryEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        itemView.apply {
+            find<TextView>(R.id.ftv_history).text = model.keyword
+        }
     }
 }

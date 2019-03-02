@@ -23,19 +23,27 @@ package com.no1.taiwan.stationmusicfm.features.main.search.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SrchSongParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.others.SearchHistoryPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
+import com.no1.taiwan.stationmusicfm.utils.presentations.exec
+import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 import kotlinx.coroutines.GlobalScope
@@ -50,11 +58,28 @@ class SearchViewModel(
 ) : AutoViewModel() {
     private val _musics by lazy { RespMutableLiveData<MusicInfoEntity.MusicEntity>() }
     val musics: RespLiveData<MusicInfoEntity.MusicEntity> = _musics
+    private val _histories by lazy { RespMutableLiveData<List<SearchHistoryEntity>>() }
+    val histories: RespLiveData<List<SearchHistoryEntity>> = _histories
     private val musicMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
+    private val historyMapper by lazy { cast<SearchHistoryPMapper>(mapperPool[SearchHistoryPMapper::class.java]) }
     val keyword = MutableLiveData<String>(DEFAULT_STR)
 
     fun runTaskSearchMusic(keyword: String) = GlobalScope.launch {
         this@SearchViewModel.keyword.postValue(keyword)
         _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(keyword))) }
+    }
+
+    fun runTaskAddHistory(keyword: String) = GlobalScope.launch {
+        addSearchHistoryCase.exec(AddSearchHistReq(SearchHistParams(keyword)))
+    }
+
+    fun runTaskFetchHistories() = GlobalScope.launch {
+        _histories reqData {
+            fetchSearchHistoriesCase.execListMapping(historyMapper, FetchSearchHistsReq(SearchHistParams(limit = 100)))
+        }
+    }
+
+    fun runTaskDeleteHistory(keyword: String) = GlobalScope.launch {
+        deleteSearchHistoriesCase.exec(DeleteSearchHistReq(SearchHistParams(keyword)))
     }
 }

@@ -35,7 +35,7 @@ class DeleteSearchHistRespCase(
     override var requestValues: DeleteSearchHistReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        TODO()
+        repository.deleteSearchHistory(it.parameters)
     }
 
     class Request(val parameters: Parameterable = SearchHistParams()) : RequestValues

@@ -51,6 +51,7 @@ class MainActivity : BaseActivity() {
         listOf(R.id.frag_explore_index, R.id.frag_mymusic, R.id.frag_rank_index, R.id.frag_search_index)
     }
     var searchItem: MenuItem? = null
+    var onQuerySubmit: ((query: String) -> Unit)? = null
 
     /**
      * For separating the huge function code in [init]. Initialize all view components here.
@@ -98,6 +99,7 @@ class MainActivity : BaseActivity() {
             queryHint = "a keyword of artist, album, tracks..."
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
+                    onQuerySubmit?.invoke(query)
                     searchItem?.collapseActionView()
 
                     when (currentFragment) {

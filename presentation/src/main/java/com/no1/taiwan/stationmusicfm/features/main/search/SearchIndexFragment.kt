@@ -21,19 +21,29 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.search
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperations {
     override val viewmodelProviderSource get() = PROVIDER_FROM_CUSTOM_FRAGMENT
     override val viewmodelProviderFragment get() = requireParentFragment()
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(ObjectLabel.LINEAR_LAYOUT_VERTICAL)
+    private val adapter: MusicAdapter by instance()
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
@@ -46,6 +56,22 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
                 loge(it)
             } doWith this@SearchIndexFragment
         }
+        observeNonNull(vm.histories) {
+            peel {
+                adapter.replaceWholeList(cast(it))
+            } happenError {
+                loge(it)
+            } doWith this@SearchIndexFragment
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        vm.runTaskFetchHistories()
+        initRecyclerViewWith(find(R.id.rv_histories), adapter, linearLayoutManager())
     }
 
     /**
@@ -54,6 +80,16 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_search_index
+
+    override fun onResume() {
+        super.onResume()
+        parent.onQuerySubmit = { vm.runTaskAddHistory(it) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        parent.onQuerySubmit = null
+    }
 
     override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
 
