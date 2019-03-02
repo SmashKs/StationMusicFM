@@ -46,7 +46,6 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
@@ -67,9 +66,6 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
     private val trackAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
     private val genreAdapter: MusicAdapter by instance()
-    private var isFetchArtist = true
-    private var isFetchTrack = true
-    private var isFetchTag = true
 
     init {
         BusFragLifeRegister(this)
@@ -79,32 +75,23 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.topTracks) {
             peel {
-                if (isFetchTrack)
-                    trackAdapter.appendList(cast(it.tracks))
+                trackAdapter.appendList(cast(it.tracks))
             } happenError {
                 loge(it)
-            } finally {
-                isFetchTrack = false
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topArtists) {
             peel {
-                if (isFetchArtist)
-                    artistAdapter.appendList(cast(it.artists))
+                artistAdapter.appendList(cast(it.artists))
             } happenError {
                 loge(it)
-            } finally {
-                isFetchArtist = false
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topTags) {
             peel {
-                if (isFetchTag)
-                    genreAdapter.appendList(cast(it.tags))
+                genreAdapter.appendList(cast(it.tags))
             } happenError {
                 loge(it)
-            } finally {
-                isFetchTag = false
             } doWith this@ExploreIndexFragment
         }
     }

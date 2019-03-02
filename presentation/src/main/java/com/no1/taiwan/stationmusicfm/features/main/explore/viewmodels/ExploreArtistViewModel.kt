@@ -46,6 +46,8 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
 import com.no1.taiwan.stationmusicfm.features.ArtistMixInfo
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.presentations.NotifLiveData
+import com.no1.taiwan.stationmusicfm.utils.presentations.NotifMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
@@ -61,14 +63,14 @@ class ExploreArtistViewModel(
     private val fetchArtistPhotoCase: FetchArtistPhotoCase,
     private val mapperPool: PreziMapperPool
 ) : AutoViewModel() {
-    private val _artistLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistEntity>() }
-    val artistLiveData: RespLiveData<ArtistInfoEntity.ArtistEntity> = _artistLiveData
-    private val _albumsLiveData by lazy { RespMutableLiveData<AlbumInfoEntity.TopAlbumsEntity>() }
-    val albumsLiveData: RespLiveData<AlbumInfoEntity.TopAlbumsEntity> = _albumsLiveData
-    private val _similarArtistsLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsSimilarEntity>() }
-    val similarArtistsLiveData: RespLiveData<ArtistInfoEntity.ArtistsSimilarEntity> = _similarArtistsLiveData
-    private val _tracksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksWithStreamableEntity>() }
-    val tracksLiveData: RespLiveData<TrackInfoEntity.TracksWithStreamableEntity> = _tracksLiveData
+    private val _artistLiveData by lazy { NotifMutableLiveData<ArtistInfoEntity.ArtistEntity>() }
+    val artistLiveData: NotifLiveData<ArtistInfoEntity.ArtistEntity> = _artistLiveData
+    private val _albumsLiveData by lazy { NotifMutableLiveData<AlbumInfoEntity.TopAlbumsEntity>() }
+    val albumsLiveData: NotifLiveData<AlbumInfoEntity.TopAlbumsEntity> = _albumsLiveData
+    private val _similarArtistsLiveData by lazy { NotifMutableLiveData<ArtistInfoEntity.ArtistsSimilarEntity>() }
+    val similarArtistsLiveData: NotifLiveData<ArtistInfoEntity.ArtistsSimilarEntity> = _similarArtistsLiveData
+    private val _tracksLiveData by lazy { NotifMutableLiveData<TrackInfoEntity.TracksWithStreamableEntity>() }
+    val tracksLiveData: NotifLiveData<TrackInfoEntity.TracksWithStreamableEntity> = _tracksLiveData
     private val _artistInfoLiveData by lazy { RespMutableLiveData<ArtistMixInfo>() }
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
     private val _photosLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.PhotosEntity>() }

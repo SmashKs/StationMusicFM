@@ -40,7 +40,6 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
@@ -52,7 +51,6 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
     private val gridLayoutManager: () -> GridLayoutManager by provider(null, 2)
     private val topperAdapter: MusicAdapter by instance()
     private val chartAdapter: MusicAdapter by instance()
-    private var isFetchData = true
 
     init {
         BusFragLifeRegister(this)
@@ -62,15 +60,13 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.rankIds) {
             peel {
-                if (it.isEmpty() || !isFetchData) return@peel
+                if (it.isEmpty()) return@peel
                 topperAdapter.appendList(cast(it.subList(0, 4).toMutableList()))
                 chartAdapter.appendList(cast(it.subList(4, it.size - 1).map {
                     RankingIdForChartItem(it.id, it.title, it.update, it.topTrackUri, it.trackNumber)
                 }))
             } happenError {
                 loge(it)
-            } finally {
-                isFetchData = false
             } doWith this@RankIndexFragment
         }
     }
@@ -83,7 +79,7 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (rankIds.value.isNull() && isFetchData)
+            if (rankIds.value.isNull())
                 runTaskFetchRankIds()
         }
     }

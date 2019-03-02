@@ -35,6 +35,7 @@ class PagerBioFragment : BasePagerFragment() {
     override fun bindLiveData() {
         observeNonNull(vm.artistLiveData) {
             peel {
+                if (isTheSameArtist) return@peel
                 find<TextView>(R.id.ftv_bio).text = it.bio.content.parseAsHtml().toSpannable()
             } doWith this@PagerBioFragment
         }

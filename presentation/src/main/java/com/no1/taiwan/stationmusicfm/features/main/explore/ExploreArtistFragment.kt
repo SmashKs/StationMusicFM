@@ -37,6 +37,8 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.Parameters
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity.TagEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerAlbumFragment
@@ -54,7 +56,6 @@ import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import org.jetbrains.anko.find
@@ -65,6 +66,7 @@ import org.kodein.di.generic.instance
 class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     companion object {
         const val ARGUMENT_VM_DEPENDENT = "fragment argument view model provider source"
+        const val ARGUMENT_IS_THE_SAME_ARTIST = "fragment argument is the same artist?"
         private const val ARGUMENT_MBID = "fragment argument mbid"
         private const val ARGUMENT_ARTIST_NAME = "fragment argument artist name"
 
@@ -82,12 +84,11 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     //endregion
     private val inflater: LayoutInflater by instance()
     private val adapterFragments by lazy {
-        listOf(PagerBioFragment().withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource),
-               PagerAlbumFragment().withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource),
-               PagerTrackFragment().withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource),
-               PagerSimilarArtistFragment().withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource))
+        listOf(PagerBioFragment(), PagerAlbumFragment(), PagerTrackFragment(), PagerSimilarArtistFragment()).onEach {
+            it.withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource,
+                             ARGUMENT_IS_THE_SAME_ARTIST to (mbid == vm.lastFindMbid))
+        }
     }
-    private var isFirstTime = true
 
     init {
         BusFragLifeRegister(this)
@@ -96,15 +97,10 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.artistInfoLiveData) {
-            peel { (artist, album, artists, tracks) ->
-                find<ImageView>(R.id.iv_artist_backdrop).loadByAny(artist.images.last().text)
-                find<ImageView>(R.id.iv_artist_thumbnail).loadByAny(artist.images.last().text)
-                find<TextView>(R.id.ftv_artist_name).text = artist.name
-                find<TextView>(R.id.ftv_tags).text = artist.tags.map { it.name }.joinToString("\n")
+            peel { (artist, _, _, _) ->
+                setArtistInfo(artist)
             } happenError {
                 loge(it)
-            } finally {
-                isFirstTime = false
             } doWith this@ExploreArtistFragment
         }
     }
@@ -121,11 +117,13 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
             if (artistInfoLiveData.value.isNull() ||
                 // 2. `mbid != vm.lastFindMbid` is for avoiding searching the same artist.
                 // 3. `isFirstTime` is for the first time open this fragment.
-                (mbid != vm.lastFindMbid && isFirstTime))
+                mbid != vm.lastFindMbid) {
                 runTaskFetchArtistInfo(mbid, artistName)
-            // Pre-load the photos.
-            if (vm.photosLiveData.value.isNull()) {
-                vm.runTaskFetchArtistPhoto(artistName)
+                // Pre-load the photos.
+                runTaskFetchArtistPhoto(artistName)
+            }
+            else {
+                setArtistInfo(requireNotNull(artistInfoLiveData.value?.data?.first))
             }
         }
     }
@@ -162,6 +160,13 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_explore_artist
+
+    private fun setArtistInfo(artist: ArtistEntity) {
+        find<ImageView>(R.id.iv_artist_backdrop).loadByAny(artist.images.last().text)
+        find<ImageView>(R.id.iv_artist_thumbnail).loadByAny(artist.images.last().text)
+        find<TextView>(R.id.ftv_artist_name).text = artist.name
+        find<TextView>(R.id.ftv_tags).text = artist.tags.joinToString("\n", transform = TagEntity::name)
+    }
 
     private fun getTabView(position: Int) = inflater.inflate(R.layout.tabitem_introduction, null).apply {
         this.find<TextView>(R.id.ftv_title).text = resources.getStringArray(R.array.artist_detail_column)[position]

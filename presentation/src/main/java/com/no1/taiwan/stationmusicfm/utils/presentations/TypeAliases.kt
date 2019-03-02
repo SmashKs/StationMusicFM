@@ -25,8 +25,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.no1.taiwan.stationmusicfm.domain.DeferredUsecase
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
+import com.no1.taiwan.stationmusicfm.utils.aac.livedata.SilentLiveData
+import com.no1.taiwan.stationmusicfm.utils.aac.livedata.SilentMutableLiveData
 
-typealias RespMutableLiveData<D> = MutableLiveData<ResponseState<D>>
-typealias RespLiveData<D> = LiveData<ResponseState<D>>
+typealias RespMutableLiveData<D> = SilentMutableLiveData<ResponseState<D>>
+typealias RespLiveData<D> = SilentLiveData<ResponseState<D>>
+typealias NotifMutableLiveData<D> = MutableLiveData<ResponseState<D>>
+typealias NotifLiveData<D> = LiveData<ResponseState<D>>
 
 typealias AsyncCase<D, V> = DeferredUsecase<D, V>
