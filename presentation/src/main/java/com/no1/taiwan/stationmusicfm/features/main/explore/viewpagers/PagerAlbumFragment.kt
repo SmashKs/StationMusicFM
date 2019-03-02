@@ -35,7 +35,6 @@ class PagerAlbumFragment : BasePagerFragment() {
         observeNonNull(vm.albumsLiveData) {
             peel {
                 if (it.albums.isEmpty()) return@peel
-                // FIXME(jieyi): 2019-02-17 Here's a bug for displaying old list.
                 adapter.replaceWholeList(cast(it.albums))
             } doWith this@PagerAlbumFragment
         }
