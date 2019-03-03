@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
+import com.hwangjr.rxbus.annotation.Subscribe
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
@@ -94,4 +95,9 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
     override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
 
     override fun getKeptKeyword() = vm.keyword.value.orEmpty()
+
+    @Subscribe(tags = [])
+    fun removeKeyword(keyword: String) {
+        vm.runTaskDeleteHistory(keyword)
+    }
 }
