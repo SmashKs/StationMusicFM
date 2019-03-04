@@ -28,6 +28,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinshaver.cast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
@@ -99,6 +100,7 @@ class MainActivity : BaseActivity() {
             queryHint = "a keyword of artist, album, tracks..."
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
+                    logd(onQuerySubmit)
                     onQuerySubmit?.invoke(query)
                     searchItem?.collapseActionView()
 

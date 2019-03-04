@@ -55,6 +55,17 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
         BusFragLifeRegister(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        parent.onQuerySubmit = { vm.runTaskAddHistory(it) }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Because the result fragment's onResume is faster than onPause from here.
+        parent.onQuerySubmit = null
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
@@ -98,16 +109,6 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_search_index
-
-    override fun onResume() {
-        super.onResume()
-        parent.onQuerySubmit = { vm.runTaskAddHistory(it) }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        parent.onQuerySubmit = null
-    }
 
     override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
 

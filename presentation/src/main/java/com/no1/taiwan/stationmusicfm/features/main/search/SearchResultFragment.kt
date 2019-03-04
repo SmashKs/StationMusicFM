@@ -50,6 +50,16 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val adapter: MusicAdapter by instance()
     private var isFirstComing = true
 
+    override fun onResume() {
+        super.onResume()
+        parent.onQuerySubmit = { vm.runTaskAddHistory(it) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        parent.onQuerySubmit = null
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
