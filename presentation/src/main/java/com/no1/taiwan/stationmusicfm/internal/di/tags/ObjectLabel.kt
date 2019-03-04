@@ -32,4 +32,6 @@ object ObjectLabel {
     const val FRAGMENT_BUS_LONG_LIFE = "fragment long life from onStart to onDestroy"
 
     const val UTIL_DIFF_KEYWORD = "recycler diff util keyword"
+
+    const val ADAPTER_HISTORY = "for history adapter"
 }

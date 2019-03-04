@@ -19,19 +19,25 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
+package com.no1.taiwan.stationmusicfm.kits.recyclerview
 
-import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveDiffUtil
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
-import com.devrapid.adaptiverecyclerview.IVisitable
+import com.devrapid.kotlinshaver.bkg
+import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters.MultiTypeAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDiffUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-typealias ViewHolderEntry = Pair<Int, Pair<Int, (View) -> RecyclerView.ViewHolder>>
-typealias ViewHolderEntries = Set<ViewHolderEntry>
-
-typealias MusicViewHolder = AdaptiveViewHolder<MultiTypeFactory, MusicMultiVisitable>
-typealias MusicMultiVisitable = IVisitable<MultiTypeFactory>
-typealias MusicAdapter = AdaptiveAdapter<MultiTypeFactory, MusicMultiVisitable, MusicViewHolder>
-typealias MusicMultiDiffUtil = AdaptiveDiffUtil<MultiTypeFactory, MusicMultiVisitable>
+class HistoryAdapter(
+    override var typeFactory: MultiTypeFactory,
+    externalDiffUtil: MusicDiffUtil? = null
+) : MultiTypeAdapter(typeFactory, externalDiffUtil) {
+    fun removeItem(keyword: String) {
+        bkg {
+            val index = dataList.indexOfFirst { it is SearchHistoryEntity && it.keyword == keyword }
+            dataList.removeAt(index)
+            withContext(Dispatchers.Main) { notifyItemRemoved(index) }
+        }
+    }
+}

@@ -23,16 +23,42 @@ package com.no1.taiwan.stationmusicfm.data.local.services
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
 import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
+import java.util.Date
 
 @Dao
 abstract class SearchingHistoryDao : BaseDao<SearchHistoryData> {
     /**
+     * Insert a history data into database and check the keyword if they are the same,
+     * just update the date; otherwise, insert a new data.
+     *
+     * @param keyword a keyword about artist, track, album, ...etc.
+     */
+    @Transaction
+    open fun insertBy(keyword: String) {
+        val history = getHistory(keyword)
+        if (history == null)
+            insert(SearchHistoryData(0, keyword, Date()))
+        else
+            replace(history.copy(update = Date()))
+    }
+
+    /**
      * Get all data from the History table.
      */
-    @Query("SELECT * FROM table_history LIMIT :limit")
+    @Query("SELECT * FROM table_history ORDER BY `update` ASC LIMIT :limit")
     abstract fun getHistories(limit: Int = 30): List<SearchHistoryData>
+
+    /**
+     * Get a data with specific [keyword] from the History table
+     *
+     * @param keyword a keyword about artist, track, album, ...etc.
+     * @return SearchHistoryData
+     */
+    @Query("SELECT * FROM table_history WHERE keyword=:keyword")
+    abstract fun getHistory(keyword: String): SearchHistoryData?
 
     /**
      * Delete a specific data by [keyword] from the History table.

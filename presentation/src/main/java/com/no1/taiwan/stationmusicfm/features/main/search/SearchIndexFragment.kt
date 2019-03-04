@@ -27,10 +27,12 @@ import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTORY
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.HistoryAdapter
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -38,7 +40,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -46,9 +47,9 @@ import org.kodein.di.generic.provider
 class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperations {
     override val viewmodelProviderSource get() = PROVIDER_FROM_CUSTOM_FRAGMENT
     override val viewmodelProviderFragment get() = requireParentFragment()
-    private val linearLayoutManager: () -> LinearLayoutManager by provider(ObjectLabel.LINEAR_LAYOUT_VERTICAL)
-    private val adapter: MusicAdapter by instance()
-    private var dropIndex = DEFAULT_INT
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
+    private val adapter: HistoryAdapter by instance(ADAPTER_HISTORY)
+    private var dropWord = DEFAULT_STR
 
     init {
         BusFragLifeRegister(this)
@@ -74,9 +75,8 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
         }
         observeNonNull(vm.removeRes) {
             peelSkipLoading {
-                //                logw(it, dropIndex)
-//                if (it && dropIndex != DEFAULT_INT)
-//                    adapter.dropAt(dropIndex)
+                if (it && dropWord != DEFAULT_STR)
+                    adapter.removeItem(dropWord)
             } happenError {
                 loge(it)
             } doWith this@SearchIndexFragment
@@ -119,7 +119,7 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
      */
     @Subscribe(tags = [Tag(TAG_SAVING_SEARCH_HIST)])
     fun removeKeyword(keyword: String) {
-        dropIndex = vm.histories.value?.data?.indexOfFirst { it.keyword == keyword } ?: DEFAULT_INT
+        dropWord = keyword
         vm.runTaskDeleteHistory(keyword)
     }
 }

@@ -38,7 +38,6 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Comp
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Companion.PARAM_NAME_RANK_ID
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Companion.PARAM_NAME_TOP_TRACK_URI
 import com.tencent.mmkv.MMKV
-import java.util.Date
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
@@ -67,8 +66,7 @@ class LocalDataStore(
     //region Search History
     override suspend fun createSearchHistory(parameterable: Parameterable) = tryWrapper {
         val keyword = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD])
-        val data = SearchHistoryData(0, keyword, Date())
-        searchingHistoryDao.insert(data)
+        searchingHistoryDao.insertBy(keyword)
     }
 
     override suspend fun getSearchHistories(parameterable: Parameterable): List<SearchHistoryData> {

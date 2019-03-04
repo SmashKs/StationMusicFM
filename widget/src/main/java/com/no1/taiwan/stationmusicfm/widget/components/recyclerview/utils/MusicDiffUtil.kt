@@ -21,10 +21,10 @@
 
 package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils
 
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicDiffUtil
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
-class MusicDiffUtil : MusicDiffUtil() {
+class MusicDiffUtil : MusicMultiDiffUtil() {
     override var newList = mutableListOf<MusicMultiVisitable>()
     override var oldList = mutableListOf<MusicMultiVisitable>()
 

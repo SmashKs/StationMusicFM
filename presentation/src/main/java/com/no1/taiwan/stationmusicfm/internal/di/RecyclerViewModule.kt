@@ -48,11 +48,13 @@ import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHol
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.search.viewholders.SearchHistoryViewHolder
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTORY
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.HistoryAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.ViewHolderEntry
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters.MultiTypeAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDiffUtil
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
@@ -81,6 +83,7 @@ object RecyclerViewModule {
     private fun adapterProvider() = Module("Recycler View Adapter") {
         bind<MultiTypeFactory>() with singleton { MultiTypeFactory(instance()) }
         bind<MusicAdapter>() with provider { MultiTypeAdapter(instance()) }
+        bind<HistoryAdapter>(ADAPTER_HISTORY) with provider { HistoryAdapter(instance()) }
     }
 
     private fun diffUtilProvider() = Module("Recycler View DiffUtil") {

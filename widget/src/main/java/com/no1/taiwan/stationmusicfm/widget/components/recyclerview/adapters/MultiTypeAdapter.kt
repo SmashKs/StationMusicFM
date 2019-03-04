@@ -19,11 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters
 
 import android.view.ViewGroup
 import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicViewHolder
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.AdapterItemTouchHelper
 
 /**
@@ -32,13 +37,13 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.Adap
  */
 open class MultiTypeAdapter(
     override var typeFactory: MultiTypeFactory,
-    private val externalDiffUtil: MusicDiffUtil? = null
+    private val externalDiffUtil: MusicMultiDiffUtil? = null
 ) : MusicAdapter(), AdapterItemTouchHelper {
     override var dataList = mutableListOf<MusicMultiVisitable>()
         set(value) {
             field = value.toMutableList()
         }
-    override var diffUtil: MusicDiffUtil
+    override var diffUtil: MusicMultiDiffUtil
         get() = externalDiffUtil ?: super.diffUtil
         set(_) = UnsupportedOperation("We don't allow this method to use!")
     protected var viewType = DEFAULT_INT
