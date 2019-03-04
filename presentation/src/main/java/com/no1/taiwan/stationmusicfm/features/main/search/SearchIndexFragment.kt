@@ -40,6 +40,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.ActionBarBlankDecoration
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -100,7 +101,7 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         vm.runTaskFetchHistories()
-        initRecyclerViewWith(find(R.id.rv_histories), adapter, linearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_histories), adapter, linearLayoutManager(), ActionBarBlankDecoration())
     }
 
     /**
