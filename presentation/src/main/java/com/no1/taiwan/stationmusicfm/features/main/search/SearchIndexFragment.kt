@@ -22,18 +22,22 @@
 package com.no1.taiwan.stationmusicfm.features.main.search
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
+import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -44,6 +48,11 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
     override val viewmodelProviderFragment get() = requireParentFragment()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(ObjectLabel.LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
+    private var dropIndex = DEFAULT_INT
+
+    init {
+        BusFragLifeRegister(this)
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -52,7 +61,6 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
                 if (it.items.isEmpty()) {
                     return@peel
                 }
-                logd(it.items.size)
             } happenError {
                 loge(it)
             } doWith this@SearchIndexFragment
@@ -60,6 +68,15 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
         observeNonNull(vm.histories) {
             peel {
                 adapter.replaceWholeList(cast(it))
+            } happenError {
+                loge(it)
+            } doWith this@SearchIndexFragment
+        }
+        observeNonNull(vm.removeRes) {
+            peelSkipLoading {
+                //                logw(it, dropIndex)
+//                if (it && dropIndex != DEFAULT_INT)
+//                    adapter.dropAt(dropIndex)
             } happenError {
                 loge(it)
             } doWith this@SearchIndexFragment
@@ -96,8 +113,13 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
 
     override fun getKeptKeyword() = vm.keyword.value.orEmpty()
 
-    @Subscribe(tags = [])
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.search.viewholders.SearchHistoryViewHolder.initView]
+     * @param keyword the keyword of searching.
+     */
+    @Subscribe(tags = [Tag(TAG_SAVING_SEARCH_HIST)])
     fun removeKeyword(keyword: String) {
+        dropIndex = vm.histories.value?.data?.indexOfFirst { it.keyword == keyword } ?: DEFAULT_INT
         vm.runTaskDeleteHistory(keyword)
     }
 }

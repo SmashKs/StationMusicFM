@@ -27,6 +27,7 @@ object RxBusConstant {
         const val TAG_TO_DETAIL = "goto detail fragment"
         const val TAG_TO_ALBUM = "goto album detail fragment"
         const val TAG_TO_SIMILAR_ARTIST = "goto similar artist fragment"
+        const val TAG_SAVING_SEARCH_HIST = "saving the searching history"
     }
 
     object Parameter {

@@ -60,6 +60,8 @@ class SearchViewModel(
     val musics: RespLiveData<MusicInfoEntity.MusicEntity> = _musics
     private val _histories by lazy { RespMutableLiveData<List<SearchHistoryEntity>>() }
     val histories: RespLiveData<List<SearchHistoryEntity>> = _histories
+    private val _removeRes by lazy { RespMutableLiveData<Boolean>() }
+    val removeRes: RespLiveData<Boolean> = _removeRes
     private val musicMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
     private val historyMapper by lazy { cast<SearchHistoryPMapper>(mapperPool[SearchHistoryPMapper::class.java]) }
     val keyword = MutableLiveData<String>(DEFAULT_STR)
@@ -80,6 +82,6 @@ class SearchViewModel(
     }
 
     fun runTaskDeleteHistory(keyword: String) = GlobalScope.launch {
-        deleteSearchHistoriesCase.exec(DeleteSearchHistReq(SearchHistParams(keyword)))
+        _removeRes reqData { deleteSearchHistoriesCase.exec(DeleteSearchHistReq(SearchHistParams(keyword))) }
     }
 }
