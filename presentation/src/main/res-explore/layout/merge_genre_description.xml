@@ -30,15 +30,23 @@
         android:id="@+id/fontTextView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        android:layout_marginTop="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:sltTitle="About"/>
+        app:sltTitle="About"
+        app:sltTitleColor="?colorPrimaryDark"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_genre_about"
-        android:layout_width="@dimen/md_zero_unit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:fontFamily="@font/cambay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fontTextView5"

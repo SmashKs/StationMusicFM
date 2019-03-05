@@ -30,15 +30,20 @@
         android:id="@+id/fontTextView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_three_unit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_tracks"
-        tools:sltTitle="Artists"/>
+        app:sltTitle="Artists"
+        app:sltTitleColor="?colorPrimaryDark"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_artists"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_two_unit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

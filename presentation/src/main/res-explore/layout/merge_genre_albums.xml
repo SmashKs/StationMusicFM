@@ -30,15 +30,20 @@
         android:id="@+id/fontTextView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_three_unit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ftv_genre_about"
-        tools:sltTitle="Albums"/>
+        app:sltTitle="Albums"
+        app:sltTitleColor="?colorPrimaryDark"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_albums"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_two_unit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fontTextView6"
