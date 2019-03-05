@@ -112,6 +112,7 @@ dependencies {
     implementation(dependencies.Deps.Presentation.ankoV7)
     implementation(dependencies.Deps.Presentation.ankoCoroutine)
     implementation(dependencies.Deps.Presentation.ankoV7Coroutine)
+    implementation(dependencies.Deps.Presentation.ankoCoroutines)
     //endregion
 
     //region DI
