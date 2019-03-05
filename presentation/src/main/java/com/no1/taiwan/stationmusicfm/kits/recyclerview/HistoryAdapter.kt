@@ -22,12 +22,11 @@
 package com.no1.taiwan.stationmusicfm.kits.recyclerview
 
 import com.devrapid.kotlinshaver.bkg
+import com.devrapid.kotlinshaver.uiSwitch
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters.MultiTypeAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDiffUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class HistoryAdapter(
     override var typeFactory: MultiTypeFactory,
@@ -37,7 +36,7 @@ class HistoryAdapter(
         bkg {
             val index = dataList.indexOfFirst { it is SearchHistoryEntity && it.keyword == keyword }
             dataList.removeAt(index)
-            withContext(Dispatchers.Main) { notifyItemRemoved(index) }
+            uiSwitch { notifyItemRemoved(index) }
         }
     }
 }

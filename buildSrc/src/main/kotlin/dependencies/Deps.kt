@@ -37,7 +37,7 @@ object Deps {
         const val rxJava2 = "io.reactivex.rxjava2:rxjava:${Versions.RxDep.rxJava2}"
         const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.RxDep.rxKotlin2}"
 
-        const val shaver = "com.devrapid.jieyi:kotlinshaver:${Versions.KotlinAndroidExt.shaver}"
+        const val shaver = "com.devrapid.jieyi:kotlinshaver:${Versions.KotlinAndroidExt.kinfer}"
 
         const val kodeinJVM = "org.kodein.di:kodein-di-generic-jvm:${Versions.DI.kodein}"
         const val kodeinCore = "org.kodein.di:kodein-di-core-jvm:${Versions.DI.kodein}"

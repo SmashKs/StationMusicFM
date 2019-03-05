@@ -47,14 +47,6 @@ class ChartViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Ranking
      */
     override fun initView(model: RankingIdForChartItem, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
-            // Adjust the top two items view only.
-//            find<CardView>(R.id.mcv_chart).apply {
-//                if (position == 0 || position == 1) {
-//                    layoutParams = cast<ViewGroup.MarginLayoutParams>(layoutParams).apply {
-//                        topMargin = context.resources.getDimension(R.dimen.md_one_unit).toInt()
-//                    }
-//                }
-//            }
             find<TextView>(R.id.ftv_chart).text =
                 listOf(model.title, model.update, "${model.trackNumber} tracks").joinToString("\n")
             find<ImageView>(R.id.aiv_thumbnail).loadByAny(model.topTrackUri, context)

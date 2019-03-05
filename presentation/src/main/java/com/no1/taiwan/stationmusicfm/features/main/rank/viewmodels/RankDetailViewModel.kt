@@ -46,8 +46,6 @@ class RankDetailViewModel(
 ) : AutoViewModel() {
     private val _rankMusic by lazy { RespMutableLiveData<MusicInfoEntity.MusicEntity>() }
     val rankMusic: RespLiveData<MusicInfoEntity.MusicEntity> = _rankMusic
-    private val _updateMusic by lazy { RespMutableLiveData<Boolean>() }
-    val updateMusic: RespLiveData<Boolean> = _updateMusic
     private val topTracksMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
 
     fun runTaskFetchTopTrack(rankId: Int) = GlobalScope.launch {
@@ -55,8 +53,6 @@ class RankDetailViewModel(
     }
 
     fun runTaskUpdateRankItem(rankId: Int, topTrackUri: String, numOfTracks: Int) = GlobalScope.launch {
-        _updateMusic reqData {
-            updateRankItemCase.exec(UpdateRankItemReq(RankParams(rankId, topTrackUri, numOfTracks)))
-        }
+        updateRankItemCase.exec(UpdateRankItemReq(RankParams(rankId, topTrackUri, numOfTracks)))
     }
 }

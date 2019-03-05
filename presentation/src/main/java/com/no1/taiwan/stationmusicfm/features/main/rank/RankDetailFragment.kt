@@ -25,6 +25,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.extraNotNull
+import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinshaver.cast
@@ -89,7 +90,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         initRecyclerViewWith(find(R.id.rv_songs),
                              songAdapter,
                              linearLayoutManager(),
-                             VerticalItemDecorator(resources.getDimension(R.dimen.md_one_half_unit).toInt()))
+                             VerticalItemDecorator(getDimen(R.dimen.md_one_half_unit).toInt()))
     }
 
     /**

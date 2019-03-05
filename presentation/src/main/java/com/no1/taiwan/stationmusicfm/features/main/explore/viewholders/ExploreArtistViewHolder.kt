@@ -29,6 +29,7 @@ import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.devrapid.kotlinknifer.DrawableDirectionConst.DRAWABLE_DIRECTION_START
 import com.devrapid.kotlinknifer.addDrawable
+import com.devrapid.kotlinknifer.getColor
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
@@ -55,7 +56,7 @@ class ExploreArtistViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory,
             find<TextView>(R.id.ftv_artist_name).text = model.name
             find<TextView>(R.id.ftv_favorite).apply {
                 addDrawable(R.drawable.ic_heart_black,
-                            resources.getColor(R.color.colorPrimaryTextV1),
+                            getColor(R.color.colorPrimaryTextV1),
                             DRAWABLE_DIRECTION_START,
                             .5f,
                             .5f)
