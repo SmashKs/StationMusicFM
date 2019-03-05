@@ -116,6 +116,13 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
     }
 
     /**
+     * Set fragment title into action bar.
+     *
+     * @return [String] action bar title.
+     */
+    override fun actionBarTitle() = tagName
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.

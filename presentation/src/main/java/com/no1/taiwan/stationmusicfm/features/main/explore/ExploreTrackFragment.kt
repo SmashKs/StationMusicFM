@@ -110,6 +110,13 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     }
 
     /**
+     * Set fragment title into action bar.
+     *
+     * @return [String] action bar title.
+     */
+    override fun actionBarTitle() = trackName
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.

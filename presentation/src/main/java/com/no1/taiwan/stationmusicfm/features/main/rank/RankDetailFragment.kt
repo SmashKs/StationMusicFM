@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.features.main.rank
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.loge
@@ -34,6 +35,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -55,6 +57,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
 
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val songAdapter: MusicAdapter by instance()
+    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -90,7 +93,8 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         initRecyclerViewWith(find(R.id.rv_songs),
                              songAdapter,
                              linearLayoutManager(),
-                             VerticalItemDecorator(getDimen(R.dimen.md_one_half_unit).toInt()))
+                             listOf(actionBarBlankDecoration,
+                                    VerticalItemDecorator(getDimen(R.dimen.md_one_half_unit).toInt())))
     }
 
     /**

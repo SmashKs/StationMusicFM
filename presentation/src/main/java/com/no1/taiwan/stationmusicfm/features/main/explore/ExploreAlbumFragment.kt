@@ -139,6 +139,13 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
     }
 
     /**
+     * Set fragment title into action bar.
+     *
+     * @return [String] action bar title.
+     */
+    override fun actionBarTitle() = albumName
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.

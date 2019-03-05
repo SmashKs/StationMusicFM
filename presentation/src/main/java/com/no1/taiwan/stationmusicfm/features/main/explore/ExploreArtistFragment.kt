@@ -155,6 +155,13 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     }
 
     /**
+     * Set fragment title into action bar.
+     *
+     * @return [String] action bar title.
+     */
+    override fun actionBarTitle() = artistName
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.

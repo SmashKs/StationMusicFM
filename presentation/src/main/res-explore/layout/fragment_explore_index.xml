@@ -20,72 +20,75 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     style="@style/Constraint.MatchParent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".features.main.explore.ExploreIndexFragment">
 
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_title_artist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Artists"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Constraint.MatchParent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_artists"
-        android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="216dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ftv_title_artist"
-        tools:itemCount="4"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_explore_artist"
-        tools:orientation="horizontal"/>
+        <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+            android:id="@+id/ftv_title_artist"
+            style="@style/MusicTextView.FitWidth"
+            android:layout_marginTop="?actionBarSize"
+            android:text="Artists"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_title_track"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/rv_artists"
-        app:layout_constraintTop_toBottomOf="@id/rv_artists"
-        tools:text="Tracks"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_artists"
+            android:layout_width="@dimen/md_zero_unit"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ftv_title_artist"
+            tools:itemCount="4"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_explore_artist"
+            tools:orientation="horizontal"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_tracks"
-        android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="@dimen/md_zero_unit"
-        android:layout_marginBottom="165dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ftv_title_track"
-        app:layout_constraintVertical_bias="0.0"
-        tools:itemCount="6"
-        tools:listitem="@layout/item_explore_track"
-        tools:orientation="horizontal"/>
+        <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+            android:id="@+id/ftv_title_track"
+            style="@style/MusicTextView.FitWidth"
+            android:layout_marginTop="@dimen/md_two_unit"
+            android:text="Tracks"
+            app:layout_constraintStart_toStartOf="@id/rv_artists"
+            app:layout_constraintTop_toBottomOf="@id/rv_artists"/>
 
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_title_genre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_tracks"
-        tools:text="Genres"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_tracks"
+            android:layout_width="match_parent"
+            android:layout_height="282dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ftv_title_track"
+            app:layout_constraintVertical_bias="0.0"
+            tools:itemCount="6"
+            tools:listitem="@layout/item_explore_track"
+            tools:orientation="horizontal"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_genres"
-        android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="@dimen/md_zero_unit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ftv_title_genre"
-        tools:itemCount="4"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_explore_genre"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+            android:id="@+id/ftv_title_genre"
+            style="@style/MusicTextView.FitWidth"
+            android:layout_marginTop="@dimen/md_two_unit"
+            android:text="Genres"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_tracks"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_genres"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:layout_marginBottom="@dimen/md_two_unit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ftv_title_genre"
+            tools:itemCount="4"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_explore_genre"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
