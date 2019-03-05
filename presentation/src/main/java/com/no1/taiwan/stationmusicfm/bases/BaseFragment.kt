@@ -74,7 +74,7 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
     protected val parent
         get() = requireActivity() as A  // If there's no parent, forcing crashing the app.
     // Set action bar's back icon color into all fragments are inheriting advFragment.
-    protected val backDrawable by lazy {
+    protected open val backDrawable by lazy {
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(getColor(R.color.colorPrimaryTextV1))
     }
 

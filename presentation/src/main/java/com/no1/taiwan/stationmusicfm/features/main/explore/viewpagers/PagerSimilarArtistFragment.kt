@@ -44,7 +44,6 @@ class PagerSimilarArtistFragment : BasePagerFragment() {
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         initRecyclerViewWith(find(R.id.rv_similar_artists), adapter, girdLayoutManager())
     }
 

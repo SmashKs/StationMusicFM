@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.ImageView
@@ -28,8 +29,10 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
+import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.isNull
 import com.google.android.material.tabs.TabLayout
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -77,6 +80,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
 
     // ViewModel's lifecycle will be itself when open a new same fragment.
     override val viewmodelProviderSource get() = vmProviderSource
+    override val backDrawable by lazy {
+        R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
+    }
     //region Parameter
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)

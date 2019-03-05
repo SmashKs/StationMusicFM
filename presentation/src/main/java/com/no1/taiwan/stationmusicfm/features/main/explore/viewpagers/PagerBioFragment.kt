@@ -48,6 +48,12 @@ class PagerBioFragment : BasePagerFragment() {
     }
 
     /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+    }
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.
