@@ -135,6 +135,7 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
     }
     //endregion
 
+    //region Customized methods
     /**
      * Set the parentView for inflating.
      *
@@ -198,17 +199,47 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
      */
     @UiThread
     protected open fun provideActionBarResource(): Toolbar? = null
+    //endregion
 
+    /**
+     * Initialize the recycler view with all simple parameters.
+     *
+     * @param recyclerView the recycler view object.
+     * @param adapter the adapter of the recycler view.
+     * @param layoutManager the layout manager of the recycler view.
+     * @param decoration the decoration of the recycle view.
+     */
     fun initRecyclerViewWith(
         recyclerView: RecyclerView,
         adapter: RecyclerView.Adapter<*>,
         layoutManager: RecyclerView.LayoutManager,
-        decoration: RecyclerView.ItemDecoration? = null
+        decoration: RecyclerView.ItemDecoration?
     ) {
         recyclerView.apply {
             this.layoutManager = layoutManager
             this.adapter = adapter
             decoration?.let(::addItemDecoration)
+        }
+    }
+
+    /**
+     * Initialize the recycler view with all simple parameters.
+     *
+     * @param recyclerView the recycler view object.
+     * @param adapter the adapter of the recycler view.
+     * @param layoutManager the layout manager of the recycler view.
+     * @param decorations a list of decorations of the recycle view.
+     */
+    fun initRecyclerViewWith(
+        recyclerView: RecyclerView,
+        adapter: RecyclerView.Adapter<*>,
+        layoutManager: RecyclerView.LayoutManager,
+        decorations: List<RecyclerView.ItemDecoration> = emptyList()
+    ) {
+        recyclerView.apply {
+            this.layoutManager = layoutManager
+            this.adapter = adapter
+            decorations.forEach(::addItemDecoration)
         }
     }
 }

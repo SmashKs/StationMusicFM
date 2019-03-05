@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.features.main.search
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.obtainViewStub
@@ -32,13 +33,13 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.SeparateLineDecoration
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -48,6 +49,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     override val viewmodelProviderFragment get() = requireParentFragment()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
+    private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
     private var isFirstComing = true
 
     override fun onResume() {
@@ -71,10 +73,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 switchStub(true)
                 adapter.replaceWholeList(cast(it.items))
                 if (isFirstComing) {
-                    initRecyclerViewWith(find(R.id.v_result),
-                                         adapter,
-                                         linearLayoutManager(),
-                                         SeparateLineDecoration(requireContext()))
+                    initRecyclerViewWith(find(R.id.v_result), adapter, linearLayoutManager(), decoration)
                     isFirstComing = false
                 }
             } happenError {

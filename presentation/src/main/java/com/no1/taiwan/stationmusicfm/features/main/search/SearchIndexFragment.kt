@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main.search
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -31,6 +32,7 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTORY
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.HistoryAdapter
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
@@ -40,7 +42,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.ActionBarBlankDecoration
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -50,6 +51,7 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
     override val viewmodelProviderFragment get() = requireParentFragment()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: HistoryAdapter by instance(ADAPTER_HISTORY)
+    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private var dropWord = DEFAULT_STR
 
     init {
@@ -101,7 +103,7 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         vm.runTaskFetchHistories()
-        initRecyclerViewWith(find(R.id.rv_histories), adapter, linearLayoutManager(), ActionBarBlankDecoration())
+        initRecyclerViewWith(find(R.id.rv_histories), adapter, linearLayoutManager(), actionBarBlankDecoration)
     }
 
     /**
