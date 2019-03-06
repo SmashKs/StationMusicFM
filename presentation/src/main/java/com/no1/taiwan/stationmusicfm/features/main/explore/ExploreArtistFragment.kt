@@ -27,6 +27,7 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.devrapid.kotlinknifer.changeColor
@@ -165,7 +166,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      *
      * @return [String] action bar title.
      */
-    override fun actionBarTitle() = artistName
+    override fun actionBarTitle() = "<font color='#ffffff'>$artistName</font>".parseAsHtml()
 
     /**
      * Set the parentView for inflating.

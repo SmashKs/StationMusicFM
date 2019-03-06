@@ -62,5 +62,6 @@ object Dependencies {
         "navigationFragmentKtx" to Deps.Presentation.navigationFragmentKtx,
         "navigationUiKtx" to Deps.Presentation.navigationUiKtx,
         "workerKtx" to Deps.Presentation.workerKtx
+//        "dynAnimKtx" to Deps.Presentation.dynAnimKtx
     )
 }

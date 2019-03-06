@@ -147,6 +147,7 @@ object Deps {
         const val navigationUiKtx =
             "android.arch.navigation:navigation-ui-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
         const val workerKtx = "android.arch.work:work-runtime-ktx:${Versions.KotlinAndroidExt.workKtx}"
+        const val dynAnimKtx = "androidx.dynamicanimation-ktx:${Versions.KotlinAndroidExt.dynAnimKtx}"
         // Testing stub
         const val idlingEspresso = "androidx.test.espresso:espresso-idling-resource:${Versions.Test.espresso}"
     }

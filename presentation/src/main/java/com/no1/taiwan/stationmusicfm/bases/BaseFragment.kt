@@ -190,7 +190,7 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
      * @return [String] action bar title.
      */
     @UiThread
-    protected open fun actionBarTitle() = actionTitle
+    protected open fun actionBarTitle(): CharSequence? = actionTitle
 
     /**
      * Provide action bar object for pre-setting.
