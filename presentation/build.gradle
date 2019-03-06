@@ -94,9 +94,7 @@ dependencies {
     implementation(project(":ext"))
 
     //region Kotlin
-    implementation(dependencies.Deps.Global.kotlin)
-    implementation(dependencies.Deps.Global.coroutine)
-    implementation(dependencies.Deps.Global.refelect)
+    implementation(dependencies.Dependencies.kotlin.values())
     implementation(dependencies.Deps.Presentation.androidCoroutine)
     //endregion
 
@@ -106,14 +104,8 @@ dependencies {
     implementation(dependencies.Deps.Presentation.quickDialog)
     //endregion
 
-    //region Anko
-    implementation(dependencies.Deps.Presentation.anko)
-    implementation(dependencies.Deps.Presentation.ankoSdk25)
-    implementation(dependencies.Deps.Presentation.ankoV7)
-    implementation(dependencies.Deps.Presentation.ankoCoroutine)
-    implementation(dependencies.Deps.Presentation.ankoV7Coroutine)
-    implementation(dependencies.Deps.Presentation.ankoCoroutines)
-    //endregion
+    // Anko
+    implementation(dependencies.Dependencies.preziAnko.values())
 
     //region DI
     implementation(dependencies.Deps.Global.kodeinJVM) {
@@ -140,10 +132,11 @@ dependencies {
         exclude(group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-core")
     }
     implementation(dependencies.Deps.Presentation.okhttp)
-    implementation(dependencies.Deps.Presentation.okhttpLogging)
     implementation(dependencies.Deps.Presentation.glide)
-    implementation(dependencies.Deps.GlobalDebug.okHttpProfiler)
     implementation(dependencies.Deps.Presentation.jsoup)
+
+    implementation(dependencies.Deps.Presentation.okhttpLogging)
+    implementation(dependencies.Deps.GlobalDebug.okHttpProfiler)
     //endregion
 
     //region Firebase & Database
@@ -154,23 +147,13 @@ dependencies {
     implementation(dependencies.Deps.Presentation.mmkv)
     //endregion
 
-    //region Android extension
-    implementation(dependencies.Deps.Presentation.ktx)
-    implementation(dependencies.Deps.Presentation.lifecycle)
-    //endregion
+    // Android Ktx
+    implementation(dependencies.Dependencies.preziKtx.values())
 
     //region Androidx SDK
-    implementation(dependencies.Deps.Presentation.dexTool)
-    implementation(dependencies.Deps.Presentation.appcompat)
-    implementation(dependencies.Deps.Presentation.materialDessign)
-    implementation(dependencies.Deps.Presentation.recyclerview)
-    implementation(dependencies.Deps.Presentation.cardview)
-    implementation(dependencies.Deps.Presentation.annot)
-    implementation(dependencies.Deps.Presentation.constraintLayout)
-    implementation(dependencies.Deps.Presentation.coordinatorLayout)
-    implementation(dependencies.Deps.Presentation.navigationUi)
-    implementation(dependencies.Deps.Presentation.navigationFragment)
-    implementation(dependencies.Deps.Presentation.worker)
+    implementation(dependencies.Dependencies.commonAndroidx.values() +
+            dependencies.Dependencies.preziAndroidx.values())
+    kapt(dependencies.Deps.Presentation.lifecycleCompiler)
 
     implementation(dependencies.Deps.Presentation.idlingEspresso)
     //endregion

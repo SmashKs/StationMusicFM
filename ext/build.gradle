@@ -34,8 +34,7 @@ tasks.whenObjectAdded {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation(dependencies.Deps.Global.kotlin)
-    implementation(dependencies.Deps.Global.coroutine)
+    implementation(dependencies.Dependencies.kotlin.values())
 
     testImplementation(dependencies.Deps.GlobalTest.kotlin)
     testImplementation(dependencies.Deps.GlobalTest.mockito) {

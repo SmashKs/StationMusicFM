@@ -84,8 +84,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation([project(":domain"), project(":ext")])
 
-    implementation(dependencies.Deps.Global.kotlin)
-    implementation(dependencies.Deps.Global.coroutine)
+    implementation(dependencies.Dependencies.commonAndroidx.values())
+    implementation(dependencies.Dependencies.kotlin.values())
     implementation(dependencies.Deps.Global.shaver) {
         exclude(group: "io.reactivex.rxjava2")
     }

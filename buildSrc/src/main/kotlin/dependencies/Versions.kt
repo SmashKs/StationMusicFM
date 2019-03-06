@@ -39,10 +39,10 @@ object Versions {
      * Related Android component lib version.
      */
     object AndroidComponent {
+        const val material = "1.1.0-alpha03"
         const val androidx = "1.0.0"
-        const val annotation = "1.0.1"
+        const val annotation = "1.0.2"
         const val appCompat = "1.1.0-alpha02"
-        const val fragment = "1.1.0-alpha03"
         const val cardView = androidx
         const val recyclerView = appCompat
         const val constraintLayout = "2.0.0-alpha3"
@@ -64,6 +64,7 @@ object Versions {
         const val adaptiveRecyclerView = "1.0.11"
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.1.2"
+        const val dialog = "1.0.6"
     }
 
     /**
@@ -72,15 +73,19 @@ object Versions {
     object KotlinAndroidExt {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
-        const val ktx = "1.1.0-alpha04"
         const val kinfer = "2.1.9"
+        const val ktx = "1.1.0-alpha04"
+        const val fragmentKtx = ktx
+        const val paletteKtx = "1.0.0"
+        const val collectionKtx = "1.1.0-alpha02"
+        const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
+        const val navigationKtx = "1.0.0-rc02"
+        const val workKtx = "1.0.0"
     }
 
     object AndroidArchitectureComponent {
         const val aacLifecycle = "2.1.0-alpha02"
-        const val navigation = "1.0.0-beta02"
         const val room = "2.1.0-alpha01"
-        const val worker = "1.0.0-rc01"
     }
 
     /**
@@ -144,14 +149,6 @@ object Versions {
     object Parser {
         const val gson = "2.8.5"
         const val jsoup = "1.10.3"
-    }
-
-    /**
-     * Related Android UI lib version.
-     */
-    object Ui {
-        const val material = "1.1.0-alpha03"
-        const val dialog = "1.0.6"
     }
 
     /**

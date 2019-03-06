@@ -31,7 +31,7 @@ object Deps {
      */
     object Global {
         const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.Kotlin.kotlinLib}"
-        const val refelect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.Kotlin.kotlinLib}"
+        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.Kotlin.kotlinLib}"
         const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.kotlinCoroutine}"
 
         const val rxJava2 = "io.reactivex.rxjava2:rxjava:${Versions.RxDep.rxJava2}"
@@ -84,66 +84,71 @@ object Deps {
      */
     object Presentation {
         const val dexTool = "androidx.multidex:multidex:${Versions.KotlinAndroidExt.dex}"
+        // Anko
         const val anko = "org.jetbrains.anko:anko-commons:${Versions.KotlinAndroidExt.anko}"
         const val ankoSdk25 = "org.jetbrains.anko:anko-sdk25:${Versions.KotlinAndroidExt.anko}"
         const val ankoV7 = "org.jetbrains.anko:anko-appcompat-v7:${Versions.KotlinAndroidExt.anko}"
         const val ankoCoroutine = "org.jetbrains.anko:anko-sdk25-coroutines:${Versions.KotlinAndroidExt.anko}"
         const val ankoV7Coroutine = "org.jetbrains.anko:anko-appcompat-v7-coroutines:${Versions.KotlinAndroidExt.anko}"
         const val ankoCoroutines = "org.jetbrains.anko:anko-coroutines:${Versions.KotlinAndroidExt.anko}"
-        const val ktx = "androidx.core:core-ktx:${Versions.KotlinAndroidExt.ktx}"
-        const val knifer = "com.devrapid.jieyi:kotlinknifer:${Versions.KotlinAndroidExt.kinfer}"
         const val androidCoroutine =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.kotlinCoroutine}"
-
+        // Jieyi Utils
+        const val knifer = "com.devrapid.jieyi:kotlinknifer:${Versions.KotlinAndroidExt.kinfer}"
+        // Rx
         const val rxBus = "com.hwangjr.rxbus:rxbus:${Versions.RxDep.rxBus}"
         const val rxPermission = "com.tbruyelle.rxpermissions2:rxpermissions:${Versions.RxDep.rxPermission2}"
-
+        // Internet
         const val retrofit2 = Data.retrofit2
         const val retrofit2Gson = Data.retrofit2ConverterGson
         const val retrofit2Courtine = Data.retrofit2AdapterCoroutine
         const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Network.okhttp3}"
         const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.Network.okhttp3}"
-
-        const val glide = "com.github.bumptech.glide:glide:${Versions.Network.glide}"
         const val jsoup = "org.jsoup:jsoup:${Versions.Network.jsoup}"
-
-        const val mmkv = "com.tencent:mmkv:${Versions.Database.mmkv}"
-
+        // Internet for image
+        const val glide = "com.github.bumptech.glide:glide:${Versions.Network.glide}"
+        // Storage (cloud & local)
         const val firebaseCore = "com.google.firebase:firebase-core:${Versions.Firebase.core}"
         const val firebaseDB = "com.google.firebase:firebase-database:${Versions.Firebase.database}"
         const val firebaseAuth = "com.google.firebase:firebase-auth:${Versions.Firebase.auth}"
         const val firebaseMessaging = "com.google.firebase:firebase-messaging:${Versions.Firebase.messaging}"
-
         const val cloudinary = "com.cloudinary:cloudinary-android:${Versions.CloudStore.cloudinary}"
-
+        const val mmkv = "com.tencent:mmkv:${Versions.Database.mmkv}"
         const val room = Data.room
-
+        // UI extensions
         const val arv = "com.devrapid.jieyi:adaptiverecyclerview:${Versions.ViewComponent.adaptiveRecyclerView}"
-
-        const val quickDialog = "com.devrapid.jieyi:dialogbuilder:${Versions.Ui.dialog}"
-
-        const val materialDessign = "com.google.android.material:material:${Versions.Ui.material}"
+        const val quickDialog = "com.devrapid.jieyi:dialogbuilder:${Versions.ViewComponent.dialog}"
+        const val shapeOfView = "com.github.florent37:shapeofview:${Versions.ViewComponent.shapeOfView}"
+        const val realtimeBlur = "com.github.mmin18:realtimeblurview:${Versions.ViewComponent.realtimeBlur}"
+        // Android Jetpack
+        const val materialDesign = "com.google.android.material:material:${Versions.AndroidComponent.material}"
         const val appcompat = "androidx.appcompat:appcompat:${Versions.AndroidComponent.appCompat}"
         const val annot = "androidx.annotation:annotation:${Versions.AndroidComponent.annotation}"
-        const val fragment = "androidx.fragment:fragment:${Versions.AndroidComponent.fragment}"
         const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.AndroidComponent.recyclerView}"
         const val cardview = "androidx.cardview:cardview:${Versions.AndroidComponent.cardView}"
         const val constraintLayout =
             "androidx.constraintlayout:constraintlayout:${Versions.AndroidComponent.constraintLayout}"
         const val coordinatorLayout =
             "androidx.coordinatorlayout:coordinatorlayout:${Versions.AndroidComponent.coordinatorLayout}"
-        const val navigationUi =
-            "android.arch.navigation:navigation-fragment-ktx:${Versions.AndroidArchitectureComponent.navigation}"
-        const val navigationFragment =
-            "android.arch.navigation:navigation-ui-ktx:${Versions.AndroidArchitectureComponent.navigation}"
-        const val lifecycle =
+        const val lifecycle =  // ViewModel and LiveData
             "androidx.lifecycle:lifecycle-extensions:${Versions.AndroidArchitectureComponent.aacLifecycle}"
-        const val worker = "android.arch.work:work-runtime-ktx:${Versions.AndroidArchitectureComponent.worker}"
-
+        const val lifecycleCompiler =
+            "android.arch.lifecycle:compiler:${Versions.AndroidArchitectureComponent.aacLifecycle}"
+        // Android Ktx
+        const val ktx = "androidx.core:core-ktx:${Versions.KotlinAndroidExt.ktx}"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.KotlinAndroidExt.fragmentKtx}"
+        const val paletteKtx = "androidx.palette:palette-ktx:${Versions.KotlinAndroidExt.paletteKtx}"
+        const val collectionKtx = "androidx.collection:collection-ktx:${Versions.KotlinAndroidExt.collectionKtx}"
+        const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.KotlinAndroidExt.viewmodelKtx}"
+        const val navigationCommonKtx =
+            "android.arch.navigation:navigation-common-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
+        const val navigationFragmentKtx =
+            "android.arch.navigation:navigation-fragment-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
+        const val navigationUiKtx =
+            "android.arch.navigation:navigation-ui-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
+        const val workerKtx = "android.arch.work:work-runtime-ktx:${Versions.KotlinAndroidExt.workKtx}"
+        // Testing stub
         const val idlingEspresso = "androidx.test.espresso:espresso-idling-resource:${Versions.Test.espresso}"
-
-        const val shapeOfView = "com.github.florent37:shapeofview:${Versions.ViewComponent.shapeOfView}"
-        const val realtimeBlur = "com.github.mmin18:realtimeblurview:${Versions.ViewComponent.realtimeBlur}"
     }
 
     /**

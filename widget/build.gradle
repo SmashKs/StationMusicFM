@@ -58,7 +58,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation(project(":ext"))
 
-    implementation(dependencies.Deps.Global.kotlin)
+    implementation(dependencies.Dependencies.kotlin.values())
 
     implementation(dependencies.Deps.Widget.appcompat)
     implementation(dependencies.Deps.Presentation.arv)
