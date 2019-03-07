@@ -30,8 +30,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_album_backdrop"
@@ -82,13 +81,18 @@
             style="@style/MusicTextView.FitWidth"
             android:layout_marginTop="@dimen/md_one_unit"
             android:gravity="center"
+            android:textSize="@dimen/text_size_title"
             app:layout_constraintTop_toBottomOf="@+id/sov_artist_icon"
             tools:text="@tools:sample/full_names"/>
 
         <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
             android:id="@+id/ftv_album_wiki"
-            style="@style/MusicTextView.FitWidth"
+            style="@style/Constraint.Wrap.FitWidth"
+            android:layout_marginEnd="@dimen/md_two_unit"
+            android:layout_marginStart="@dimen/md_two_unit"
             android:layout_marginTop="@dimen/md_two_unit"
+            android:fontFamily="@font/cambay"
+            android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/ftv_album_name"
             tools:text="@tools:sample/lorem/random"/>
 

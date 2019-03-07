@@ -67,6 +67,48 @@ private fun <E> RespMutableLiveData<E>.preProc(block: suspend () -> Unit) = runB
 }
 
 /**
+ * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state
+ * changing and the state becomes [Success] when retrieving a data from RankInfoData layer by Kotlin coroutine.
+ *
+ * Also, unboxing the [ResponseState] and obtaining the data inside of the [ResponseState], then return the
+ * data to [RespMutableLiveData].
+ */
+fun <E, R> NotifMutableLiveData<R>.reqDataMap(
+    usecaseRes: suspend () -> ResponseState<E>,
+    transformBlock: (E) -> R
+) = preProc {
+    // Fetching the data from the data layer.
+    tryResp {
+        val data = usecaseRes().data ?: return@tryResp ResponseState.Error<R>(msg = "Don't have any response.")
+        ResponseState.Success(transformBlock(data))
+    }.let(this@reqDataMap::postValue)
+}
+
+/**
+ * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state
+ * changing and the state becomes [Success] when retrieving a data from RankInfoData layer by Kotlin coroutine.
+ */
+infix fun <E> NotifMutableLiveData<E>.reqData(usecaseRes: suspend () -> E) = preProc {
+    // Fetching the data from the data layer.
+    tryResp { ResponseState.Success(usecaseRes()) }.let(this@reqData::postValue)
+}
+
+infix fun <E> NotifMutableLiveData<E>.reqDataWrap(usecaseRes: suspend () -> ResponseState<E>) = preProc {
+    // Fetching the data from the data layer.
+    tryResp { usecaseRes() }.let(this@reqDataWrap::postValue)
+}
+
+/**
+ * Pre-process does that showing the loading view.
+ */
+private fun <E> NotifMutableLiveData<E>.preProc(block: suspend () -> Unit) = runBlocking {
+    // Opening the loading view.
+    postValue(ResponseState.Loading())
+    // Fetching the data from the data layer.
+    block()
+}
+
+/**
  * Wrapping the `try catch` and ignoring the return value.
  */
 private inline fun <E> tryResp(block: () -> ResponseState<E>) = try {

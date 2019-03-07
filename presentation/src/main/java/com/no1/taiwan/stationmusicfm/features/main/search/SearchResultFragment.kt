@@ -33,6 +33,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -50,6 +51,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
+    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private var isFirstComing = true
 
     override fun onResume() {
@@ -73,7 +75,10 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 switchStub(true)
                 adapter.replaceWholeList(cast(it.items))
                 if (isFirstComing) {
-                    initRecyclerViewWith(find(R.id.v_result), adapter, linearLayoutManager(), decoration)
+                    initRecyclerViewWith(find(R.id.v_result),
+                                         adapter,
+                                         linearLayoutManager(),
+                                         listOf(decoration, actionBarBlankDecoration))
                     isFirstComing = false
                 }
             } happenError {

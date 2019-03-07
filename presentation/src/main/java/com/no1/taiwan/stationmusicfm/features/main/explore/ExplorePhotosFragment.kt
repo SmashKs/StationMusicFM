@@ -31,7 +31,7 @@ import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseFragment
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
@@ -45,7 +45,7 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
         private const val ARGUMENT_ARTIST_NAME = "fragment argument name"
         private const val ARGUMENT_ARTIST_PHOTOS = "fragment argument photo"
 
-        fun createBundle(artistName: String, list: List<ArtistInfoEntity.PhotoEntity>) =
+        fun createBundle(artistName: String, list: List<PhotoEntity>) =
             bundleOf(ARGUMENT_ARTIST_NAME to artistName,
                      ARGUMENT_ARTIST_PHOTOS to list)
     }
@@ -56,7 +56,7 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
     private val adapter: MusicAdapter by instance()
     private val name by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
-    private val preloadList by extraNotNull<ArrayList<ArtistInfoEntity.PhotoEntity>>(ARGUMENT_ARTIST_PHOTOS)
+    private val preloadList by extraNotNull<ArrayList<PhotoEntity>>(ARGUMENT_ARTIST_PHOTOS)
 
     /**
      * For separating the huge function code in [rendered]. Initialize all view components here.

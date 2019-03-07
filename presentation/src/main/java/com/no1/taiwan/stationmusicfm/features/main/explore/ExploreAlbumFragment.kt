@@ -28,11 +28,14 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.decorateGradientMask
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.isNull
@@ -57,7 +60,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -83,6 +85,9 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
                      ARGUMENT_ARTIST_THUMB_URI to artistThumbUri)
     }
 
+    override val backDrawable by lazy {
+        R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
+    }
     //region Parameter
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
     private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
@@ -103,8 +108,8 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
             peel {
                 find<TextView>(R.id.ftv_published_at).text = it.wiki.published
                 find<TextView>(R.id.ftv_tags).text = it.tags.map(TagInfoEntity.TagEntity::name).joinToString("\n")
-                find<TextView>(R.id.ftv_album_wiki).text = it.wiki.summary
-                adapter.append(cast<MusicVisitables>(it.tracks))
+                find<TextView>(R.id.ftv_album_wiki).text = it.wiki.summary.parseAsHtml()
+                adapter.replaceWholeList(cast(it.tracks))
             } happenError {
                 loge(it)
             } doWith this@ExploreAlbumFragment
@@ -144,7 +149,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
      *
      * @return [String] action bar title.
      */
-    override fun actionBarTitle() = albumName
+    override fun actionBarTitle() = "<font color='#ffffff'>$albumName</font>".parseAsHtml()
 
     /**
      * Set the parentView for inflating.

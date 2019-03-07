@@ -178,8 +178,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     private fun setArtistInfo(artist: ArtistEntity) {
         find<ImageView>(R.id.iv_artist_backdrop).loadByAny(artist.images.last().text)
         find<ImageView>(R.id.iv_artist_thumbnail).loadByAny(artist.images.last().text)
-        find<TextView>(R.id.ftv_artist_name).text = artist.name
         find<TextView>(R.id.ftv_tags).text = artist.tags.joinToString("\n", transform = TagEntity::name)
+        find<TextView>(R.id.ftv_mics).text = artist.listeners
     }
 
     private fun getTabView(position: Int) = inflater.inflate(R.layout.tabitem_introduction, null).apply {
