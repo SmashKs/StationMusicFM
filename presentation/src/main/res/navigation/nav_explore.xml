@@ -46,7 +46,7 @@
     <fragment
         android:id="@+id/frag_explore_artist"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment"
-        android:label="Explore"
+        android:label="artistName"
         tools:layout="@layout/fragment_explore_artist">
         <action
             android:id="@+id/action_frag_explore_artist_self"

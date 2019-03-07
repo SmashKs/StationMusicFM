@@ -23,6 +23,7 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "org.jetbrains.kotlin.kapt"
+//apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion dependencies.Versions.Android.compileSdk
@@ -94,7 +95,7 @@ dependencies {
     implementation(project(":ext"))
 
     //region Kotlin
-    implementation(dependencies.Dependencies.kotlin.values())
+    implementation(dependencies.Dependencies.kotlinAndroid.values())
     implementation(dependencies.Deps.Presentation.androidCoroutine)
     //endregion
 

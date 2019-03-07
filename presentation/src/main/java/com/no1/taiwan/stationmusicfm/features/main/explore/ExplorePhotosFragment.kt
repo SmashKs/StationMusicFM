@@ -21,9 +21,13 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
+import android.graphics.Color
 import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.extraNotNull
+import com.devrapid.kotlinknifer.toDrawable
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
@@ -44,6 +48,9 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
                      ARGUMENT_ARTIST_PHOTOS to list)
     }
 
+    override val backDrawable by lazy {
+        R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
+    }
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
     private val adapter: MusicAdapter by instance()
     private val name by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
@@ -58,6 +65,13 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
         adapter.appendList(preloadList.toMutableList())
         initRecyclerViewWith(find(R.id.rv_photos), adapter, linearLayoutManager())
     }
+
+    /**
+     * Set fragment title into action bar.
+     *
+     * @return [String] action bar title.
+     */
+    override fun actionBarTitle() = "<font color='#ffffff'>$name</font>".parseAsHtml()
 
     /**
      * Set the parentView for inflating.

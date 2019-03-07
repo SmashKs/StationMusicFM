@@ -91,7 +91,7 @@ class MainActivity : BaseActivity() {
             finish()
             return
         }
-        super.onBackPressed()
+        fragmentIndexNavigator.navigateUp()
     }
 
     private fun searchViewSetting() {

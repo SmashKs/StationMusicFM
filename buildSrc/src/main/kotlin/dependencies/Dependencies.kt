@@ -22,11 +22,18 @@
 package dependencies
 
 object Dependencies {
-    val kotlin = hashMapOf(
+    private val basicKotlin = hashMapOf(
         "kotlin" to Deps.Global.kotlin,
-        "reflect" to Deps.Global.reflect,
-        "coroutine" to Deps.Global.coroutine
+        "reflect" to Deps.Global.reflect
     )
+
+    val kotlinAndroid = basicKotlin.apply {
+        put("coroutineForAndroid", Deps.Presentation.androidCoroutine)
+    }
+
+    val kotlin = basicKotlin.apply {
+        put("coroutine", Deps.Global.coroutine)
+    }
 
     val commonAndroidx = hashMapOf(
         "appcompat" to Deps.Presentation.appcompat,

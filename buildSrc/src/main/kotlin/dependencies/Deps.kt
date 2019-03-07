@@ -84,6 +84,8 @@ object Deps {
      */
     object Presentation {
         const val dexTool = "androidx.multidex:multidex:${Versions.KotlinAndroidExt.dex}"
+        const val androidCoroutine =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.kotlinCoroutine}"
         // Anko
         const val anko = "org.jetbrains.anko:anko-commons:${Versions.KotlinAndroidExt.anko}"
         const val ankoSdk25 = "org.jetbrains.anko:anko-sdk25:${Versions.KotlinAndroidExt.anko}"
@@ -91,8 +93,6 @@ object Deps {
         const val ankoCoroutine = "org.jetbrains.anko:anko-sdk25-coroutines:${Versions.KotlinAndroidExt.anko}"
         const val ankoV7Coroutine = "org.jetbrains.anko:anko-appcompat-v7-coroutines:${Versions.KotlinAndroidExt.anko}"
         const val ankoCoroutines = "org.jetbrains.anko:anko-coroutines:${Versions.KotlinAndroidExt.anko}"
-        const val androidCoroutine =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.kotlinCoroutine}"
         // Jieyi Utils
         const val knifer = "com.devrapid.jieyi:kotlinknifer:${Versions.KotlinAndroidExt.kinfer}"
         // Rx

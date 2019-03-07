@@ -85,7 +85,7 @@ dependencies {
     implementation([project(":domain"), project(":ext")])
 
     implementation(dependencies.Dependencies.commonAndroidx.values())
-    implementation(dependencies.Dependencies.kotlin.values())
+    implementation(dependencies.Dependencies.kotlinAndroid.values())
     implementation(dependencies.Deps.Global.shaver) {
         exclude(group: "io.reactivex.rxjava2")
     }
