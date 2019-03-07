@@ -57,6 +57,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -103,7 +104,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
                 find<TextView>(R.id.ftv_published_at).text = it.wiki.published
                 find<TextView>(R.id.ftv_tags).text = it.tags.map(TagInfoEntity.TagEntity::name).joinToString("\n")
                 find<TextView>(R.id.ftv_album_wiki).text = it.wiki.summary
-                adapter.appendList(cast(it.tracks))
+                adapter.append(cast<MusicVisitables>(it.tracks))
             } happenError {
                 loge(it)
             } doWith this@ExploreAlbumFragment

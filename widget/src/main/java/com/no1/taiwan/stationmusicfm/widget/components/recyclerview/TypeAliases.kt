@@ -35,3 +35,5 @@ typealias MusicViewHolder = AdaptiveViewHolder<MultiTypeFactory, MusicMultiVisit
 typealias MusicMultiVisitable = IVisitable<MultiTypeFactory>
 typealias MusicAdapter = AdaptiveAdapter<MultiTypeFactory, MusicMultiVisitable, MusicViewHolder>
 typealias MusicMultiDiffUtil = AdaptiveDiffUtil<MultiTypeFactory, MusicMultiVisitable>
+
+typealias MusicVisitables = MutableList<MusicMultiVisitable>

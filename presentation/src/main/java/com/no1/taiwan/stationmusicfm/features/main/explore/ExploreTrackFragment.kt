@@ -47,6 +47,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -81,7 +82,7 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
                         bitmap.decorateGradientMask(shader)
                     }
                 }
-                adapter.appendList(cast(similarTracks.tracks))
+                adapter.append(cast<MusicVisitables>(similarTracks.tracks))
             } happenError {
                 loge(it)
             } doWith this@ExploreTrackFragment

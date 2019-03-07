@@ -28,12 +28,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.toDrawable
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -62,7 +64,7 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         // Preload from the previous fragment.
-        adapter.appendList(preloadList.toMutableList())
+        adapter.append(cast<MusicVisitables>(preloadList))
         initRecyclerViewWith(find(R.id.rv_photos), adapter, linearLayoutManager())
     }
 

@@ -49,6 +49,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -75,21 +76,21 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.topTracks) {
             peel {
-                trackAdapter.appendList(cast(it.tracks))
+                trackAdapter.append(cast<MusicVisitables>(it.tracks))
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topArtists) {
             peel {
-                artistAdapter.appendList(cast(it.artists))
+                artistAdapter.append(cast<MusicVisitables>(it.artists))
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topTags) {
             peel {
-                genreAdapter.appendList(cast(it.tags))
+                genreAdapter.append(cast<MusicVisitables>(it.tags))
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment

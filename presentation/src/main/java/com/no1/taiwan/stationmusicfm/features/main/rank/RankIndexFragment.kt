@@ -43,6 +43,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -61,8 +62,8 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
         observeNonNull(vm.rankIds) {
             peel {
                 if (it.isEmpty()) return@peel
-                topperAdapter.appendList(cast(it.subList(0, 4).toMutableList()))
-                chartAdapter.appendList(cast(it.subList(4, it.size - 1).map {
+                topperAdapter.append(cast<MusicVisitables>(it.subList(0, 4).toMutableList()))
+                chartAdapter.append(cast<MusicVisitables>(it.subList(4, it.size - 1).map {
                     RankingIdForChartItem(it.id, it.title, it.update, it.topTrackUri, it.trackNumber)
                 }))
             } happenError {

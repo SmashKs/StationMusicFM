@@ -43,6 +43,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -64,7 +65,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.rankMusic) {
             peel {
-                songAdapter.appendList(cast(it.songs))
+                songAdapter.append(cast<MusicVisitables>(it.songs))
                 vm.runTaskUpdateRankItem(rankId, it.songs.first().oriCoverUrl, it.songs.size)
             } happenError {
                 loge(it)

@@ -56,6 +56,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -83,9 +84,9 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
         observeNonNull(vm.tagInfoLiveData) {
             peel { (tag, artist, album, tracks) ->
                 find<TextView>(R.id.ftv_genre_about).text = tag.wiki.content.parseAsHtml().toSpannable()
-                albumAdapter.appendList(cast(album.albums))
-                artistAdapter.appendList(cast(artist.artists))
-                trackAdapter.appendList(cast(tracks.tracks))
+                albumAdapter.append(cast<MusicVisitables>(album.albums))
+                artistAdapter.append(cast<MusicVisitables>(artist.artists))
+                trackAdapter.append(cast<MusicVisitables>(tracks.tracks))
             } happenError {
                 loge(it)
             } doWith this@ExploreGenreFragment
