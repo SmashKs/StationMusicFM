@@ -94,19 +94,22 @@ class MainActivity : BaseActivity() {
         fragmentIndexNavigator.navigateUp()
     }
 
+    fun performKeywordSubmit(query: String) {
+        onQuerySubmit?.invoke(query)
+        searchItem?.collapseActionView()
+
+        when (currentFragment) {
+            is SearchIndexFragment -> fragmentIndexNavigator.navigate(R.id.action_frag_search_index_to_frag_search_result)
+            is SearchResultFragment -> cast<SearchResultFragment>(currentFragment).searchMusicBy(query)
+        }
+    }
+
     private fun searchViewSetting() {
         cast<SearchView>(searchItem?.actionView).apply {
             queryHint = "a keyword of artist, album, tracks..."
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    onQuerySubmit?.invoke(query)
-                    searchItem?.collapseActionView()
-
-                    when (currentFragment) {
-                        is SearchIndexFragment -> fragmentIndexNavigator.navigate(R.id.action_frag_search_index_to_frag_search_result)
-                        is SearchResultFragment -> cast<SearchResultFragment>(currentFragment).searchMusicBy(query)
-                    }
-
+                    performKeywordSubmit(query)
                     return true
                 }
 

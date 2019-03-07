@@ -35,6 +35,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.HistoryAdapter
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -121,9 +122,20 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
      * @event_from [com.no1.taiwan.stationmusicfm.features.main.search.viewholders.SearchHistoryViewHolder.initView]
      * @param keyword the keyword of searching.
      */
-    @Subscribe(tags = [Tag(TAG_SAVING_SEARCH_HIST)])
+    @Subscribe(tags = [Tag(TAG_REMOVING_SEARCH_HIST)])
     fun removeKeyword(keyword: String) {
         dropWord = keyword
         vm.runTaskDeleteHistory(keyword)
+    }
+
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.search.viewholders.SearchHistoryViewHolder.initView]
+     * @param keyword the keyword of searching.
+     */
+    @Subscribe(tags = [Tag(TAG_SAVING_SEARCH_HIST)])
+    fun searchByHistory(keyword: String) {
+        keepKeywordIntoViewModel(keyword)
+        vm.runTaskAddHistory(keyword)
+        parent.performKeywordSubmit(keyword)
     }
 }
