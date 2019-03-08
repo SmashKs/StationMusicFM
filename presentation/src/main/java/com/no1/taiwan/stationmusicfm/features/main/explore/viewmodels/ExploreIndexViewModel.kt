@@ -21,23 +21,22 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackReq
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistsEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity.TagsEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TracksEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.data
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
@@ -49,17 +48,17 @@ class ExploreIndexViewModel(
     private val fetchChartTopTrackCase: FetchChartTopTrackCase,
     private val fetchChartTopArtistCase: FetchChartTopArtistCase,
     private val fetchChartTopTagCase: FetchChartTopTagCase,
-    private val mapperPool: PreziMapperPool
-) : AutoViewModel() {
-    private val _topTracks by lazy { RespMutableLiveData<TrackInfoEntity.TracksEntity>() }
-    val topTracks: RespLiveData<TrackInfoEntity.TracksEntity> = _topTracks
-    private val _topArtists by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsEntity>() }
-    val topArtists: RespLiveData<ArtistInfoEntity.ArtistsEntity> = _topArtists
-    private val _topTags by lazy { RespMutableLiveData<TagInfoEntity.TagsEntity>() }
-    val topTags: RespLiveData<TagInfoEntity.TagsEntity> = _topTags
-    private val topTracksMapper by lazy { cast<TracksPMapper>(mapperPool[TracksPMapper::class.java]) }
-    private val topArtistsMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
-    private val topTagsMapper by lazy { cast<TagsPMapper>(mapperPool[TagsPMapper::class.java]) }
+    diggerDelegate: PreziMapperDigger
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+    private val _topTracks by lazy { RespMutableLiveData<TracksEntity>() }
+    val topTracks: RespLiveData<TracksEntity> = _topTracks
+    private val _topArtists by lazy { RespMutableLiveData<ArtistsEntity>() }
+    val topArtists: RespLiveData<ArtistsEntity> = _topArtists
+    private val _topTags by lazy { RespMutableLiveData<TagsEntity>() }
+    val topTags: RespLiveData<TagsEntity> = _topTags
+    private val topTracksMapper by lazy { digMapper(TracksPMapper::class) }
+    private val topArtistsMapper by lazy { digMapper(ArtistsPMapper::class) }
+    private val topTagsMapper by lazy { digMapper(TagsPMapper::class) }
 
     fun runTaskFetchTopTrack(limit: Int = Pager.LIMIT) = GlobalScope.launch {
         var params = FetchChartTopTrackReq()

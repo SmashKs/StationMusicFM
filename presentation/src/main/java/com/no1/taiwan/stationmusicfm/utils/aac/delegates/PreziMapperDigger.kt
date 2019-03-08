@@ -19,20 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di
+package com.no1.taiwan.stationmusicfm.utils.aac.delegates
 
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDelegate
-import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import com.no1.taiwan.stationmusicfm.entities.PreziMapper
+import kotlin.reflect.KClass
 
-object PresentationModule {
-    fun kitsProvider() = Kodein.Module("Presentation Util Module") {
-        /** Mapper Pool for providing all data mappers */
-        bind<PreziMapperPool>() with singleton { instance<PreziMapperEntries>().toMap() }
-        bind<PreziMapperDigger>() with singleton { PreziMapperDelegate(instance()) }
-    }
+interface PreziMapperDigger {
+    /**
+     * Get a mapper object from the mapper pool.
+     *
+     * @param klass the data type of the the mapper.
+     */
+    fun <PM : PreziMapper> digMapper(klass: KClass<PM>): PM
 }

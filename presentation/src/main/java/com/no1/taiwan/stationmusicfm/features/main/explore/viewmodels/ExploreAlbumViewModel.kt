@@ -21,14 +21,13 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.AlbumParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumReq
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.AlbumEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
@@ -38,11 +37,11 @@ import kotlinx.coroutines.launch
 
 class ExploreAlbumViewModel(
     private val fetchAlbumCase: FetchAlbumCase,
-    private val mapperPool: PreziMapperPool
-) : AutoViewModel() {
-    private val _albumLiveData by lazy { NotifMutableLiveData<AlbumInfoEntity.AlbumEntity>() }
-    val albumLiveData: NotifLiveData<AlbumInfoEntity.AlbumEntity> = _albumLiveData
-    private val albumMapper by lazy { cast<AlbumPMapper>(mapperPool[AlbumPMapper::class.java]) }
+    diggerDelegate: PreziMapperDigger
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+    private val _albumLiveData by lazy { NotifMutableLiveData<AlbumEntity>() }
+    val albumLiveData: NotifLiveData<AlbumEntity> = _albumLiveData
+    private val albumMapper by lazy { digMapper(AlbumPMapper::class) }
 
     fun runTaskFetchAlbum(mbid: String, albumName: String, artistName: String) = GlobalScope.launch {
         _albumLiveData reqData {

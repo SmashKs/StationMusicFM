@@ -26,6 +26,8 @@ import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.LocalDataStore
 import com.no1.taiwan.stationmusicfm.data.datastores.RemoteDataStore
+import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDelegate
+import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDigger
 import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
 import com.no1.taiwan.stationmusicfm.data.repositories.HistoryDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
@@ -64,6 +66,7 @@ object RepositoryModule {
         }
         /** Mapper Pool for providing all data mappers */
         bind<DataMapperPool>() with singleton { instance<DataMapperEntries>().toMap() }
+        bind<DataMapperDigger>() with singleton { DataMapperDelegate(instance()) }
 
         // Repositories into mapper
         bind<OthersRepository>() with singleton {

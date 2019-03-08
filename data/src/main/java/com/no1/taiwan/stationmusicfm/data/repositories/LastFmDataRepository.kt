@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.data.repositories
 
-import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.AlbumDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.ArtistPhotosDMapper
@@ -33,6 +32,7 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TrackDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksWithStreamableDMapper
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
+import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDigger
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.ext.exceptions.EmptyException
@@ -44,23 +44,24 @@ import kotlinx.coroutines.async
  * Also we need to do [async] & [await] one time for getting the data then transform and wrap to Domain layer.
  *
  * @property local from database/file/memory data store.
- * @property mapperPool keeping all of the data mapper here.
+ * @property remote from remote sever/firebase.
+ * @property diggerDelegate keeping all of the data mapper here.
  */
 class LastFmDataRepository constructor(
     private val local: DataStore,
     private val remote: DataStore,
-    mapperPool: DataMapperPool
-) : BaseRepository(mapperPool), LastFmRepository {
-    private val albumMapper by lazy { digDataMapper<AlbumDMapper>() }
-    private val artistMapper by lazy { digDataMapper<ArtistDMapper>() }
-    private val artistsMapper by lazy { digDataMapper<ArtistsDMapper>() }
-    private val tagMapper by lazy { digDataMapper<TagDMapper>() }
-    private val tagsMapper by lazy { digDataMapper<TagsDMapper>() }
-    private val topAlbumMapper by lazy { digDataMapper<TopAlbumDMapper>() }
-    private val trackMapper by lazy { digDataMapper<TrackDMapper>() }
-    private val tracksMapper by lazy { digDataMapper<TracksDMapper>() }
-    private val tracksWithStreamableMapper by lazy { digDataMapper<TracksWithStreamableDMapper>() }
-    private val artistPhotosMapper by lazy { digDataMapper<ArtistPhotosDMapper>() }
+    diggerDelegate: DataMapperDigger
+) : LastFmRepository, DataMapperDigger by diggerDelegate {
+    private val albumMapper by lazy { digMapper(AlbumDMapper::class) }
+    private val artistMapper by lazy { digMapper(ArtistDMapper::class) }
+    private val artistsMapper by lazy { digMapper(ArtistsDMapper::class) }
+    private val tagMapper by lazy { digMapper(TagDMapper::class) }
+    private val tagsMapper by lazy { digMapper(TagsDMapper::class) }
+    private val topAlbumMapper by lazy { digMapper(TopAlbumDMapper::class) }
+    private val trackMapper by lazy { digMapper(TrackDMapper::class) }
+    private val tracksMapper by lazy { digMapper(TracksDMapper::class) }
+    private val tracksWithStreamableMapper by lazy { digMapper(TracksWithStreamableDMapper::class) }
+    private val artistPhotosMapper by lazy { digMapper(ArtistPhotosDMapper::class) }
 
     override suspend fun fetchAlbum(parameters: Parameterable) =
         remote.getAlbumInfo(parameters).album?.run(albumMapper::toModelFrom) ?: throw EmptyException()

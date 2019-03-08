@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.TagParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagCase
@@ -31,17 +30,17 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackReq
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.TopAlbumsEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistsEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity.TagEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TracksTypeGenreEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.features.GenreMixInfo
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
@@ -54,22 +53,22 @@ class ExploreGenreViewModel(
     private val fetchTagTopArtistCase: FetchTagTopArtistCase,
     private val fetchTagTopAlbumCase: FetchTagTopAlbumCase,
     private val fetchTagTopTrackCase: FetchTagTopTrackCase,
-    private val mapperPool: PreziMapperPool
-) : AutoViewModel() {
-    private val _tagLiveData by lazy { RespMutableLiveData<TagInfoEntity.TagEntity>() }
-    val tagLiveData: RespLiveData<TagInfoEntity.TagEntity> = _tagLiveData
-    private val _topArtistsLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.ArtistsEntity>() }
-    val topArtistsLiveData: RespLiveData<ArtistInfoEntity.ArtistsEntity> = _topArtistsLiveData
-    private val _topAlbumsLiveData by lazy { RespMutableLiveData<AlbumInfoEntity.TopAlbumsEntity>() }
-    val topAlbumsLiveData: RespLiveData<AlbumInfoEntity.TopAlbumsEntity> = _topAlbumsLiveData
-    private val _topTracksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksTypeGenreEntity>() }
-    val topTracksLiveData: RespLiveData<TrackInfoEntity.TracksTypeGenreEntity> = _topTracksLiveData
+    diggerDelegate: PreziMapperDigger
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+    private val _tagLiveData by lazy { RespMutableLiveData<TagEntity>() }
+    val tagLiveData: RespLiveData<TagEntity> = _tagLiveData
+    private val _topArtistsLiveData by lazy { RespMutableLiveData<ArtistsEntity>() }
+    val topArtistsLiveData: RespLiveData<ArtistsEntity> = _topArtistsLiveData
+    private val _topAlbumsLiveData by lazy { RespMutableLiveData<TopAlbumsEntity>() }
+    val topAlbumsLiveData: RespLiveData<TopAlbumsEntity> = _topAlbumsLiveData
+    private val _topTracksLiveData by lazy { RespMutableLiveData<TracksTypeGenreEntity>() }
+    val topTracksLiveData: RespLiveData<TracksTypeGenreEntity> = _topTracksLiveData
     private val _tagInfoLiveData by lazy { RespMutableLiveData<GenreMixInfo>() }
     val tagInfoLiveData: RespLiveData<GenreMixInfo> = _tagInfoLiveData
-    private val tagMapper by lazy { cast<TagPMapper>(mapperPool[TagPMapper::class.java]) }
-    private val artistsMapper by lazy { cast<ArtistsPMapper>(mapperPool[ArtistsPMapper::class.java]) }
-    private val albumsMapper by lazy { cast<TopAlbumTypeGenrePMapper>(mapperPool[TopAlbumTypeGenrePMapper::class.java]) }
-    private val tracksMapper by lazy { cast<TracksTypeGenrePMapper>(mapperPool[TracksTypeGenrePMapper::class.java]) }
+    private val tagMapper by lazy { digMapper(TagPMapper::class) }
+    private val artistsMapper by lazy { digMapper(ArtistsPMapper::class) }
+    private val albumsMapper by lazy { digMapper(TopAlbumTypeGenrePMapper::class) }
+    private val tracksMapper by lazy { digMapper(TracksTypeGenrePMapper::class) }
 
     fun runTaskFetchGenreInfo(tagName: String) = GlobalScope.launch {
         val parameters = TagParams(tagName)
@@ -84,7 +83,7 @@ class ExploreGenreViewModel(
             _topAlbumsLiveData.postValue(ResponseState.Success(album))
             _topTracksLiveData.postValue(ResponseState.Success(tracks))
 
-            GenreMixInfo(tag, ArtistInfoEntity.ArtistsEntity(), album, tracks)
+            GenreMixInfo(tag, ArtistsEntity(), album, tracks)
         }
     }
 }

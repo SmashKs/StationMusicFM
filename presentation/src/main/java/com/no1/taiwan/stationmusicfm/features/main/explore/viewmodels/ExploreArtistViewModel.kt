@@ -22,7 +22,6 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
@@ -35,10 +34,11 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopTrackReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistReq
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.TopAlbumsEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistsSimilarEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TracksWithStreamableEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPhotosPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsSimilarPMapper
@@ -46,6 +46,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
 import com.no1.taiwan.stationmusicfm.features.ArtistMixInfo
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
@@ -61,25 +62,25 @@ class ExploreArtistViewModel(
     private val fetchSimilarArtistCase: FetchSimilarArtistCase,
     private val fetchArtistTopTrackCase: FetchArtistTopTrackCase,
     private val fetchArtistPhotoCase: FetchArtistPhotoCase,
-    private val mapperPool: PreziMapperPool
-) : AutoViewModel() {
-    private val _artistLiveData by lazy { NotifMutableLiveData<ArtistInfoEntity.ArtistEntity>() }
-    val artistLiveData: NotifLiveData<ArtistInfoEntity.ArtistEntity> = _artistLiveData
-    private val _albumsLiveData by lazy { NotifMutableLiveData<AlbumInfoEntity.TopAlbumsEntity>() }
-    val albumsLiveData: NotifLiveData<AlbumInfoEntity.TopAlbumsEntity> = _albumsLiveData
-    private val _similarArtistsLiveData by lazy { NotifMutableLiveData<ArtistInfoEntity.ArtistsSimilarEntity>() }
-    val similarArtistsLiveData: NotifLiveData<ArtistInfoEntity.ArtistsSimilarEntity> = _similarArtistsLiveData
-    private val _tracksLiveData by lazy { NotifMutableLiveData<TrackInfoEntity.TracksWithStreamableEntity>() }
-    val tracksLiveData: NotifLiveData<TrackInfoEntity.TracksWithStreamableEntity> = _tracksLiveData
+    diggerDelegate: PreziMapperDigger
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+    private val _artistLiveData by lazy { NotifMutableLiveData<ArtistEntity>() }
+    val artistLiveData: NotifLiveData<ArtistEntity> = _artistLiveData
+    private val _albumsLiveData by lazy { NotifMutableLiveData<TopAlbumsEntity>() }
+    val albumsLiveData: NotifLiveData<TopAlbumsEntity> = _albumsLiveData
+    private val _similarArtistsLiveData by lazy { NotifMutableLiveData<ArtistsSimilarEntity>() }
+    val similarArtistsLiveData: NotifLiveData<ArtistsSimilarEntity> = _similarArtistsLiveData
+    private val _tracksLiveData by lazy { NotifMutableLiveData<TracksWithStreamableEntity>() }
+    val tracksLiveData: NotifLiveData<TracksWithStreamableEntity> = _tracksLiveData
     private val _artistInfoLiveData by lazy { RespMutableLiveData<ArtistMixInfo>() }
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
     private val _photosLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.PhotosEntity>() }
     val photosLiveData: RespLiveData<ArtistInfoEntity.PhotosEntity> = _photosLiveData
-    private val artistMapper by lazy { cast<ArtistPMapper>(mapperPool[ArtistPMapper::class.java]) }
-    private val topAlbumMapper by lazy { cast<TopAlbumPMapper>(mapperPool[TopAlbumPMapper::class.java]) }
-    private val artistsSimilarMapper by lazy { cast<ArtistsSimilarPMapper>(mapperPool[ArtistsSimilarPMapper::class.java]) }
-    private val tracksWithStreamableMapper by lazy { cast<TracksWithStreamablePMapper>(mapperPool[TracksWithStreamablePMapper::class.java]) }
-    private val photosMapper by lazy { cast<ArtistPhotosPMapper>(mapperPool[ArtistPhotosPMapper::class.java]) }
+    private val artistMapper by lazy { digMapper(ArtistPMapper::class) }
+    private val topAlbumMapper by lazy { digMapper(TopAlbumPMapper::class) }
+    private val artistsSimilarMapper by lazy { digMapper(ArtistsSimilarPMapper::class) }
+    private val tracksWithStreamableMapper by lazy { digMapper(TracksWithStreamablePMapper::class) }
+    private val photosMapper by lazy { digMapper(ArtistPhotosPMapper::class) }
 
     private val _lastFindMbid by lazy { MutableLiveData<String>() }
     val lastFindMbid get() = _lastFindMbid.value

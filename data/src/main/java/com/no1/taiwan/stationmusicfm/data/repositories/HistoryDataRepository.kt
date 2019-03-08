@@ -21,17 +21,25 @@
 
 package com.no1.taiwan.stationmusicfm.data.repositories
 
-import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
 import com.no1.taiwan.stationmusicfm.data.data.mappers.others.SearchHistoryDMapper
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
+import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDigger
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.HistoryRepository
 
+/**
+ * The data repository for being responsible for selecting an appropriate data store to access
+ * the data.
+ * Also we need to do [async] & [await] one time for getting the data then transform and wrap to Domain layer.
+ *
+ * @property local from database/file/memory data store.
+ * @property diggerDelegate keeping all of the data mapper here.
+ */
 class HistoryDataRepository(
     private val local: DataStore,
-    mapperPool: DataMapperPool
-) : BaseRepository(mapperPool), HistoryRepository {
-    private val searchHistMapper by lazy { digDataMapper<SearchHistoryDMapper>() }
+    diggerDelegate: DataMapperDigger
+) : HistoryRepository, DataMapperDigger by diggerDelegate {
+    private val searchHistMapper by lazy { digMapper(SearchHistoryDMapper::class) }
 
     override suspend fun addSearchHistory(parameters: Parameterable) =
         local.createSearchHistory(parameters)

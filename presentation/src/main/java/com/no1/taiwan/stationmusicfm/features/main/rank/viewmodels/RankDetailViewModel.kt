@@ -21,16 +21,15 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels
 
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemReq
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
-import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
@@ -42,11 +41,11 @@ import kotlinx.coroutines.launch
 class RankDetailViewModel(
     private val fetchRankMusicCase: FetchRankMusicCase,
     private val updateRankItemCase: UpdateRankItemCase,
-    private val mapperPool: PreziMapperPool
-) : AutoViewModel() {
-    private val _rankMusic by lazy { RespMutableLiveData<MusicInfoEntity.MusicEntity>() }
-    val rankMusic: RespLiveData<MusicInfoEntity.MusicEntity> = _rankMusic
-    private val topTracksMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
+    diggerDelegate: PreziMapperDigger
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+    private val _rankMusic by lazy { RespMutableLiveData<MusicEntity>() }
+    val rankMusic: RespLiveData<MusicEntity> = _rankMusic
+    private val topTracksMapper by lazy { digMapper(MusicPMapper::class) }
 
     fun runTaskFetchTopTrack(rankId: Int) = GlobalScope.launch {
         _rankMusic reqData { fetchRankMusicCase.execMapping(topTracksMapper, FetchRankMusicReq(RankParams(rankId))) }

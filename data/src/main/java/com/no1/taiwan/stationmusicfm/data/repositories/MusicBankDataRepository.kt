@@ -21,13 +21,12 @@
 
 package com.no1.taiwan.stationmusicfm.data.repositories
 
-import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
-import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.HotListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MusicDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.others.RankingDMapper
 import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
+import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDigger
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
@@ -39,17 +38,17 @@ import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
  * [Mapper].
  *
  * @property local from database/file/memory data store.
- * @property mapperPool keeping all of the data mapper here.
+ * @property remote from remote sever/firebase.
  */
 class MusicBankDataRepository constructor(
     private val local: DataStore,
     private val remote: DataStore,
-    mapperPool: DataMapperPool
-) : BaseRepository(mapperPool), MusicBankRepository {
-    private val musicMapper by lazy { digDataMapper<MusicDMapper>() }
-    private val hotListMapper by lazy { digDataMapper<HotListDMapper>() }
-    private val playlistMapper by lazy { digDataMapper<SongListDMapper>() }
-    private val rankingMapper by lazy { digDataMapper<RankingDMapper>() }
+    diggerDelegate: DataMapperDigger
+) : MusicBankRepository, DataMapperDigger by diggerDelegate {
+    private val musicMapper by lazy { digMapper(MusicDMapper::class) }
+    private val hotListMapper by lazy { digMapper(HotListDMapper::class) }
+    private val playlistMapper by lazy { digMapper(SongListDMapper::class) }
+    private val rankingMapper by lazy { digMapper(RankingDMapper::class) }
 
     override suspend fun fetchMusicRanking(parameters: Parameterable) =
         remote.getMusicRanking(parameters).data.run(musicMapper::toModelFrom)

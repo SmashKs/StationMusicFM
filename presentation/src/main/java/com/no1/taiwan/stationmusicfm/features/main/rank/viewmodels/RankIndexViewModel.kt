@@ -21,13 +21,12 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels
 
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
@@ -37,11 +36,11 @@ import kotlinx.coroutines.launch
 
 class RankIndexViewModel(
     private val fetchRankIdsCase: FetchRankIdsCase,
-    private val mapperPool: PreziMapperPool
-) : AutoViewModel() {
+    diggerDelegate: PreziMapperDigger
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _rankIds by lazy { RespMutableLiveData<List<RankingIdEntity>>() }
     val rankIds: RespLiveData<List<RankingIdEntity>> = _rankIds
-    private val rankingIdMapper by lazy { cast<RankingPMapper>(mapperPool[RankingPMapper::class.java]) }
+    private val rankingIdMapper by lazy { digMapper(RankingPMapper::class) }
 
     fun runTaskFetchRankIds() = GlobalScope.launch {
         _rankIds reqData { fetchRankIdsCase.execListMapping(rankingIdMapper, FetchRankIdsReq()) }

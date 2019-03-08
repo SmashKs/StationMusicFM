@@ -21,18 +21,18 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
-import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.TrackParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarTrackReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackReq
-import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TracksEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TrackPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
@@ -43,17 +43,17 @@ import kotlinx.coroutines.launch
 class ExploreTrackViewModel(
     private val fetchTrackCase: FetchTrackCase,
     private val fetchSimilarTrackCase: FetchSimilarTrackCase,
-    private val mapperPool: PreziMapperPool
-) : AutoViewModel() {
-    private val _trackLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TrackEntity>() }
-    val trackLiveData: RespLiveData<TrackInfoEntity.TrackEntity> = _trackLiveData
-    private val _similarTracksLiveData by lazy { RespMutableLiveData<TrackInfoEntity.TracksEntity>() }
-    val similarTracksLiveData: RespLiveData<TrackInfoEntity.TracksEntity> = _similarTracksLiveData
-    private val _trackInfoLiveData by lazy { RespMutableLiveData<Pair<TrackInfoEntity.TrackEntity, TrackInfoEntity.TracksEntity>>() }
-    val trackInfoLiveData: RespLiveData<Pair<TrackInfoEntity.TrackEntity, TrackInfoEntity.TracksEntity>> =
+    diggerDelegate: PreziMapperDigger
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+    private val _trackLiveData by lazy { RespMutableLiveData<TrackEntity>() }
+    val trackLiveData: RespLiveData<TrackEntity> = _trackLiveData
+    private val _similarTracksLiveData by lazy { RespMutableLiveData<TracksEntity>() }
+    val similarTracksLiveData: RespLiveData<TracksEntity> = _similarTracksLiveData
+    private val _trackInfoLiveData by lazy { RespMutableLiveData<Pair<TrackEntity, TracksEntity>>() }
+    val trackInfoLiveData: RespLiveData<Pair<TrackEntity, TracksEntity>> =
         _trackInfoLiveData
-    private val trackMapper by lazy { cast<TrackPMapper>(mapperPool[TrackPMapper::class.java]) }
-    private val tracksMapper by lazy { cast<TracksPMapper>(mapperPool[TracksPMapper::class.java]) }
+    private val trackMapper by lazy { digMapper(TrackPMapper::class) }
+    private val tracksMapper by lazy { digMapper(TracksPMapper::class) }
 
     fun runTaskFetchTrack(mbid: String, artistName: String, trackName: String) = GlobalScope.launch {
         val parameters = TrackParams(mbid, trackName, artistName)
