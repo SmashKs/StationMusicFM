@@ -26,7 +26,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
-import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
@@ -34,6 +33,7 @@ import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_RANK
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_RANK_ID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_DETAIL
@@ -43,7 +43,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -51,7 +50,7 @@ import org.kodein.di.generic.provider
 class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
     private val gridLayoutManager: () -> GridLayoutManager by provider(null, 2)
     private val topperAdapter: MusicAdapter by instance()
-    private val chartAdapter: MusicAdapter by instance()
+    private val chartAdapter: MusicAdapter by instance(ADAPTER_RANK)
 
     init {
         BusFragLifeRegister(this)
@@ -62,8 +61,8 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
         observeNonNull(vm.rankIds) {
             peel {
                 if (it.isEmpty()) return@peel
-                topperAdapter.append(cast<MusicVisitables>(it.subList(0, 4).toMutableList()))
-                chartAdapter.append(cast<MusicVisitables>(it.subList(4, it.size - 1).map {
+                topperAdapter.replaceWholeList(cast(it.subList(0, 4).toMutableList()))
+                chartAdapter.replaceWholeList(cast(it.subList(4, it.size - 1).map {
                     RankingIdForChartItem(it.id, it.title, it.update, it.topTrackUri, it.trackNumber)
                 }))
             } happenError {
@@ -79,10 +78,8 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.apply {
-            if (rankIds.value.isNull())
-                runTaskFetchRankIds()
-        }
+        // Update every time because the top thumbnail will be change after went to detail.
+        vm.runTaskFetchRankIds()
     }
 
     /**

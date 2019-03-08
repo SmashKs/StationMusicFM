@@ -23,15 +23,15 @@ package com.no1.taiwan.stationmusicfm.internal.di
 
 import android.content.Context
 import com.no1.taiwan.stationmusicfm.data.data.DataMapperPool
-import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
-import com.no1.taiwan.stationmusicfm.data.datastores.LocalDataStore
-import com.no1.taiwan.stationmusicfm.data.datastores.RemoteDataStore
 import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDelegate
 import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDigger
 import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
 import com.no1.taiwan.stationmusicfm.data.repositories.HistoryDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.MusicBankDataRepository
+import com.no1.taiwan.stationmusicfm.data.stores.DataStore
+import com.no1.taiwan.stationmusicfm.data.stores.LocalDataStore
+import com.no1.taiwan.stationmusicfm.data.stores.RemoteDataStore
 import com.no1.taiwan.stationmusicfm.domain.repositories.HistoryRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository

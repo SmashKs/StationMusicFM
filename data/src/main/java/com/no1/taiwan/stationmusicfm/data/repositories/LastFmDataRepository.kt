@@ -31,8 +31,8 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TopAlbumDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TrackDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksWithStreamableDMapper
-import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
 import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDigger
+import com.no1.taiwan.stationmusicfm.data.stores.DataStore
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.ext.exceptions.EmptyException

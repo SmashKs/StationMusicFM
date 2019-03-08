@@ -21,22 +21,22 @@
 
 package com.no1.taiwan.stationmusicfm.kits.recyclerview
 
-import com.devrapid.kotlinshaver.bkg
-import com.devrapid.kotlinshaver.uiSwitch
-import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters.MultiTypeAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
-class HistoryAdapter(
-    override var typeFactory: MultiTypeFactory,
-    externalDiffUtil: MusicMultiDiffUtil? = null
-) : MultiTypeAdapter(typeFactory, externalDiffUtil) {
-    fun removeItem(keyword: String) {
-        bkg {
-            val index = dataList.indexOfFirst { it is SearchHistoryEntity && it.keyword == keyword }
-            dataList.removeAt(index)
-            uiSwitch { notifyItemRemoved(index) }
-        }
-    }
+class RankDiffUtil : MusicMultiDiffUtil() {
+    override var newList = mutableListOf<MusicMultiVisitable>()
+    override var oldList = mutableListOf<MusicMultiVisitable>()
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(oldList[oldItemPosition]).topTrackUri
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(oldList[oldItemPosition]).topTrackUri
+
+    override fun getNewListSize() = newList.size
+
+    override fun getOldListSize() = oldList.size
 }

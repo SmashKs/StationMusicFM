@@ -32,9 +32,11 @@ object ObjectLabel {
     const val FRAGMENT_BUS_LONG_LIFE = "fragment long life from onStart to onDestroy"
 
     const val UTIL_DIFF_KEYWORD = "recycler diff util keyword"
+    const val UTIL_DIFF_RANK = "recycler diff rank"
 
     const val ITEM_DECORATION_ACTION_BAR_BLANK = "recycler item decoration action bar blank"
     const val ITEM_DECORATION_SEPARATOR = "recycler item decoration separator"
 
     const val ADAPTER_HISTORY = "for history adapter"
+    const val ADAPTER_RANK = "for rank adapter"
 }

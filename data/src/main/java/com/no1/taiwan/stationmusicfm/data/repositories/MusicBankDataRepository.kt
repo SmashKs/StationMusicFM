@@ -25,8 +25,8 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.HotListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MusicDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.others.RankingDMapper
-import com.no1.taiwan.stationmusicfm.data.datastores.DataStore
 import com.no1.taiwan.stationmusicfm.data.delegates.DataMapperDigger
+import com.no1.taiwan.stationmusicfm.data.stores.DataStore
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
