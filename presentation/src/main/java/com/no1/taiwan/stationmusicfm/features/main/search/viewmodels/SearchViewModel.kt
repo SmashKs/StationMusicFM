@@ -72,6 +72,7 @@ class SearchViewModel(
     }
 
     fun runTaskAddHistory(keyword: String) = GlobalScope.launch {
+        this@SearchViewModel.keyword.postValue(keyword)
         addSearchHistoryCase.exec(AddSearchHistReq(SearchHistParams(keyword)))
     }
 

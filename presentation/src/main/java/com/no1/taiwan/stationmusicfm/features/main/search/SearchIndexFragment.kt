@@ -64,12 +64,6 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
         parent.onQuerySubmit = { vm.runTaskAddHistory(it) }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Because the result fragment's onResume is faster than onPause from here.
-        parent.onQuerySubmit = null
-    }
-
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
@@ -134,8 +128,6 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
      */
     @Subscribe(tags = [Tag(TAG_SAVING_SEARCH_HIST)])
     fun searchByHistory(keyword: String) {
-        keepKeywordIntoViewModel(keyword)
-        vm.runTaskAddHistory(keyword)
         parent.performKeywordSubmit(keyword)
     }
 }

@@ -28,6 +28,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinshaver.cast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
@@ -51,7 +52,7 @@ class MainActivity : BaseActivity() {
         listOf(R.id.frag_explore_index, R.id.frag_mymusic, R.id.frag_rank_index, R.id.frag_search_index)
     }
     var searchItem: MenuItem? = null
-    var onQuerySubmit: ((query: String) -> Unit)? = null
+    var onQuerySubmit by WeakRef<(query: String) -> Unit>()
 
     /**
      * For separating the huge function code in [init]. Initialize all view components here.

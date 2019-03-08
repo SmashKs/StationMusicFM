@@ -37,6 +37,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
@@ -62,7 +63,7 @@ class ExploreIndexViewModel(
 
     fun runTaskFetchTopTrack(limit: Int = Pager.LIMIT) = GlobalScope.launch {
         var params = FetchChartTopTrackReq()
-        _topTracks.value?.data?.attr?.let {
+        _topTracks.data()?.attr?.let {
             params = FetchChartTopTrackReq(autoIncreaseParams(it, limit) ?: return@launch)
         }
         _topTracks reqData { fetchChartTopTrackCase.execMapping(topTracksMapper, params) }
@@ -70,7 +71,7 @@ class ExploreIndexViewModel(
 
     fun runTaskFetchTopArtist(limit: Int = Pager.LIMIT) = GlobalScope.launch {
         var params = FetchChartTopArtistReq()
-        _topArtists.value?.data?.attr?.let {
+        _topArtists.data()?.attr?.let {
             params = FetchChartTopArtistReq(autoIncreaseParams(it, limit) ?: return@launch)
         }
         _topArtists reqData { fetchChartTopArtistCase.execMapping(topArtistsMapper, params) }
@@ -78,7 +79,7 @@ class ExploreIndexViewModel(
 
     fun runTaskFetchTopTag(limit: Int = Pager.LIMIT) = GlobalScope.launch {
         var params = FetchChartTopTagReq()
-        _topTags.value?.data?.attr?.let {
+        _topTags.data()?.attr?.let {
             params = FetchChartTopTagReq(autoIncreaseParams(it, limit) ?: return@launch)
         }
         _topTags reqData { fetchChartTopTagCase.execMapping(topTagsMapper, params) }

@@ -57,6 +57,7 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALB
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_SIMILAR_ARTIST
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -130,7 +131,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 runTaskFetchArtistPhoto(artistName)
             }
             else {
-                setArtistInfo(requireNotNull(artistInfoLiveData.value?.data?.first))
+                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
             }
         }
     }
@@ -156,8 +157,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         super.componentListenersBinding()
         find<ImageView>(R.id.iv_artist_backdrop).setOnClickListener {
             findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
-                                         ExplorePhotosFragment.createBundle(vm.artistLiveData.value?.data?.name.orEmpty(),
-                                                                            vm.photosLiveData.value?.data?.photos.orEmpty()))
+                                         ExplorePhotosFragment.createBundle(vm.artistLiveData.data()?.name.orEmpty(),
+                                                                            vm.photosLiveData.data()?.photos.orEmpty()))
         }
     }
 
@@ -215,6 +216,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                                                                        artistName,
                                                                        albumName,
                                                                        albumUri,
-                                                                       vm.artistLiveData.value?.data?.images?.last()?.text.orEmpty()))
+                                                                       vm.artistLiveData.data()?.images?.last()?.text.orEmpty()))
     }
 }
