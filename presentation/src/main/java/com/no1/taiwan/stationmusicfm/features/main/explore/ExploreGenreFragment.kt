@@ -51,6 +51,7 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRA
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -114,6 +115,10 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
         initRecyclerViewWith(find(R.id.rv_albums), albumAdapter, horLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_artists), artistAdapter, horLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_tracks), trackAdapter, verLinearLayoutManager())
+        // For coming back here and show it again.
+        if (vm.tagInfoLiveData.value != null)
+            find<TextView>(R.id.ftv_genre_about).text =
+                vm.tagInfoLiveData.data()?.first?.wiki?.content?.parseAsHtml()?.toSpannable()
     }
 
     /**
