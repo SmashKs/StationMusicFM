@@ -24,13 +24,11 @@ package com.no1.taiwan.stationmusicfm.features.main.rank
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
-import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_RANK
@@ -39,9 +37,6 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_RAN
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
-import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -58,17 +53,8 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        observeNonNull(vm.rankIds) {
-            peel {
-                if (it.isEmpty()) return@peel
-                topperAdapter.replaceWholeList(cast(it.subList(0, 4).toMutableList()))
-                chartAdapter.replaceWholeList(cast(it.subList(4, it.size - 1).map {
-                    RankingIdForChartItem(it.id, it.title, it.update, it.topTrackUri, it.trackNumber)
-                }))
-            } happenError {
-                loge(it)
-            } doWith this@RankIndexFragment
-        }
+        observeNonNull(vm.rankTopper) { topperAdapter.replaceWholeList(this.toMutableList()) }
+        observeNonNull(vm.rankElse) { chartAdapter.replaceWholeList(this.toMutableList()) }
     }
 
     /**

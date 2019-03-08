@@ -31,16 +31,14 @@ import kotlinx.coroutines.runBlocking
  * Also, unboxing the [ResponseState] and obtaining the data inside of the [ResponseState], then return the
  * data to [RespMutableLiveData].
  */
-fun <E, R> RespMutableLiveData<R>.reqDataMap(
-    usecaseRes: suspend () -> ResponseState<E>,
-    transformBlock: (E) -> R
-) = preProc {
-    // Fetching the data from the data layer.
-    tryResp {
-        val data = usecaseRes().data ?: return@tryResp ResponseState.Error<R>(msg = "Don't have any response.")
-        ResponseState.Success(transformBlock(data))
-    }.let(this@reqDataMap::postValue)
-}
+fun <E, R> RespMutableLiveData<R>.reqDataMap(usecaseRes: E, transformBlock: (E) -> R) =
+    preProc {
+        // Fetching the data from the data layer.
+        tryResp {
+            val data = usecaseRes ?: return@tryResp ResponseState.Error<R>(msg = "Don't have any response.")
+            ResponseState.Success(transformBlock(data))
+        }.let(this@reqDataMap::postValue)
+    }
 
 /**
  * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state
@@ -73,16 +71,14 @@ private fun <E> RespMutableLiveData<E>.preProc(block: suspend () -> Unit) = runB
  * Also, unboxing the [ResponseState] and obtaining the data inside of the [ResponseState], then return the
  * data to [RespMutableLiveData].
  */
-fun <E, R> NotifMutableLiveData<R>.reqDataMap(
-    usecaseRes: suspend () -> ResponseState<E>,
-    transformBlock: (E) -> R
-) = preProc {
-    // Fetching the data from the data layer.
-    tryResp {
-        val data = usecaseRes().data ?: return@tryResp ResponseState.Error<R>(msg = "Don't have any response.")
-        ResponseState.Success(transformBlock(data))
-    }.let(this@reqDataMap::postValue)
-}
+fun <E, R> NotifMutableLiveData<R>.reqDataMap(usecaseRes: E, transformBlock: (E) -> R) =
+    preProc {
+        // Fetching the data from the data layer.
+        tryResp {
+            val data = usecaseRes ?: return@tryResp ResponseState.Error<R>(msg = "Don't have any response.")
+            ResponseState.Success(transformBlock(data))
+        }.let(this@reqDataMap::postValue)
+    }
 
 /**
  * A transformer wrapper for encapsulating the [RespMutableLiveData]'s state

@@ -27,7 +27,8 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
-import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
+import com.no1.taiwan.stationmusicfm.utils.aac.livedata.others.RankingIdForChartLiveData
+import com.no1.taiwan.stationmusicfm.utils.aac.livedata.others.RankingIdLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
@@ -39,7 +40,8 @@ class RankIndexViewModel(
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _rankIds by lazy { RespMutableLiveData<List<RankingIdEntity>>() }
-    val rankIds: RespLiveData<List<RankingIdEntity>> = _rankIds
+    val rankTopper = RankingIdLiveData(_rankIds)
+    val rankElse = RankingIdForChartLiveData(_rankIds)
     private val rankingIdMapper by lazy { digMapper(RankingPMapper::class) }
 
     fun runTaskFetchRankIds() = GlobalScope.launch {
