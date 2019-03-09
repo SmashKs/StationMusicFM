@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_frag_explore_tag_to_frag_explore_track"
             app:destination="@id/frag_explore_track"/>
+        <action
+            android:id="@+id/action_frag_explore_tag_self"
+            app:destination="@id/frag_explore_tag"/>
     </fragment>
 
     <fragment

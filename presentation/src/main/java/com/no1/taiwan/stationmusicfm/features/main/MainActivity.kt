@@ -35,10 +35,8 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment.Companion.PROVIDER_FROM_ACTIVITY
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
-import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreGenreFragment
-import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchCommonOperations
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment
@@ -114,11 +112,9 @@ class MainActivity : BaseActivity() {
                                                                                    query,
                                                                                    PROVIDER_FROM_ACTIVITY))
             }
-            is ExploreTrackFragment -> {
-            }
-            is ExploreAlbumFragment -> {
-            }
             is ExploreGenreFragment -> {
+                fragmentIndexNavigator.navigate(R.id.action_frag_explore_tag_self,
+                                                ExploreGenreFragment.createBundle(query))
             }
         }
     }
