@@ -32,7 +32,13 @@ import com.devrapid.kotlinknifer.WeakRef
 import com.devrapid.kotlinshaver.cast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.bases.AdvFragment.Companion.PROVIDER_FROM_ACTIVITY
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment
+import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment
+import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreGenreFragment
+import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchCommonOperations
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment
@@ -102,6 +108,18 @@ class MainActivity : BaseActivity() {
         when (currentFragment) {
             is SearchIndexFragment -> fragmentIndexNavigator.navigate(R.id.action_frag_search_index_to_frag_search_result)
             is SearchResultFragment -> cast<SearchResultFragment>(currentFragment).searchMusicBy(query)
+            is ExploreArtistFragment -> {
+                fragmentIndexNavigator.navigate(R.id.action_frag_explore_artist_self,
+                                                ExploreArtistFragment.createBundle(DEFAULT_STR,
+                                                                                   query,
+                                                                                   PROVIDER_FROM_ACTIVITY))
+            }
+            is ExploreTrackFragment -> {
+            }
+            is ExploreAlbumFragment -> {
+            }
+            is ExploreGenreFragment -> {
+            }
         }
     }
 
@@ -120,12 +138,6 @@ class MainActivity : BaseActivity() {
                     return true
                 }
             })
-            setOnQueryTextFocusChangeListener { v, hasFocus ->
-                if (hasFocus) {
-                    val queried = (currentFragment as? SearchCommonOperations)?.getKeptKeyword()
-                    cast<SearchView>(v).setQuery(queried.toString(), false)
-                }
-            }
         }
     }
 }
