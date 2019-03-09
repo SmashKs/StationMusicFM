@@ -119,6 +119,14 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    fun showSearchButton() {
+        searchItem?.isVisible = true
+    }
+
+    fun hideSearchButton() {
+        searchItem?.isVisible = false
+    }
+
     private fun searchViewSetting() {
         cast<SearchView>(searchItem?.actionView).apply {
             queryHint = "a keyword of artist, album, tracks..."

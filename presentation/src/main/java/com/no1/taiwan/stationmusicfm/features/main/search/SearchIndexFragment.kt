@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.search
 
+import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
@@ -93,11 +94,21 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
     }
 
     /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        super.rendered(savedInstanceState)
+        vm.runTaskFetchHistories()
+    }
+
+    /**
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        vm.runTaskFetchHistories()
+        parent.showSearchButton()
         initRecyclerViewWith(find(R.id.rv_histories), adapter, linearLayoutManager(), actionBarBlankDecoration)
     }
 

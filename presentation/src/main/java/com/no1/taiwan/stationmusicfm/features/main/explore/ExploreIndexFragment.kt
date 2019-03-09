@@ -119,6 +119,7 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        parent.hideSearchButton()
         initRecyclerViewWith(find(R.id.rv_tracks), trackAdapter, verLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_artists), artistAdapter, horLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_genres), genreAdapter, girdLayoutManager())

@@ -103,6 +103,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         super.onViewStateRestored(savedInstanceState)
         // It needs to reset again when phone rotated the screen.
         isFirstComing = true
+        parent.showSearchButton()
     }
 
     override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)

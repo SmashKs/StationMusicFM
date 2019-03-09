@@ -73,6 +73,7 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        parent.hideSearchButton()
         initRecyclerViewWith(find(R.id.rv_chart), chartAdapter, gridLayoutManager())
         initRecyclerViewWith(find(R.id.rv_topper), topperAdapter, gridLayoutManager())
     }

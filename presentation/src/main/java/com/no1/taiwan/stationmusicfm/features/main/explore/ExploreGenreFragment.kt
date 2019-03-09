@@ -112,6 +112,7 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        parent.showSearchButton()
         initRecyclerViewWith(find(R.id.rv_albums), albumAdapter, horLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_artists), artistAdapter, horLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_tracks), trackAdapter, verLinearLayoutManager())

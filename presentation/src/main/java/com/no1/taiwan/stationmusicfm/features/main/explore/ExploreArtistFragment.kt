@@ -141,6 +141,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        parent.showSearchButton()
         find<ViewPager>(R.id.vp_container).also {
             it.adapter = SimpleFragmentPagerAdapter(childFragmentManager, adapterFragments)
             find<TabLayout>(R.id.tl_category).apply {

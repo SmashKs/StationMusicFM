@@ -134,6 +134,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        parent.hideSearchButton()
         initRecyclerViewWith(find(R.id.rv_tracks_of_album), adapter, linearLayoutManager())
         find<ImageView>(R.id.iv_artist_icon).loadByAny(artistThumbUri, parent)
         find<TextView>(R.id.ftv_album_name).text = albumName

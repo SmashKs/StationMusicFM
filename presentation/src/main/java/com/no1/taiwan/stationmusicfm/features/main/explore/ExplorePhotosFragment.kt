@@ -63,6 +63,7 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        parent.hideSearchButton()
         // Preload from the previous fragment.
         adapter.append(cast<MusicVisitables>(preloadList))
         initRecyclerViewWith(find(R.id.rv_photos), adapter, linearLayoutManager())

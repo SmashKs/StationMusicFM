@@ -91,6 +91,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        parent.hideSearchButton()
         initRecyclerViewWith(find(R.id.rv_songs),
                              songAdapter,
                              linearLayoutManager(),
