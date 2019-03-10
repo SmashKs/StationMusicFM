@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils.delegate
+package com.no1.taiwan.stationmusicfm.ktx.delegate
 
 import com.google.gson.Gson
 import com.tencent.mmkv.MMKV

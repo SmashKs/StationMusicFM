@@ -22,7 +22,7 @@
 package com.no1.taiwan.stationmusicfm.widget.components.recyclerview
 
 import com.devrapid.adaptiverecyclerview.ViewTypeFactory
-import com.no1.taiwan.stationmusicfm.UnsupportedOperation
+import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
 /**
  * A factory for providing the viewholder from an object data type to the recyclerview.

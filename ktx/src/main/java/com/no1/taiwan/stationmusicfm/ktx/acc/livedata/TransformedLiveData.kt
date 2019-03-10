@@ -19,8 +19,25 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm
+package com.no1.taiwan.stationmusicfm.ktx.acc.livedata
 
-inline fun UnsupportedOperation(): Nothing = throw UnsupportedOperationException()
+import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-inline fun UnsupportedOperation(reason: String): Nothing = throw UnsupportedOperationException(reason)
+abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S> {
+    protected abstract val source: LiveData<S>
+
+    override fun onActive() = source.observeForever(this)
+
+    override fun onInactive() = source.removeObserver(this)
+
+    override fun onChanged(source: S) {
+        GlobalScope.launch { postValue(getTransformed(source)) }
+    }
+
+    @WorkerThread
+    protected abstract fun getTransformed(source: S): T
+}

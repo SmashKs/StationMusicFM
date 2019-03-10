@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils
+package com.no1.taiwan.stationmusicfm.ext
 
 /*
  * Copyright (C) 2019 The Smash Ks Open Project

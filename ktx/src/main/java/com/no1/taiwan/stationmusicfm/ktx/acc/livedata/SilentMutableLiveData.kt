@@ -19,16 +19,15 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils.aac.lifecycles
+package com.no1.taiwan.stationmusicfm.ktx.acc.livedata
 
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleObserver
-import com.devrapid.kotlinknifer.WeakRef
+class SilentMutableLiveData<T> : SilentLiveData<T>(),
+                                 SilentHook<T> {
+    public override fun postValue(value: T) {
+        super.postValue(value)
+    }
 
-abstract class FragmentLifeRegister<F : Fragment>(fragment: F) : LifecycleObserver {
-    protected val frag by WeakRef(fragment)
-
-    init {
-        frag?.lifecycle?.addObserver(this)
+    public override fun setValue(value: T) {
+        super.setValue(value)
     }
 }

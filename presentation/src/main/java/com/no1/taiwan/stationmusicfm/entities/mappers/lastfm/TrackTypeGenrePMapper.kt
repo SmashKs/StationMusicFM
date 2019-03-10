@@ -21,10 +21,10 @@
 
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
 import com.no1.taiwan.stationmusicfm.entities.TrackTypeGenrePreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
 /**
  * A transforming mapping between [TrackInfoModel.TrackModel] and [TrackInfoEntity.TrackTypeGenreEntity].
@@ -64,5 +64,6 @@ class TrackTypeGenrePMapper(
         }
     }
 
-    override fun toModelFrom(entity: TrackInfoEntity.TrackTypeGenreEntity) = UnsupportedOperation()
+    override fun toModelFrom(entity: TrackInfoEntity.TrackTypeGenreEntity) =
+        UnsupportedOperation()
 }

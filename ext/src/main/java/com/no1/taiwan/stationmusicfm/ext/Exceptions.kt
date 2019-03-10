@@ -19,14 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils.aac.livedata
+package com.no1.taiwan.stationmusicfm.ext
 
-class SilentMutableLiveData<T> : SilentLiveData<T>(), SilentHook<T> {
-    public override fun postValue(value: T) {
-        super.postValue(value)
-    }
+inline fun UnsupportedOperation(): Nothing = throw UnsupportedOperationException()
 
-    public override fun setValue(value: T) {
-        super.setValue(value)
-    }
-}
+inline fun UnsupportedOperation(reason: String): Nothing = throw UnsupportedOperationException(reason)

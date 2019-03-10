@@ -23,7 +23,6 @@ package com.no1.taiwan.stationmusicfm.data.stores
 
 import android.content.Context
 import com.devrapid.kotlinshaver.cast
-import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.R
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
@@ -37,6 +36,7 @@ import com.no1.taiwan.stationmusicfm.domain.Fields
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.BaseWithPagingParams
+import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct
@@ -144,16 +144,22 @@ class RemoteDataStore(
     }
 
     //region UnsupportedOperationException
-    override suspend fun createRankingData(params: List<RankingIdData>) = UnsupportedOperation()
+    override suspend fun createRankingData(params: List<RankingIdData>) =
+        UnsupportedOperation()
 
-    override suspend fun getRankingData(): List<RankingIdData> = UnsupportedOperation()
+    override suspend fun getRankingData(): List<RankingIdData> =
+        UnsupportedOperation()
 
-    override suspend fun modifyRankingData(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun modifyRankingData(parameterable: Parameterable) =
+        UnsupportedOperation()
 
-    override suspend fun createSearchHistory(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun createSearchHistory(parameterable: Parameterable) =
+        UnsupportedOperation()
 
-    override suspend fun getSearchHistories(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun getSearchHistories(parameterable: Parameterable) =
+        UnsupportedOperation()
 
-    override suspend fun removeSearchHistory(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun removeSearchHistory(parameterable: Parameterable) =
+        UnsupportedOperation()
     //endregion
 }

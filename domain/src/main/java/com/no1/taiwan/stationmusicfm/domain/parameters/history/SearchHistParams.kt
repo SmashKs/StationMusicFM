@@ -21,11 +21,11 @@
 
 package com.no1.taiwan.stationmusicfm.domain.parameters.history
 
-import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 
 data class SearchHistParams(

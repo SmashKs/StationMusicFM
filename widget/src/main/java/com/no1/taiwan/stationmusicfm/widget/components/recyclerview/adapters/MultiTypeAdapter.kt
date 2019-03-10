@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters
 
 import android.view.ViewGroup
-import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
+import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil

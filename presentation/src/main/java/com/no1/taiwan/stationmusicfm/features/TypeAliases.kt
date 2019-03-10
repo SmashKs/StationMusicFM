@@ -28,7 +28,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
-import com.no1.taiwan.stationmusicfm.utils.Quadruple
+import com.no1.taiwan.stationmusicfm.ext.Quadruple
 
 typealias ArtistMixInfo = Quadruple<ArtistInfoEntity.ArtistEntity, AlbumInfoEntity.TopAlbumsEntity, ArtistInfoEntity.ArtistsSimilarEntity, TrackInfoEntity.TracksWithStreamableEntity>
 typealias GenreMixInfo = Quadruple<TagInfoEntity.TagEntity, ArtistInfoEntity.ArtistsEntity, AlbumInfoEntity.TopAlbumsEntity, TrackInfoEntity.TracksTypeGenreEntity>

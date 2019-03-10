@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.hwangjr.rxbus.RxBus
+import com.no1.taiwan.stationmusicfm.ktx.acc.lifecycle.ActivityLifeRegister
 
 class BusActLongerLifeRegister(activity: AppCompatActivity) : ActivityLifeRegister<AppCompatActivity>(activity) {
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)

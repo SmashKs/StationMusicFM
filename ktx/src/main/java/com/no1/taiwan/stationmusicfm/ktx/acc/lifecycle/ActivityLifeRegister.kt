@@ -19,25 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.utils.aac.livedata
+package com.no1.taiwan.stationmusicfm.ktx.acc.lifecycle
 
-import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleObserver
+import com.devrapid.kotlinknifer.WeakRef
 
-abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S> {
-    protected abstract val source: LiveData<S>
+abstract class ActivityLifeRegister<A : AppCompatActivity>(activity: A) : LifecycleObserver {
+    protected val act by WeakRef(activity)
 
-    override fun onActive() = source.observeForever(this)
-
-    override fun onInactive() = source.removeObserver(this)
-
-    override fun onChanged(source: S) {
-        GlobalScope.launch { postValue(getTransformed(source)) }
+    init {
+        act?.lifecycle?.addObserver(this)
     }
-
-    @WorkerThread
-    protected abstract fun getTransformed(source: S): T
 }

@@ -21,10 +21,10 @@
 
 package com.no1.taiwan.stationmusicfm.entities.mappers.lastfm
 
-import com.no1.taiwan.stationmusicfm.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 import com.no1.taiwan.stationmusicfm.entities.TopAlbumPreziMap
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
 /**
  * A transforming mapping between [CommonLastFmModel.TopAlbumsModel] and [AlbumInfoEntity.TopAlbumsEntity].
@@ -39,5 +39,6 @@ class TopAlbumTypeGenrePMapper(
                                         attr.let(attrMapper::toEntityFrom))
     }
 
-    override fun toModelFrom(entity: AlbumInfoEntity.TopAlbumsEntity) = UnsupportedOperation()
+    override fun toModelFrom(entity: AlbumInfoEntity.TopAlbumsEntity) =
+        UnsupportedOperation()
 }

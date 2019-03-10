@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.hwangjr.rxbus.RxBus
+import com.no1.taiwan.stationmusicfm.ktx.acc.lifecycle.FragmentLifeRegister
 
 class BusFragLifeRegister(fragment: Fragment) : FragmentLifeRegister<Fragment>(fragment) {
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
