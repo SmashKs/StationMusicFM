@@ -50,8 +50,7 @@ class ExploreTrackViewModel(
     private val _similarTracksLiveData by lazy { RespMutableLiveData<TracksEntity>() }
     val similarTracksLiveData: RespLiveData<TracksEntity> = _similarTracksLiveData
     private val _trackInfoLiveData by lazy { RespMutableLiveData<Pair<TrackEntity, TracksEntity>>() }
-    val trackInfoLiveData: RespLiveData<Pair<TrackEntity, TracksEntity>> =
-        _trackInfoLiveData
+    val trackInfoLiveData: RespLiveData<Pair<TrackEntity, TracksEntity>> = _trackInfoLiveData
     private val trackMapper by lazy { digMapper(TrackPMapper::class) }
     private val tracksMapper by lazy { digMapper(TracksPMapper::class) }
 

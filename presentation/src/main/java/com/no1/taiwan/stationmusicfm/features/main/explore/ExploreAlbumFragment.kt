@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.decorateGradientMask
 import com.devrapid.kotlinknifer.extraNotNull
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.cast
@@ -52,12 +53,14 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
+import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
@@ -112,6 +115,18 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
                 find<TextView>(R.id.ftv_tags).text = it.tags.map(TagInfoEntity.TagEntity::name).joinToString("\n")
                 find<TextView>(R.id.ftv_album_wiki).text = it.wiki.summary.parseAsHtml()
                 adapter.replaceWholeList(cast(it.tracks))
+            } happenError {
+                loge(it)
+            } finally {
+                logd(Thread.currentThread().name)
+                val artistName = vm.albumLiveData.data()?.artist.orEmpty()
+                if (artistThumbUri.isBlank() && artistName.isNotBlank())
+                    vm.runTaskFetchArtist(artistName)
+            } doWith this@ExploreAlbumFragment
+        }
+        observeNonNull(vm.artistLiveData) {
+            peel {
+                find<ImageView>(R.id.iv_artist_icon).loadByAny(it.images.last().text, parent)
             } happenError {
                 loge(it)
             } doWith this@ExploreAlbumFragment

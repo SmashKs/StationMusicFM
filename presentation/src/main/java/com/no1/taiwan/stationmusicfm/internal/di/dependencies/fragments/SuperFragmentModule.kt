@@ -55,7 +55,7 @@ object SuperFragmentModule {
                                                                        instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            ExploreAlbumViewModel::class.java to ExploreAlbumViewModel(instance(), instance())
+            ExploreAlbumViewModel::class.java to ExploreAlbumViewModel(instance(), instance(), instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
             ExploreArtistViewModel::class.java to ExploreArtistViewModel(instance(),

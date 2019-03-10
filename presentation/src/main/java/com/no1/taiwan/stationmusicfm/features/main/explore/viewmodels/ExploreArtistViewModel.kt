@@ -35,9 +35,9 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopTrackReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistReq
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.TopAlbumsEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistsSimilarEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotosEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TracksWithStreamableEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPhotosPMapper
@@ -74,8 +74,8 @@ class ExploreArtistViewModel(
     val tracksLiveData: NotifLiveData<TracksWithStreamableEntity> = _tracksLiveData
     private val _artistInfoLiveData by lazy { RespMutableLiveData<ArtistMixInfo>() }
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
-    private val _photosLiveData by lazy { RespMutableLiveData<ArtistInfoEntity.PhotosEntity>() }
-    val photosLiveData: RespLiveData<ArtistInfoEntity.PhotosEntity> = _photosLiveData
+    private val _photosLiveData by lazy { RespMutableLiveData<PhotosEntity>() }
+    val photosLiveData: RespLiveData<PhotosEntity> = _photosLiveData
     private val artistMapper by lazy { digMapper(ArtistPMapper::class) }
     private val topAlbumMapper by lazy { digMapper(TopAlbumPMapper::class) }
     private val artistsSimilarMapper by lazy { digMapper(ArtistsSimilarPMapper::class) }

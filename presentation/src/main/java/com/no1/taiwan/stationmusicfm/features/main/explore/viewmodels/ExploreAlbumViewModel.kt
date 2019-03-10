@@ -22,10 +22,15 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.AlbumParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistReq
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.AlbumEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifLiveData
@@ -37,15 +42,26 @@ import kotlinx.coroutines.launch
 
 class ExploreAlbumViewModel(
     private val fetchAlbumCase: FetchAlbumCase,
+    private val fetchArtistCase: FetchArtistCase,
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _albumLiveData by lazy { NotifMutableLiveData<AlbumEntity>() }
     val albumLiveData: NotifLiveData<AlbumEntity> = _albumLiveData
+    private val _artistLiveData by lazy { NotifMutableLiveData<ArtistEntity>() }
+    val artistLiveData: NotifLiveData<ArtistEntity> = _artistLiveData
     private val albumMapper by lazy { digMapper(AlbumPMapper::class) }
+    private val artistMapper by lazy { digMapper(ArtistPMapper::class) }
 
-    fun runTaskFetchAlbum(mbid: String, albumName: String, artistName: String) = GlobalScope.launch {
-        _albumLiveData reqData {
-            fetchAlbumCase.execMapping(albumMapper, FetchAlbumReq(AlbumParams(mbid, albumName, artistName)))
+    fun runTaskFetchAlbum(mbid: String, albumName: String, artistName: String) =
+        GlobalScope.launch {
+            _albumLiveData reqData {
+                fetchAlbumCase.execMapping(albumMapper, FetchAlbumReq(AlbumParams(mbid, albumName, artistName)))
+            }
+        }
+
+    fun runTaskFetchArtist(artistName: String) = GlobalScope.launch {
+        _artistLiveData reqData {
+            fetchArtistCase.execMapping(artistMapper, FetchArtistReq(ArtistParams(artistName = artistName)))
         }
     }
 }

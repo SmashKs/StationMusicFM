@@ -21,14 +21,16 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels
 
+import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
-import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
+import com.no1.taiwan.stationmusicfm.features.RankingIds
+import com.no1.taiwan.stationmusicfm.features.RankingIdsForChart
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
-import com.no1.taiwan.stationmusicfm.utils.aac.livedata.others.RankingIdForChartLiveData
-import com.no1.taiwan.stationmusicfm.utils.aac.livedata.others.RankingIdLiveData
+import com.no1.taiwan.stationmusicfm.utils.aac.livedata.TransformedLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
@@ -39,12 +41,35 @@ class RankIndexViewModel(
     private val fetchRankIdsCase: FetchRankIdsCase,
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
-    private val _rankIds by lazy { RespMutableLiveData<List<RankingIdEntity>>() }
+    private val _rankIds by lazy { RespMutableLiveData<RankingIds>() }
     val rankTopper = RankingIdLiveData(_rankIds)
     val rankElse = RankingIdForChartLiveData(_rankIds)
     private val rankingIdMapper by lazy { digMapper(RankingPMapper::class) }
 
     fun runTaskFetchRankIds() = GlobalScope.launch {
         _rankIds reqData { fetchRankIdsCase.execListMapping(rankingIdMapper, FetchRankIdsReq()) }
+    }
+
+    class RankingIdForChartLiveData(
+        override val source: RespMutableLiveData<RankingIds>
+    ) : TransformedLiveData<ResponseState<RankingIds>, RankingIdsForChart>() {
+        override fun getTransformed(source: ResponseState<RankingIds>) =
+            if (source is ResponseState.Success<RankingIds>)
+                source.data?.let { it.subList(4, it.size - 1) }
+                    ?.map {
+                        RankingIdForChartItem(it.id, it.title, it.update, it.topTrackUri, it.trackNumber)
+                    }.orEmpty()
+            else
+                emptyList()
+    }
+
+    class RankingIdLiveData(
+        override val source: RespMutableLiveData<RankingIds>
+    ) : TransformedLiveData<ResponseState<RankingIds>, RankingIds>() {
+        override fun getTransformed(source: ResponseState<RankingIds>) =
+            if (source is ResponseState.Success<RankingIds>)
+                source.data?.subList(0, 4).orEmpty()
+            else
+                emptyList()
     }
 }

@@ -35,8 +35,8 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.SearchHistoryPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
-import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.features.SearchHistories
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
@@ -57,8 +57,8 @@ class SearchViewModel(
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _musics by lazy { RespMutableLiveData<MusicEntity>() }
     val musics: RespLiveData<MusicEntity> = _musics
-    private val _histories by lazy { RespMutableLiveData<List<SearchHistoryEntity>>() }
-    val histories: RespLiveData<List<SearchHistoryEntity>> = _histories
+    private val _histories by lazy { RespMutableLiveData<SearchHistories>() }
+    val histories: RespLiveData<SearchHistories> = _histories
     private val _removeRes by lazy { RespMutableLiveData<Boolean>() }
     val removeRes: RespLiveData<Boolean> = _removeRes
     private val musicMapper by lazy { digMapper(MusicPMapper::class) }
