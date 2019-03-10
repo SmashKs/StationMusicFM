@@ -56,8 +56,9 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALB
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_SIMILAR_ARTIST
-import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.data
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingByColorLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -100,6 +101,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
 
     init {
         BusFragLifeRegister(this)
+        SearchShowingByColorLifeRegister(this)
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -141,7 +143,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.showSearchButton()
         find<ViewPager>(R.id.vp_container).also {
             it.adapter = SimpleFragmentPagerAdapter(childFragmentManager, adapterFragments)
             find<TabLayout>(R.id.tl_category).apply {

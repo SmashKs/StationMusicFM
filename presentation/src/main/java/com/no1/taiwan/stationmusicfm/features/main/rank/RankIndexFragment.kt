@@ -35,7 +35,8 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_RANK
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_RANK_ID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_DETAIL
-import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
@@ -49,6 +50,7 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
 
     init {
         BusFragLifeRegister(this)
+        SearchHidingLifeRegister(this)
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -73,7 +75,6 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.hideSearchButton()
         initRecyclerViewWith(find(R.id.rv_chart), chartAdapter, gridLayoutManager())
         initRecyclerViewWith(find(R.id.rv_topper), topperAdapter, gridLayoutManager())
     }

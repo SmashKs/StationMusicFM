@@ -38,7 +38,8 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.HistoryAdapter
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
-import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -58,6 +59,7 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
 
     init {
         BusFragLifeRegister(this)
+        SearchShowingLifeRegister(this)
     }
 
     override fun onResume() {
@@ -108,7 +110,6 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.showSearchButton()
         initRecyclerViewWith(find(R.id.rv_histories), adapter, linearLayoutManager(), actionBarBlankDecoration)
     }
 

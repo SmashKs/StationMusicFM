@@ -38,6 +38,7 @@ import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailVie
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -60,6 +61,10 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     private val songAdapter: MusicAdapter by instance()
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
+
+    init {
+        SearchHidingLifeRegister(this)
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -91,7 +96,6 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.hideSearchButton()
         initRecyclerViewWith(find(R.id.rv_songs),
                              songAdapter,
                              linearLayoutManager(),

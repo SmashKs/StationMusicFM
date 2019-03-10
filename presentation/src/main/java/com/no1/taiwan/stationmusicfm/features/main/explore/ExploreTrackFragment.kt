@@ -41,6 +41,7 @@ import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -68,6 +69,10 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
     private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     private val trackName by extraNotNull<String>(ARGUMENT_TRACK_NAME)
+
+    init {
+        SearchHidingLifeRegister(this)
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -107,7 +112,6 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.hideSearchButton()
         initRecyclerViewWith(find(R.id.rv_similar_tracks), adapter, linearLayoutManager())
     }
 

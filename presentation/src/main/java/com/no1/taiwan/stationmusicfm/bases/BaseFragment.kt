@@ -42,8 +42,8 @@ import com.no1.taiwan.stationmusicfm.internal.di.dependencies.fragments.SuperFra
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_LONG_LIFE
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.FRAGMENT_BUS_SHORT_LIFE
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
-import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
-import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLongerLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

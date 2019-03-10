@@ -52,7 +52,8 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
-import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
@@ -100,6 +101,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
 
     init {
         BusFragLifeRegister(this)
+        SearchHidingLifeRegister(this)
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -134,7 +136,6 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.hideSearchButton()
         initRecyclerViewWith(find(R.id.rv_tracks_of_album), adapter, linearLayoutManager())
         find<ImageView>(R.id.iv_artist_icon).loadByAny(artistThumbUri, parent)
         find<TextView>(R.id.ftv_album_name).text = albumName

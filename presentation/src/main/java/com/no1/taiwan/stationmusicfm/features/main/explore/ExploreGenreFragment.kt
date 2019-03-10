@@ -50,8 +50,9 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALB
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
-import com.no1.taiwan.stationmusicfm.utils.aac.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.data
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -78,6 +79,7 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
 
     init {
         BusFragLifeRegister(this)
+        SearchShowingLifeRegister(this)
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -112,7 +114,6 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.showSearchButton()
         initRecyclerViewWith(find(R.id.rv_albums), albumAdapter, horLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_artists), artistAdapter, horLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_tracks), trackAdapter, verLinearLayoutManager())

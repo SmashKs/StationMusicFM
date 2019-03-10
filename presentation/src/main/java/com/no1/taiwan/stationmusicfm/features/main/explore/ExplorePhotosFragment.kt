@@ -34,6 +34,7 @@ import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
@@ -58,12 +59,15 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
     private val name by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     private val preloadList by extraNotNull<ArrayList<PhotoEntity>>(ARGUMENT_ARTIST_PHOTOS)
 
+    init {
+        SearchHidingLifeRegister(this)
+    }
+
     /**
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        parent.hideSearchButton()
         // Preload from the previous fragment.
         adapter.append(cast<MusicVisitables>(preloadList))
         initRecyclerViewWith(find(R.id.rv_photos), adapter, linearLayoutManager())

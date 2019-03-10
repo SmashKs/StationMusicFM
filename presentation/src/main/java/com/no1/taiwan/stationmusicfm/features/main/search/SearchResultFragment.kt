@@ -36,6 +36,7 @@ import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewM
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -53,6 +54,10 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private var isFirstComing = true
+
+    init {
+        SearchShowingLifeRegister(this)
+    }
 
     override fun onResume() {
         super.onResume()
@@ -103,7 +108,6 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         super.onViewStateRestored(savedInstanceState)
         // It needs to reset again when phone rotated the screen.
         isFirstComing = true
-        parent.showSearchButton()
     }
 
     override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
