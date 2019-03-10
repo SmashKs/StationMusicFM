@@ -29,7 +29,9 @@ import androidx.core.text.toSpannable
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.extraNotNull
+import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.isNull
@@ -116,7 +118,10 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
         super.viewComponentBinding()
         initRecyclerViewWith(find(R.id.rv_albums), albumAdapter, horLinearLayoutManager())
         initRecyclerViewWith(find(R.id.rv_artists), artistAdapter, horLinearLayoutManager())
-        initRecyclerViewWith(find(R.id.rv_tracks), trackAdapter, verLinearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_tracks),
+                             trackAdapter,
+                             verLinearLayoutManager(),
+                             VerticalItemDecorator(getDimen(R.dimen.md_one_unit).toInt()))
         // For coming back here and show it again.
         if (vm.tagInfoLiveData.value != null)
             find<TextView>(R.id.ftv_genre_about).text =

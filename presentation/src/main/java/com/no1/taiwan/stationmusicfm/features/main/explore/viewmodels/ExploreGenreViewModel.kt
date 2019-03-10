@@ -28,6 +28,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackReq
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.TopAlbumsEntity
@@ -74,16 +75,16 @@ class ExploreGenreViewModel(
         val parameters = TagParams(tagName)
         _tagInfoLiveData reqData {
             val tag = fetchTagCase.execMapping(tagMapper, FetchTagReq(parameters))
-//            val artist = fetchTagTopArtistCase.execMapping(artistsMapper, FetchTagTopArtistReq(parameters))
+            val artist = fetchTagTopArtistCase.execMapping(artistsMapper, FetchTagTopArtistReq(parameters))
             val album = fetchTagTopAlbumCase.execMapping(albumsMapper, FetchTagTopAlbumReq(parameters))
             val tracks = fetchTagTopTrackCase.execMapping(tracksMapper, FetchTagTopTrackReq(parameters))
             // If success to get them assign to each livedata.
             _tagLiveData.postValue(ResponseState.Success(tag))
-//            _topArtistsLiveData.postValue(ResponseState.Success(artist))
+            _topArtistsLiveData.postValue(ResponseState.Success(artist))
             _topAlbumsLiveData.postValue(ResponseState.Success(album))
             _topTracksLiveData.postValue(ResponseState.Success(tracks))
 
-            GenreMixInfo(tag, ArtistsEntity(), album, tracks)
+            GenreMixInfo(tag, artist, album, tracks)
         }
     }
 }

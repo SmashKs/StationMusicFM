@@ -25,6 +25,6 @@ import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
 
 data class TagTopArtistData(
-    @SerializedName("topArtists")
+    @SerializedName("topartists")
     val topArtists: TopArtistInfoData.ArtistsData
 ) : Data
