@@ -25,6 +25,7 @@ import android.view.View
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.devrapid.kotlinshaver.toTimeString
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
@@ -47,6 +48,9 @@ class HotTrackViewHolder(
     ) {
         itemView.apply {
             find<TextView>(R.id.ftv_track_name).text = "${position + 1} ${model.name}"
+            model.duration.takeIf { it.isNotBlank() }?.let {
+                find<TextView>(R.id.ftv_duration).text = it.toInt().toTimeString()
+            }
         }
     }
 }

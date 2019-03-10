@@ -34,18 +34,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.decorateGradientMask
 import com.devrapid.kotlinknifer.extraNotNull
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.toDrawable
+import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.isNull
+import com.devrapid.kotlinshaver.uiSwitch
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreAlbumViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
@@ -114,11 +116,20 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
                 find<TextView>(R.id.ftv_published_at).text = it.wiki.published
                 find<TextView>(R.id.ftv_tags).text = it.tags.map(TagInfoEntity.TagEntity::name).joinToString("\n")
                 find<TextView>(R.id.ftv_album_wiki).text = it.wiki.summary.parseAsHtml()
-                adapter.replaceWholeList(cast(it.tracks))
+                bkg {
+                    val tracks = it.tracks.map {
+                        TrackInfoEntity.TrackWithStreamableEntity().apply {
+                            name = it.name
+                            url = it.url
+                            artist = it.artist
+                            duration = it.duration
+                        }
+                    }
+                    uiSwitch { adapter.replaceWholeList(cast(tracks)) }
+                }
             } happenError {
                 loge(it)
             } finally {
-                logd(Thread.currentThread().name)
                 val artistName = vm.albumLiveData.data()?.artist.orEmpty()
                 if (artistThumbUri.isBlank() && artistName.isNotBlank())
                     vm.runTaskFetchArtist(artistName)

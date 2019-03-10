@@ -103,6 +103,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ftv_album_wiki"
             tools:itemCount="4"
-            tools:listitem="@layout/item_hot_track"/>
+            tools:listitem="@layout/item_explore_track"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
