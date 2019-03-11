@@ -19,18 +19,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.others
+package com.no1.taiwan.stationmusicfm.data.local.services
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.no1.taiwan.stationmusicfm.data.data.Data
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
-import java.util.Date
+import androidx.room.Dao
+import com.no1.taiwan.stationmusicfm.data.data.playlist.PlaylistInfoData
+import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
 
-@Entity(tableName = "table_history")
-data class SearchHistoryData(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val keyword: String = DEFAULT_STR,
-    val update: Date = Date()
-) : Data
+@Dao
+abstract class PlaylistDao : BaseDao<PlaylistInfoData>

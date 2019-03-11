@@ -13,41 +13,24 @@
   ~ copies or substantial portions of the Software.
   ~
   ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-  ~ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+  ~ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
   ~ PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
   ~ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
 <navigation
-    android:id="@+id/nav_main"
+    android:id="@+id/nav_rank"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/frag_search">
+    app:startDestination="@id/frag_music_index">
 
     <fragment
-        android:id="@+id/frag_explore"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreDispatcherFragment"
-        android:label="Explore"
-        tools:layout="@layout/fragment_explore_dispatcher"/>
-
-    <fragment
-        android:id="@+id/frag_mymusic"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicDispatcherFragment"
-        android:label="MyMusic"
-        tools:layout="@layout/fragment_mymusic_dispatcher"/>
-
-    <fragment
-        android:id="@+id/frag_rank"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.rank.RankDispatcherFragment"
-        android:label="Rank"
-        tools:layout="@layout/fragment_rank_dispatcher"/>
-
-    <fragment
-        android:id="@+id/frag_search"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.search.SearchDispatcherFragment"
-        android:label="Search"
-        tools:layout="@layout/fragment_search_dispatcher"/>
+        android:id="@+id/frag_music_index"
+        android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicIndexFragment"
+        android:label="My Music"
+        tools:layout="@layout/fragment_mymusic_index">
+    </fragment>
 </navigation>

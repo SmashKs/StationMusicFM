@@ -24,13 +24,14 @@ package com.no1.taiwan.stationmusicfm.data.data.others
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.no1.taiwan.stationmusicfm.data.data.Data
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 @Entity(tableName = "table_ranking")
 data class RankingIdData(
     @PrimaryKey
-    val id: Int,
-    val title: String,
-    val update: String,
-    val topTrackUri: String,
-    val trackNumber: Int
+    val id: Int = 0,
+    val title: String = DEFAULT_STR,
+    val update: String = DEFAULT_STR,
+    val topTrackUri: String = DEFAULT_STR,
+    val trackNumber: Int = 0
 ) : Data

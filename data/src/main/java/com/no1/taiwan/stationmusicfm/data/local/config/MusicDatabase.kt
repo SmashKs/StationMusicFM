@@ -28,14 +28,20 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
+import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
+import com.no1.taiwan.stationmusicfm.data.data.playlist.PlaylistInfoData
 import com.no1.taiwan.stationmusicfm.data.local.converters.DateConvert
+import com.no1.taiwan.stationmusicfm.data.local.services.LocalMusicDao
+import com.no1.taiwan.stationmusicfm.data.local.services.PlaylistDao
 import com.no1.taiwan.stationmusicfm.data.local.services.RankingDao
 import com.no1.taiwan.stationmusicfm.data.local.services.SearchingHistoryDao
 
 /**
  * The access operations to a database.
  */
-@Database(entities = [RankingIdData::class, SearchHistoryData::class], version = 1, exportSchema = false)
+@Database(entities = [RankingIdData::class, SearchHistoryData::class, LocalMusicData::class, PlaylistInfoData::class],
+          version = 1,
+          exportSchema = false)
 @TypeConverters(DateConvert::class)
 abstract class MusicDatabase : RoomDatabase() {
     companion object {
@@ -63,4 +69,6 @@ abstract class MusicDatabase : RoomDatabase() {
 
     abstract fun createRankingDao(): RankingDao
     abstract fun createSearchHistoryDao(): SearchingHistoryDao
+    abstract fun createLocalMusicDao(): LocalMusicDao
+    abstract fun createPlaylistDao(): PlaylistDao
 }

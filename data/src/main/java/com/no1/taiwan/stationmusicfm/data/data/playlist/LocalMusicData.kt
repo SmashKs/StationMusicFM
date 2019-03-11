@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.others
+package com.no1.taiwan.stationmusicfm.data.data.playlist
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -27,10 +27,17 @@ import com.no1.taiwan.stationmusicfm.data.data.Data
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import java.util.Date
 
-@Entity(tableName = "table_history")
-data class SearchHistoryData(
+@Entity(tableName = "table_local_music")
+data class LocalMusicData(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val keyword: String = DEFAULT_STR,
-    val update: Date = Date()
+    val trackName: String = DEFAULT_STR,
+    val artistName: String = DEFAULT_STR,
+    val duration: Int = 0,
+    val hasOwn: Boolean = false,
+    val remoteTrackUri: String = DEFAULT_STR,
+    val localTrackUri: String = DEFAULT_STR,
+    val playlistList: String = DEFAULT_STR,
+    val createdDate: Date = Date(),
+    val lastListenDate: Date = Date()
 ) : Data

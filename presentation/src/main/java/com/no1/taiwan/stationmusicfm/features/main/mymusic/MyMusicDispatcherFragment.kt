@@ -25,11 +25,11 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 
-class MyMusicFragment : BaseFragment<MainActivity>() {
+class MyMusicDispatcherFragment : BaseFragment<MainActivity>() {
     /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.
      */
-    override fun provideInflateView() = R.layout.fragment_mymusic
+    override fun provideInflateView() = R.layout.fragment_mymusic_dispatcher
 }
