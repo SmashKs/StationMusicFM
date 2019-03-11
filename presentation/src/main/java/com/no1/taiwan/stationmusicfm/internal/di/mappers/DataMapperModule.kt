@@ -49,6 +49,8 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.UserDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.others.RankingDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.others.SearchHistoryDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.playlist.LocalMusicDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.playlist.PlaylistInfoDMapper
 import com.no1.taiwan.stationmusicfm.internal.di.DataMapperEntry
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -118,5 +120,7 @@ object DataMapperModule {
             ArtistPhotosDMapper::class.java to ArtistPhotosDMapper(ArtistPhotoDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton { SearchHistoryDMapper::class.java to SearchHistoryDMapper() }
+        bind<DataMapperEntry>().inSet() with singleton { LocalMusicDMapper::class.java to LocalMusicDMapper() }
+        bind<DataMapperEntry>().inSet() with singleton { PlaylistInfoDMapper::class.java to PlaylistInfoDMapper() }
     }
 }

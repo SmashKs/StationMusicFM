@@ -21,11 +21,28 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.support.v4.find
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
+    private val adapter: MusicAdapter by instance()
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(ObjectLabel.LINEAR_LAYOUT_VERTICAL)
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        initRecyclerViewWith(find(R.id.rv_playlist), adapter, linearLayoutManager())
+    }
+
     /**
      * Set the parentView for inflating.
      *
