@@ -32,5 +32,5 @@ data class SearchHistoryData(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val keyword: String = DEFAULT_STR,
-    val update: Date = Date()
+    val updated: Date = Date()
 ) : Data

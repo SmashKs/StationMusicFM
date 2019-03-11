@@ -32,24 +32,24 @@ import java.util.Date
 abstract class SearchingHistoryDao : BaseDao<SearchHistoryData> {
     /**
      * Insert a history data into database and check the keyword if they are the same,
-     * just update the date; otherwise, insert a new data.
+     * just updated the date; otherwise, insert a new data.
      *
      * @param keyword a keyword about artist, track, album, ...etc.
      */
     @Transaction
     open fun insertBy(keyword: String) {
-        val history = getHistory(keyword)
+        val history = retrieveHistory(keyword)
         if (history == null)
             insert(SearchHistoryData(0, keyword, Date()))
         else
-            replace(history.copy(update = Date()))
+            replace(history.copy(updated = Date()))
     }
 
     /**
      * Get all data from the History table.
      */
-    @Query("SELECT * FROM table_history ORDER BY `update` ASC LIMIT :limit")
-    abstract fun getHistories(limit: Int = 30): List<SearchHistoryData>
+    @Query("SELECT * FROM table_history ORDER BY updated ASC LIMIT :limit")
+    abstract fun retrieveHistories(limit: Int = 30): List<SearchHistoryData>
 
     /**
      * Get a data with specific [keyword] from the History table
@@ -58,7 +58,7 @@ abstract class SearchingHistoryDao : BaseDao<SearchHistoryData> {
      * @return SearchHistoryData
      */
     @Query("SELECT * FROM table_history WHERE keyword=:keyword")
-    abstract fun getHistory(keyword: String): SearchHistoryData?
+    abstract fun retrieveHistory(keyword: String): SearchHistoryData?
 
     /**
      * Delete a specific data by [keyword] from the History table.

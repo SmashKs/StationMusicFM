@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.playlist
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.no1.taiwan.stationmusicfm.data.data.Data
@@ -31,13 +32,20 @@ import java.util.Date
 data class LocalMusicData(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    @ColumnInfo(name = "track_name")
     val trackName: String = DEFAULT_STR,
+    @ColumnInfo(name = "artist_name")
     val artistName: String = DEFAULT_STR,
     val duration: Int = 0,
+    @ColumnInfo(name = "has_own")
     val hasOwn: Boolean = false,
+    @ColumnInfo(name = "remote_track_uri")
     val remoteTrackUri: String = DEFAULT_STR,
+    @ColumnInfo(name = "local_track_uri")
     val localTrackUri: String = DEFAULT_STR,
+    @ColumnInfo(name = "playlist_list")
     val playlistList: String = DEFAULT_STR,
-    val createdDate: Date = Date(),
-    val lastListenDate: Date = Date()
+    val created: Date = Date(),
+    @ColumnInfo(name = "last_listen")
+    val lastListen: Date = Date()
 ) : Data

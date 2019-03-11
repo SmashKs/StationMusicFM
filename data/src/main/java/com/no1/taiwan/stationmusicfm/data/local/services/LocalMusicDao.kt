@@ -22,8 +22,17 @@
 package com.no1.taiwan.stationmusicfm.data.local.services
 
 import androidx.room.Dao
+import androidx.room.Query
 import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
 import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
 
 @Dao
-abstract class LocalMusicDao : BaseDao<LocalMusicData>
+abstract class LocalMusicDao : BaseDao<LocalMusicData> {
+    /**
+     * Get all data from the local music table.
+     */
+    @Query("SELECT * FROM table_local_music")
+    abstract fun retrieveMusics(): List<LocalMusicData>
+
+//    abstract fun insertBy(localMusicData: LocalMusicData)
+}

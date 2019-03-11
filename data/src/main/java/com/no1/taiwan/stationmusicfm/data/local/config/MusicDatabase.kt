@@ -31,6 +31,7 @@ import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
 import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
 import com.no1.taiwan.stationmusicfm.data.data.playlist.PlaylistInfoData
 import com.no1.taiwan.stationmusicfm.data.local.converters.DateConvert
+import com.no1.taiwan.stationmusicfm.data.local.services.ListenHistoryDao
 import com.no1.taiwan.stationmusicfm.data.local.services.LocalMusicDao
 import com.no1.taiwan.stationmusicfm.data.local.services.PlaylistDao
 import com.no1.taiwan.stationmusicfm.data.local.services.RankingDao
@@ -71,4 +72,5 @@ abstract class MusicDatabase : RoomDatabase() {
     abstract fun createSearchHistoryDao(): SearchingHistoryDao
     abstract fun createLocalMusicDao(): LocalMusicDao
     abstract fun createPlaylistDao(): PlaylistDao
+    abstract fun createListenHistoryDao(): ListenHistoryDao
 }

@@ -53,7 +53,7 @@ class LocalDataStore(
         rankingDao.insert(*params.toTypedArray())
     }
 
-    override suspend fun getRankingData() = rankingDao.getRankings()
+    override suspend fun getRankingData() = rankingDao.retrieveRankings()
 
     override suspend fun modifyRankingData(parameterable: Parameterable) = tryWrapper {
         val id = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_RANK_ID])
@@ -71,7 +71,7 @@ class LocalDataStore(
 
     override suspend fun getSearchHistories(parameterable: Parameterable): List<SearchHistoryData> {
         val limit = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_LIMIT])
-        return searchingHistoryDao.getHistories(limit)
+        return searchingHistoryDao.retrieveHistories(limit)
     }
 
     override suspend fun removeSearchHistory(parameterable: Parameterable) = tryWrapper {

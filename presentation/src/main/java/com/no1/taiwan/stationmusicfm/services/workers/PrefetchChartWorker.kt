@@ -55,7 +55,7 @@ class PrefetchChartWorker(
     companion object {
         const val ARGUMENT_DATA_ID = "argument id"
         const val ARGUMENT_DATA_TITLE = "argument title"
-        const val ARGUMENT_DATA_UPDATE = "argument update period"
+        const val ARGUMENT_DATA_UPDATE = "argument updated period"
     }
 
     /** A Kodein Aware class must be within reach of a [Kodein] object. */

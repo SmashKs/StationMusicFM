@@ -32,8 +32,8 @@ abstract class RankingDao : BaseDao<RankingIdData> {
      * Get all data from the Ranking table.
      */
     @Query("SELECT * FROM table_ranking")
-    abstract fun getRankings(): List<RankingIdData>
+    abstract fun retrieveRankings(): List<RankingIdData>
 
-    @Query("UPDATE table_ranking SET topTrackUri=:uri, trackNumber=:numOfTracks WHERE id=:rankId")
+    @Query("UPDATE table_ranking SET top_track_uri=:uri, track_number=:numOfTracks WHERE id=:rankId")
     abstract fun replaceBy(rankId: Int, uri: String, numOfTracks: Int)
 }

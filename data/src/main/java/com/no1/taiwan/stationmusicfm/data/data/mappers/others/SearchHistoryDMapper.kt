@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
  */
 class SearchHistoryDMapper : SearchHistoryDataMap {
     override fun toModelFrom(data: SearchHistoryData) = data.run {
-        SearchHistModel(id, keyword, update)
+        SearchHistModel(id, keyword, updated)
     }
 
     override fun toDataFrom(model: SearchHistModel) = model.run {

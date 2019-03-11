@@ -19,26 +19,29 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.playlist
+package com.no1.taiwan.stationmusicfm.data.local.services
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.no1.taiwan.stationmusicfm.data.data.Data
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import androidx.room.Dao
+import androidx.room.Query
+import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
 import java.util.Date
 
-@Entity(tableName = "table_playlist_info")
-data class PlaylistInfoData(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val name: String = DEFAULT_STR,
-    @ColumnInfo(name = "track_count")
-    val trackCount: Int = 0,
-    val created: Date = Date(),
-    val updated: Date = givenDate
-) : Data {
-    companion object Constant {
-        private val givenDate = Date(0)
-    }
+@Dao
+abstract class ListenHistoryDao {
+    /**
+     * Get all data from the History table with limitation.
+     *
+     * @param limit the limitation of the histories.
+     */
+    @Query("SELECT * FROM table_local_music ORDER BY last_listen ASC LIMIT :limit")
+    abstract fun retrieveHistories(limit: Int = 30): List<LocalMusicData>
+
+    /**
+     * Reset the update time of a history.
+     *
+     * @param id history's id.
+     * @param clearDate init time for not getting it.
+     */
+    @Query("UPDATE table_local_music SET last_listen=:clearDate WHERE id=:id")
+    abstract fun releaseHistory(id: Int, clearDate: Date = Date(0))
 }

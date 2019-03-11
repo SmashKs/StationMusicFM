@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.data.data.others
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.no1.taiwan.stationmusicfm.data.data.Data
@@ -31,7 +32,9 @@ data class RankingIdData(
     @PrimaryKey
     val id: Int = 0,
     val title: String = DEFAULT_STR,
-    val update: String = DEFAULT_STR,
+    val updated: String = DEFAULT_STR,
+    @ColumnInfo(name = "top_track_uri")
     val topTrackUri: String = DEFAULT_STR,
+    @ColumnInfo(name = "track_number")
     val trackNumber: Int = 0
 ) : Data
