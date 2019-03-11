@@ -22,6 +22,7 @@
 
 
 <androidx.core.widget.NestedScrollView
+    android:id="@+id/nsv_base_ranking"
     style="@style/Constraint.MatchParent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
