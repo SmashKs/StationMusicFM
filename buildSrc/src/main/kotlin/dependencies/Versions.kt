@@ -177,6 +177,6 @@ object Versions {
     }
 
     object Player {
-        const val exoplayer = "r2.9.6"
+        const val exoplayer = "2.9.6"
     }
 }

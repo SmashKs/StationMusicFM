@@ -19,4 +19,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':presentation', ':data', ':domain', ':widget', ':ext', ':buildSrc', ':ktx', ':player'
+package com.no1.taiwan.stationmusicfm.player
+
+sealed class MusicPlayerState {
+    object Standby : MusicPlayerState()
+    object Play : MusicPlayerState()
+    object Pause : MusicPlayerState()
+}

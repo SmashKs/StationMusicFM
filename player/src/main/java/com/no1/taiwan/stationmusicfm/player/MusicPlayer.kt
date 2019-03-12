@@ -1,0 +1,88 @@
+/*
+ * Copyright (C) 2019 The Smash Ks Open Project
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished
+ * to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+package com.no1.taiwan.stationmusicfm.player
+
+import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Pause
+import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Play
+import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Standby
+
+interface MusicPlayer {
+    /**
+     * Start playing a music.
+     * This function will play the music which is specified with an URI.
+     * If playing is failed, the function returns false.
+     */
+    fun play(uri: String): Boolean
+
+    /**
+     * This function is also about play the music, but when the music is playing,
+     * executing this function will pause the music.
+     * If the music is pausing, executing this function will resume the music.
+     * If playing is failed, the function returns false.
+     */
+    fun play(): Boolean
+
+    /**
+     * Stop playing the music.
+     */
+    fun stop()
+
+    /**
+     * Pause a music. If no music is played, nothing to do.
+     */
+    fun pause()
+
+    /**
+     * Resume the playing of the music.
+     */
+    fun resume()
+
+    /**
+     * Set the repeat mode: normal play, repeat one music, repeat the whole playlist
+     */
+    fun setRepeat(isRepeat: Boolean)
+
+    /**
+     * seek the play time when the music is playing
+     */
+    fun seekTo(sec: Int)
+
+    /**
+     * The function is used to get the current state of the music player.
+     *
+     * @return [Standby]: the music player is waiting for the music.
+     *  [Play]: the music player is playing.
+     *  [Pause]: the music player is pausing.
+     */
+    fun getPlayerState(): MusicPlayerState
+
+    /**
+     * The function is used to write the media file to local storage if the music player get the complete file.
+     * @return false is that writing file unsuccessful, otherwise, is that writing file successful.
+     */
+    fun writeToFile(url: String, filePath: String? = null): Boolean
+
+    /**
+     * The function is used to set up an event listener which monitor the activity of music player.
+     */
+    fun setEventListener(listener: ExoPlayerEventListener.PlayerEventListener)
+}

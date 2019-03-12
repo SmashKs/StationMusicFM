@@ -19,4 +19,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':presentation', ':data', ':domain', ':widget', ':ext', ':buildSrc', ':ktx', ':player'
+package com.no1.taiwan.stationmusicfm.player
+
+internal interface EventListener {
+    fun onDurationChanged(duration: Int)
+    fun onBufferPercentage(percent: Int)
+    fun onCurrentTime(second: Int)
+    fun onPlayerStateChanged(state: MusicPlayerState)
+    fun onDownloadTrack(isSuccess: Boolean)
+}
