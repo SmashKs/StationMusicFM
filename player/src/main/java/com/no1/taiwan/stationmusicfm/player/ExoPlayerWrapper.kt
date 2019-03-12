@@ -47,7 +47,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     private lateinit var exoPlayer: SimpleExoPlayer
     private var isPlaying = false
     private lateinit var timer: PausableTimer
-    private var playerState = MusicPlayerState.Standby
+    private var playerState: MusicPlayerState = MusicPlayerState.Standby
 
     private var listener: ExoPlayerEventListener.PlayerEventListener? = null
 
@@ -55,7 +55,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         if (!isNetworkAvailable())
             return false
 
-        if (playerState == MusicPlayerState.Play) {
+        if (playerState is MusicPlayerState.Play) {
             // TODO: find out a appropriate exception or make one.
             throw Exception("now is playing")
         }
@@ -186,13 +186,13 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             musicPlayer.listener?.onBufferPercentage(exoPlayer.bufferedPercentage)
         }
 
-        override fun onPositionDiscontinuity() {
+        override fun onPositionDiscontinuity(reason: Int) {
         }
 
         override fun onRepeatModeChanged(repeatMode: Int) {
         }
 
-        override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {
+        override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int) {
             val millis = 1000
             val threshold = 1000_000  // Avoiding the bigger timeline comes, cause the running time is incorrect.
 
