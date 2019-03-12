@@ -43,12 +43,14 @@ import com.google.android.exoplayer2.util.Log
 import com.google.android.exoplayer2.util.Util
 
 class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
-    private val tag = "ExoPlayerWrapper"
-    private lateinit var exoPlayer: SimpleExoPlayer
-    private var isPlaying = false
-    private lateinit var timer: PausableTimer
-    private var playerState: MusicPlayerState = MusicPlayerState.Standby
+    companion object {
+        private const val tag = "ExoPlayerWrapper"
+    }
 
+    private lateinit var exoPlayer: SimpleExoPlayer
+    private lateinit var timer: PausableTimer
+    private var isPlaying = false
+    private var playerState: MusicPlayerState = MusicPlayerState.Standby
     private var listener: ExoPlayerEventListener.PlayerEventListener? = null
 
     override fun play(uri: String): Boolean {

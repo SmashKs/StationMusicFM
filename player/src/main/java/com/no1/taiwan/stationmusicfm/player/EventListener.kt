@@ -23,8 +23,12 @@ package com.no1.taiwan.stationmusicfm.player
 
 internal interface EventListener {
     fun onDurationChanged(duration: Int)
+
     fun onBufferPercentage(percent: Int)
+
     fun onCurrentTime(second: Int)
+
     fun onPlayerStateChanged(state: MusicPlayerState)
+
     fun onDownloadTrack(isSuccess: Boolean)
 }

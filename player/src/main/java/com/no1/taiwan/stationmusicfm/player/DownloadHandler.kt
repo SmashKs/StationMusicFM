@@ -33,7 +33,7 @@ import java.net.URL
 class DownloadHandler(
     private val url: String,
     filePath: String? = null,
-    private val eventListener: ExoPlayerEventListener.PlayerEventListener? = null
+    eventListener: ExoPlayerEventListener.PlayerEventListener? = null
 ) : Thread() {
     private val tag = "DownloadHandler"
     private val bufferSize = 2048
@@ -103,33 +103,22 @@ class DownloadHandler(
     private fun downloadFile(): Boolean {
         val fileOutputStream = FileOutputStream(file)
         val inputStream = BufferedInputStream(URL(url).openStream())
-
         var downloadSize = 0
-
         val buffer = ByteArray(bufferSize)
         var bufferLength: Int
         fileOutputStream.use { fos ->
             inputStream.use { bis ->
                 while (true) {
-                    bufferLength = inputStream.read(buffer)
+                    bufferLength = bis.read(buffer)
                     if (bufferLength <= 0)
                         break
-                    fileOutputStream.write(buffer, 0, bufferLength)
+                    fos.write(buffer, 0, bufferLength)
                     downloadSize += bufferLength
                 }
             }
-        }
-        while (true) {
-            bufferLength = inputStream.read(buffer)
-            if (bufferLength <= 0)
-                break
-            fileOutputStream.write(buffer, 0, bufferLength)
-            downloadSize += bufferLength
+            fos.flush()
         }
 
-        fileOutputStream.flush()
-        fileOutputStream.close()
-        inputStream.close()
         if (downloadSize != totalSize) {
             Log.e(tag, "file was not complete")
             return false

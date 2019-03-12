@@ -58,6 +58,23 @@ class MainActivity : BaseActivity() {
     var searchItem: MenuItem? = null
     var onQuerySubmit by WeakRef<(query: String) -> Unit>()
 
+//    private lateinit var player: ExoPlayerWrapper
+//    private val permissionsStorage = arrayOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)
+//    private val permissionsRequestCode = 1
+//    private val url =
+//        "https://soundsthatmatterblog.files.wordpress.com/2012/12/04-just-give-me-a-reason-feat-nate-ruess.mp3"
+//
+//    private fun requirePermission() {
+//        ActivityCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE)
+//            .takeIf { it == PackageManager.PERMISSION_DENIED }
+//            ?.let { ActivityCompat.requestPermissions(this, permissionsStorage, permissionsRequestCode) }
+//    }
+//
+//    fun playASong() {
+//        player = ExoPlayerWrapper(application)
+//        player.play(url)
+//    }
+
     /**
      * For separating the huge function code in [init]. Initialize all view components here.
      */
