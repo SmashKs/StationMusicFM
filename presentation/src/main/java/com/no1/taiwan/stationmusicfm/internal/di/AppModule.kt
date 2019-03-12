@@ -19,16 +19,25 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.ktx.acc.lifecycle
+package com.no1.taiwan.stationmusicfm.internal.di
 
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleObserver
-import com.devrapid.kotlinknifer.SoftRef
+import android.content.Context
+import com.no1.taiwan.stationmusicfm.player.ExoPlayerWrapper
+import com.no1.taiwan.stationmusicfm.player.MusicPlayer
+import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
 
-abstract class FragmentLifeRegister<F : Fragment>(fragment: F) : LifecycleObserver {
-    protected val frag by SoftRef(fragment)
-
-    init {
-        frag?.lifecycle?.addObserver(this)
+/**
+ * To provide the necessary App objects(singleton) for the whole app.
+ */
+object AppModule {
+    /**
+     * Provider the objects by using application context.
+     *
+     * @param context
+     */
+    fun appProvider(context: Context) = Kodein.Module("Application Module") {
+        bind<MusicPlayer>() with instance(ExoPlayerWrapper(context))
     }
 }

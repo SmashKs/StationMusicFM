@@ -27,6 +27,7 @@ import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.devrapid.kotlinshaver.toTimeString
+import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
@@ -48,6 +49,9 @@ class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Com
             find<TextView>(R.id.ftv_track_name).text = model.title
             find<TextView>(R.id.ftv_artist_name).text = model.artist
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()
+            setOnClickListener {
+                RxBus.get().post("play a song", model.url)
+            }
         }
     }
 }

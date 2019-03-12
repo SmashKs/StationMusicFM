@@ -29,6 +29,8 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.obtainViewStub
 import com.devrapid.kotlinknifer.showViewStub
 import com.devrapid.kotlinshaver.cast
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
@@ -36,6 +38,8 @@ import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewM
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.player.MusicPlayer
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -53,9 +57,11 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val adapter: MusicAdapter by instance()
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
+    private val player: MusicPlayer by instance()
     private var isFirstComing = true
 
     init {
+        BusFragLongerLifeRegister(this)
         SearchShowingLifeRegister(this)
     }
 
@@ -115,6 +121,11 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     override fun getKeptKeyword() = vm.keyword.value.orEmpty()
 
     fun searchMusicBy(keyword: String) = vm.runTaskSearchMusic(keyword)
+
+    @Subscribe(tags = [Tag("play a song")])
+    fun playASong(uri: String) {
+        player.play(uri)
+    }
 
     private fun switchStub(isResult: Boolean) {
         if (isResult) {

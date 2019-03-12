@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm
 import android.content.Context
 import androidx.multidex.MultiDexApplication
 import androidx.work.WorkManager
+import com.no1.taiwan.stationmusicfm.internal.di.AppModule
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
 import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
@@ -59,11 +60,12 @@ class MusicApp : MultiDexApplication(), KodeinAware {
      */
     override val kodein = Kodein.lazy {
         import(androidXModule(this@MusicApp))
+        import(AppModule.appProvider(applicationContext))
         /** bindings */
-        import(UtilModule.utilProvider(this@MusicApp))
+        import(UtilModule.utilProvider(applicationContext))
         /** usecases are bind here but the scope is depending on each layers.  */
         import(UsecaseModule.usecaseProvider())
-        import(RepositoryModule.repositoryProvider(this@MusicApp))
+        import(RepositoryModule.repositoryProvider(applicationContext))
         import(DataMapperModule.dataUtilProvider())
     }
 
@@ -71,6 +73,7 @@ class MusicApp : MultiDexApplication(), KodeinAware {
         super.onCreate()
         workManager.enqueue(initRequest)
         workManager.enqueue(parserRequest)
+        // Special initial.
         MMKV.initialize(applicationContext)
         MmkvPrefs.setPrefSettings()
     }
