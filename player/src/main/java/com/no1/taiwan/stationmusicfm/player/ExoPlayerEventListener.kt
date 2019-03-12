@@ -22,35 +22,28 @@
 package com.no1.taiwan.stationmusicfm.player
 
 class ExoPlayerEventListener {
-    class PlayerEventListenerFunc {
-        var onDurationChanged: ((duration: Int) -> Unit)? = null
-        var onBufferPercentage: ((percent: Int) -> Unit)? = null
-        var onCurrentTime: ((second: Int) -> Unit)? = null
-        var onPlayerStateChanged: ((state: MusicPlayerState) -> Unit)? = null
-        var onDownloadTrack: ((isSuccess: Boolean) -> Int)? = null
-    }
+    var onDurationChanged: ((duration: Int) -> Unit)? = null
+    var onBufferPercentage: ((percent: Int) -> Unit)? = null
+    var onCurrentTime: ((second: Int) -> Unit)? = null
+    var onPlayerStateChanged: ((state: MusicPlayerState) -> Unit)? = null
+    var onDownloadTrack: ((isSuccess: Boolean) -> Int)? = null
 
-    class PlayerEventListener(func: PlayerEventListenerFunc.() -> Unit) : EventListener {
-        private var func = PlayerEventListenerFunc().apply(func)
+    class PlayerEventListener(func: ExoPlayerEventListener.() -> Unit) : EventListener {
+        private var func = ExoPlayerEventListener().apply(func)
 
-        override fun onDurationChanged(duration: Int) {
-            func.onDurationChanged?.invoke(duration)
-        }
+        override fun onDurationChanged(duration: Int) =
+            func.onDurationChanged?.invoke(duration) ?: Unit
 
-        override fun onBufferPercentage(percent: Int) {
-            func.onBufferPercentage?.invoke(percent)
-        }
+        override fun onBufferPercentage(percent: Int) =
+            func.onBufferPercentage?.invoke(percent) ?: Unit
 
-        override fun onCurrentTime(second: Int) {
-            func.onCurrentTime?.invoke(second)
-        }
+        override fun onCurrentTime(second: Int) =
+            func.onCurrentTime?.invoke(second) ?: Unit
 
-        override fun onPlayerStateChanged(state: MusicPlayerState) {
-            func.onPlayerStateChanged?.invoke(state)
-        }
+        override fun onPlayerStateChanged(state: MusicPlayerState) =
+            func.onPlayerStateChanged?.invoke(state) ?: Unit
 
-        override fun onDownloadTrack(isSuccess: Boolean) {
-            func.onDownloadTrack?.invoke(isSuccess)
-        }
+        override fun onDownloadTrack(isSuccess: Boolean) =
+            func.onDownloadTrack?.invoke(isSuccess) ?: -1
     }
 }

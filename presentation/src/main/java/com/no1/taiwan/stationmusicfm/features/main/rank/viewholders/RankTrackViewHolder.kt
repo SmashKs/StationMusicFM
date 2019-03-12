@@ -49,6 +49,7 @@ class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Com
             find<TextView>(R.id.ftv_track_name).text = model.title
             find<TextView>(R.id.ftv_artist_name).text = model.artist
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()
+            find<ImageView>(R.id.iv_play)
             setOnClickListener {
                 RxBus.get().post("play a song", model.url)
             }

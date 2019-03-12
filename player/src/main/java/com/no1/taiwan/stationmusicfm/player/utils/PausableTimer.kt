@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.player
+package com.no1.taiwan.stationmusicfm.player.utils
 
 import android.os.CountDownTimer
 

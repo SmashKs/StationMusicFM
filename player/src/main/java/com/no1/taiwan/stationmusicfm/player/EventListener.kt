@@ -30,5 +30,5 @@ internal interface EventListener {
 
     fun onPlayerStateChanged(state: MusicPlayerState)
 
-    fun onDownloadTrack(isSuccess: Boolean)
+    fun onDownloadTrack(isSuccess: Boolean): Int
 }

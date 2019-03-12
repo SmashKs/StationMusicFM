@@ -26,20 +26,17 @@ import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Play
 import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Standby
 
 interface MusicPlayer {
+    val isPlaying: Boolean
+
     /**
      * Start playing a music.
      * This function will play the music which is specified with an URI.
-     * If playing is failed, the function returns false.
-     */
-    fun play(uri: String): Boolean
-
-    /**
-     * This function is also about play the music, but when the music is playing,
-     * executing this function will pause the music.
+     * If the [uri] is blank string, the function is also about play the music, but when
+     * the music is playing, executing this function will pause the music.
      * If the music is pausing, executing this function will resume the music.
      * If playing is failed, the function returns false.
      */
-    fun play(): Boolean
+    fun play(uri: String = ""): Boolean
 
     /**
      * Stop playing the music.
