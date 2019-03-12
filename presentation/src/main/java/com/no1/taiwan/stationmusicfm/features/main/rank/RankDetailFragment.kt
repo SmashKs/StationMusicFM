@@ -31,13 +31,18 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -61,8 +66,10 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     private val songAdapter: MusicAdapter by instance()
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
+    private val player: MusicPlayer by instance()
 
     init {
+        BusFragLongerLifeRegister(this)
         SearchHidingLifeRegister(this)
     }
 
@@ -109,4 +116,15 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_rank_detail
+
+    /**
+     * Play a track by [MusicPlayer].
+     *
+     * @param uri a track uri.
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder.initView]
+     */
+    @Subscribe(tags = [Tag(TAG_PLAY_A_SONG)])
+    fun playASong(uri: String) {
+        player.play(uri)
+    }
 }

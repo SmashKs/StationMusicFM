@@ -39,6 +39,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATIO
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -122,7 +123,13 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
 
     fun searchMusicBy(keyword: String) = vm.runTaskSearchMusic(keyword)
 
-    @Subscribe(tags = [Tag("play a song")])
+    /**
+     * Play a track by [MusicPlayer].
+     *
+     * @param uri a track uri.
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder.initView]
+     */
+    @Subscribe(tags = [Tag(TAG_PLAY_A_SONG)])
     fun playASong(uri: String) {
         player.play(uri)
     }

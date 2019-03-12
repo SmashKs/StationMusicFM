@@ -30,6 +30,7 @@ import com.devrapid.kotlinshaver.toTimeString
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
@@ -42,6 +43,7 @@ class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Com
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
+
     override fun initView(model: CommonMusicEntity.SongEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<ImageView>(R.id.iv_album).loadByAny(model.oriCoverUrl)
@@ -51,7 +53,11 @@ class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Com
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()
             find<ImageView>(R.id.iv_play)
             setOnClickListener {
-                RxBus.get().post("play a song", model.url)
+                /**
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment.playASong]
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.playASong]
+                 */
+                RxBus.get().post(TAG_PLAY_A_SONG, model.url)
             }
         }
     }
