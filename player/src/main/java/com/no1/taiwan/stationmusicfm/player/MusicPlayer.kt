@@ -26,7 +26,10 @@ import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Play
 import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Standby
 
 interface MusicPlayer {
+    /** The current is paying state or not. */
     val isPlaying: Boolean
+    /** Current playing track's uri. */
+    val curPlayingUri: String
 
     /**
      * Start playing a music.
@@ -73,13 +76,13 @@ interface MusicPlayer {
     fun getPlayerState(): MusicPlayerState
 
     /**
+     * The function is used to set up an event listener which monitor the activity of music player.
+     */
+    fun setEventListener(listener: ExoPlayerEventListener.PlayerEventListener)
+
+    /**
      * The function is used to write the media file to local storage if the music player get the complete file.
      * @return false is that writing file unsuccessful, otherwise, is that writing file successful.
      */
     fun writeToFile(url: String, filePath: String? = null): Boolean
-
-    /**
-     * The function is used to set up an event listener which monitor the activity of music player.
-     */
-    fun setEventListener(listener: ExoPlayerEventListener.PlayerEventListener)
 }

@@ -23,19 +23,14 @@ package com.no1.taiwan.stationmusicfm.player
 
 import android.content.Context
 import android.net.Uri
-import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.STATE_ENDED
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.Timeline
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Log
@@ -53,14 +48,14 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     }
 
     override var isPlaying = false
-    private val exoPlayer: SimpleExoPlayer by lazy {
+    override var curPlayingUri = ""
+    private val exoPlayer by lazy {
         Log.i(TAG, "init ExoPlayer")
         ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector()).apply {
             addListener(LocalPlayerEventListener(this@ExoPlayerWrapper, this))
         }
     }
     private lateinit var timer: PausableTimer
-    private var playingUri = ""
     private var playerState: MusicPlayerState = Standby
         set(value) {
             if (value == field) return
@@ -91,14 +86,14 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             exoPlayer.playWhenReady = !isPlaying
         }
         else {
-            if (playingUri == uri) return false
+            if (curPlayingUri == uri) return false
             // Prepare the player with the source.
             exoPlayer.apply {
                 prepare(buildMediaSource(uri))
                 playWhenReady = true
             }
             playerState = Play
-            playingUri = uri
+            curPlayingUri = uri
         }
 
         return true
@@ -155,7 +150,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         this.listener = listener
     }
 
-    private fun buildMediaSource(url: String): ExtractorMediaSource? {
+    private fun buildMediaSource(url: String): ExtractorMediaSource {
         val uri = Uri.parse(url)
         // Produces DataSource instances through which media data is loaded.
         val dataSourceFactory =
@@ -170,15 +165,6 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         private val musicPlayer: ExoPlayerWrapper,
         private val exoPlayer: ExoPlayer
     ) : Player.EventListener {
-        override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
-        }
-
-        override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
-        }
-
-        override fun onPlayerError(error: ExoPlaybackException?) {
-        }
-
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
             musicPlayer.isPlaying = playWhenReady
             if (playbackState == STATE_ENDED) {
@@ -190,15 +176,9 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             musicPlayer.listener?.onBufferPercentage(exoPlayer.bufferedPercentage)
         }
 
-        override fun onPositionDiscontinuity(reason: Int) {
-        }
-
-        override fun onRepeatModeChanged(repeatMode: Int) {
-        }
-
         override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int) {
             val millis = 1000
-            val threshold = 1000_000  // Avoiding the bigger timeline comes, cause the running time is incorrect.
+            val threshold = 1_000_000  // Avoiding the bigger timeline comes, cause the running time is incorrect.
 
             if (exoPlayer.duration in 1..threshold) {
                 musicPlayer.listener?.onDurationChanged(exoPlayer.duration.div(millis).toInt())

@@ -26,16 +26,29 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.toTimeString
 import com.hwangjr.rxbus.RxBus
+import com.no1.taiwan.stationmusicfm.MusicApp
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
+import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, CommonMusicEntity.SongEntity>(view) {
+class RankTrackViewHolder(
+    view: View
+) : AdaptiveViewHolder<MultiTypeFactory, CommonMusicEntity.SongEntity>(view), KodeinAware {
+    /** A Kodein Aware class must be within reach of a [Kodein] object. */
+    override val kodein by kodein(MusicApp.appContext)
+    private val player: MusicPlayer by instance()
+
     /**
      * Set the views' properties.
      *
@@ -43,7 +56,6 @@ class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Com
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-
     override fun initView(model: CommonMusicEntity.SongEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<ImageView>(R.id.iv_album).loadByAny(model.oriCoverUrl)
@@ -51,6 +63,7 @@ class RankTrackViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Com
             find<TextView>(R.id.ftv_track_name).text = model.title
             find<TextView>(R.id.ftv_artist_name).text = model.artist
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()
+            logw(player)
             find<ImageView>(R.id.iv_play)
             setOnClickListener {
                 /**
