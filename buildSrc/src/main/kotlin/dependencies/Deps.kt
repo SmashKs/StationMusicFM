@@ -235,4 +235,9 @@ object Deps {
      */
     object ExtTest
     //endregion
+
+    object Exoplayer {
+        const val exoplayer = "com.google.android.exoplayer:exoplayer-core:${Versions.Player.exoplayer}"
+        const val exoplyerUi = "com.google.android.exoplayer:exoplayer-ui:${Versions.Player.exoplayer}"
+    }
 }

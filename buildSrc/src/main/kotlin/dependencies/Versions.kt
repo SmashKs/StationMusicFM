@@ -175,4 +175,8 @@ object Versions {
         const val detekt = "1.0.0-RC14"
         const val versionUpdater = "0.20.0"
     }
+
+    object Player {
+        const val exoplayer = "r2.9.6"
+    }
 }

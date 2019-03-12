@@ -71,4 +71,9 @@ object Dependencies {
         "workerKtx" to Deps.Presentation.workerKtx
 //        "dynAnimKtx" to Deps.Presentation.dynAnimKtx
     )
+
+    val player = hashMapOf(
+        "exoplayer" to Deps.Exoplayer.exoplayer,
+        "exoplyerUi" to Deps.Exoplayer.exoplyerUi
+    )
 }
