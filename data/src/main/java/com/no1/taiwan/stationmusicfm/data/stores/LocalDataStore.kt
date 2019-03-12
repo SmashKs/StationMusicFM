@@ -26,6 +26,9 @@ import com.devrapid.kotlinshaver.castOrNull
 import com.no1.taiwan.stationmusicfm.data.data.mappers.others.SearchHistoryDMapper
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
+import com.no1.taiwan.stationmusicfm.data.local.services.ListenHistoryDao
+import com.no1.taiwan.stationmusicfm.data.local.services.LocalMusicDao
+import com.no1.taiwan.stationmusicfm.data.local.services.PlaylistDao
 import com.no1.taiwan.stationmusicfm.data.local.services.RankingDao
 import com.no1.taiwan.stationmusicfm.data.local.services.SearchingHistoryDao
 import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
@@ -46,6 +49,9 @@ import com.tencent.mmkv.MMKV
 class LocalDataStore(
     private val rankingDao: RankingDao,
     private val searchingHistoryDao: SearchingHistoryDao,
+    private val listenHistoryDao: ListenHistoryDao,
+    private val localMusicDao: LocalMusicDao,
+    private val playlistDao: PlaylistDao,
     private val mmkv: MMKV
 ) : DataStore {
     //region Ranking
@@ -85,6 +91,26 @@ class LocalDataStore(
             searchingHistoryDao.releaseBy(keyword)
         }
     }
+    //endregion
+
+    //region Playlist
+    override suspend fun fetchLocalMusics(parameterable: Parameterable) = TODO()
+
+    override suspend fun addLocalMusic(parameterable: Parameterable) = TODO()
+
+    override suspend fun updateLocalMusic(parameterable: Parameterable) = TODO()
+
+    override suspend fun deleteLocalMusic(parameterable: Parameterable) = TODO()
+
+    override suspend fun fetchPlaylists() = TODO()
+
+    override suspend fun fetchPlaylist(parameterable: Parameterable) = TODO()
+
+    override suspend fun addPlaylist(parameterable: Parameterable) = TODO()
+
+    override suspend fun updatePlaylist(parameterable: Parameterable) = TODO()
+
+    override suspend fun deletePlaylist(parameterable: Parameterable) = TODO()
     //endregion
 
     //region UnsupportedOperationException

@@ -36,7 +36,6 @@
         android:drawablePadding="@dimen/md_two_unit"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf=""
         app:layout_constraintEnd_toStartOf="@+id/ftv_number_of_tracks"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

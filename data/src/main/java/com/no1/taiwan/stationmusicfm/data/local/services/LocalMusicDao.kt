@@ -34,5 +34,11 @@ abstract class LocalMusicDao : BaseDao<LocalMusicData> {
     @Query("SELECT * FROM table_local_music")
     abstract fun retrieveMusics(): List<LocalMusicData>
 
-//    abstract fun insertBy(localMusicData: LocalMusicData)
+    /**
+     * Remove a music from local music table.
+     *
+     * @param id local music's id.
+     */
+    @Query("DELETE FROM table_local_music WHERE id=:id")
+    abstract fun releaseBy(id: Int)
 }

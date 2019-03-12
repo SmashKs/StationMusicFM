@@ -29,6 +29,7 @@ import com.no1.taiwan.stationmusicfm.data.local.config.MusicDatabase
 import com.no1.taiwan.stationmusicfm.data.repositories.HistoryDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.LastFmDataRepository
 import com.no1.taiwan.stationmusicfm.data.repositories.MusicBankDataRepository
+import com.no1.taiwan.stationmusicfm.data.repositories.PlaylistDataRepository
 import com.no1.taiwan.stationmusicfm.data.stores.DataStore
 import com.no1.taiwan.stationmusicfm.data.stores.LocalDataStore
 import com.no1.taiwan.stationmusicfm.data.stores.RemoteDataStore
@@ -36,6 +37,7 @@ import com.no1.taiwan.stationmusicfm.domain.repositories.HistoryRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.LastFmRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 import com.no1.taiwan.stationmusicfm.domain.repositories.OthersRepository
+import com.no1.taiwan.stationmusicfm.domain.repositories.PlaylistRepository
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.JSOUP
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.LOCAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.REMOTE
@@ -62,6 +64,9 @@ object RepositoryModule {
         bind<DataStore>(LOCAL) with singleton {
             LocalDataStore(instance<MusicDatabase>().createRankingDao(),
                            instance<MusicDatabase>().createSearchHistoryDao(),
+                           instance<MusicDatabase>().createListenHistoryDao(),
+                           instance<MusicDatabase>().createLocalMusicDao(),
+                           instance<MusicDatabase>().createPlaylistDao(),
                            instance())
         }
         /** Mapper Pool for providing all data mappers */
@@ -80,6 +85,9 @@ object RepositoryModule {
         }
         bind<MusicBankRepository>() with singleton {
             MusicBankDataRepository(instance(LOCAL), instance(REMOTE), instance())
+        }
+        bind<PlaylistRepository>() with singleton {
+            PlaylistDataRepository(instance(LOCAL), instance())
         }
     }
 }

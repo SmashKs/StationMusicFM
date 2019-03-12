@@ -144,22 +144,34 @@ class RemoteDataStore(
     }
 
     //region UnsupportedOperationException
-    override suspend fun createRankingData(params: List<RankingIdData>) =
-        UnsupportedOperation()
+    override suspend fun createRankingData(params: List<RankingIdData>) = UnsupportedOperation()
 
-    override suspend fun getRankingData(): List<RankingIdData> =
-        UnsupportedOperation()
+    override suspend fun getRankingData(): List<RankingIdData> = UnsupportedOperation()
 
-    override suspend fun modifyRankingData(parameterable: Parameterable) =
-        UnsupportedOperation()
+    override suspend fun modifyRankingData(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun createSearchHistory(parameterable: Parameterable) =
-        UnsupportedOperation()
+    override suspend fun createSearchHistory(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun getSearchHistories(parameterable: Parameterable) =
-        UnsupportedOperation()
+    override suspend fun getSearchHistories(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun removeSearchHistory(parameterable: Parameterable) =
-        UnsupportedOperation()
+    override suspend fun removeSearchHistory(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun fetchLocalMusics(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun addLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun updateLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun deleteLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun fetchPlaylists() = UnsupportedOperation()
+
+    override suspend fun fetchPlaylist(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun addPlaylist(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun updatePlaylist(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun deletePlaylist(parameterable: Parameterable) = UnsupportedOperation()
     //endregion
 }

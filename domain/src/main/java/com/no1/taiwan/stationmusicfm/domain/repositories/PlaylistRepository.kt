@@ -19,27 +19,32 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.playlist
+package com.no1.taiwan.stationmusicfm.domain.repositories
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
-import com.no1.taiwan.stationmusicfm.data.data.Data
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
-import java.util.Date
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.playlist.PlaylistInfoModel
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 
-@Entity(tableName = "table_playlist_info", indices = [Index("name", unique = true)])
-data class PlaylistInfoData(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val name: String = DEFAULT_STR,
-    @ColumnInfo(name = "track_count")
-    val trackCount: Int = 0,
-    val created: Date = Date(),
-    val updated: Date = givenDate
-) : Data {
-    companion object Constant {
-        private val givenDate = Date(0)
-    }
+/**
+ * This interface will be the similar to [com.no1.taiwan.stationmusicfm.data.datastores.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
+ */
+interface PlaylistRepository {
+    fun fetchLocalMusics(parameters: Parameterable): List<MusicInfoModel>
+
+    fun addLocalMusic(parameters: Parameterable): Boolean
+
+    fun updateLocalMusic(parameters: Parameterable): Boolean
+
+    fun deleteLocalMusic(parameters: Parameterable): Boolean
+
+    fun fetchPlaylists(parameters: Parameterable): List<PlaylistInfoModel>
+
+    fun fetchPlaylist(parameters: Parameterable): PlaylistInfoModel
+
+    fun addPlaylist(parameters: Parameterable): Boolean
+
+    fun updatePlaylist(parameters: Parameterable): Boolean
+
+    fun deletePlaylist(parameters: Parameterable): Boolean
 }

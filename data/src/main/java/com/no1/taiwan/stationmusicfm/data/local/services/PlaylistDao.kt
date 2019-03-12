@@ -22,8 +22,23 @@
 package com.no1.taiwan.stationmusicfm.data.local.services
 
 import androidx.room.Dao
+import androidx.room.Query
 import com.no1.taiwan.stationmusicfm.data.data.playlist.PlaylistInfoData
 import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
 
 @Dao
-abstract class PlaylistDao : BaseDao<PlaylistInfoData>
+abstract class PlaylistDao : BaseDao<PlaylistInfoData> {
+    /**
+     * Get all data from the playlist table.
+     */
+    @Query("SELECT * FROM table_playlist_info")
+    abstract fun retrievePlaylists(): List<PlaylistInfoData>
+
+    /**
+     * Get a data from the playlist table.
+     *
+     * @param id playlist's id.
+     */
+    @Query("SELECT * FROM table_playlist_info WHERE id=:id")
+    abstract fun retrievePlaylist(id: Int): PlaylistInfoData
+}
