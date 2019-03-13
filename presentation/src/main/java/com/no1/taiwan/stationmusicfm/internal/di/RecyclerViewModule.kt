@@ -54,12 +54,14 @@ import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHo
 import com.no1.taiwan.stationmusicfm.features.main.search.viewholders.SearchHistoryViewHolder
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTORY
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_RANK
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_RANK
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.RankDiffUtil
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.HistoryAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
@@ -98,10 +100,10 @@ object RecyclerViewModule {
         // *** Adapters
         bind<MusicAdapter>() with provider { MultiTypeAdapter(instance()) }
         bind<HistoryAdapter>(ADAPTER_HISTORY) with provider {
-            HistoryAdapter(instance(),
-                           instance(UTIL_DIFF_KEYWORD))
+            HistoryAdapter(instance(), instance(UTIL_DIFF_KEYWORD))
         }
         bind<MusicAdapter>(ADAPTER_RANK) with provider { MultiTypeAdapter(instance(), instance(UTIL_DIFF_RANK)) }
+        bind<NotifiableAdapter>(ADAPTER_TRACK) with provider { NotifiableAdapter(instance()) }
     }
 
     private fun diffUtilProvider() = Module("Recycler View DiffUtil") {

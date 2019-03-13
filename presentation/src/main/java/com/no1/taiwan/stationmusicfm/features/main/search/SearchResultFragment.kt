@@ -36,9 +36,11 @@ import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
@@ -50,7 +52,6 @@ import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -60,7 +61,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     override val viewmodelProviderSource get() = PROVIDER_FROM_CUSTOM_FRAGMENT
     override val viewmodelProviderFragment get() = requireParentFragment()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val adapter: MusicAdapter by instance()
+    private val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val player: MusicPlayer by instance()
@@ -178,9 +179,9 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
 
         player.play(uri)
+
+        adapter.playingPosition = position
         find<RecyclerView>(R.id.v_result).apply {
-            // FIXME(jieyi): 2019-03-13 childCount is the count only showing on the view,
-            //  but there're few views haven't been recycled which doesn't change.
             repeat(childCount) {
                 cast<Notifiable>(getChildViewHolder(getChildAt(it))).notifyChange(position)
             }

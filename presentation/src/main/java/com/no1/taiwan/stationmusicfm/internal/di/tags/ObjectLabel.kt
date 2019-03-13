@@ -39,4 +39,5 @@ object ObjectLabel {
 
     const val ADAPTER_HISTORY = "for history adapter"
     const val ADAPTER_RANK = "for rank adapter"
+    const val ADAPTER_TRACK = "for changeable adapter"
 }
