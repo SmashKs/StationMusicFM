@@ -145,8 +145,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
             // FIXME(jieyi): 2019-03-13 childCount is the count only showing on the view,
             //  but there're few views haven't been recycled which doesn't change.
             repeat(childCount) {
-                val vh = getChildViewHolder(getChildAt(it)) as Notifiable
-                vh.notifyChange(position)
+                cast<Notifiable>(getChildViewHolder(getChildAt(it))).notifyChange(position)
             }
         }
     }
