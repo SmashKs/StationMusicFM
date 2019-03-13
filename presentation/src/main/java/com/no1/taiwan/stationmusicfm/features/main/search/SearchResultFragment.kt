@@ -65,6 +65,33 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val player: MusicPlayer by instance()
     private var isFirstComing = true
+    private val rvScrollListener = object : RecyclerView.OnScrollListener() {
+        /** The total number of items in the data set after the last load. */
+        private var previousTotal = 0
+        /** True if we are still waiting for the last set of data to load. */
+        private var isLoading = true
+        private val visibleThreshold = 3
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            val visibleItemCount = recyclerView.childCount
+            val totalItemCount = requireNotNull(recyclerView.layoutManager).itemCount
+            val firstVisibleItem = cast<LinearLayoutManager>(recyclerView.layoutManager).findFirstVisibleItemPosition()
+
+            if (isLoading) {
+                if (totalItemCount > previousTotal) {
+                    isLoading = false
+                    previousTotal = totalItemCount
+                }
+            }
+            if (!isLoading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
+                // End has been reached
+                // NOTE(jieyi): totalItemCount is set for avoiding the first page to load again and again.
+                //  If there's only few items(1 ~ 7) will trigger load more in the beginning.
+                vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
+                isLoading = true
+            }
+        }
+    }
 
     init {
         BusFragLongerLifeRegister(this)
@@ -74,6 +101,12 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     override fun onResume() {
         super.onResume()
         parent.onQuerySubmit = { vm.runTaskAddHistory(it) }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        // Reset the page number for searching again.
+        vm.resetPageNumber()
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -86,13 +119,17 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 }
                 switchStub(true)
                 adapter.append(cast<MusicVisitables>(it.items))
+                vm.increasePageNumber()
                 if (isFirstComing) {
                     initRecyclerViewWith(find(R.id.v_result),
                                          adapter,
                                          linearLayoutManager(),
                                          listOf(decoration, actionBarBlankDecoration))
+                    find<RecyclerView>(R.id.v_result).apply {
+                        clearOnScrollListeners()
+                        addOnScrollListener(rvScrollListener)
+                    }
                     isFirstComing = false
-                    vm.runTaskSearchMusic(vm.keyword.value.orEmpty(), 1)
                 }
             } happenError {
                 loge(it)

@@ -63,11 +63,17 @@ class SearchViewModel(
     val removeRes: RespLiveData<Boolean> = _removeRes
     private val musicMapper by lazy { digMapper(MusicPMapper::class) }
     private val historyMapper by lazy { digMapper(SearchHistoryPMapper::class) }
-    val keyword = MutableLiveData<String>(DEFAULT_STR)
+    private val page = MutableLiveData(0)
+    val keyword = MutableLiveData(DEFAULT_STR)
 
-    fun runTaskSearchMusic(keyword: String, page: Int = 0) = GlobalScope.launch {
+    fun runTaskSearchMusic(keyword: String) = GlobalScope.launch {
         this@SearchViewModel.keyword.postValue(keyword)
-        _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(keyword, page))) }
+        if (page.value != -1) {  // -1 means to the end.
+            _musics reqData {
+                fetchMusicCase.execMapping(musicMapper,
+                                           FetchMusicReq(SrchSongParams(keyword, requireNotNull(page.value))))
+            }
+        }
     }
 
     fun runTaskAddHistory(keyword: String) = GlobalScope.launch {
@@ -84,4 +90,13 @@ class SearchViewModel(
     fun runTaskDeleteHistory(keyword: String) = GlobalScope.launch {
         _removeRes reqData { deleteSearchHistoriesCase.exec(DeleteSearchHistReq(SearchHistParams(keyword))) }
     }
+
+    fun increasePageNumber() {
+        page.postValue(requireNotNull(page.value) + 1)
+    }
+
+    fun resetPageNumber() {
+        page.postValue(0)
+    }
 }
+
