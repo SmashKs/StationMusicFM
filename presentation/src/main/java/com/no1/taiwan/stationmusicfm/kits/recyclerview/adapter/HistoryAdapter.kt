@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.kits.recyclerview
+package com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter
 
 import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.uiSwitch

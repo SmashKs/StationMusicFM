@@ -26,23 +26,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.devrapid.kotlinknifer.DrawableDirectionConst.DRAWABLE_DIRECTION_START
 import com.devrapid.kotlinknifer.addDrawable
 import com.devrapid.kotlinknifer.getColor
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.Companion.FRAGMENT_TARGET_ARTIST
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
 
-class ExploreArtistViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, ArtistInfoEntity.ArtistEntity>(view) {
+class ExploreArtistViewHolder(view: View) : MultiViewHolder<ArtistEntity>(view) {
     /**
      * Set the views' properties.
      *
@@ -50,7 +49,7 @@ class ExploreArtistViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory,
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-    override fun initView(model: ArtistInfoEntity.ArtistEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(model: ArtistEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<ImageView>(R.id.iv_artist).loadByAny(model.images.last().text)
             find<TextView>(R.id.ftv_artist_name).text = model.name

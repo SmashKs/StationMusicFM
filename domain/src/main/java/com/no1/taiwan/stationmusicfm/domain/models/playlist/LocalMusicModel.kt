@@ -33,6 +33,7 @@ data class LocalMusicModel(
     val hasOwn: Boolean = false,
     val remoteTrackUri: String = DEFAULT_STR,
     val localTrackUri: String = DEFAULT_STR,
+    val coverUri: String = DEFAULT_STR,
     val playlistList: String = DEFAULT_STR,
     val created: Date = Date(),
     val lastListen: Date = Date()

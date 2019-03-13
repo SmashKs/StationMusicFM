@@ -26,20 +26,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.AlbumWithArtistEntity
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
 
-class HotAlbumViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, AlbumInfoEntity.AlbumWithArtistEntity>(view) {
+class HotAlbumViewHolder(view: View) : MultiViewHolder<AlbumWithArtistEntity>(view) {
     /**
      * Set the views' properties.
      *
@@ -47,11 +46,7 @@ class HotAlbumViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, Albu
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-    override fun initView(
-        model: AlbumInfoEntity.AlbumWithArtistEntity,
-        position: Int,
-        adapter: AdaptiveAdapter<*, *, *>
-    ) {
+    override fun initView(model: AlbumWithArtistEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<ImageView>(R.id.iv_album).loadByAny(model.images.last().text)
             find<TextView>(R.id.ftv_album_name).text = model.name

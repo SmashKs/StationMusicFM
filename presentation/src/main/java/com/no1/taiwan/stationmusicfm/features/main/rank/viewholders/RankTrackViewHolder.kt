@@ -25,28 +25,20 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
-import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.toTimeString
 import com.hwangjr.rxbus.RxBus
-import com.no1.taiwan.stationmusicfm.MusicApp
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
+import org.jetbrains.anko.image
 import org.kodein.di.generic.instance
 
-class RankTrackViewHolder(
-    view: View
-) : AdaptiveViewHolder<MultiTypeFactory, CommonMusicEntity.SongEntity>(view), KodeinAware {
-    /** A Kodein Aware class must be within reach of a [Kodein] object. */
-    override val kodein by kodein(MusicApp.appContext)
+class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view) {
     private val player: MusicPlayer by instance()
 
     /**
@@ -56,22 +48,36 @@ class RankTrackViewHolder(
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-    override fun initView(model: CommonMusicEntity.SongEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(model: SongEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<ImageView>(R.id.iv_album).loadByAny(model.oriCoverUrl)
             find<TextView>(R.id.ftv_order).text = (position + 1).toString()
             find<TextView>(R.id.ftv_track_name).text = model.title
             find<TextView>(R.id.ftv_artist_name).text = model.artist
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()
-            logw(player)
-            find<ImageView>(R.id.iv_play)
+            setCurStateIcon(model.url)
             setOnClickListener {
                 /**
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment.playASong]
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.playASong]
                  */
                 RxBus.get().post(TAG_PLAY_A_SONG, model.url)
+                find<ImageView>(R.id.iv_play).image = R.drawable.ic_pause_circle_outline_black.toDrawable(context)
             }
+        }
+    }
+
+    /**
+     * According to the current playing track uri to show the icon.
+     *
+     * @param uri track's uri.
+     */
+    private fun setCurStateIcon(uri: String) {
+        itemView.apply {
+            find<ImageView>(R.id.iv_play).image = (if (player.isPlaying && player.curPlayingUri == uri)
+                R.drawable.ic_pause_circle_outline_black
+            else
+                R.drawable.ic_play_circle_outline_black).toDrawable(context)
         }
     }
 }

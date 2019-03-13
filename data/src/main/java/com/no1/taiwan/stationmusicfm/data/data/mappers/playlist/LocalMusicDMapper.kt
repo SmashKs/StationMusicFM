@@ -39,6 +39,7 @@ class LocalMusicDMapper : LocalMusicDataMap {
                         remoteTrackUri,
                         localTrackUri,
                         playlistList,
+                        coverUri,
                         created,
                         lastListen)
     }
@@ -52,6 +53,7 @@ class LocalMusicDMapper : LocalMusicDataMap {
                        remoteTrackUri,
                        localTrackUri,
                        playlistList,
+                       coverUri,
                        created,
                        lastListen)
     }

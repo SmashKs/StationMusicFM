@@ -24,14 +24,13 @@ package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 import android.view.View
 import android.widget.ImageView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotoEntity
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
 
-class ExplorePhotoViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, ArtistInfoEntity.PhotoEntity>(view) {
+class ExplorePhotoViewHolder(view: View) : MultiViewHolder<PhotoEntity>(view) {
     /**
      * Set the views' properties.
      *
@@ -39,7 +38,7 @@ class ExplorePhotoViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, 
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-    override fun initView(model: ArtistInfoEntity.PhotoEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(model: PhotoEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<ImageView>(R.id.iv_photo_thumbnail).loadByAny(model.url)
         }

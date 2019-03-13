@@ -23,11 +23,10 @@ package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders
 
 import android.view.View
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 
-class MyMusicViewHolder(view: View) : AdaptiveViewHolder<MultiTypeFactory, LocalMusicEntity>(view) {
+class MyMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view) {
     /**
      * Set the views' properties.
      *

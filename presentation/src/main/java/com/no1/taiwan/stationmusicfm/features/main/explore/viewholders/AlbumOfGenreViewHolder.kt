@@ -25,22 +25,19 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.AlbumWithArtistTypeGenreEntity
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import org.jetbrains.anko.find
 
-class AlbumOfGenreViewHolder(
-    view: View
-) : AdaptiveViewHolder<MultiTypeFactory, AlbumInfoEntity.AlbumWithArtistTypeGenreEntity>(view) {
+class AlbumOfGenreViewHolder(view: View) : MultiViewHolder<AlbumWithArtistTypeGenreEntity>(view) {
     /**
      * Set the views' properties.
      *
@@ -48,11 +45,7 @@ class AlbumOfGenreViewHolder(
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-    override fun initView(
-        model: AlbumInfoEntity.AlbumWithArtistTypeGenreEntity,
-        position: Int,
-        adapter: AdaptiveAdapter<*, *, *>
-    ) {
+    override fun initView(model: AlbumWithArtistTypeGenreEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<ImageView>(R.id.iv_album_thumbnail).loadByAny(model.images.last().text)
             find<TextView>(R.id.ftv_album_name).text = model.name

@@ -44,6 +44,8 @@ data class LocalMusicData(
     val remoteTrackUri: String = DEFAULT_STR,
     @ColumnInfo(name = "local_track_uri")
     val localTrackUri: String = DEFAULT_STR,
+    @ColumnInfo(name = "cover_uri")
+    val coverUri: String = DEFAULT_STR,
     @ColumnInfo(name = "playlist_list")
     val playlistList: String = DEFAULT_STR,
     val created: Date = Date(),

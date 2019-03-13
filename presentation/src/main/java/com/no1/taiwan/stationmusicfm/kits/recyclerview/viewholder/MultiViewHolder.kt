@@ -19,26 +19,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.entities.playlist
+package com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder
 
-import com.no1.taiwan.stationmusicfm.entities.Entity
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import android.view.View
+import com.devrapid.adaptiverecyclerview.AdaptiveViewHolder
+import com.no1.taiwan.stationmusicfm.MusicApp
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
-import java.util.Date
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
 
-data class LocalMusicEntity(
-    val id: Int = 0,
-    val trackName: String = DEFAULT_STR,
-    val artistName: String = DEFAULT_STR,
-    val duration: Int = 0,
-    val hasOwn: Boolean = false,
-    val remoteTrackUri: String = DEFAULT_STR,
-    val localTrackUri: String = DEFAULT_STR,
-    val playlistList: String = DEFAULT_STR,
-    val coverUri: String = DEFAULT_STR,
-    val created: Date = Date(),
-    val lastListen: Date = Date()
-) : Entity, MusicMultiVisitable {
-    override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+abstract class MultiViewHolder<T : MusicMultiVisitable>(
+    view: View
+) : AdaptiveViewHolder<MultiTypeFactory, T>(view), KodeinAware {
+    /** A Kodein Aware class must be within reach of a [Kodein] object. */
+    override val kodein by kodein(MusicApp.appContext)
 }
