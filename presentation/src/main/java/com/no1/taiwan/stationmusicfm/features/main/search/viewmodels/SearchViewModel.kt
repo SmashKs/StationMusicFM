@@ -38,6 +38,7 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEnt
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.SearchHistories
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
@@ -92,7 +93,7 @@ class SearchViewModel(
     }
 
     fun increasePageNumber() {
-        page.postValue(requireNotNull(page.value) + 1)
+        page.postValue(if (_musics.data()?.hasMore == true) requireNotNull(page.value) + 1 else -1)
     }
 
     fun resetPageNumber() {
