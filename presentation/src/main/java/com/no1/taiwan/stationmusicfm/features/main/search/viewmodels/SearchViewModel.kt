@@ -65,9 +65,9 @@ class SearchViewModel(
     private val historyMapper by lazy { digMapper(SearchHistoryPMapper::class) }
     val keyword = MutableLiveData<String>(DEFAULT_STR)
 
-    fun runTaskSearchMusic(keyword: String) = GlobalScope.launch {
+    fun runTaskSearchMusic(keyword: String, page: Int = 0) = GlobalScope.launch {
         this@SearchViewModel.keyword.postValue(keyword)
-        _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(keyword))) }
+        _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(keyword, page))) }
     }
 
     fun runTaskAddHistory(keyword: String) = GlobalScope.launch {

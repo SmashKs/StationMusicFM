@@ -47,5 +47,8 @@ object RxBusConstant {
         const val PARAMS_TO_TRACK_NAME = "track name"
 
         const val PARAMS_TO_RANK_ID = "rank id"
+
+        const val PARAMS_TRACK_URI = "track uri"
+        const val PARAMS_LAYOUT_POSITION = "viewholder position"
     }
 }

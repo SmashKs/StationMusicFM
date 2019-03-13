@@ -33,12 +33,16 @@ import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
@@ -47,6 +51,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -80,13 +85,14 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                     return@peel
                 }
                 switchStub(true)
-                adapter.replaceWholeList(cast(it.items))
+                adapter.append(cast<MusicVisitables>(it.items))
                 if (isFirstComing) {
                     initRecyclerViewWith(find(R.id.v_result),
                                          adapter,
                                          linearLayoutManager(),
                                          listOf(decoration, actionBarBlankDecoration))
                     isFirstComing = false
+                    vm.runTaskSearchMusic(vm.keyword.value.orEmpty(), 1)
                 }
             } happenError {
                 loge(it)
@@ -126,12 +132,23 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     /**
      * Play a track by [MusicPlayer].
      *
-     * @param uri a track uri.
+     * @param parameter
      * @event_from [com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder.initView]
      */
     @Subscribe(tags = [Tag(TAG_PLAY_A_SONG)])
-    fun playASong(uri: String) {
+    fun playASong(parameter: AnyParameters) {
+        val uri = cast<String>(parameter[PARAMS_TRACK_URI])
+        val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
+
         player.play(uri)
+        find<RecyclerView>(R.id.v_result).apply {
+            // FIXME(jieyi): 2019-03-13 childCount is the count only showing on the view,
+            //  but there're few views haven't been recycled which doesn't change.
+            repeat(childCount) {
+                val vh = getChildViewHolder(getChildAt(it)) as Notifiable
+                vh.notifyChange(position)
+            }
+        }
     }
 
     private fun switchStub(isResult: Boolean) {

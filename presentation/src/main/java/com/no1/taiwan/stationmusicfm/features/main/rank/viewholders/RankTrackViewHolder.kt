@@ -31,14 +31,17 @@ import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
 import org.jetbrains.anko.image
 import org.kodein.di.generic.instance
 
-class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view) {
+class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notifiable {
     private val player: MusicPlayer by instance()
 
     /**
@@ -55,29 +58,33 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view) {
             find<TextView>(R.id.ftv_track_name).text = model.title
             find<TextView>(R.id.ftv_artist_name).text = model.artist
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()
-            setCurStateIcon(model.url)
+            setCurStateIcon(!player.isPlaying || player.curPlayingUri != model.url)
             setOnClickListener {
                 /**
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment.playASong]
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.playASong]
                  */
-                RxBus.get().post(TAG_PLAY_A_SONG, model.url)
-                find<ImageView>(R.id.iv_play).image = R.drawable.ic_pause_circle_outline_black.toDrawable(context)
+                RxBus.get().post(TAG_PLAY_A_SONG, hashMapOf(PARAMS_TRACK_URI to model.url,
+                                                            PARAMS_LAYOUT_POSITION to position))
             }
         }
+    }
+
+    override fun notifyChange(position: Int) {
+        setCurStateIcon(position != layoutPosition)
     }
 
     /**
      * According to the current playing track uri to show the icon.
      *
-     * @param uri track's uri.
+     * @param isIdle
      */
-    private fun setCurStateIcon(uri: String) {
+    private fun setCurStateIcon(isIdle: Boolean) {
         itemView.apply {
-            find<ImageView>(R.id.iv_play).image = (if (player.isPlaying && player.curPlayingUri == uri)
-                R.drawable.ic_pause_circle_outline_black
+            find<ImageView>(R.id.iv_play).image = (if (isIdle)
+                R.drawable.ic_play_circle_outline_black
             else
-                R.drawable.ic_play_circle_outline_black).toDrawable(context)
+                R.drawable.ic_pause_circle_outline_black).toDrawable(context)
         }
     }
 }
