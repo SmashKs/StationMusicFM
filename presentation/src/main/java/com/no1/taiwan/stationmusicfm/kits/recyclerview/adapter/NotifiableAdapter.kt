@@ -21,6 +21,11 @@
 
 package com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter
 
+import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.SoftRef
+import com.devrapid.kotlinshaver.bkg
+import com.devrapid.kotlinshaver.castOrNull
+import com.devrapid.kotlinshaver.uiSwitch
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
@@ -31,8 +36,19 @@ class NotifiableAdapter(
     override var typeFactory: MultiTypeFactory,
     externalDiffUtil: MusicMultiDiffUtil? = null
 ) : MultiTypeAdapter(typeFactory, externalDiffUtil) {
+    private var recyclerView by SoftRef<RecyclerView>()
     var playingPosition = -1
-    // TODO(jieyi): 2019-03-13 update the all views which are showing on the screen.
+        set(value) {
+            field = value
+            // Update all child views which are showing on the screen.
+            bkg {
+                recyclerView?.apply {
+                    repeat(childCount) {
+                        uiSwitch { castOrNull<Notifiable>(getChildViewHolder(getChildAt(it)))?.notifyChange(value) }
+                    }
+                }
+            }
+        }
 
     /**
      * Called when a view created by this adapter has been attached to a window.
@@ -48,5 +64,11 @@ class NotifiableAdapter(
     override fun onViewAttachedToWindow(holder: MusicViewHolder) {
         super.onViewAttachedToWindow(holder)
         (holder as? Notifiable)?.notifyChange(playingPosition)
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        // For catching the recycleview.
+        this.recyclerView = recyclerView
     }
 }

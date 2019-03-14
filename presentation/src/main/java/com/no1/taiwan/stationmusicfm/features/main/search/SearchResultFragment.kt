@@ -41,7 +41,6 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATIO
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
@@ -179,13 +178,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
 
         player.play(uri)
-
         adapter.playingPosition = position
-        find<RecyclerView>(R.id.v_result).apply {
-            repeat(childCount) {
-                cast<Notifiable>(getChildViewHolder(getChildAt(it))).notifyChange(position)
-            }
-        }
     }
 
     private fun switchStub(isResult: Boolean) {
