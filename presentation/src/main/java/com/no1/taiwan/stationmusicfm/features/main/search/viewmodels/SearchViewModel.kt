@@ -64,8 +64,8 @@ class SearchViewModel(
     val removeRes: RespLiveData<Boolean> = _removeRes
     private val musicMapper by lazy { digMapper(MusicPMapper::class) }
     private val historyMapper by lazy { digMapper(SearchHistoryPMapper::class) }
-    private val page = MutableLiveData(0)
-    val keyword = MutableLiveData(DEFAULT_STR)
+    private val page by lazy { MutableLiveData(0) }
+    val keyword by lazy { MutableLiveData(DEFAULT_STR) }
 
     fun runTaskSearchMusic(keyword: String) = GlobalScope.launch {
         this@SearchViewModel.keyword.postValue(keyword)
@@ -93,11 +93,11 @@ class SearchViewModel(
     }
 
     fun increasePageNumber() {
-        page.postValue(if (_musics.data()?.hasMore == true) requireNotNull(page.value) + 1 else -1)
+        page.value = if (_musics.data()?.items?.isEmpty() == false) requireNotNull(page.value) + 1 else -1
     }
 
-    fun resetPageNumber() {
-        page.postValue(0)
-    }
+    fun getCurPageNumber() = requireNotNull(page.value)
+
+    fun resetPageNumber() = page.postValue(0)
 }
 

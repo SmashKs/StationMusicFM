@@ -65,33 +65,36 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val player: MusicPlayer by instance()
     private var isFirstComing = true
-    private val rvScrollListener = object : RecyclerView.OnScrollListener() {
-        /** The total number of items in the data set after the last load. */
-        private var previousTotal = 0
-        /** True if we are still waiting for the last set of data to load. */
-        private var isLoading = true
-        private val visibleThreshold = 3
+    private val rvScrollListener
+        get() = object : RecyclerView.OnScrollListener() {
+            /** The total number of items in the data set after the last load. */
+            private var previousTotal = 0
+            /** True if we are still waiting for the last set of data to load. */
+            private var isLoading = true
+            private val visibleThreshold = 4
 
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val visibleItemCount = recyclerView.childCount
-            val totalItemCount = requireNotNull(recyclerView.layoutManager).itemCount
-            val firstVisibleItem = cast<LinearLayoutManager>(recyclerView.layoutManager).findFirstVisibleItemPosition()
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val visibleItemCount = recyclerView.childCount
+                val totalItemCount = requireNotNull(recyclerView.layoutManager).itemCount
+                val firstVisibleItem =
+                    cast<LinearLayoutManager>(recyclerView.layoutManager).findFirstVisibleItemPosition()
 
-            if (isLoading) {
-                if (totalItemCount > previousTotal) {
-                    isLoading = false
-                    previousTotal = totalItemCount
+                if (isLoading) {
+                    if (totalItemCount > previousTotal) {
+                        isLoading = false
+                        previousTotal = totalItemCount
+                    }
+                }
+                if (!isLoading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
+                    // End has been reached
+                    // NOTE(jieyi): totalItemCount is set for avoiding the first page to load again and again.
+                    //  If there's only few items(1 ~ 7) will trigger load more in the beginning.
+                    if (vm.getCurPageNumber() > 1)
+                        vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
+                    isLoading = true
                 }
             }
-            if (!isLoading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
-                // End has been reached
-                // NOTE(jieyi): totalItemCount is set for avoiding the first page to load again and again.
-                //  If there's only few items(1 ~ 7) will trigger load more in the beginning.
-                vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
-                isLoading = true
-            }
         }
-    }
 
     init {
         BusFragLongerLifeRegister(this)
@@ -100,7 +103,10 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
 
     override fun onResume() {
         super.onResume()
-        parent.onQuerySubmit = { vm.runTaskAddHistory(it) }
+        parent.onQuerySubmit = {
+            vm.resetPageNumber()
+            vm.runTaskAddHistory(it)
+        }
     }
 
     override fun onDetach() {
@@ -113,24 +119,21 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     override fun bindLiveData() {
         observeNonNull(vm.musics) {
             peel {
-                if (it.items.isEmpty()) {
+                if (it.items.isEmpty() && vm.getCurPageNumber() == 0) {
                     switchStub(false)
                     return@peel
                 }
+                // Show the view stub.
                 switchStub(true)
-                adapter.append(cast<MusicVisitables>(it.items))
-                vm.increasePageNumber()
-                if (isFirstComing) {
-                    initRecyclerViewWith(find(R.id.v_result),
-                                         adapter,
-                                         linearLayoutManager(),
-                                         listOf(decoration, actionBarBlankDecoration))
-                    find<RecyclerView>(R.id.v_result).apply {
-                        clearOnScrollListeners()
-                        addOnScrollListener(rvScrollListener)
-                    }
-                    isFirstComing = false
-                }
+                // When search in the beginning, adapter whole list will be replaced.
+                if (vm.getCurPageNumber() == 0)
+                    adapter.replaceWholeList(cast(it.items))
+                else
+                    adapter.append(cast<MusicVisitables>(it.items))
+                vm.increasePageNumber()  // after success fetching, auto increasing the page.
+                fetchAgainForFirstTime()
+                // Initialize the recycler view.
+                initRecyclerView()
             } happenError {
                 loge(it)
             } doWith this@SearchResultFragment
@@ -179,6 +182,29 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
 
         player.play(uri)
         adapter.playingPosition = position
+    }
+
+    private fun fetchAgainForFirstTime() {
+        // The first time searching will fetch two times in the beginning.
+        if (vm.getCurPageNumber() == 1)
+            vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
+    }
+
+    private fun initRecyclerView() {
+        if (isFirstComing) {
+            initRecyclerViewWith(find(R.id.v_result),
+                                 adapter,
+                                 linearLayoutManager(),
+                                 listOf(decoration, actionBarBlankDecoration))
+            isFirstComing = false
+        }
+        // Reset the listener again when search again on this [SearchResultFragment].
+        if (vm.getCurPageNumber() == 1) {
+            find<RecyclerView>(R.id.v_result).apply {
+                clearOnScrollListeners()
+                addOnScrollListener(rvScrollListener)
+            }
+        }
     }
 
     private fun switchStub(isResult: Boolean) {

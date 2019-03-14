@@ -23,10 +23,10 @@ package com.no1.taiwan.stationmusicfm.ktx.acc.lifecycle
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleObserver
-import com.devrapid.kotlinknifer.WeakRef
+import com.devrapid.kotlinknifer.SoftRef
 
 abstract class ActivityLifeRegister<A : AppCompatActivity>(activity: A) : LifecycleObserver {
-    protected val act by WeakRef(activity)
+    protected val act by SoftRef(activity)
 
     init {
         act?.lifecycle?.addObserver(this)
