@@ -50,5 +50,8 @@ object RxBusConstant {
 
         const val PARAMS_TRACK_URI = "track uri"
         const val PARAMS_LAYOUT_POSITION = "viewholder position"
+        const val PARAMS_SEARCH_KEYWORD = "searching keyword"
+
+        const val PARAMS_SEARCH_MUSIC_BY_KEYWORD = "search a music by keyword"
     }
 }

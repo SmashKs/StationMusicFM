@@ -26,6 +26,7 @@ import com.devrapid.kotlinknifer.SoftRef
 import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.uiSwitch
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
@@ -70,5 +71,12 @@ class NotifiableAdapter(
         super.onAttachedToRecyclerView(recyclerView)
         // For catching the recycleview.
         this.recyclerView = recyclerView
+    }
+
+    fun reassignTrackUri(uri: String) {
+        if (playingPosition < 0) return
+        when (val data = dataList[playingPosition]) {
+            is TrackWithStreamableEntity -> data.url = uri
+        }
     }
 }

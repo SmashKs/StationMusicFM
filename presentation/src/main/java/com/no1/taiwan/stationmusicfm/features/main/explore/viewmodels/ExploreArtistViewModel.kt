@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 import androidx.lifecycle.MutableLiveData
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SrchSongParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistPhotoReq
@@ -32,6 +33,8 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopAlbumReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistTopTrackReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSimilarArtistReq
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.TopAlbumsEntity
@@ -44,7 +47,11 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPhotosPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsSimilarPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
+import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
 import com.no1.taiwan.stationmusicfm.features.ArtistMixInfo
+import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.TransformedLiveData
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifLiveData
@@ -62,6 +69,7 @@ class ExploreArtistViewModel(
     private val fetchSimilarArtistCase: FetchSimilarArtistCase,
     private val fetchArtistTopTrackCase: FetchArtistTopTrackCase,
     private val fetchArtistPhotoCase: FetchArtistPhotoCase,
+    private val fetchMusicCase: FetchMusicCase,
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _artistLiveData by lazy { NotifMutableLiveData<ArtistEntity>() }
@@ -76,11 +84,14 @@ class ExploreArtistViewModel(
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
     private val _photosLiveData by lazy { RespMutableLiveData<PhotosEntity>() }
     val photosLiveData: RespLiveData<PhotosEntity> = _photosLiveData
+    private val _musics by lazy { RespMutableLiveData<MusicEntity>() }
+    val foundMusic by lazy { MusicLiveData(_musics) }
     private val artistMapper by lazy { digMapper(ArtistPMapper::class) }
     private val topAlbumMapper by lazy { digMapper(TopAlbumPMapper::class) }
     private val artistsSimilarMapper by lazy { digMapper(ArtistsSimilarPMapper::class) }
     private val tracksWithStreamableMapper by lazy { digMapper(TracksWithStreamablePMapper::class) }
     private val photosMapper by lazy { digMapper(ArtistPhotosPMapper::class) }
+    private val musicMapper by lazy { digMapper(MusicPMapper::class) }
 
     private val _lastFindMbid by lazy { MutableLiveData<String>() }
     val lastFindMbid get() = _lastFindMbid.value
@@ -109,5 +120,15 @@ class ExploreArtistViewModel(
         _photosLiveData reqData {
             fetchArtistPhotoCase.execMapping(photosMapper, FetchArtistPhotoReq(ArtistParams(artistName = artistName)))
         }
+    }
+
+    fun runTaskSearchMusic(wholeKeyword: String) = GlobalScope.launch {
+        _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(wholeKeyword))) }
+    }
+
+    class MusicLiveData(
+        override val source: RespMutableLiveData<MusicEntity>
+    ) : TransformedLiveData<ResponseState<MusicEntity>, SongEntity?>() {
+        override fun getTransformed(source: ResponseState<MusicEntity>) = source.data?.items?.firstOrNull()
     }
 }

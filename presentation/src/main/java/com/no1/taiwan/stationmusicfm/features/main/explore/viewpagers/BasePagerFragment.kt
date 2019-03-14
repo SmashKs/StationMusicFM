@@ -29,8 +29,9 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.Companion.ARGUMENT_IS_THE_SAME_ARTIST
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.Companion.ARGUMENT_VM_DEPENDENT
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -42,7 +43,7 @@ abstract class BasePagerFragment : AdvFragment<MainActivity, ExploreArtistViewMo
 
     protected val girdLayoutManager: () -> GridLayoutManager by provider(null, 2)
     protected val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    protected val adapter: MusicAdapter by instance()
+    protected val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
 
     //region Parameter
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)

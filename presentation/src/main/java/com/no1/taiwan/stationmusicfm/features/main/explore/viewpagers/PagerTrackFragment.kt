@@ -21,14 +21,32 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers
 
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
+import com.no1.taiwan.stationmusicfm.player.MusicPlayer
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SEARCH_KEYWORD
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SEARCH_MUSIC_BY_KEYWORD
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import org.jetbrains.anko.support.v4.find
+import org.kodein.di.generic.instance
 
 class PagerTrackFragment : BasePagerFragment() {
+    private var playingTrackPosition = DEFAULT_INT
+    private val player: MusicPlayer by instance()
+
+    init {
+        BusFragLifeRegister(this)
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()
@@ -36,6 +54,13 @@ class PagerTrackFragment : BasePagerFragment() {
             peel {
                 adapter.replaceWholeList(cast(it.tracks))
             } doWith this@PagerTrackFragment
+        }
+        observeNonNull(vm.foundMusic) {
+            logw(this)
+            if (this == null) return@observeNonNull
+            adapter.playingPosition = playingTrackPosition
+            adapter.reassignTrackUri(url)
+            player.play(url)
         }
     }
 
@@ -52,4 +77,15 @@ class PagerTrackFragment : BasePagerFragment() {
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.viewpager_track
+
+    /**
+     * @param parameter artist name + track name.
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder.initView]
+     */
+    @Subscribe(tags = [Tag(PARAMS_SEARCH_MUSIC_BY_KEYWORD)])
+    fun searchMusic(parameter: AnyParameters) {
+        val keyword = cast<String>(parameter[PARAMS_SEARCH_KEYWORD])
+        playingTrackPosition = cast(parameter[PARAMS_LAYOUT_POSITION])
+        vm.runTaskSearchMusic(keyword)
+    }
 }

@@ -22,15 +22,29 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
 
 import android.view.View
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.toTimeString
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
+import com.no1.taiwan.stationmusicfm.player.MusicPlayer
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SEARCH_KEYWORD
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SEARCH_MUSIC_BY_KEYWORD
 import org.jetbrains.anko.find
+import org.jetbrains.anko.image
+import org.kodein.di.generic.instance
 
-class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity>(view) {
+class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity>(view), Notifiable {
+    private val player: MusicPlayer by instance()
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -40,10 +54,34 @@ class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity
      */
     override fun initView(model: TrackWithStreamableEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
-            find<TextView>(R.id.ftv_track_name).text = "${position + 1} ${model.name}"
+            find<TextView>(R.id.ftv_track_name).text = "${position + 1}\t${model.name}"
             model.duration.takeIf { it.isNotBlank() }?.let {
                 find<TextView>(R.id.ftv_duration).text = it.toInt().toTimeString()
             }
+            setCurStateIcon(!player.isPlaying || player.curPlayingUri != model.url)
+            find<ImageButton>(R.id.ib_option).setOnClickListener {
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment.searchMusic] */
+                emitter.post(PARAMS_SEARCH_MUSIC_BY_KEYWORD, hashMapOf(PARAMS_LAYOUT_POSITION to layoutPosition,
+                                                                       PARAMS_SEARCH_KEYWORD to "${model.artist.name} ${model.name}"))
+            }
+        }
+    }
+
+    override fun notifyChange(position: Int) {
+        setCurStateIcon(position != layoutPosition)
+    }
+
+    /**
+     * According to the current playing track uri to show the icon.
+     *
+     * @param isIdle
+     */
+    private fun setCurStateIcon(isIdle: Boolean) {
+        itemView.apply {
+            find<ImageView>(R.id.ib_option).image = (if (isIdle)
+                R.drawable.ic_play_circle_outline_black
+            else
+                R.drawable.ic_pause_circle_outline_black).toDrawable(context)
         }
     }
 }
