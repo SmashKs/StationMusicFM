@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers
 
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -41,6 +40,7 @@ import org.kodein.di.generic.instance
 
 class PagerTrackFragment : BasePagerFragment() {
     private var playingTrackPosition = DEFAULT_INT
+    private var isSearching = false
     private val player: MusicPlayer by instance()
 
     init {
@@ -56,11 +56,11 @@ class PagerTrackFragment : BasePagerFragment() {
             } doWith this@PagerTrackFragment
         }
         observeNonNull(vm.foundMusic) {
-            logw(this)
-            if (this == null) return@observeNonNull
+            if (this == null || !isSearching) return@observeNonNull
             adapter.playingPosition = playingTrackPosition
             adapter.reassignTrackUri(url)
             player.play(url)
+            isSearching = false
         }
     }
 
@@ -87,5 +87,6 @@ class PagerTrackFragment : BasePagerFragment() {
         val keyword = cast<String>(parameter[PARAMS_SEARCH_KEYWORD])
         playingTrackPosition = cast(parameter[PARAMS_LAYOUT_POSITION])
         vm.runTaskSearchMusic(keyword)
+        isSearching = true
     }
 }

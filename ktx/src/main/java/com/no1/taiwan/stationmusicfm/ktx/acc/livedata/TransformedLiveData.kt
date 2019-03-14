@@ -22,13 +22,46 @@
 package com.no1.taiwan.stationmusicfm.ktx.acc.livedata
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S> {
+abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHook<T> {
     protected abstract val source: LiveData<S>
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
+        super.observe(owner, observer)
+        try {
+            beSilent(observer)
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun beSilent(observer: Observer<in T>) {
+        // Get wrapper's version.
+        val classLiveData = LiveData::class.java
+        val fieldObservers = classLiveData.getDeclaredField("mObservers").apply { isAccessible = true }
+        val objectObservers = fieldObservers.get(this)
+        val classObservers = objectObservers.javaClass
+        val methodGet = classObservers.getDeclaredMethod("get", Any::class.java).apply { isAccessible = true }
+        val objectWrapperEntry = methodGet.invoke(objectObservers, observer)
+        lateinit var objectWrapper: Any
+        if (objectWrapperEntry is Map.Entry<*, *>) {
+            objectWrapper = requireNotNull(objectWrapperEntry.value)
+        }
+        val classObserverWrapper = objectWrapper.javaClass.superclass
+        val fieldLastVersion = requireNotNull(classObserverWrapper?.getDeclaredField("mLastVersion"))
+        fieldLastVersion.isAccessible = true
+        // Get LiveData's version.
+        val fieldVersion = classLiveData.getDeclaredField("mVersion").apply { isAccessible = true }
+        val objectVersion = fieldVersion.get(this)
+        // Set wrapper's version.
+        fieldLastVersion.set(objectWrapper, objectVersion)
+    }
 
     override fun onActive() = source.observeForever(this)
 

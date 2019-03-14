@@ -43,7 +43,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATIO
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
-import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
+import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
@@ -63,7 +63,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         private const val ARGUMENT_RANK_ID = "fragment argument rank id"
 
         fun createBundle(rankId: Int, title: String) = bundleOf(ARGUMENT_RANK_ID to rankId,
-                                                                FragmentArguments.COMMON_TITLE to title)
+                                                                COMMON_TITLE to title)
     }
 
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)

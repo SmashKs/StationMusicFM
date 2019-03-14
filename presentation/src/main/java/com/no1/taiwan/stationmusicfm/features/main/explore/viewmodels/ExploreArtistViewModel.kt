@@ -84,7 +84,7 @@ class ExploreArtistViewModel(
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
     private val _photosLiveData by lazy { RespMutableLiveData<PhotosEntity>() }
     val photosLiveData: RespLiveData<PhotosEntity> = _photosLiveData
-    private val _musics by lazy { RespMutableLiveData<MusicEntity>() }
+    private val _musics by lazy { NotifMutableLiveData<MusicEntity>() }
     val foundMusic by lazy { MusicLiveData(_musics) }
     private val artistMapper by lazy { digMapper(ArtistPMapper::class) }
     private val topAlbumMapper by lazy { digMapper(TopAlbumPMapper::class) }
@@ -127,8 +127,13 @@ class ExploreArtistViewModel(
     }
 
     class MusicLiveData(
-        override val source: RespMutableLiveData<MusicEntity>
+        override val source: NotifMutableLiveData<MusicEntity>
     ) : TransformedLiveData<ResponseState<MusicEntity>, SongEntity?>() {
-        override fun getTransformed(source: ResponseState<MusicEntity>) = source.data?.items?.firstOrNull()
+        override fun getTransformed(source: ResponseState<MusicEntity>): SongEntity? {
+            return if (source is ResponseState.Success<MusicEntity>)
+                source.data?.items?.firstOrNull()
+            else
+                null
+        }
     }
 }

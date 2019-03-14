@@ -26,11 +26,13 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.toTimeString
 import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
@@ -42,6 +44,7 @@ import org.jetbrains.anko.image
 import org.kodein.di.generic.instance
 
 class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity>(view), Notifiable {
+    private var trackUri = DEFAULT_STR
     private val player: MusicPlayer by instance()
     private val emitter: Bus by instance()
 
@@ -58,6 +61,7 @@ class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity
             model.duration.takeIf { it.isNotBlank() }?.let {
                 find<TextView>(R.id.ftv_duration).text = it.toInt().toTimeString()
             }
+            trackUri = model.url
             setCurStateIcon(!player.isPlaying || player.curPlayingUri != model.url)
             find<ImageButton>(R.id.ib_option).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment.searchMusic] */
@@ -78,6 +82,7 @@ class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity
      */
     private fun setCurStateIcon(isIdle: Boolean) {
         itemView.apply {
+            logw("???????????????????????????????????????????????????????????", isIdle, layoutPosition, trackUri)
             find<ImageView>(R.id.ib_option).image = (if (isIdle)
                 R.drawable.ic_play_circle_outline_black
             else
