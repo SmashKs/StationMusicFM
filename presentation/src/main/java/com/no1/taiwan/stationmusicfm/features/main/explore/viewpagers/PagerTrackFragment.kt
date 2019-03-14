@@ -47,6 +47,11 @@ class PagerTrackFragment : BasePagerFragment() {
         BusFragLifeRegister(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()

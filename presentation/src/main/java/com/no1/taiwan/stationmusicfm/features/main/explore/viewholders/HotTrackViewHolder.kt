@@ -72,6 +72,7 @@ class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity
     }
 
     override fun notifyChange(position: Int) {
+        // FIXME(jieyi): 2019-03-15 here will be called again when view comes back.
         setCurStateIcon(position != layoutPosition)
     }
 
