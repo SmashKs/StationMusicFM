@@ -22,6 +22,8 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import android.content.Context
+import com.hwangjr.rxbus.Bus
+import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.player.ExoPlayerWrapper
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import org.kodein.di.Kodein
@@ -39,5 +41,6 @@ object AppModule {
      */
     fun appProvider(context: Context) = Kodein.Module("Application Module") {
         bind<MusicPlayer>() with instance(ExoPlayerWrapper(context))
+        bind<Bus>() with instance(RxBus.get())
     }
 }

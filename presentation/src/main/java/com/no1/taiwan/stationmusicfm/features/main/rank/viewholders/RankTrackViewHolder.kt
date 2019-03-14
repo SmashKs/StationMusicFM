@@ -27,7 +27,7 @@ import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.toTimeString
-import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
@@ -43,6 +43,7 @@ import org.kodein.di.generic.instance
 
 class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notifiable {
     private val player: MusicPlayer by instance()
+    private val emitter: Bus by instance()
 
     /**
      * Set the views' properties.
@@ -64,8 +65,8 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment.playASong]
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.playASong]
                  */
-                RxBus.get().post(TAG_PLAY_A_SONG, hashMapOf(PARAMS_TRACK_URI to model.url,
-                                                            PARAMS_LAYOUT_POSITION to position))
+                emitter.post(TAG_PLAY_A_SONG, hashMapOf(PARAMS_TRACK_URI to model.url,
+                                                        PARAMS_LAYOUT_POSITION to position))
             }
         }
     }

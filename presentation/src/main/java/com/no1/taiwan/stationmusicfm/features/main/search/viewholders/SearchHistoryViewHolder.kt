@@ -25,15 +25,18 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class SearchHistoryViewHolder(view: View) : MultiViewHolder<SearchHistoryEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -46,11 +49,11 @@ class SearchHistoryViewHolder(view: View) : MultiViewHolder<SearchHistoryEntity>
             find<TextView>(R.id.ftv_history).text = model.keyword
             find<ImageButton>(R.id.ib_remove).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment.removeKeyword] */
-                RxBus.get().post(TAG_REMOVING_SEARCH_HIST, model.keyword)
+                emitter.post(TAG_REMOVING_SEARCH_HIST, model.keyword)
             }
             setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment.searchByHistory] */
-                RxBus.get().post(TAG_SAVING_SEARCH_HIST, model.keyword)
+                emitter.post(TAG_SAVING_SEARCH_HIST, model.keyword)
             }
         }
     }

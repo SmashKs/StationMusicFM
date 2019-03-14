@@ -29,7 +29,7 @@ import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.kotlinknifer.DrawableDirectionConst.DRAWABLE_DIRECTION_START
 import com.devrapid.kotlinknifer.addDrawable
 import com.devrapid.kotlinknifer.getColor
-import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.Companion.FRAGMENT_TARGET_ARTIST
@@ -40,8 +40,11 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class ExploreArtistViewHolder(view: View) : MultiViewHolder<ArtistEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -63,9 +66,9 @@ class ExploreArtistViewHolder(view: View) : MultiViewHolder<ArtistEntity>(view) 
             }
             find<CardView>(R.id.mcv_artist).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
-                RxBus.get().post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_ARTIST,
-                                                          PARAMS_COMMON_MBID to model.mbid,
-                                                          PARAMS_COMMON_ARTIST_NAME to model.name))
+                emitter.post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_ARTIST,
+                                                      PARAMS_COMMON_MBID to model.mbid,
+                                                      PARAMS_COMMON_ARTIST_NAME to model.name))
             }
         }
     }

@@ -25,7 +25,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackTypeGenreEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
@@ -35,8 +35,11 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRA
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class TrackOfGenreViewHolder(view: View) : MultiViewHolder<TrackTypeGenreEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -53,9 +56,9 @@ class TrackOfGenreViewHolder(view: View) : MultiViewHolder<TrackTypeGenreEntity>
             find<TextView>(R.id.ftv_track_len).text
             /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreGenreFragment.gotoTrackDetailFragment] */
             setOnClickListener {
-                RxBus.get().post(TAG_TO_DETAIL, hashMapOf(PARAMS_COMMON_MBID to model.mbid,
-                                                          PARAMS_COMMON_ARTIST_NAME to model.artist.name,
-                                                          PARAMS_TO_TRACK_NAME to model.name))
+                emitter.post(TAG_TO_DETAIL, hashMapOf(PARAMS_COMMON_MBID to model.mbid,
+                                                      PARAMS_COMMON_ARTIST_NAME to model.artist.name,
+                                                      PARAMS_TO_TRACK_NAME to model.name))
             }
         }
     }

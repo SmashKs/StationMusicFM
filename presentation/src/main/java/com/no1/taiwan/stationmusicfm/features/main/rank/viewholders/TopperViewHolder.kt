@@ -28,7 +28,7 @@ import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.kotlinknifer.getDisplayMetrics
 import com.devrapid.kotlinknifer.resizeView
-import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
@@ -37,12 +37,15 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_RAN
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class TopperViewHolder(view: View) : MultiViewHolder<RankingIdEntity>(view) {
     companion object {
         private const val CONST_SIZE_RATIO_WIDTH = .5
         private const val CONST_SIZE_RATIO_HEIGHT = .75
     }
+
+    private val emitter: Bus by instance()
 
     /**
      * Set the views' properties.
@@ -63,8 +66,8 @@ class TopperViewHolder(view: View) : MultiViewHolder<RankingIdEntity>(view) {
             find<ImageView>(R.id.aiv_thumbnail).loadByAny(model.topTrackUri, context)
             /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankIndexFragment.gotoDetailFragment] */
             find<CardView>(R.id.mcv_chart).setOnClickListener {
-                RxBus.get().post(TAG_RANK_DETAIL, hashMapOf(PARAMS_TO_RANK_ID to model.id,
-                                                            PARAMS_COMMON_TITLE to model.title))
+                emitter.post(TAG_RANK_DETAIL, hashMapOf(PARAMS_TO_RANK_ID to model.id,
+                                                        PARAMS_COMMON_TITLE to model.title))
             }
         }
     }

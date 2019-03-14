@@ -26,7 +26,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackEntity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.Companion.FRAGMENT_TARGET_TRACK
@@ -38,8 +38,11 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRA
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class ExploreTrackViewHolder(view: View) : MultiViewHolder<TrackEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -57,10 +60,10 @@ class ExploreTrackViewHolder(view: View) : MultiViewHolder<TrackEntity>(view) {
             find<CardView>(R.id.mcv_track).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment.gotoTrackDetailFragment] */
-                RxBus.get().post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_TRACK,
-                                                          PARAMS_COMMON_MBID to model.mbid,
-                                                          PARAMS_COMMON_ARTIST_NAME to model.artist.name,
-                                                          PARAMS_TO_TRACK_NAME to model.name))
+                emitter.post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_TRACK,
+                                                      PARAMS_COMMON_MBID to model.mbid,
+                                                      PARAMS_COMMON_ARTIST_NAME to model.artist.name,
+                                                      PARAMS_TO_TRACK_NAME to model.name))
             }
         }
     }

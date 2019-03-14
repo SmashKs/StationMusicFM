@@ -35,12 +35,17 @@ import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
@@ -48,7 +53,6 @@ import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -63,7 +67,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     }
 
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val songAdapter: MusicAdapter by instance()
+    private val songAdapter: NotifiableAdapter by instance(ADAPTER_TRACK)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
     private val player: MusicPlayer by instance()
@@ -120,11 +124,15 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     /**
      * Play a track by [MusicPlayer].
      *
-     * @param uri a track uri.
+     * @param parameter
      * @event_from [com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder.initView]
      */
     @Subscribe(tags = [Tag(TAG_PLAY_A_SONG)])
-    fun playASong(uri: String) {
+    fun playASong(parameter: AnyParameters) {
+        val uri = cast<String>(parameter[PARAMS_TRACK_URI])
+        val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
+
         player.play(uri)
+        songAdapter.playingPosition = position
     }
 }

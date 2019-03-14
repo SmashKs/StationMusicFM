@@ -26,7 +26,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.AlbumWithArtistEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
@@ -37,8 +37,11 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALB
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_ALBUM
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class HotAlbumViewHolder(view: View) : MultiViewHolder<AlbumWithArtistEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -52,10 +55,10 @@ class HotAlbumViewHolder(view: View) : MultiViewHolder<AlbumWithArtistEntity>(vi
             find<TextView>(R.id.ftv_album_name).text = model.name
             find<CardView>(R.id.mcv_album).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.navToAlbumDetail] */
-                RxBus.get().post(TAG_TO_ALBUM, hashMapOf(PARAMS_COMMON_MBID to model.mbid,
-                                                         PARAMS_TO_ALBUM_NAME to model.name,
-                                                         PARAMS_TO_ALBUM_URI to model.images.last().text,
-                                                         PARAMS_COMMON_ARTIST_NAME to model.artist.name))
+                emitter.post(TAG_TO_ALBUM, hashMapOf(PARAMS_COMMON_MBID to model.mbid,
+                                                     PARAMS_TO_ALBUM_NAME to model.name,
+                                                     PARAMS_TO_ALBUM_URI to model.images.last().text,
+                                                     PARAMS_COMMON_ARTIST_NAME to model.artist.name))
             }
         }
     }
