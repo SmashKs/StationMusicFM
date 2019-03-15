@@ -27,6 +27,7 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.others.SearchHistoryDMapp
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
 import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
+import com.no1.taiwan.stationmusicfm.data.data.playlist.PlaylistInfoData
 import com.no1.taiwan.stationmusicfm.data.local.services.ListenHistoryDao
 import com.no1.taiwan.stationmusicfm.data.local.services.LocalMusicDao
 import com.no1.taiwan.stationmusicfm.data.local.services.PlaylistDao
@@ -115,7 +116,6 @@ class LocalDataStore(
             val localTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_LOCAL_TRACK_URI])
             val coverUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_COVER_URI])
             val playlistList = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_LIST])
-
             localMusicDao.insertBy(LocalMusicData(0,
                                                   trackName,
                                                   artistName,
@@ -137,9 +137,12 @@ class LocalDataStore(
 
     override suspend fun deleteLocalMusic(parameterable: Parameterable) = TODO()
 
-    override suspend fun fetchPlaylists() = TODO()
+    override suspend fun fetchPlaylists() = playlistDao.retrievePlaylists()
 
-    override suspend fun fetchPlaylist(parameterable: Parameterable) = TODO()
+    override suspend fun fetchPlaylist(parameterable: Parameterable): PlaylistInfoData {
+        val id = cast<Int>(parameterable.toApiAnyParam()["id"])
+        return playlistDao.retrievePlaylist(id)
+    }
 
     override suspend fun addPlaylist(parameterable: Parameterable) = TODO()
 
