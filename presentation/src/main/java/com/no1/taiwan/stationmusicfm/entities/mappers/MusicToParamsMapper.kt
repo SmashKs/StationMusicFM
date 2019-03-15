@@ -19,32 +19,18 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.repositories
+package com.no1.taiwan.stationmusicfm.entities.mappers
 
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
-import com.no1.taiwan.stationmusicfm.domain.models.playlist.PlaylistInfoModel
-import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 /**
- * This interface will be the similar to [com.no1.taiwan.stationmusicfm.data.datastores.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
+ * A transforming mapping between [SongEntity] and [LocalMusicParams].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
  */
-interface PlaylistRepository {
-    suspend fun fetchLocalMusics(parameters: Parameterable): List<MusicInfoModel>
-
-    suspend fun addLocalMusic(parameters: Parameterable): Boolean
-
-    suspend fun updateLocalMusic(parameters: Parameterable): Boolean
-
-    suspend fun deleteLocalMusic(parameters: Parameterable): Boolean
-
-    suspend fun fetchPlaylists(parameters: Parameterable): List<PlaylistInfoModel>
-
-    suspend fun fetchPlaylist(parameters: Parameterable): PlaylistInfoModel
-
-    suspend fun addPlaylist(parameters: Parameterable): Boolean
-
-    suspend fun updatePlaylist(parameters: Parameterable): Boolean
-
-    suspend fun deletePlaylist(parameters: Parameterable): Boolean
+class MusicToParamsMapper {
+    fun toParamsFrom(song: SongEntity) = song.run {
+        LocalMusicParams(title, artist, length, false, url, DEFAULT_STR, oriCoverUrl, DEFAULT_STR)
+    }
 }

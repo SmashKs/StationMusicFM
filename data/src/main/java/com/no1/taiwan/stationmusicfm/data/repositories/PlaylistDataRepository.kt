@@ -43,21 +43,21 @@ class PlaylistDataRepository constructor(
     private val musicMapper by lazy { digMapper(LocalMusicDMapper::class) }
     private val playlistMapper by lazy { digMapper(PlaylistInfoDMapper::class) }
 
-    override fun fetchLocalMusics(parameters: Parameterable) = TODO()
+    override suspend fun fetchLocalMusics(parameters: Parameterable) = TODO()
 
-    override fun addLocalMusic(parameters: Parameterable) = TODO()
+    override suspend fun addLocalMusic(parameters: Parameterable) = local.addLocalMusic(parameters)
 
-    override fun updateLocalMusic(parameters: Parameterable) = TODO()
+    override suspend fun updateLocalMusic(parameters: Parameterable) = TODO()
 
-    override fun deleteLocalMusic(parameters: Parameterable) = TODO()
+    override suspend fun deleteLocalMusic(parameters: Parameterable) = TODO()
 
-    override fun fetchPlaylists(parameters: Parameterable) = TODO()
+    override suspend fun fetchPlaylists(parameters: Parameterable) = TODO()
 
-    override fun fetchPlaylist(parameters: Parameterable) = TODO()
+    override suspend fun fetchPlaylist(parameters: Parameterable) = TODO()
 
-    override fun addPlaylist(parameters: Parameterable) = TODO()
+    override suspend fun addPlaylist(parameters: Parameterable) = TODO()
 
-    override fun updatePlaylist(parameters: Parameterable) = TODO()
+    override suspend fun updatePlaylist(parameters: Parameterable) = TODO()
 
-    override fun deletePlaylist(parameters: Parameterable) = TODO()
+    override suspend fun deletePlaylist(parameters: Parameterable) = TODO()
 }

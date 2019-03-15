@@ -26,6 +26,7 @@ import com.devrapid.kotlinshaver.castOrNull
 import com.no1.taiwan.stationmusicfm.data.data.mappers.others.SearchHistoryDMapper
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
+import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
 import com.no1.taiwan.stationmusicfm.data.local.services.ListenHistoryDao
 import com.no1.taiwan.stationmusicfm.data.local.services.LocalMusicDao
 import com.no1.taiwan.stationmusicfm.data.local.services.PlaylistDao
@@ -39,6 +40,14 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams.
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Companion.PARAM_NAME_NUMBER_OF_TRACK
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Companion.PARAM_NAME_RANK_ID
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams.Companion.PARAM_NAME_TOP_TRACK_URI
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_ARTIST_NAME
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_COVER_URI
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_DURATION
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_HAS_OWN
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_LOCAL_TRACK_URI
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_LIST
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_REMOTE_TRACK_URI
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_TRACK_NAME
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 import com.tencent.mmkv.MMKV
 
@@ -96,7 +105,33 @@ class LocalDataStore(
     //region Playlist
     override suspend fun fetchLocalMusics(parameterable: Parameterable) = TODO()
 
-    override suspend fun addLocalMusic(parameterable: Parameterable) = TODO()
+    override suspend fun addLocalMusic(parameterable: Parameterable): Boolean {
+        try {
+            val trackName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_NAME])
+            val artistName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_ARTIST_NAME])
+            val duration = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_DURATION])
+            val hasOwn = cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_HAS_OWN])
+            val remoteTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_REMOTE_TRACK_URI])
+            val localTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_LOCAL_TRACK_URI])
+            val coverUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_COVER_URI])
+            val playlistList = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_LIST])
+
+            localMusicDao.insert(LocalMusicData(0,
+                                                trackName,
+                                                artistName,
+                                                duration,
+                                                hasOwn,
+                                                remoteTrackUri,
+                                                localTrackUri,
+                                                coverUri,
+                                                playlistList))
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+        return true
+    }
 
     override suspend fun updateLocalMusic(parameterable: Parameterable) = TODO()
 

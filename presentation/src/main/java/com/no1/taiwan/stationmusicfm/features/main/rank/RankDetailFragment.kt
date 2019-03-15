@@ -36,6 +36,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
@@ -45,6 +46,7 @@ import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
@@ -131,8 +133,10 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     fun playASong(parameter: AnyParameters) {
         val uri = cast<String>(parameter[PARAMS_TRACK_URI])
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
+        val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
 
         player.play(uri)
         songAdapter.playingPosition = position
+        vm.runTaskAddToPlayHistory(song)
     }
 }

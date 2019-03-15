@@ -22,11 +22,15 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemReq
+import com.no1.taiwan.stationmusicfm.entities.mappers.MusicToParamsMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
@@ -41,6 +45,7 @@ import kotlinx.coroutines.launch
 class RankDetailViewModel(
     private val fetchRankMusicCase: FetchRankMusicCase,
     private val updateRankItemCase: UpdateRankItemCase,
+    private val addLocalMusicCase: AddLocalMusicCase,
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _rankMusic by lazy { RespMutableLiveData<MusicEntity>() }
@@ -53,5 +58,9 @@ class RankDetailViewModel(
 
     fun runTaskUpdateRankItem(rankId: Int, topTrackUri: String, numOfTracks: Int) = GlobalScope.launch {
         updateRankItemCase.exec(UpdateRankItemReq(RankParams(rankId, topTrackUri, numOfTracks)))
+    }
+
+    fun runTaskAddToPlayHistory(song: CommonMusicEntity.SongEntity) = GlobalScope.launch {
+        addLocalMusicCase.exec(AddLocalMusicReq(MusicToParamsMapper().toParamsFrom(song)))
     }
 }

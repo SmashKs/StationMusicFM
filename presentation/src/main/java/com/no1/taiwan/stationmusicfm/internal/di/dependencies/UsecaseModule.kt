@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies
 
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistCase
@@ -71,6 +72,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespC
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.UpdateRankItemRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddLocalMusicRespCase
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -109,8 +111,13 @@ object UsecaseModule {
         bind<FetchTrackCase>() with singleton { FetchTrackRespCase(instance()) }
         //endregion
 
+        //region History
         bind<AddSearchHistCase>() with singleton { AddSearchHistRespCase(instance()) }
         bind<DeleteSearchHistCase>() with singleton { DeleteSearchHistRespCase(instance()) }
         bind<FetchSearchHistsCase>() with singleton { FetchSearchHistsRespCase(instance()) }
+        //endregion
+
+        bind<AddLocalMusicCase>() with singleton { AddLocalMusicRespCase(instance()) }
+
     }
 }
