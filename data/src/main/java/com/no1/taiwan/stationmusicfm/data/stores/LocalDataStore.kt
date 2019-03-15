@@ -116,15 +116,15 @@ class LocalDataStore(
             val coverUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_COVER_URI])
             val playlistList = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_LIST])
 
-            localMusicDao.insert(LocalMusicData(0,
-                                                trackName,
-                                                artistName,
-                                                duration,
-                                                hasOwn,
-                                                remoteTrackUri,
-                                                localTrackUri,
-                                                coverUri,
-                                                playlistList))
+            localMusicDao.insertBy(LocalMusicData(0,
+                                                  trackName,
+                                                  artistName,
+                                                  duration,
+                                                  hasOwn,
+                                                  remoteTrackUri,
+                                                  localTrackUri,
+                                                  coverUri,
+                                                  playlistList))
         }
         catch (e: Exception) {
             e.printStackTrace()

@@ -23,16 +23,46 @@ package com.no1.taiwan.stationmusicfm.data.local.services
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
 import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 @Dao
 abstract class LocalMusicDao : BaseDao<LocalMusicData> {
+    /**
+     * Insert a data if there's the same data inside the database, it will be replaced.
+     *
+     * @param data
+     */
+    @Transaction
+    open fun insertBy(data: LocalMusicData) {
+        val existMusic = retrieveMusic(data.trackName, data.artistName)
+        if (existMusic == null)
+            insert(data)
+        else
+            replace(existMusic.copy(hasOwn = data.hasOwn.takeIf { !it } ?: existMusic.hasOwn,
+                                    remoteTrackUri = data.remoteTrackUri.takeIf { it == DEFAULT_STR } ?: existMusic.remoteTrackUri,
+                                    localTrackUri = data.localTrackUri.takeIf { it == DEFAULT_STR } ?: existMusic.localTrackUri,
+                                    coverUri = data.coverUri.takeIf { it == DEFAULT_STR } ?: existMusic.coverUri,
+                                    playlistList = data.playlistList.takeIf { it == DEFAULT_STR } ?: existMusic.playlistList,
+                                    lastListen = data.lastListen))
+    }
+
     /**
      * Get all data from the local music table.
      */
     @Query("SELECT * FROM table_local_music")
     abstract fun retrieveMusics(): List<LocalMusicData>
+
+    /**
+     * Get one data from the local music table.
+     *
+     * @param track
+     * @param artist
+     */
+    @Query("SELECT * FROM table_local_music WHERE track_name=:track AND artist_name=:artist")
+    abstract fun retrieveMusic(track: String, artist: String): LocalMusicData?
 
     /**
      * Remove a music from local music table.
