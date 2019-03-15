@@ -27,6 +27,7 @@ import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.uiSwitch
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
@@ -54,7 +55,6 @@ class NotifiableAdapter(
     /**
      * Called when a view created by this adapter has been attached to a window.
      *
-     *
      * This can be used as a reasonable signal that the view is about to be seen
      * by the user. If the adapter previously freed any resources in
      * [onViewDetachedFromWindow][.onViewDetachedFromWindow]
@@ -64,7 +64,11 @@ class NotifiableAdapter(
      */
     override fun onViewAttachedToWindow(holder: MusicViewHolder) {
         super.onViewAttachedToWindow(holder)
-        (holder as? Notifiable)?.notifyChange(playingPosition)
+        // For updating views are out of the screen but didn't go to attached scrap buffer.
+        castOrNull<Notifiable>(holder)?.notifyChange(playingPosition)
+        // OPTIMIZE(jieyi): 2019-03-15 Workaround for setting icon again because the viewpager shows again will
+        //  call [notifyChange] to override the correct icon.
+        castOrNull<HotTrackViewHolder>(holder)?.setOptionIcon()
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

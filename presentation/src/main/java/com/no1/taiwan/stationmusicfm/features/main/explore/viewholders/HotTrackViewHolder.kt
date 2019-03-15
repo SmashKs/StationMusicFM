@@ -26,7 +26,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.toTimeString
 import com.hwangjr.rxbus.Bus
@@ -62,7 +61,7 @@ class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity
                 find<TextView>(R.id.ftv_duration).text = it.toInt().toTimeString()
             }
             trackUri = model.url
-            setCurStateIcon(!player.isPlaying || player.curPlayingUri != model.url)
+            setOptionIcon()
             find<ImageButton>(R.id.ib_option).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment.searchMusic] */
                 emitter.post(PARAMS_SEARCH_MUSIC_BY_KEYWORD, hashMapOf(PARAMS_LAYOUT_POSITION to layoutPosition,
@@ -72,8 +71,11 @@ class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity
     }
 
     override fun notifyChange(position: Int) {
-        // FIXME(jieyi): 2019-03-15 here will be called again when view comes back.
         setCurStateIcon(position != layoutPosition)
+    }
+
+    fun setOptionIcon() {
+        setCurStateIcon(!player.isPlaying || player.curPlayingUri != trackUri)
     }
 
     /**
@@ -83,7 +85,6 @@ class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity
      */
     private fun setCurStateIcon(isIdle: Boolean) {
         itemView.apply {
-            logw("???????????????????????????????????????????????????????????", isIdle, layoutPosition, trackUri)
             find<ImageView>(R.id.ib_option).image = (if (isIdle)
                 R.drawable.ic_play_circle_outline_black
             else
