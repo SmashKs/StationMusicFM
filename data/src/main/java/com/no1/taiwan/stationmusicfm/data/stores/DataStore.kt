@@ -40,6 +40,7 @@ import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
+import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
 import com.no1.taiwan.stationmusicfm.data.data.playlist.PlaylistInfoData
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 
@@ -115,7 +116,7 @@ interface DataStore {
     //endregion
 
     //region Playlist
-    suspend fun fetchLocalMusics(parameterable: Parameterable): List<MusicInfoData>
+    suspend fun fetchLocalMusics(parameterable: Parameterable): List<LocalMusicData>
 
     suspend fun addLocalMusic(parameterable: Parameterable): Boolean
 

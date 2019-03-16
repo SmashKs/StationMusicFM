@@ -70,6 +70,13 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
                                                         PARAMS_LAYOUT_POSITION to position,
                                                         PARAMS_SONG_ENTITY to model.copy()))
             }
+            setOnLongClickListener {
+                /**
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.openBottomSheetDialog]
+                 */
+                emitter.post("open dialog sheet", hashMapOf<String, Any>("entity" to model))
+                true
+            }
         }
     }
 

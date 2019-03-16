@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,7 @@ import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailVie
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
@@ -56,6 +58,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
+import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -73,6 +76,9 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
     private val player: MusicPlayer by instance()
+    private val bottomSheet by lazy {
+        BottomSheetFactory.createMusicSheet(requireActivity())
+    }
 
     init {
         BusFragLongerLifeRegister(this)
@@ -117,6 +123,21 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     }
 
     /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        bottomSheet.find<View>(R.id.ftv_download).setOnClickListener {
+            bottomSheet.dismiss()
+        }
+        bottomSheet.find<View>(R.id.ftv_to_favorite).setOnClickListener {
+            bottomSheet.dismiss()
+        }
+        bottomSheet.find<View>(R.id.ftv_music_info).setOnClickListener {
+            bottomSheet.dismiss()
+        }
+    }
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.
@@ -134,9 +155,20 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         val uri = cast<String>(parameter[PARAMS_TRACK_URI])
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
         val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
-
         player.play(uri)
+        // For updating current views are showing on the recycler view.
         songAdapter.playingPosition = position
+        // Add the play history into database.
         vm.runTaskAddToPlayHistory(song)
+    }
+
+    /**
+     *
+     * @param parameter
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder.initView]
+     */
+    @Subscribe(tags = [Tag("open dialog sheet")])
+    fun openBottomSheetDialog(parameter: AnyParameters) {
+        bottomSheet.show()
     }
 }

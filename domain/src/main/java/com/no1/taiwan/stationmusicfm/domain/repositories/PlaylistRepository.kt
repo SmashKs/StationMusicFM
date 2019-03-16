@@ -21,7 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.domain.repositories
 
-import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.playlist.LocalMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.playlist.PlaylistInfoModel
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 
@@ -30,7 +30,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 interface PlaylistRepository {
-    suspend fun fetchLocalMusics(parameters: Parameterable): List<MusicInfoModel>
+    suspend fun fetchLocalMusics(parameters: Parameterable): List<LocalMusicModel>
 
     suspend fun addLocalMusic(parameters: Parameterable): Boolean
 

@@ -104,7 +104,7 @@ class LocalDataStore(
     //endregion
 
     //region Playlist
-    override suspend fun fetchLocalMusics(parameterable: Parameterable) = TODO()
+    override suspend fun fetchLocalMusics(parameterable: Parameterable) = localMusicDao.retrieveMusics()
 
     override suspend fun addLocalMusic(parameterable: Parameterable): Boolean {
         try {
@@ -135,7 +135,17 @@ class LocalDataStore(
 
     override suspend fun updateLocalMusic(parameterable: Parameterable) = TODO()
 
-    override suspend fun deleteLocalMusic(parameterable: Parameterable) = TODO()
+    override suspend fun deleteLocalMusic(parameterable: Parameterable): Boolean {
+        val id = cast<Int>(parameterable.toApiAnyParam()["id"])
+        try {
+            localMusicDao.releaseBy(id)
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+        return true
+    }
 
     override suspend fun fetchPlaylists() = playlistDao.retrievePlaylists()
 
