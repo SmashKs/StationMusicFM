@@ -103,7 +103,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      * Stop playing the music.
      */
     override fun stop() {
-        if (playerState is MusicPlayerState.Standby) return
+        if (playerState is Standby) return
         exoPlayer.playWhenReady = false
         exoPlayer.stop()
         timer.stop()
@@ -114,7 +114,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      * Pause a music. If no music is played, nothing to do.
      */
     override fun pause() {
-        if (playerState is MusicPlayerState.Pause) return
+        if (playerState is Pause) return
         exoPlayer.playWhenReady = false
         timer.pause()
         playerState = Pause
@@ -124,7 +124,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      * Resume the playing of the music.
      */
     override fun resume() {
-        if (playerState is MusicPlayerState.Play) return
+        if (playerState is Play) return
         exoPlayer.playWhenReady = true
         timer.resume()
         playerState = Play

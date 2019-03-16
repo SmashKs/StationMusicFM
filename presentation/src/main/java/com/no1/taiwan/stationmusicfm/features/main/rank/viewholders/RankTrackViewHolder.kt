@@ -74,7 +74,7 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
                 /**
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.openBottomSheetDialog]
                  */
-                emitter.post("open dialog sheet", hashMapOf<String, Any>("entity" to model))
+                emitter.post("open dialog sheet", hashMapOf<String, Any>("song" to model.copy()))
                 true
             }
         }

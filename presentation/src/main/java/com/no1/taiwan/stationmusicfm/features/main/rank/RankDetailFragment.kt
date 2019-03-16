@@ -21,8 +21,11 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.rank
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +37,6 @@ import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
-import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
@@ -62,6 +64,7 @@ import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
+import java.io.File
 
 class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     companion object {
@@ -71,13 +74,14 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
                                                                 COMMON_TITLE to title)
     }
 
+    private lateinit var tempSongEntity: SongEntity
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val songAdapter: NotifiableAdapter by instance(ADAPTER_TRACK)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
     private val player: MusicPlayer by instance()
     private val bottomSheet by lazy {
-        BottomSheetFactory.createMusicSheet(requireActivity())
+        BottomSheetFactory.createMusicSheet(parent)
     }
 
     init {
@@ -115,24 +119,36 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(R.id.rv_songs),
+        initRecyclerViewWith(find(com.no1.taiwan.stationmusicfm.R.id.rv_songs),
                              songAdapter,
                              linearLayoutManager(),
                              listOf(actionBarBlankDecoration,
-                                    VerticalItemDecorator(getDimen(R.dimen.md_one_half_unit).toInt())))
+                                    VerticalItemDecorator(getDimen(com.no1.taiwan.stationmusicfm.R.dimen.md_one_half_unit).toInt())))
     }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        bottomSheet.find<View>(R.id.ftv_download).setOnClickListener {
+        bottomSheet.find<View>(com.no1.taiwan.stationmusicfm.R.id.ftv_download).setOnClickListener {
+            if (::tempSongEntity.isInitialized) {
+                requireStoragePermission {
+                    val musicDir = File(parent.applicationContext.filesDir, "music").apply {
+                        if (!exists())
+                            mkdir()
+                    }
+                    val path = listOf(musicDir.toString(),
+                                      (tempSongEntity.artist.split(" ") + tempSongEntity.title.split(" "))
+                                          .joinToString("_")).joinToString("/", postfix = ".mp3")
+                    player.writeToFile(tempSongEntity.url, path)
+                }
+            }
             bottomSheet.dismiss()
         }
-        bottomSheet.find<View>(R.id.ftv_to_favorite).setOnClickListener {
+        bottomSheet.find<View>(com.no1.taiwan.stationmusicfm.R.id.ftv_to_favorite).setOnClickListener {
             bottomSheet.dismiss()
         }
-        bottomSheet.find<View>(R.id.ftv_music_info).setOnClickListener {
+        bottomSheet.find<View>(com.no1.taiwan.stationmusicfm.R.id.ftv_music_info).setOnClickListener {
             bottomSheet.dismiss()
         }
     }
@@ -142,7 +158,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      *
      * @return [LayoutRes] layout xml.
      */
-    override fun provideInflateView() = R.layout.fragment_rank_detail
+    override fun provideInflateView() = com.no1.taiwan.stationmusicfm.R.layout.fragment_rank_detail
 
     /**
      * Play a track by [MusicPlayer].
@@ -169,6 +185,16 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     @Subscribe(tags = [Tag("open dialog sheet")])
     fun openBottomSheetDialog(parameter: AnyParameters) {
+        tempSongEntity = cast(parameter["song"])
         bottomSheet.show()
+    }
+
+    private fun requireStoragePermission(grantedBlock: (() -> Unit)? = null) {
+        if (ActivityCompat.checkSelfPermission(parent, WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            grantedBlock?.invoke()
+        }
+        else {
+            requestPermissions(arrayOf(WRITE_EXTERNAL_STORAGE), 1)
+        }
     }
 }
