@@ -36,6 +36,7 @@ import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_OPEN_BOTTOM_SHEET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
@@ -71,10 +72,8 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
                                                         PARAMS_SONG_ENTITY to model.copy()))
             }
             setOnLongClickListener {
-                /**
-                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.openBottomSheetDialog]
-                 */
-                emitter.post("open dialog sheet", hashMapOf<String, Any>("song" to model.copy()))
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.openBottomSheetDialog] */
+                emitter.post(TAG_OPEN_BOTTOM_SHEET, hashMapOf<String, Any>(PARAMS_SONG_ENTITY to model.copy()))
                 true
             }
         }

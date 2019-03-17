@@ -30,29 +30,23 @@ object RxBusConstant {
         const val TAG_REMOVING_SEARCH_HIST = "removing the searching history"
         const val TAG_SAVING_SEARCH_HIST = "saving the searching history"
         const val TAG_PLAY_A_SONG = "play a song for asking the exo player"
+        const val TAG_OPEN_BOTTOM_SHEET = "open bottom sheet dialog"
     }
 
     object Parameter {
         const val PARAMS_COMMON_TITLE = "title"
         const val PARAMS_COMMON_MBID = "mbid"
         const val PARAMS_COMMON_ARTIST_NAME = "artist name"
-
         const val PARAMS_TO_DETAIL_TARGET = "target"
-
         const val PARAMS_TO_GENRE_NAME = "genre name"
-
         const val PARAMS_TO_ALBUM_NAME = "album name"
         const val PARAMS_TO_ALBUM_URI = "album uri"
-
         const val PARAMS_TO_TRACK_NAME = "track name"
-
         const val PARAMS_TO_RANK_ID = "rank id"
-
         const val PARAMS_TRACK_URI = "track uri"
         const val PARAMS_SONG_ENTITY = "song entity"
         const val PARAMS_LAYOUT_POSITION = "viewholder position"
         const val PARAMS_SEARCH_KEYWORD = "searching keyword"
-
         const val PARAMS_SEARCH_MUSIC_BY_KEYWORD = "search a music by keyword"
     }
 }

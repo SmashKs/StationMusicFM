@@ -30,7 +30,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.MusicToParamsMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
-import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
 import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
@@ -60,7 +60,14 @@ class RankDetailViewModel(
         updateRankItemCase.exec(UpdateRankItemReq(RankParams(rankId, topTrackUri, numOfTracks)))
     }
 
-    fun runTaskAddToPlayHistory(song: CommonMusicEntity.SongEntity) = GlobalScope.launch {
+    fun runTaskAddToPlayHistory(song: SongEntity) = GlobalScope.launch {
         addLocalMusicCase.exec(AddLocalMusicReq(MusicToParamsMapper().toParamsFrom(song)))
+    }
+
+    fun runTaskAddDownloadedTrackInfo(song: SongEntity, localUri: String) = GlobalScope.launch {
+        val parameter = MusicToParamsMapper()
+            .toParamsFrom(song)
+            .copy(hasOwn = true, localTrackUri = localUri)
+        addLocalMusicCase.exec(AddLocalMusicReq(parameter))
     }
 }

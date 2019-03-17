@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.features.main.rank
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
@@ -37,6 +38,7 @@ import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
+import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
@@ -52,10 +54,12 @@ import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_OPEN_BOTTOM_SHEET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.file.FilePathFactory
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -64,7 +68,6 @@ import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
-import java.io.File
 
 class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     companion object {
@@ -119,36 +122,36 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(com.no1.taiwan.stationmusicfm.R.id.rv_songs),
+        initRecyclerViewWith(find(R.id.rv_songs),
                              songAdapter,
                              linearLayoutManager(),
                              listOf(actionBarBlankDecoration,
-                                    VerticalItemDecorator(getDimen(com.no1.taiwan.stationmusicfm.R.dimen.md_one_half_unit).toInt())))
+                                    VerticalItemDecorator(getDimen(R.dimen.md_one_half_unit).toInt())))
     }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        bottomSheet.find<View>(com.no1.taiwan.stationmusicfm.R.id.ftv_download).setOnClickListener {
+        bottomSheet.find<View>(R.id.ftv_download).setOnClickListener {
             if (::tempSongEntity.isInitialized) {
                 requireStoragePermission {
-                    val musicDir = File(parent.applicationContext.filesDir, "music").apply {
-                        if (!exists())
-                            mkdir()
-                    }
-                    val path = listOf(musicDir.toString(),
-                                      (tempSongEntity.artist.split(" ") + tempSongEntity.title.split(" "))
-                                          .joinToString("_")).joinToString("/", postfix = ".mp3")
-                    player.writeToFile(tempSongEntity.url, path)
+                    val encode = Base64.encodeToString(
+                        (tempSongEntity.artist.split(" ") + tempSongEntity.title.split(" "))
+                            .joinToString("_")
+                            .toByteArray(), Base64.NO_WRAP)
+                    val path = FilePathFactory.obtainMusicPath(encode)
+                    // Save into internal storage.
+//                    player.writeToFile(tempSongEntity.url, path)
+                    vm.runTaskAddDownloadedTrackInfo(tempSongEntity, path)
                 }
             }
             bottomSheet.dismiss()
         }
-        bottomSheet.find<View>(com.no1.taiwan.stationmusicfm.R.id.ftv_to_favorite).setOnClickListener {
+        bottomSheet.find<View>(R.id.ftv_to_favorite).setOnClickListener {
             bottomSheet.dismiss()
         }
-        bottomSheet.find<View>(com.no1.taiwan.stationmusicfm.R.id.ftv_music_info).setOnClickListener {
+        bottomSheet.find<View>(R.id.ftv_music_info).setOnClickListener {
             bottomSheet.dismiss()
         }
     }
@@ -158,7 +161,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      *
      * @return [LayoutRes] layout xml.
      */
-    override fun provideInflateView() = com.no1.taiwan.stationmusicfm.R.layout.fragment_rank_detail
+    override fun provideInflateView() = R.layout.fragment_rank_detail
 
     /**
      * Play a track by [MusicPlayer].
@@ -183,9 +186,9 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      * @param parameter
      * @event_from [com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder.initView]
      */
-    @Subscribe(tags = [Tag("open dialog sheet")])
+    @Subscribe(tags = [Tag(TAG_OPEN_BOTTOM_SHEET)])
     fun openBottomSheetDialog(parameter: AnyParameters) {
-        tempSongEntity = cast(parameter["song"])
+        tempSongEntity = cast(parameter[PARAMS_SONG_ENTITY])
         bottomSheet.show()
     }
 
