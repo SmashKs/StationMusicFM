@@ -49,6 +49,8 @@ data class LocalMusicData(
     @ColumnInfo(name = "playlist_list")
     val playlistList: String = DEFAULT_STR,
     val created: Date = Date(),
-    @ColumnInfo(name = "last_listen")
-    val lastListen: Date = Date()
+    @ColumnInfo(name = "last_listen_date")
+    val lastListen: Date = Date(),
+    @ColumnInfo(name = "download_date")
+    val downloaded: Date = Date()
 ) : Data

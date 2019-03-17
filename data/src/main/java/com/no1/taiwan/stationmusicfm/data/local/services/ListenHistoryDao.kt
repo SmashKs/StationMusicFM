@@ -33,7 +33,7 @@ abstract class ListenHistoryDao {
      *
      * @param limit the limitation of the histories.
      */
-    @Query("SELECT * FROM table_local_music WHERE last_listen>=:zeroTime ORDER BY last_listen ASC LIMIT :limit")
+    @Query("SELECT * FROM table_local_music WHERE last_listen_date>=:zeroTime ORDER BY last_listen_date ASC LIMIT :limit")
     abstract fun retrieveHistories(limit: Int = 30, zeroTime: Date = Date(0)): List<LocalMusicData>
 
     /**
@@ -42,6 +42,6 @@ abstract class ListenHistoryDao {
      * @param id history's id.
      * @param clearDate init time for not getting it.
      */
-    @Query("UPDATE table_local_music SET last_listen=:clearDate WHERE id=:id")
+    @Query("UPDATE table_local_music SET last_listen_date=:clearDate WHERE id=:id")
     abstract fun releaseHistory(id: Int, clearDate: Date = Date(0))
 }

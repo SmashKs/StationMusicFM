@@ -27,26 +27,35 @@ import androidx.room.Transaction
 import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
 import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import java.util.Date
 
 @Dao
 abstract class LocalMusicDao : BaseDao<LocalMusicData> {
     /**
      * Insert a data if there's the same data inside the database, it will be replaced.
      *
-     * @param data
+     * @param newData
      */
     @Transaction
-    open fun insertBy(data: LocalMusicData) {
-        val existMusic = retrieveMusic(data.trackName, data.artistName)
+    open fun insertBy(newData: LocalMusicData) {
+        val existMusic = retrieveMusic(newData.trackName, newData.artistName)
+        var updatedData = newData
+        // Update the download date if the data isn't download information.
+        if (!newData.hasOwn || (newData.hasOwn && existMusic?.hasOwn == true))
+            updatedData = newData.copy(downloaded = Date(0),
+                                       lastListen = if (!updatedData.hasOwn)
+                                           updatedData.lastListen
+                                       else
+                                           existMusic?.lastListen ?: updatedData.lastListen)
         if (existMusic == null)
-            insert(data)
+            insert(updatedData)
         else
-            replace(existMusic.copy(hasOwn = data.hasOwn.takeIf { !it } ?: existMusic.hasOwn,
-                                    remoteTrackUri = data.remoteTrackUri.takeIf { it == DEFAULT_STR } ?: existMusic.remoteTrackUri,
-                                    localTrackUri = data.localTrackUri.takeIf { it == DEFAULT_STR } ?: existMusic.localTrackUri,
-                                    coverUri = data.coverUri.takeIf { it == DEFAULT_STR } ?: existMusic.coverUri,
-                                    playlistList = data.playlistList.takeIf { it == DEFAULT_STR } ?: existMusic.playlistList,
-                                    lastListen = data.lastListen))
+            replace(existMusic.copy(hasOwn = updatedData.hasOwn.takeIf { it } ?: existMusic.hasOwn,
+                                    remoteTrackUri = updatedData.remoteTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.remoteTrackUri,
+                                    localTrackUri = updatedData.localTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.localTrackUri,
+                                    coverUri = updatedData.coverUri.takeIf { it != DEFAULT_STR } ?: existMusic.coverUri,
+                                    playlistList = updatedData.playlistList.takeIf { it != DEFAULT_STR } ?: existMusic.playlistList,
+                                    lastListen = updatedData.lastListen))
     }
 
     /**

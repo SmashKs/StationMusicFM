@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.utils.file
 
-import com.devrapid.kotlinknifer.logw
 import com.no1.taiwan.stationmusicfm.MusicApp
 import java.io.File
 
@@ -31,7 +30,6 @@ object FilePathFactory {
             if (!exists())
                 mkdir()
         }
-        logw(fileName)
         return listOf(musicDir.toString(), fileName).joinToString("/", postfix = ".mp3")
     }
 }
