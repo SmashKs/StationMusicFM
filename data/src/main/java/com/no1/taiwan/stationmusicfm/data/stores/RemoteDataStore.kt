@@ -160,8 +160,6 @@ class RemoteDataStore(
 
     override suspend fun addLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun updateLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
-
     override suspend fun deleteLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
 
     override suspend fun fetchPlaylists() = UnsupportedOperation()
@@ -173,5 +171,7 @@ class RemoteDataStore(
     override suspend fun updatePlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
     override suspend fun deletePlaylist(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun fetchListenedHistories(parameterable: Parameterable) = UnsupportedOperation()
     //endregion
 }

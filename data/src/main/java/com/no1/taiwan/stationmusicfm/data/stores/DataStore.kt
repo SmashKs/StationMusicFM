@@ -120,8 +120,6 @@ interface DataStore {
 
     suspend fun addLocalMusic(parameterable: Parameterable): Boolean
 
-    suspend fun updateLocalMusic(parameterable: Parameterable): Boolean
-
     suspend fun deleteLocalMusic(parameterable: Parameterable): Boolean
 
     suspend fun fetchPlaylists(): List<PlaylistInfoData>
@@ -133,5 +131,7 @@ interface DataStore {
     suspend fun updatePlaylist(parameterable: Parameterable): Boolean
 
     suspend fun deletePlaylist(parameterable: Parameterable): Boolean
+
+    suspend fun fetchListenedHistories(parameterable: Parameterable): List<LocalMusicData>
     //endregion
 }

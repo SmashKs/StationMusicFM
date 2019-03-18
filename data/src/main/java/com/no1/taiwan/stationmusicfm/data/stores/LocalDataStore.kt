@@ -46,6 +46,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_DURATION
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_HAS_OWN
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_LOCAL_TRACK_URI
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_ID
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_LIST
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_REMOTE_TRACK_URI
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_TRACK_NAME
@@ -133,10 +134,8 @@ class LocalDataStore(
         return true
     }
 
-    override suspend fun updateLocalMusic(parameterable: Parameterable) = TODO()
-
     override suspend fun deleteLocalMusic(parameterable: Parameterable): Boolean {
-        val id = cast<Int>(parameterable.toApiAnyParam()["id"])
+        val id = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_ID])
         try {
             localMusicDao.releaseBy(id)
         }
@@ -150,7 +149,7 @@ class LocalDataStore(
     override suspend fun fetchPlaylists() = playlistDao.retrievePlaylists()
 
     override suspend fun fetchPlaylist(parameterable: Parameterable): PlaylistInfoData {
-        val id = cast<Int>(parameterable.toApiAnyParam()["id"])
+        val id = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_ID])
         return playlistDao.retrievePlaylist(id)
     }
 
@@ -159,6 +158,11 @@ class LocalDataStore(
     override suspend fun updatePlaylist(parameterable: Parameterable) = TODO()
 
     override suspend fun deletePlaylist(parameterable: Parameterable) = TODO()
+
+    override suspend fun fetchListenedHistories(parameterable: Parameterable): List<LocalMusicData> {
+        val limit = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_LIMIT])
+        return listenHistoryDao.retrieveHistories(limit)
+    }
     //endregion
 
     //region UnsupportedOperationException

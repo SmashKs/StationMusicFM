@@ -32,6 +32,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
+import com.no1.taiwan.stationmusicfm.domain.models.playlist.LocalMusicModel
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistsRespCase
@@ -58,6 +59,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRes
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.UpdateRankItemRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddLocalMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchListenedHistsRespCase
 
 // MusicBank
 
@@ -124,5 +126,7 @@ typealias UpdateRankItemCase = DeferredUsecase<Boolean, UpdateRankItemReq>
 // Playlist
 
 typealias AddLocalMusicReq = AddLocalMusicRespCase.Request
+typealias FetchListenedHistReq = FetchListenedHistsRespCase.Request
 
 typealias AddLocalMusicCase = DeferredUsecase<Boolean, AddLocalMusicReq>
+typealias FetchListenedHistCase = DeferredUsecase<List<LocalMusicModel>, FetchListenedHistReq>

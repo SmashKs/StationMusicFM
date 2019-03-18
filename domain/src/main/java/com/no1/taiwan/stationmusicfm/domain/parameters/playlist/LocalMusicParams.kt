@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.domain.parameters.playlist
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
@@ -33,7 +34,8 @@ data class LocalMusicParams(
     private val remoteTrackUri: String = DEFAULT_STR,
     private val localTrackUri: String = DEFAULT_STR,
     private val coverUri: String = DEFAULT_STR,
-    private val playlistList: String = DEFAULT_STR
+    private val playlistList: String = DEFAULT_STR,
+    private val id: Int = DEFAULT_INT
 ) : Parameterable {
     companion object {
         const val PARAM_NAME_TRACK_NAME = "local_track_name"
@@ -44,6 +46,7 @@ data class LocalMusicParams(
         const val PARAM_NAME_LOCAL_TRACK_URI = "local_local_track_uri"
         const val PARAM_NAME_COVER_URI = "local_cover_uri"
         const val PARAM_NAME_PLAYLIST_LIST = "local_playlist_list"
+        const val PARAM_NAME_PLAYLIST_ID = "local_playlist_id"
     }
 
     override fun toApiParam() = UnsupportedOperation()
@@ -56,5 +59,6 @@ data class LocalMusicParams(
         PARAM_NAME_REMOTE_TRACK_URI to remoteTrackUri,
         PARAM_NAME_LOCAL_TRACK_URI to localTrackUri,
         PARAM_NAME_COVER_URI to coverUri,
-        PARAM_NAME_PLAYLIST_LIST to playlistList)
+        PARAM_NAME_PLAYLIST_LIST to playlistList,
+        PARAM_NAME_PLAYLIST_ID to id)
 }

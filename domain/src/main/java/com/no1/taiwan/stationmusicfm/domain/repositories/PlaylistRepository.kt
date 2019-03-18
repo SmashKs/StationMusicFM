@@ -34,8 +34,6 @@ interface PlaylistRepository {
 
     suspend fun addLocalMusic(parameters: Parameterable): Boolean
 
-    suspend fun updateLocalMusic(parameters: Parameterable): Boolean
-
     suspend fun deleteLocalMusic(parameters: Parameterable): Boolean
 
     suspend fun fetchPlaylists(parameters: Parameterable): List<PlaylistInfoModel>
@@ -47,4 +45,6 @@ interface PlaylistRepository {
     suspend fun updatePlaylist(parameters: Parameterable): Boolean
 
     suspend fun deletePlaylist(parameters: Parameterable): Boolean
+
+    suspend fun fetchListenedHistories(parameters: Parameterable): List<LocalMusicModel>
 }
