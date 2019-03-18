@@ -37,17 +37,15 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.others.SearchHistoryPMappe
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.SearchHistories
-import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val fetchMusicCase: FetchMusicCase,
@@ -67,7 +65,7 @@ class SearchViewModel(
     private val page by lazy { MutableLiveData(0) }
     val keyword by lazy { MutableLiveData(DEFAULT_STR) }
 
-    fun runTaskSearchMusic(keyword: String) = GlobalScope.launch {
+    fun runTaskSearchMusic(keyword: String) = launchBehind {
         this@SearchViewModel.keyword.postValue(keyword)
         if (page.value != -1) {  // -1 means to the end.
             _musics reqData {
@@ -77,18 +75,18 @@ class SearchViewModel(
         }
     }
 
-    fun runTaskAddHistory(keyword: String) = GlobalScope.launch {
+    fun runTaskAddHistory(keyword: String) = launchBehind {
         this@SearchViewModel.keyword.postValue(keyword)
         addSearchHistoryCase.exec(AddSearchHistReq(SearchHistParams(keyword)))
     }
 
-    fun runTaskFetchHistories() = GlobalScope.launch {
+    fun runTaskFetchHistories() = launchBehind {
         _histories reqData {
             fetchSearchHistoriesCase.execListMapping(historyMapper, FetchSearchHistsReq(SearchHistParams(limit = 100)))
         }
     }
 
-    fun runTaskDeleteHistory(keyword: String) = GlobalScope.launch {
+    fun runTaskDeleteHistory(keyword: String) = launchBehind {
         _removeRes reqData { deleteSearchHistoriesCase.exec(DeleteSearchHistReq(SearchHistParams(keyword))) }
     }
 

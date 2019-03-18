@@ -31,14 +31,12 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity.AlbumEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistPMapper
-import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ExploreAlbumViewModel(
     private val fetchAlbumCase: FetchAlbumCase,
@@ -53,13 +51,13 @@ class ExploreAlbumViewModel(
     private val artistMapper by lazy { digMapper(ArtistPMapper::class) }
 
     fun runTaskFetchAlbum(mbid: String, albumName: String, artistName: String) =
-        GlobalScope.launch {
+        launchBehind {
             _albumLiveData reqData {
                 fetchAlbumCase.execMapping(albumMapper, FetchAlbumReq(AlbumParams(mbid, albumName, artistName)))
             }
         }
 
-    fun runTaskFetchArtist(artistName: String) = GlobalScope.launch {
+    fun runTaskFetchArtist(artistName: String) = launchBehind {
         _artistLiveData reqData {
             fetchArtistCase.execMapping(artistMapper, FetchArtistReq(ArtistParams(artistName = artistName)))
         }

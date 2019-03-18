@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.features.test
 
-import androidx.lifecycle.ViewModel
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.AlbumParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
@@ -29,20 +28,19 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.AlbumPMapper
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.BehindViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class TestViewModel(
     private val fetchAlbumCase: FetchAlbumCase,
     private val mapperPool: PreziMapperPool
-) : ViewModel() {
+) : BehindViewModel() {
     val ld by lazy { RespMutableLiveData<AlbumInfoEntity.AlbumEntity>() }
     private val mapper by lazy { cast<AlbumPMapper>(mapperPool[AlbumPMapper::class.java]) }
 
-    fun testFetching() = GlobalScope.launch {
+    fun testFetching() = launchBehind {
         ld reqData {
             fetchAlbumCase.execMapping(mapper,
                                        FetchAlbumReq(AlbumParams(mbid = "61bf0388-b8a9-48f4-81d1-7eb02706dfb0")))

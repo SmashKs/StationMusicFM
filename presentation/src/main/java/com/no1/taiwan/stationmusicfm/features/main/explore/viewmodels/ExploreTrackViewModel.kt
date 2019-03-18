@@ -31,14 +31,12 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TracksEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TrackPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
-import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ExploreTrackViewModel(
     private val fetchTrackCase: FetchTrackCase,
@@ -54,7 +52,7 @@ class ExploreTrackViewModel(
     private val trackMapper by lazy { digMapper(TrackPMapper::class) }
     private val tracksMapper by lazy { digMapper(TracksPMapper::class) }
 
-    fun runTaskFetchTrack(mbid: String, artistName: String, trackName: String) = GlobalScope.launch {
+    fun runTaskFetchTrack(mbid: String, artistName: String, trackName: String) = launchBehind {
         val parameters = TrackParams(mbid, trackName, artistName)
         _trackInfoLiveData reqData {
             val track = fetchTrackCase.execMapping(trackMapper, FetchTrackReq(parameters))

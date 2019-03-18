@@ -40,14 +40,12 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TopAlbumTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.features.GenreMixInfo
-import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ExploreGenreViewModel(
     private val fetchTagCase: FetchTagCase,
@@ -71,7 +69,7 @@ class ExploreGenreViewModel(
     private val albumsMapper by lazy { digMapper(TopAlbumTypeGenrePMapper::class) }
     private val tracksMapper by lazy { digMapper(TracksTypeGenrePMapper::class) }
 
-    fun runTaskFetchGenreInfo(tagName: String) = GlobalScope.launch {
+    fun runTaskFetchGenreInfo(tagName: String) = launchBehind {
         val parameters = TagParams(tagName)
         _tagInfoLiveData reqData {
             val tag = fetchTagCase.execMapping(tagMapper, FetchTagReq(parameters))

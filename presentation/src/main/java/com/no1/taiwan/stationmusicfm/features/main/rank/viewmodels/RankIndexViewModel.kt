@@ -29,13 +29,11 @@ import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.RankingIds
 import com.no1.taiwan.stationmusicfm.features.RankingIdsForChart
 import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.TransformedLiveData
-import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class RankIndexViewModel(
     private val fetchRankIdsCase: FetchRankIdsCase,
@@ -46,7 +44,7 @@ class RankIndexViewModel(
     val rankElse = RankingIdForChartLiveData(_rankIds)
     private val rankingIdMapper by lazy { digMapper(RankingPMapper::class) }
 
-    fun runTaskFetchRankIds() = GlobalScope.launch {
+    fun runTaskFetchRankIds() = launchBehind {
         _rankIds reqData { fetchRankIdsCase.execListMapping(rankingIdMapper, FetchRankIdsReq()) }
     }
 

@@ -52,16 +52,14 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEn
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
 import com.no1.taiwan.stationmusicfm.features.ArtistMixInfo
 import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.TransformedLiveData
-import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ExploreArtistViewModel(
     private val fetchArtistCase: FetchArtistCase,
@@ -96,7 +94,7 @@ class ExploreArtistViewModel(
     private val _lastFindMbid by lazy { MutableLiveData<String>() }
     val lastFindMbid get() = _lastFindMbid.value
 
-    fun runTaskFetchArtistInfo(mbid: String, name: String) = GlobalScope.launch {
+    fun runTaskFetchArtistInfo(mbid: String, name: String) = launchBehind {
         val parameters = ArtistParams(mbid, name)
         _artistInfoLiveData reqData {
             val artist = fetchArtistCase.execMapping(artistMapper, FetchArtistReq(parameters))
@@ -116,13 +114,13 @@ class ExploreArtistViewModel(
         }
     }
 
-    fun runTaskFetchArtistPhoto(artistName: String) = GlobalScope.launch {
+    fun runTaskFetchArtistPhoto(artistName: String) = launchBehind {
         _photosLiveData reqData {
             fetchArtistPhotoCase.execMapping(photosMapper, FetchArtistPhotoReq(ArtistParams(artistName = artistName)))
         }
     }
 
-    fun runTaskSearchMusic(wholeKeyword: String) = GlobalScope.launch {
+    fun runTaskSearchMusic(wholeKeyword: String) = launchBehind {
         _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(wholeKeyword))) }
     }
 

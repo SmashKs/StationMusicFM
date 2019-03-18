@@ -34,15 +34,13 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
-import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ExploreIndexViewModel(
     private val fetchChartTopTrackCase: FetchChartTopTrackCase,
@@ -60,26 +58,26 @@ class ExploreIndexViewModel(
     private val topArtistsMapper by lazy { digMapper(ArtistsPMapper::class) }
     private val topTagsMapper by lazy { digMapper(TagsPMapper::class) }
 
-    fun runTaskFetchTopTrack(limit: Int = Pager.LIMIT) = GlobalScope.launch {
+    fun runTaskFetchTopTrack(limit: Int = Pager.LIMIT) = launchBehind {
         var params = FetchChartTopTrackReq()
         _topTracks.data()?.attr?.let {
-            params = FetchChartTopTrackReq(autoIncreaseParams(it, limit) ?: return@launch)
+            params = FetchChartTopTrackReq(autoIncreaseParams(it, limit) ?: return@launchBehind)
         }
         _topTracks reqData { fetchChartTopTrackCase.execMapping(topTracksMapper, params) }
     }
 
-    fun runTaskFetchTopArtist(limit: Int = Pager.LIMIT) = GlobalScope.launch {
+    fun runTaskFetchTopArtist(limit: Int = Pager.LIMIT) = launchBehind {
         var params = FetchChartTopArtistReq()
         _topArtists.data()?.attr?.let {
-            params = FetchChartTopArtistReq(autoIncreaseParams(it, limit) ?: return@launch)
+            params = FetchChartTopArtistReq(autoIncreaseParams(it, limit) ?: return@launchBehind)
         }
         _topArtists reqData { fetchChartTopArtistCase.execMapping(topArtistsMapper, params) }
     }
 
-    fun runTaskFetchTopTag(limit: Int = Pager.LIMIT) = GlobalScope.launch {
+    fun runTaskFetchTopTag(limit: Int = Pager.LIMIT) = launchBehind {
         var params = FetchChartTopTagReq()
         _topTags.data()?.attr?.let {
-            params = FetchChartTopTagReq(autoIncreaseParams(it, limit) ?: return@launch)
+            params = FetchChartTopTagReq(autoIncreaseParams(it, limit) ?: return@launchBehind)
         }
         _topTags reqData { fetchChartTopTagCase.execMapping(topTagsMapper, params) }
     }

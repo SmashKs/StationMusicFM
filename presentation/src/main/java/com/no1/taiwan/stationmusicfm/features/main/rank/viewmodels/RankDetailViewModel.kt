@@ -32,15 +32,13 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.MusicToParamsMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
-import com.no1.taiwan.stationmusicfm.utils.aac.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class RankDetailViewModel(
     private val fetchRankMusicCase: FetchRankMusicCase,
@@ -52,19 +50,19 @@ class RankDetailViewModel(
     val rankMusic: RespLiveData<MusicEntity> = _rankMusic
     private val topTracksMapper by lazy { digMapper(MusicPMapper::class) }
 
-    fun runTaskFetchTopTrack(rankId: Int) = GlobalScope.launch {
+    fun runTaskFetchTopTrack(rankId: Int) = launchBehind {
         _rankMusic reqData { fetchRankMusicCase.execMapping(topTracksMapper, FetchRankMusicReq(RankParams(rankId))) }
     }
 
-    fun runTaskUpdateRankItem(rankId: Int, topTrackUri: String, numOfTracks: Int) = GlobalScope.launch {
+    fun runTaskUpdateRankItem(rankId: Int, topTrackUri: String, numOfTracks: Int) = launchBehind {
         updateRankItemCase.exec(UpdateRankItemReq(RankParams(rankId, topTrackUri, numOfTracks)))
     }
 
-    fun runTaskAddToPlayHistory(song: SongEntity) = GlobalScope.launch {
+    fun runTaskAddToPlayHistory(song: SongEntity) = launchBehind {
         addLocalMusicCase.exec(AddLocalMusicReq(MusicToParamsMapper().toParamsFrom(song)))
     }
 
-    fun runTaskAddDownloadedTrackInfo(song: SongEntity, localUri: String) = GlobalScope.launch {
+    fun runTaskAddDownloadedTrackInfo(song: SongEntity, localUri: String) = launchBehind {
         val parameter = MusicToParamsMapper()
             .toParamsFrom(song)
             .copy(hasOwn = true, localTrackUri = localUri)
