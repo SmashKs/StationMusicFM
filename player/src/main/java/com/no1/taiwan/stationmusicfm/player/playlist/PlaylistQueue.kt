@@ -22,18 +22,24 @@
 package com.no1.taiwan.stationmusicfm.player.playlist
 
 import java.util.ArrayDeque
+import kotlin.random.Random
 
 class PlaylistQueue : Playlist<String> {
     private val queue by lazy { ArrayDeque<String>(30) }
-    private val duplication get() = queue.clone()
     private var index = 0
-
     override var mode: Playlist.Mode = Playlist.Mode.Default
     override var current = queue.firstOrNull()
     override var previous = ""
     override val next: String
         get() {
-            return ""
+            previous = queue.elementAt(index)
+            index = when (mode) {
+                is Playlist.Mode.Default -> (index + 1).takeIf { it < size } ?: -1
+                is Playlist.Mode.RepeatOne -> index
+                is Playlist.Mode.RepeatAll -> (index + 1) % size
+                is Playlist.Mode.Shuffle -> Random(size).nextInt()
+            }
+            return queue.elementAt(index)
         }
     override val size get() = queue.size
 
