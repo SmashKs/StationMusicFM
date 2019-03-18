@@ -30,6 +30,7 @@ import com.google.android.exoplayer2.Player.STATE_ENDED
 import com.google.android.exoplayer2.Timeline
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -150,7 +151,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         this.listener = listener
     }
 
-    private fun buildMediaSource(url: String): ExtractorMediaSource {
+    private fun buildMediaSource(url: String): MediaSource {
         val uri = Uri.parse(url)
         // Produces DataSource instances through which media data is loaded.
         val dataSourceFactory =
