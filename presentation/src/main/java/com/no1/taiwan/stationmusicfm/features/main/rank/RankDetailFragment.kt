@@ -24,7 +24,6 @@ package com.no1.taiwan.stationmusicfm.features.main.rank
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
@@ -136,13 +135,9 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         bottomSheet.find<View>(R.id.ftv_download).setOnClickListener {
             if (::tempSongEntity.isInitialized) {
                 requireStoragePermission {
-                    val encode = Base64.encodeToString(
-                        (tempSongEntity.artist.split(" ") + tempSongEntity.title.split(" "))
-                            .joinToString("_")
-                            .toByteArray(), Base64.NO_WRAP)
-                    val path = FilePathFactory.obtainMusicPath(encode)
+                    val path = FilePathFactory.obtainMusicPath(tempSongEntity.encodeByName())
                     // Save into internal storage.
-//                    player.writeToFile(tempSongEntity.url, path)
+                    player.writeToFile(tempSongEntity.url, path)
                     vm.runTaskAddDownloadedTrackInfo(tempSongEntity, path)
                 }
             }
@@ -171,9 +166,9 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     @Subscribe(tags = [Tag(TAG_PLAY_A_SONG)])
     fun playASong(parameter: AnyParameters) {
-        val uri = cast<String>(parameter[PARAMS_TRACK_URI])
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
         val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
+        val uri = FilePathFactory.checkMusicExist(song.encodeByName()) ?: cast(parameter[PARAMS_TRACK_URI])
         player.play(uri)
         // For updating current views are showing on the recycler view.
         songAdapter.playingPosition = position

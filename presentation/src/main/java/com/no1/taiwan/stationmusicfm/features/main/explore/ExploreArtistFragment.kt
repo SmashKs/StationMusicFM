@@ -200,7 +200,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     fun navToNextOfMe(params: Parameters) {
         val name = requireNotNull(params[PARAMS_COMMON_ARTIST_NAME])
         val mbid = requireNotNull(params[PARAMS_COMMON_MBID])
-
         findNavController().navigate(R.id.action_frag_explore_artist_self,
                                      ExploreArtistFragment.createBundle(mbid, name, PROVIDER_FROM_CUSTOM_FRAGMENT))
     }
@@ -215,7 +214,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         val albumName = requireNotNull(params[PARAMS_TO_ALBUM_NAME])
         val albumUri = requireNotNull(params[PARAMS_TO_ALBUM_URI])
         val artistName = requireNotNull(params[PARAMS_COMMON_ARTIST_NAME])
-
         findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_album,
                                      ExploreAlbumFragment.createBundle(mbid,
                                                                        artistName,

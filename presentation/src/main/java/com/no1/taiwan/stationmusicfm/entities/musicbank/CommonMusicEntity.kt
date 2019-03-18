@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.entities.musicbank
 
+import android.util.Base64
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
@@ -59,6 +60,10 @@ object CommonMusicEntity {
         val url: String = DEFAULT_STR
     ) : Entity, MusicMultiVisitable {
         override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
+
+        fun encodeByName() = Base64.encodeToString((artist.split(" ") + title.split(" "))
+                                                       .joinToString("_")
+                                                       .toByteArray(), Base64.NO_WRAP)
     }
 
     data class PlayListEntity(
