@@ -86,6 +86,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     override val backDrawable by lazy {
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
     }
+    private var switchOfPhotos = false
     //region Parameter
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
@@ -113,6 +114,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 loge(it)
             } doWith this@ExploreArtistFragment
         }
+        observeNonNull(vm.photosLiveData) { peel { switchOfPhotos = true } doWith this@ExploreArtistFragment }
     }
 
     /**
@@ -158,6 +160,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     override fun componentListenersBinding() {
         super.componentListenersBinding()
         find<ImageView>(R.id.iv_artist_backdrop).setOnClickListener {
+            if (!switchOfPhotos) return@setOnClickListener
             findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
                                          ExplorePhotosFragment.createBundle(vm.artistLiveData.data()?.name.orEmpty(),
                                                                             vm.photosLiveData.data()?.photos.orEmpty()))
