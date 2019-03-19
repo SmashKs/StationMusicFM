@@ -32,7 +32,8 @@ class PlaylistQueue : Playlist<String> {
     override var previous = ""
     override val next: String
         get() {
-            previous = queue.elementAt(index)
+            if (mode != Playlist.Mode.RepeatOne)
+                previous = queue.elementAt(index)
             index = when (mode) {
                 is Playlist.Mode.Default -> (index + 1).takeIf { it < size } ?: -1
                 is Playlist.Mode.RepeatOne -> index
