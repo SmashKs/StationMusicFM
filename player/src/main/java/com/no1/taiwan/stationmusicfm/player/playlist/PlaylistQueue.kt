@@ -26,22 +26,29 @@ import java.util.ArrayDeque
 class PlaylistQueue : Playlist<String> {
     private val queue by lazy { ArrayDeque<String>(30) }
     private var index = 0
+    private var randomNumber = -1
     override var mode: Playlist.Mode = Playlist.Mode.Default
-    override var current = if (size > 0) queue.elementAt(index) else ""
+    override val current get() = if (size > 0) queue.elementAt(index) else ""
     override var previous = ""
-    override val next: String
-        get() {
-            if (mode != Playlist.Mode.RepeatOne)
-                previous = queue.elementAt(index)
-            index = when (mode) {
-                is Playlist.Mode.Default -> (index + 1).takeIf { it < size } ?: -1
-                is Playlist.Mode.RepeatOne -> index
-                is Playlist.Mode.RepeatAll -> (index + 1) % size
-                is Playlist.Mode.Shuffle -> (0..size - 1).random()
-            }
-            return queue.elementAt(index)
-        }
+    override val next get() = queue.elementAt(getNextIndex())
     override val size get() = queue.size
+
+    override fun setStartIndex(index: Int): Boolean {
+        if (index !in 0..size) return false
+        this@PlaylistQueue.index = index
+        return true
+    }
+
+    override fun goNext(): String? {
+        if (mode != Playlist.Mode.RepeatOne)
+            previous = queue.elementAt(index)
+        index = getNextIndex()
+        return queue.elementAt(index)
+    }
+
+    override fun goPrevious(): String? {
+        TODO()
+    }
 
     override fun dequeue() = if (queue.size > 0) queue.poll() else null
 
@@ -50,4 +57,22 @@ class PlaylistQueue : Playlist<String> {
     override fun enqueue(obj: String) = queue.add(obj)
 
     override fun clear() = queue.clear()
+
+    private fun getNextIndex() = when (mode) {
+        is Playlist.Mode.Default -> (index + 1).takeIf { it < size } ?: -1
+        is Playlist.Mode.RepeatOne -> index
+        is Playlist.Mode.RepeatAll -> (index + 1) % size
+        is Playlist.Mode.Shuffle -> rollNewIndex()
+    }
+
+    private fun rollNewIndex(): Int {
+        if (index == randomNumber || randomNumber == -1 /* at the initial */) {
+            // Avoid to get the same number again.
+            while (true) {
+                randomNumber = (0 until size).random()
+                if (randomNumber != index) break
+            }
+        }
+        return randomNumber
+    }
 }

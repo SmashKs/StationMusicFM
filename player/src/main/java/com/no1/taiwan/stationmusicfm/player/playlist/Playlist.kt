@@ -29,17 +29,64 @@ interface Playlist<T> {
         object Shuffle : Mode()
     }
 
+    /** Current playlist's mode. */
     var mode: Mode
+    /** Current item from the playlist. */
     val current: T?
+    /** Previous item from the playlist. */
     val previous: T?
+    /** Next item from the playlist. */
     val next: T?
+    /** Size of the playlist. */
     val size: Int
 
+    /**
+     * Set the playlist index.
+     *
+     * @param index index of the playlist.
+     * @return True if the index is between 0 and `size`.
+     */
+    fun setStartIndex(index: Int): Boolean
+
+    /**
+     * Set the current to the next item.
+     *
+     * @return
+     */
+    fun goNext(): T?
+
+    /**
+     * Set the current to the previous item
+     *
+     * @return
+     */
+    fun goPrevious(): T?
+
+    /**
+     * Remove and get the first item from the playlist.
+     *
+     * @return
+     */
     fun dequeue(): T?
 
+    /**
+     * Append a list of objs into the playlist.
+     *
+     * @param objs List<T>
+     * @return Boolean
+     */
     fun enqueue(objs: List<T>): Boolean
 
+    /**
+     * Append an item into the playlist.
+     *
+     * @param obj
+     * @return
+     */
     fun enqueue(obj: T): Boolean
 
+    /**
+     * Clear the while playlist.
+     */
     fun clear()
 }
