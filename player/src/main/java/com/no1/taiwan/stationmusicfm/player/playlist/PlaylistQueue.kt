@@ -22,41 +22,65 @@
 package com.no1.taiwan.stationmusicfm.player.playlist
 
 import java.util.ArrayDeque
+import java.util.Stack
 
 class PlaylistQueue : Playlist<String> {
     private val queue by lazy { ArrayDeque<String>(30) }
+    private val history by lazy { Stack<Pair<Int, String>>() }
     private var index = 0
     private var randomNumber = -1
     override var mode: Playlist.Mode = Playlist.Mode.Default
     override val current get() = if (size > 0) queue.elementAt(index) else ""
-    override var previous = ""
+    override val previous: String
+        get() {
+            if (mode == Playlist.Mode.RepeatOne)
+                return current
+            return if (history.empty()) "" else history.peek().second
+        }
     override val next get() = queue.elementAt(getNextIndex())
     override val size get() = queue.size
 
     override fun setStartIndex(index: Int): Boolean {
         if (index !in 0..size) return false
+        history.clear()
         this@PlaylistQueue.index = index
         return true
     }
 
     override fun goNext(): String? {
         if (mode != Playlist.Mode.RepeatOne)
-            previous = queue.elementAt(index)
+            history.push(index to queue.elementAt(index))
         index = getNextIndex()
         return queue.elementAt(index)
     }
 
     override fun goPrevious(): String? {
-        TODO()
+        if (mode == Playlist.Mode.RepeatOne) return current
+        if (history.empty()) return null
+        val data = history.pop()
+        randomNumber = -1  // Reset the next random number.
+        index = data.first
+        return data.second
     }
 
     override fun dequeue() = if (queue.size > 0) queue.poll() else null
 
-    override fun enqueue(objs: List<String>) = queue.addAll(objs)
+    override fun enqueue(objs: List<String>): Boolean {
+        if (size == 0)
+            history.push(0 to objs.first())
+        return queue.addAll(objs)
+    }
 
-    override fun enqueue(obj: String) = queue.add(obj)
+    override fun enqueue(obj: String): Boolean {
+        if (size == 0)
+            history.push(0 to obj)
+        return queue.add(obj)
+    }
 
-    override fun clear() = queue.clear()
+    override fun clear() {
+        history.clear()
+        queue.clear()
+    }
 
     private fun getNextIndex() = when (mode) {
         is Playlist.Mode.Default -> (index + 1).takeIf { it < size } ?: -1
