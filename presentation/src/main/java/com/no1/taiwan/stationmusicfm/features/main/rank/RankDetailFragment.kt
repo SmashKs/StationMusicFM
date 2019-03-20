@@ -33,6 +33,7 @@ import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -40,6 +41,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
@@ -96,6 +98,12 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         observeNonNull(vm.rankMusic) {
             peel {
                 songAdapter.append(cast<MusicVisitables>(it.songs))
+                bkg {
+                    it.songs.asSequence()
+                        .map(CommonMusicEntity.SongEntity::url)
+                        .toList()
+                        .let(player::addToPlaylist)
+                }
                 vm.runTaskUpdateRankItem(rankId, it.songs.first().oriCoverUrl, it.songs.size)
             } happenError {
                 loge(it)
@@ -169,7 +177,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
         val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
         val uri = FilePathFactory.checkMusicExist(song.encodeByName()) ?: cast(parameter[PARAMS_TRACK_URI])
-        player.play(uri)
+        player.play(position)
         // For updating current views are showing on the recycler view.
         songAdapter.playingPosition = position
         // Add the play history into database.

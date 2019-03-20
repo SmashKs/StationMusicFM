@@ -24,12 +24,15 @@ package com.no1.taiwan.stationmusicfm.player
 import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Pause
 import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Play
 import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Standby
+import com.no1.taiwan.stationmusicfm.player.playlist.Playlist
 
 interface MusicPlayer {
     /** The current is paying state or not. */
     val isPlaying: Boolean
     /** Current playing track's uri. */
     val curPlayingUri: String
+    /** Current playing mode for the playlist. */
+    val playingMode: Playlist.Mode
 
     /**
      * Start playing a music.
@@ -38,8 +41,18 @@ interface MusicPlayer {
      * the music is playing, executing this function will pause the music.
      * If the music is pausing, executing this function will resume the music.
      * If playing is failed, the function returns false.
+     *
+     * @param uri the uri of a track.
      */
     fun play(uri: String = ""): Boolean
+
+    /**
+     * Start playing a music according to the playlist index.
+     *
+     * @param index
+     * @return
+     */
+    fun play(index: Int): Boolean
 
     /**
      * Stop playing the music.
@@ -55,6 +68,40 @@ interface MusicPlayer {
      * Resume the playing of the music.
      */
     fun resume()
+
+    /**
+     * Play the next track from the playlist.
+     */
+    fun next()
+
+    /**
+     * Play the previous track from the playlist.
+     */
+    fun previous()
+
+    /**
+     * Clear all tracks from the playlist.
+     */
+    fun clearPlaylist()
+
+    /**
+     * Add a new track [list] into the playlist.
+     *
+     * @param list
+     * @return
+     */
+    fun addToPlaylist(list: List<String>): Boolean
+
+    /**
+     * Clear original list playlist has then add a new track [list] into the playlist.
+     * @param list
+     */
+    fun replacePlaylist(list: List<String>)
+
+    /**
+     * Set the shuffle mode. Execute [next] method will play random music from the playlist.
+     */
+    fun setShuffle()
 
     /**
      * Set the repeat mode: normal play, repeat one music, repeat the whole playlist
