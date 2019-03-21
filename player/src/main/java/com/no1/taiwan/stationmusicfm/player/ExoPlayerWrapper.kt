@@ -52,11 +52,12 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     }
 
     override var isPlaying = false
-    override var curPlayingUri = ""
+    override val curPlayingUri get() = duplicatedList[exoPlayer.currentWindowIndex]
     override var playingMode: Playlist.Mode = Playlist.Mode.Default
     private val exoPlayer by lazy {
         Log.i(TAG, "init ExoPlayer")
         ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector()).apply {
+            prepare(playlist)
             addListener(LocalPlayerEventListener(this@ExoPlayerWrapper, this))
         }
     }
@@ -65,16 +66,18 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         set(value) {
             if (value == field) return
             field = value
-            when (value) {
-                Standby -> timer.stop()
-                Play -> timer.resume()
-                Pause -> timer.pause()
-            }
+//            when (value) {
+//                Standby -> timer.stop()
+//                Play -> timer.resume()
+//                Pause -> timer.pause()
+//            }
             // Call the callback function.
             listener?.onPlayerStateChanged(value)
         }
-    private val playlist = mutableListOf<MediaSource>()
+    private val playlist by lazy { ConcatenatingMediaSource() }
+    private val duplicatedList by lazy { mutableListOf<String>() }
     private var listener: ExoPlayerEventListener.PlayerEventListener? = null
+    private var individualPlay = false
 
     /**
      * Start playing a music.
@@ -85,14 +88,9 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      * If playing is failed, the function returns false.
      */
     override fun play(uri: String): Boolean {
-        // Play the media from the build-in exoplayer's playlist.
+        // Play the media from the build-in [exoPlayer]'s playlist.
         if (uri.isBlank()) {
-            if (isPlaying) {
-                playerState = Pause
-            }
-            else {
-                playerState = Play
-            }
+            playerState = if (isPlaying) Pause else Play
             exoPlayer.playWhenReady = !isPlaying
         }
         // Play a single individual uri.
@@ -103,18 +101,21 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
                 prepare(buildMediaSource(uri))
                 playWhenReady = true
             }
+            individualPlay = true
             playerState = Play
-            curPlayingUri = uri
         }
 
         return true
     }
 
     override fun play(index: Int): Boolean {
-        // According to index to play the music from the playlist.
-        exoPlayer.apply {
-            resetPlayerState()
-            seekTo(index, C.TIME_UNSET)
+        // If play the difference track, it should be reset.
+        if (duplicatedList[index] != curPlayingUri) {
+            // According to index to play the music from the playlist.
+            exoPlayer.apply {
+                resetPlayerState()
+                seekTo(index, C.TIME_UNSET)
+            }
         }
         return play()
     }
@@ -172,6 +173,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      */
     override fun clearPlaylist() {
         playlist.clear()
+        duplicatedList.clear()
     }
 
     /**
@@ -181,10 +183,14 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      * @return
      */
     override fun addToPlaylist(list: List<String>): Boolean {
+        if (individualPlay) {
+            exoPlayer.prepare(playlist)
+            individualPlay = false
+        }
         // Append the new list into the current playlist.
-        list.asSequence().map(::buildMediaSource).let(playlist::addAll)
-        // Create a media source and set into [exoPlayer].
-        ConcatenatingMediaSource().apply { addMediaSources(playlist) }.let(exoPlayer::prepare)
+        list.asSequence().map(::buildMediaSource).toMutableList().let(playlist::addMediaSources)
+        // Set backup list.
+        duplicatedList.addAll(list)
         return true
     }
 
