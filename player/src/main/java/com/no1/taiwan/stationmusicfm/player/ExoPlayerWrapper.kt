@@ -23,12 +23,14 @@ package com.no1.taiwan.stationmusicfm.player
 
 import android.content.Context
 import android.net.Uri
+import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.STATE_ENDED
 import com.google.android.exoplayer2.Timeline
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -41,7 +43,6 @@ import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Play
 import com.no1.taiwan.stationmusicfm.player.MusicPlayerState.Standby
 import com.no1.taiwan.stationmusicfm.player.helpers.DownloadHandler
 import com.no1.taiwan.stationmusicfm.player.playlist.Playlist
-import com.no1.taiwan.stationmusicfm.player.playlist.PlaylistQueue
 import com.no1.taiwan.stationmusicfm.player.utils.PausableTimer
 
 class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
@@ -52,22 +53,27 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
 
     override var isPlaying = false
     override var curPlayingUri = ""
-    override val playingMode get() = playlist.mode
+    override var playingMode: Playlist.Mode = Playlist.Mode.Default
     private val exoPlayer by lazy {
         Log.i(TAG, "init ExoPlayer")
         ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector()).apply {
             addListener(LocalPlayerEventListener(this@ExoPlayerWrapper, this))
         }
     }
-    private val playlist: Playlist<String> by lazy { PlaylistQueue() }
     private lateinit var timer: PausableTimer
     private var playerState: MusicPlayerState = Standby
         set(value) {
             if (value == field) return
             field = value
+            when (value) {
+                Standby -> timer.stop()
+                Play -> timer.resume()
+                Pause -> timer.pause()
+            }
             // Call the callback function.
             listener?.onPlayerStateChanged(value)
         }
+    private val playlist = mutableListOf<MediaSource>()
     private var listener: ExoPlayerEventListener.PlayerEventListener? = null
 
     /**
@@ -79,17 +85,17 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      * If playing is failed, the function returns false.
      */
     override fun play(uri: String): Boolean {
+        // Play the media from the build-in exoplayer's playlist.
         if (uri.isBlank()) {
             if (isPlaying) {
-                timer.pause()
                 playerState = Pause
             }
             else {
-                timer.resume()
                 playerState = Play
             }
             exoPlayer.playWhenReady = !isPlaying
         }
+        // Play a single individual uri.
         else {
             if (curPlayingUri == uri) return false
             // Prepare the player with the source.
@@ -105,10 +111,12 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     }
 
     override fun play(index: Int): Boolean {
-        val res = playlist.setStartIndex(index)
-        if (!res) return res
-        play(requireNotNull(playlist.current))
-        return res
+        // According to index to play the music from the playlist.
+        exoPlayer.apply {
+            resetPlayerState()
+            seekTo(index, C.TIME_UNSET)
+        }
+        return play()
     }
 
     /**
@@ -118,8 +126,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         if (playerState is Standby) return
         exoPlayer.playWhenReady = false
         exoPlayer.stop()
-        timer.stop()
-        playerState = Standby
+        resetPlayerState()
     }
 
     /**
@@ -128,7 +135,6 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     override fun pause() {
         if (playerState is Pause) return
         exoPlayer.playWhenReady = false
-        timer.pause()
         playerState = Pause
     }
 
@@ -138,43 +144,76 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     override fun resume() {
         if (playerState is Play) return
         exoPlayer.playWhenReady = true
-        timer.resume()
         playerState = Play
     }
 
+    /**
+     * Play the next track from the playlist.
+     */
     override fun next() {
-        val uri = playlist.goNext() ?: return
-        play(uri)
+        exoPlayer.apply {
+            if (hasNext())
+                next()
+        }
     }
 
+    /**
+     * Play the previous track from the playlist.
+     */
     override fun previous() {
-        val uri = playlist.goPrevious() ?: return
-        play(uri)
+        exoPlayer.apply {
+            if (hasPrevious())
+                previous()
+        }
     }
 
-    override fun clearPlaylist() = playlist.clear()
+    /**
+     * Clear all tracks from the playlist.
+     */
+    override fun clearPlaylist() {
+        playlist.clear()
+    }
 
+    /**
+     * Add a new track [list] into the playlist.
+     *
+     * @param list
+     * @return
+     */
     override fun addToPlaylist(list: List<String>): Boolean {
-        return playlist.enqueue(list)
+        // Append the new list into the current playlist.
+        list.asSequence().map(::buildMediaSource).let(playlist::addAll)
+        // Create a media source and set into [exoPlayer].
+        ConcatenatingMediaSource().apply { addMediaSources(playlist) }.let(exoPlayer::prepare)
+        return true
     }
 
+    /**
+     * Clear original list playlist has then add a new track [list] into the playlist.
+     *
+     * @param list
+     */
     override fun replacePlaylist(list: List<String>) {
         clearPlaylist()
         addToPlaylist(list)
     }
 
-    override fun setShuffle() {
-        playlist.mode = Playlist.Mode.Shuffle
-    }
-
-    override fun setRepeat(isRepeat: Boolean) {
-        exoPlayer.repeatMode = if (isRepeat) {
-            playlist.mode = Playlist.Mode.RepeatOne
-            Player.REPEAT_MODE_ONE
-        }
-        else {
-            playlist.mode = Playlist.Mode.Default
-            Player.REPEAT_MODE_OFF
+    override fun setPlayMode(mode: Playlist.Mode) {
+        playingMode = mode
+        when (mode) {
+            Playlist.Mode.Default -> {
+                exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
+                exoPlayer.shuffleModeEnabled = false
+            }
+            Playlist.Mode.RepeatOne -> {
+                exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
+                exoPlayer.shuffleModeEnabled = false
+            }
+            Playlist.Mode.RepeatAll -> {
+                exoPlayer.repeatMode = Player.REPEAT_MODE_ALL
+                exoPlayer.shuffleModeEnabled = false
+            }
+            Playlist.Mode.Shuffle -> exoPlayer.shuffleModeEnabled = true
         }
     }
 
@@ -199,11 +238,15 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         // Produces DataSource instances through which media data is loaded.
         val dataSourceFactory =
             DefaultDataSourceFactory(context, Util.getUserAgent(context, NAME), DefaultBandwidthMeter())
-        // TODO(jieyi): 2019-03-21 https://medium.com/google-exoplayer/dynamic-playlists-with-exoplayer-6f53e54a56c0
         // This is the MediaSource representing the media to be played.
         return ExtractorMediaSource.Factory(dataSourceFactory)
             .setExtractorsFactory(DefaultExtractorsFactory())
             .createMediaSource(uri)
+    }
+
+    private fun resetPlayerState() {
+        isPlaying = false
+        playerState = Standby
     }
 
     private open class LocalPlayerEventListener(
@@ -228,10 +271,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
 
             if (exoPlayer.duration in 1..threshold) {
                 musicPlayer.listener?.onDurationChanged(exoPlayer.duration.div(millis).toInt())
-
-                musicPlayer.timer =
-                    PausableTimer(exoPlayer.duration.minus(exoPlayer.currentPosition),
-                                  millis.toLong())
+                musicPlayer.timer = PausableTimer(exoPlayer.duration.minus(exoPlayer.currentPosition), millis.toLong())
                 musicPlayer.timer.onTick = { millisUntilFinished ->
                     val time = (exoPlayer.duration - millisUntilFinished).div(millis).toInt()
                     musicPlayer.listener?.onCurrentTime(time)

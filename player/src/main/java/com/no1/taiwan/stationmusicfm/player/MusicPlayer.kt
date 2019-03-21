@@ -94,19 +94,15 @@ interface MusicPlayer {
 
     /**
      * Clear original list playlist has then add a new track [list] into the playlist.
+     *
      * @param list
      */
     fun replacePlaylist(list: List<String>)
 
     /**
-     * Set the shuffle mode. Execute [next] method will play random music from the playlist.
-     */
-    fun setShuffle()
-
-    /**
      * Set the repeat mode: normal play, repeat one music, repeat the whole playlist
      */
-    fun setRepeat(isRepeat: Boolean)
+    fun setPlayMode(mode: Playlist.Mode)
 
     /**
      * seek the play time when the music is playing
