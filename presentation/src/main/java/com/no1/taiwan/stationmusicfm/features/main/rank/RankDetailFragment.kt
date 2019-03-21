@@ -166,6 +166,11 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun provideInflateView() = R.layout.fragment_rank_detail
 
+    override fun onDetach() {
+        super.onDetach()
+        player.clearPlaylist()
+    }
+
     /**
      * Play a track by [MusicPlayer].
      *
