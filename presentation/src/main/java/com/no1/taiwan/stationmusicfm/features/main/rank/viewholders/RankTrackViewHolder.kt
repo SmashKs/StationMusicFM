@@ -46,6 +46,7 @@ import org.kodein.di.generic.instance
 class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notifiable {
     private val player: MusicPlayer by instance()
     private val emitter: Bus by instance()
+    private lateinit var song: SongEntity
 
     /**
      * Set the views' properties.
@@ -55,6 +56,7 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
      * @param adapter parent adapter.
      */
     override fun initView(model: SongEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        song = model.copy()
         itemView.apply {
             find<ImageView>(R.id.iv_album).loadByAny(model.oriCoverUrl)
             find<TextView>(R.id.ftv_order).text = (position + 1).toString()
@@ -69,11 +71,11 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
                  */
                 emitter.post(TAG_PLAY_A_SONG, hashMapOf(PARAMS_TRACK_URI to model.url,
                                                         PARAMS_LAYOUT_POSITION to position,
-                                                        PARAMS_SONG_ENTITY to model.copy()))
+                                                        PARAMS_SONG_ENTITY to song))
             }
             setOnLongClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.openBottomSheetDialog] */
-                emitter.post(TAG_OPEN_BOTTOM_SHEET, hashMapOf<String, Any>(PARAMS_SONG_ENTITY to model.copy()))
+                emitter.post(TAG_OPEN_BOTTOM_SHEET, hashMapOf<String, Any>(PARAMS_SONG_ENTITY to song))
                 true
             }
         }

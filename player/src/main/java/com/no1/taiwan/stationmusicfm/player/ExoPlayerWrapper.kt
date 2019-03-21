@@ -52,7 +52,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     }
 
     override var isPlaying = false
-    override val curPlayingUri get() = duplicatedList[exoPlayer.currentWindowIndex]
+    override val curPlayingUri get() = (exoPlayer.currentTag as? String).orEmpty()
     override var playingMode: Playlist.Mode = Playlist.Mode.Default
     private val exoPlayer by lazy {
         Log.i(TAG, "init ExoPlayer")
@@ -76,8 +76,22 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         }
     private val playlist by lazy { ConcatenatingMediaSource() }
     private val duplicatedList by lazy { mutableListOf<String>() }
+    private val isTheSame: Boolean
+        get() {
+            if (playlist.size != duplicatedList.size)
+                return false
+            duplicatedList.forEachIndexed { index, uri ->
+                if ((playlist.getMediaSource(index).tag as String) != uri)
+                    return false
+            }
+            return true
+        }
     private var listener: ExoPlayerEventListener.PlayerEventListener? = null
     private var individualPlay = false
+
+    init {
+        exoPlayer
+    }
 
     /**
      * Start playing a music.
@@ -91,7 +105,8 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         // Play the media from the build-in [exoPlayer]'s playlist.
         if (uri.isBlank()) {
             playerState = if (isPlaying) Pause else Play
-            exoPlayer.playWhenReady = !isPlaying
+            isPlaying = !isPlaying
+            exoPlayer.playWhenReady = isPlaying
         }
         // Play a single individual uri.
         else {
@@ -111,6 +126,10 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     override fun play(index: Int): Boolean {
         // If play the difference track, it should be reset.
         if (duplicatedList[index] != curPlayingUri) {
+            if (!isTheSame) {
+                playlist.clear()
+                playlist.addMediaSources(duplicatedList.map(::buildMediaSource))
+            }
             // According to index to play the music from the playlist.
             exoPlayer.apply {
                 resetPlayerState()
@@ -172,7 +191,6 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      * Clear all tracks from the playlist.
      */
     override fun clearPlaylist() {
-        playlist.clear()
         duplicatedList.clear()
     }
 
@@ -187,9 +205,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             exoPlayer.prepare(playlist)
             individualPlay = false
         }
-        // Append the new list into the current playlist.
-        list.asSequence().map(::buildMediaSource).toMutableList().let(playlist::addMediaSources)
-        // Set backup list.
+        // Set backup list temporally because it might not be played.
         duplicatedList.addAll(list)
         return true
     }
@@ -247,6 +263,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         // This is the MediaSource representing the media to be played.
         return ExtractorMediaSource.Factory(dataSourceFactory)
             .setExtractorsFactory(DefaultExtractorsFactory())
+            .setTag(url)  // Keep the uri to tag.
             .createMediaSource(uri)
     }
 
