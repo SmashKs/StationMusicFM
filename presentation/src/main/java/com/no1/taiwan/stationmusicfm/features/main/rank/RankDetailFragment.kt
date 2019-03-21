@@ -41,7 +41,6 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
-import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
@@ -100,7 +99,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
                 songAdapter.append(cast<MusicVisitables>(it.songs))
                 bkg {
                     it.songs.asSequence()
-                        .map(CommonMusicEntity.SongEntity::url)
+                        .map { song -> FilePathFactory.getMusicPath(song.encodeByName()) ?: song.url }
                         .toList()
                         .let(player::addToPlaylist)
                 }
@@ -181,7 +180,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     fun playASong(parameter: AnyParameters) {
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
         val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
-        val uri = FilePathFactory.checkMusicExist(song.encodeByName()) ?: cast(parameter[PARAMS_TRACK_URI])
+        val uri = FilePathFactory.getMusicPath(song.encodeByName()) ?: cast(parameter[PARAMS_TRACK_URI])
         player.play(position)
         // For updating current views are showing on the recycler view.
         songAdapter.playingPosition = position

@@ -33,5 +33,5 @@ object FilePathFactory {
         return listOf(musicDir.toString(), fileName).joinToString("/", postfix = ".mp3")
     }
 
-    fun checkMusicExist(fileName: String) = obtainMusicPath(fileName).takeIf { File(it).exists() }
+    fun getMusicPath(fileName: String) = obtainMusicPath(fileName).takeIf { File(it).exists() }
 }
