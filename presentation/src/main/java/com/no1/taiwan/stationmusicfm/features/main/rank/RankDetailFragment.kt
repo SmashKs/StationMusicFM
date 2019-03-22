@@ -82,9 +82,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
     private val player: MusicPlayer by instance()
-    private val bottomSheet by lazy {
-        BottomSheetFactory.createMusicSheet(parent)
-    }
+    private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
 
     init {
         BusFragLongerLifeRegister(this)
@@ -179,9 +177,11 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     fun playASong(parameter: AnyParameters) {
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
         val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
-        player.play(position)
-        // For updating current views are showing on the recycler view.
-        songAdapter.playingPosition = position
+        val res = player.play(position)
+        if (res)
+            songAdapter.playingPosition = position  // For updating current views are showing on the recycler view.
+        else
+            songAdapter.setStateMusicBy(position, res)
         // Add the play history into database.
         vm.runTaskAddToPlayHistory(song)
     }

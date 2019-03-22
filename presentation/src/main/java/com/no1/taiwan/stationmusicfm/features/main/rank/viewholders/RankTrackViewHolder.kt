@@ -85,6 +85,11 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
         setCurStateIcon(position != layoutPosition)
     }
 
+    override fun notifyChange(position: Int, isSuccessToPlay: Boolean) {
+        if (position == layoutPosition)
+            setCurStateIcon(!isSuccessToPlay)
+    }
+
     /**
      * According to the current playing track uri to show the icon.
      *
@@ -92,10 +97,12 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
      */
     private fun setCurStateIcon(isIdle: Boolean) {
         itemView.apply {
-            find<ImageView>(R.id.iv_play).image = (if (isIdle)
-                R.drawable.ic_play_circle_outline_black
-            else
-                R.drawable.ic_pause_circle_outline_black).toDrawable(context)
+            find<ImageView>(R.id.iv_play).apply {
+                image = (if (isIdle)
+                    R.drawable.ic_play_circle_outline_black
+                else
+                    R.drawable.ic_pause_circle_outline_black).toDrawable(context)
+            }
         }
     }
 }

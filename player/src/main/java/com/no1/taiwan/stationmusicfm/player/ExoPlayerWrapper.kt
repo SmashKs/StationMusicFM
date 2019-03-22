@@ -99,7 +99,9 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      * If the [uri] is blank string, the function is also about play the music, but when
      * the music is playing, executing this function will pause the music.
      * If the music is pausing, executing this function will resume the music.
-     * If playing is failed, the function returns false.
+     *
+     * @param uri a individual track or video uri.
+     * @return True if playing is success, otherwise, as like [Pause], playing the same uri then return False.
      */
     override fun play(uri: String): Boolean {
         // Play the media from the build-in [exoPlayer]'s playlist.
@@ -120,7 +122,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             playerState = Play
         }
 
-        return true
+        return playerState == Play
     }
 
     override fun play(index: Int): Boolean {
@@ -278,7 +280,8 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     ) : Player.EventListener {
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
             musicPlayer.isPlaying = playWhenReady
-            if (playbackState == STATE_ENDED) {
+            // FIXME(jieyi): 2019-03-22 This has some issue.
+            if (playbackState == STATE_ENDED && !playWhenReady) {
                 musicPlayer.playerState = Standby
                 musicPlayer.next()
             }

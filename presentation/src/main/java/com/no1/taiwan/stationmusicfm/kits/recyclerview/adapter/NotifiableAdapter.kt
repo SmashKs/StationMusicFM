@@ -73,7 +73,7 @@ class NotifiableAdapter(
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        // For catching the recycleview.
+        // For catching the recycle view.
         this.recyclerView = recyclerView
     }
 
@@ -81,6 +81,20 @@ class NotifiableAdapter(
         if (playingPosition < 0) return
         when (val data = dataList[playingPosition]) {
             is TrackWithStreamableEntity -> data.url = uri
+        }
+    }
+
+    fun setStateMusicBy(position: Int, isSuccessToPlay: Boolean) {
+        // Update all child views which are showing on the screen.
+        bkg {
+            recyclerView?.apply {
+                repeat(childCount) {
+                    uiSwitch {
+                        castOrNull<Notifiable>(getChildViewHolder(getChildAt(it)))?.notifyChange(position,
+                                                                                                 isSuccessToPlay)
+                    }
+                }
+            }
         }
     }
 }

@@ -23,4 +23,6 @@ package com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder
 
 interface Notifiable {
     fun notifyChange(position: Int)
+
+    fun notifyChange(position: Int, isSuccessToPlay: Boolean)
 }

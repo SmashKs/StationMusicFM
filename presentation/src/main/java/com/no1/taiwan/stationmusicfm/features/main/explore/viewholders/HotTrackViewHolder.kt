@@ -74,6 +74,11 @@ class HotTrackViewHolder(view: View) : MultiViewHolder<TrackWithStreamableEntity
         setCurStateIcon(position != layoutPosition)
     }
 
+    override fun notifyChange(position: Int, isSuccessToPlay: Boolean) {
+        if (position == layoutPosition)
+            setCurStateIcon(!isSuccessToPlay)
+    }
+
     fun setOptionIcon() {
         setCurStateIcon(!player.isPlaying || player.curPlayingUri != trackUri)
     }
