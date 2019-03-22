@@ -19,10 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.data.data.playlist
+package com.no1.taiwan.stationmusicfm.domain.parameters.playlist
 
-object PlaylistId {
-    const val DOWNLOADED = 0x01
-    const val FAVORITE = 0x02
-    const val UNCATEGORY = 0x03
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
+
+data class PlaylistParams(
+    val ids: List<Int> = emptyList(),
+    val names: List<String> = emptyList()
+) : Parameterable {
+    companion object {
+        const val PARAM_NAME_IDS = "playlist id list"
+        const val PARAM_NAME_NAMES = "playlist name list"
+    }
+
+    override fun toApiParam() = UnsupportedOperation()
+
+    override fun toApiAnyParam(): HashMap<String, Any> = hashMapOf(
+        PARAM_NAME_IDS to ids,
+        PARAM_NAME_NAMES to names)
 }
+

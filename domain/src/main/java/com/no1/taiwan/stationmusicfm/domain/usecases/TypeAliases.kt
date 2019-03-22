@@ -59,7 +59,10 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRes
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.UpdateRankItemRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddLocalMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddPlaylistsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.DeletePlaylistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchListenedHistsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.UpdatePlaylistsRespCase
 
 // MusicBank
 
@@ -127,6 +130,12 @@ typealias UpdateRankItemCase = DeferredUsecase<Boolean, UpdateRankItemReq>
 
 typealias AddLocalMusicReq = AddLocalMusicRespCase.Request
 typealias FetchListenedHistReq = FetchListenedHistsRespCase.Request
+typealias AddPlaylistsReq = AddPlaylistsRespCase.Request
+typealias UpdatePlaylistsReq = UpdatePlaylistsRespCase.Request
+typealias DeletePlaylistsReq = DeletePlaylistsRespCase.Request
 
 typealias AddLocalMusicCase = DeferredUsecase<Boolean, AddLocalMusicReq>
 typealias FetchListenedHistCase = DeferredUsecase<List<LocalMusicModel>, FetchListenedHistReq>
+typealias AddPlaylistsCase = DeferredUsecase<Boolean, AddPlaylistsReq>
+typealias UpdatePlaylistsCase = DeferredUsecase<Boolean, UpdatePlaylistsReq>
+typealias DeletePlaylistsCase = DeferredUsecase<Boolean, DeletePlaylistsReq>

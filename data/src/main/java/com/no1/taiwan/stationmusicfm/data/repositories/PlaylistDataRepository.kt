@@ -56,11 +56,11 @@ class PlaylistDataRepository constructor(
     override suspend fun fetchPlaylist(parameters: Parameterable) =
         local.fetchPlaylist(parameters).run(playlistMapper::toModelFrom)
 
-    override suspend fun addPlaylist(parameters: Parameterable) = TODO()
+    override suspend fun addPlaylist(parameters: Parameterable) = local.addPlaylist(parameters)
 
-    override suspend fun updatePlaylist(parameters: Parameterable) = TODO()
+    override suspend fun updatePlaylist(parameters: Parameterable) = local.updatePlaylist(parameters)
 
-    override suspend fun deletePlaylist(parameters: Parameterable) = TODO()
+    override suspend fun deletePlaylist(parameters: Parameterable) = local.deletePlaylist(parameters)
 
     override suspend fun fetchListenedHistories(parameters: Parameterable) =
         local.fetchListenedHistories(parameters).map(musicMapper::toModelFrom)

@@ -22,8 +22,10 @@
 package com.no1.taiwan.stationmusicfm.internal.di.dependencies
 
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddPlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.DeletePlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchArtistCase
@@ -46,6 +48,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.UpdatePlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistRespCase
@@ -73,6 +76,9 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRes
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.UpdateRankItemRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddLocalMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddPlaylistsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.DeletePlaylistsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.UpdatePlaylistsRespCase
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -118,6 +124,8 @@ object UsecaseModule {
         //endregion
 
         bind<AddLocalMusicCase>() with singleton { AddLocalMusicRespCase(instance()) }
-
+        bind<AddPlaylistsCase>() with singleton { AddPlaylistsRespCase(instance()) }
+        bind<UpdatePlaylistsCase>() with singleton { UpdatePlaylistsRespCase(instance()) }
+        bind<DeletePlaylistsCase>() with singleton { DeletePlaylistsRespCase(instance()) }
     }
 }

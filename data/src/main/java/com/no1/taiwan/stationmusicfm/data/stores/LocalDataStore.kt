@@ -50,6 +50,8 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_LIST
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_REMOTE_TRACK_URI
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_TRACK_NAME
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_IDS
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_NAMES
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 import com.tencent.mmkv.MMKV
 
@@ -154,10 +156,10 @@ class LocalDataStore(
     }
 
     override suspend fun addPlaylist(parameterable: Parameterable): Boolean {
-        val ids = cast<List<Int>>(parameterable.toApiAnyParam()["id"])
-        val names = cast<List<String>>(parameterable.toApiAnyParam()["name"])
-        val playlists = (0..minOf(ids.size, names.size))
-            .map { PlaylistInfoData(ids[it], names[it]) }
+        val ids = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS])
+        val names = cast<List<String>>(parameterable.toApiAnyParam()[PARAM_NAME_NAMES])
+        val playlists = ids.zip(names)
+            .map { (id, name) -> PlaylistInfoData(id, name) }
             .toTypedArray()
         playlistDao.insert(*playlists)
         return true
