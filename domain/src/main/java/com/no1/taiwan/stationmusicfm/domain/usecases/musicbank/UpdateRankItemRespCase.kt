@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.domain.usecases.musicbank
 
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.MusicBankRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
@@ -37,5 +38,5 @@ class UpdateRankItemRespCase(
         repository.updateRanking(it.parameters)
     }
 
-    class Request(val parameters: RankParams) : RequestValues
+    class Request(val parameters: Parameterable = RankParams()) : RequestValues
 }

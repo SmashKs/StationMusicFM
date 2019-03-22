@@ -35,6 +35,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true
+        vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi = dependencies.Versions.Android.minSdk
         renderscriptSupportModeEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

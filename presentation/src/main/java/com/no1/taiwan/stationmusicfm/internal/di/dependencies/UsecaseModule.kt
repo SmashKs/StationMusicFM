@@ -36,7 +36,9 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchHotListCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchListenedHistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsCase
@@ -78,6 +80,8 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.UpdateRankItemRes
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddLocalMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddPlaylistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.DeletePlaylistsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchListenedHistsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchPlaylistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.UpdatePlaylistsRespCase
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -123,9 +127,13 @@ object UsecaseModule {
         bind<FetchSearchHistsCase>() with singleton { FetchSearchHistsRespCase(instance()) }
         //endregion
 
+        //region Playlist
         bind<AddLocalMusicCase>() with singleton { AddLocalMusicRespCase(instance()) }
+        bind<FetchListenedHistCase>() with singleton { FetchListenedHistsRespCase(instance()) }
+        bind<FetchPlaylistsCase>() with singleton { FetchPlaylistsRespCase(instance()) }
         bind<AddPlaylistsCase>() with singleton { AddPlaylistsRespCase(instance()) }
         bind<UpdatePlaylistsCase>() with singleton { UpdatePlaylistsRespCase(instance()) }
         bind<DeletePlaylistsCase>() with singleton { DeletePlaylistsRespCase(instance()) }
+        //endregion
     }
 }

@@ -21,21 +21,25 @@
 
 package com.no1.taiwan.stationmusicfm.domain.usecases.playlist
 
+import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.PlaylistRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
-import com.no1.taiwan.stationmusicfm.domain.usecases.DeletePlaylistsCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.DeletePlaylistsReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsReq
 
-class DeletePlaylistsRespCase(
+class FetchPlaylistsRespCase(
     private val repository: PlaylistRepository
-) : DeletePlaylistsCase() {
+) : FetchPlaylistsCase() {
     /** Provide a common parameter variable for the children class. */
-    override var requestValues: DeletePlaylistsReq? = null
+    override var requestValues: FetchPlaylistsReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        repository.deletePlaylist(it.parameters)
+        if (it.parameters is EmptyParams)
+            listOf(repository.fetchPlaylist(it.parameters))
+        else
+            repository.fetchPlaylists(it.parameters)
     }
 
     class Request(val parameters: Parameterable = PlaylistParams()) : RequestValues

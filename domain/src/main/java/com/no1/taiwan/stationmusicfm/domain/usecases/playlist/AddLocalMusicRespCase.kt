@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.domain.usecases.playlist
 
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.PlaylistRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
@@ -37,5 +38,5 @@ class AddLocalMusicRespCase(
         repository.addLocalMusic(it.parameters)
     }
 
-    class Request(val parameters: LocalMusicParams) : RequestValues
+    class Request(val parameters: Parameterable = LocalMusicParams()) : RequestValues
 }
