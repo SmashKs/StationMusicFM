@@ -26,16 +26,19 @@ import android.util.ArrayMap
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import com.no1.taiwan.stationmusicfm.services.workers.InitialWorker
-import com.no1.taiwan.stationmusicfm.services.workers.RankChartParserWorker
+import com.no1.taiwan.stationmusicfm.services.workers.PreprocessDataWorker
+import com.no1.taiwan.stationmusicfm.services.workers.RankChartHasParsedWorker
 
 object WorkerRequestFactory {
     const val WORKER_INIT = "worker for initializing"
-    const val WORKER_PARSE_CHART = "worker for parse chart from resource"
+    const val WORKER_CHART_CHECKER = "worker for parse chart from resource"
+    const val WORKER_INIT_DATA = "worker for initializing the data from json"
 
     private val mapping by lazy {
         ArrayMap<String, OneTimeWorkRequest>().apply {
             put(WORKER_INIT, OneTimeWorkRequestBuilder<InitialWorker>().build())
-            put(WORKER_PARSE_CHART, OneTimeWorkRequestBuilder<RankChartParserWorker>().build())
+            put(WORKER_CHART_CHECKER, OneTimeWorkRequestBuilder<RankChartHasParsedWorker>().build())
+            put(WORKER_INIT_DATA, OneTimeWorkRequestBuilder<PreprocessDataWorker>().build())
         }
     }
 

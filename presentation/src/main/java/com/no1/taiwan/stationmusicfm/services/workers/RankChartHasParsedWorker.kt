@@ -19,64 +19,45 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm
+package com.no1.taiwan.stationmusicfm.services.workers
 
 import android.content.Context
-import androidx.multidex.MultiDexApplication
-import androidx.work.WorkManager
-import com.no1.taiwan.stationmusicfm.internal.di.AppModule
+import androidx.work.Worker
+import androidx.work.WorkerParameters
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
+import com.no1.taiwan.stationmusicfm.internal.di.PresentationModule
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
 import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
-import com.no1.taiwan.stationmusicfm.ktx.delegate.MmkvPrefs
-import com.no1.taiwan.stationmusicfm.services.WorkerRequestFactory
-import com.tencent.mmkv.MMKV
+import com.no1.taiwan.stationmusicfm.utils.presentations.exec
+import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.instance
 
-/**
- * Android Main Application
- */
-class MusicApp : MultiDexApplication(), KodeinAware {
-    companion object {
-        var isFirstTimeOpen = false
-        lateinit var appContext: Context
-            private set
-    }
-
-    private val workManager: WorkManager by instance()
-    private val initRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_INIT) }
-    private val initDataRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_INIT_DATA) }
-    private val parserRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_CHART_CHECKER) }
-
-    init {
-        appContext = this
-    }
-
-    /**
-     * A Kodein Aware class must be within reach of a Kodein object.
-     */
+class RankChartHasParsedWorker(
+    context: Context,
+    workerParams: WorkerParameters
+) : Worker(context, workerParams), KodeinAware {
+    /** A Kodein Aware class must be within reach of a [Kodein] object. */
     override val kodein = Kodein.lazy {
-        import(androidXModule(this@MusicApp))
-        import(AppModule.appProvider(applicationContext))
         /** bindings */
         import(UtilModule.utilProvider(applicationContext))
+        import(PresentationModule.kitsProvider())
         /** usecases are bind here but the scope is depending on each layers.  */
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(applicationContext))
         import(DataMapperModule.dataUtilProvider())
     }
+    private val fetchRankIdsCase: FetchRankIdsCase by instance()
 
-    override fun onCreate() {
-        super.onCreate()
-        workManager.enqueue(initRequest)
-        workManager.enqueue(parserRequest)
-        workManager.enqueue(initDataRequest)
-        // Special initial.
-        MMKV.initialize(applicationContext)
-        MmkvPrefs.setPrefSettings()
+    override fun doWork(): Result {
+        // If there're data inside in database already, we can skip storing.
+        if (runBlocking { fetchRankIdsCase.exec(FetchRankIdsReq()) }.isNotEmpty())
+            return Result.success()
+
+        return Result.failure()
     }
 }

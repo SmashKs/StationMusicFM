@@ -24,20 +24,20 @@ package com.no1.taiwan.stationmusicfm.services.workers
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
+import com.google.gson.Gson
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.internal.di.PresentationModule
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
 import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
-import com.no1.taiwan.stationmusicfm.utils.presentations.exec
-import kotlinx.coroutines.runBlocking
+import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
+import java.io.BufferedReader
 
-class RankChartParserWorker(
+class PreprocessDataWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : Worker(context, workerParams), KodeinAware {
@@ -50,14 +50,15 @@ class RankChartParserWorker(
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(applicationContext))
         import(DataMapperModule.dataUtilProvider())
+        import(PresentationMapperModule.presentationUtilProvider())
     }
-    private val fetchRankIdsCase: FetchRankIdsCase by instance()
+    private val gson: Gson by instance()
 
     override fun doWork(): Result {
-        // If there're data inside in database already, we can skip storing.
-        if (runBlocking { fetchRankIdsCase.exec(FetchRankIdsReq()) }.isNotEmpty())
-            return Result.success()
-
-        return Result.failure()
+        val json = applicationContext.assets.open("json/playlist.json").use {
+            it.bufferedReader().use(BufferedReader::readText)
+        }
+        val list = gson.fromJson(json, Array<PlaylistInfoEntity>::class.java).toList()
+        return Result.success()
     }
 }

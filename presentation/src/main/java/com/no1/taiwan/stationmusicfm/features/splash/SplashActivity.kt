@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class SplashActivity : BaseActivity() {
     private val workManager: WorkManager by instance()
-    private val parserRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_PARSE_CHART) }
+    private val parserRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_CHART_CHECKER) }
     private var counter = AtomicInteger(0)
     private var workersSize = 0
 

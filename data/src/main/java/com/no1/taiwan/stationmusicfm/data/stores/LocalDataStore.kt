@@ -153,7 +153,15 @@ class LocalDataStore(
         return playlistDao.retrievePlaylist(id)
     }
 
-    override suspend fun addPlaylist(parameterable: Parameterable) = TODO()
+    override suspend fun addPlaylist(parameterable: Parameterable): Boolean {
+        val ids = cast<List<Int>>(parameterable.toApiAnyParam()["id"])
+        val names = cast<List<String>>(parameterable.toApiAnyParam()["name"])
+        val playlists = (0..minOf(ids.size, names.size))
+            .map { PlaylistInfoData(ids[it], names[it]) }
+            .toTypedArray()
+        playlistDao.insert(*playlists)
+        return true
+    }
 
     override suspend fun updatePlaylist(parameterable: Parameterable) = TODO()
 
