@@ -27,7 +27,6 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.Player.STATE_ENDED
 import com.google.android.exoplayer2.Timeline
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
@@ -106,9 +105,9 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     override fun play(uri: String): Boolean {
         // Play the media from the build-in [exoPlayer]'s playlist.
         if (uri.isBlank()) {
+            // FIXME(jieyi): 2019-03-23 The first time even playWhenReady is set true, it's still not work.
             playerState = if (isPlaying) Pause else Play
-            isPlaying = !isPlaying
-            exoPlayer.playWhenReady = isPlaying
+            exoPlayer.playWhenReady = !isPlaying
         }
         // Play a single individual uri.
         else {
@@ -280,11 +279,6 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     ) : Player.EventListener {
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
             musicPlayer.isPlaying = playWhenReady
-            // FIXME(jieyi): 2019-03-22 This has some issue.
-            if (playbackState == STATE_ENDED && !playWhenReady) {
-                musicPlayer.playerState = Standby
-                musicPlayer.next()
-            }
         }
 
         override fun onLoadingChanged(isLoading: Boolean) {
