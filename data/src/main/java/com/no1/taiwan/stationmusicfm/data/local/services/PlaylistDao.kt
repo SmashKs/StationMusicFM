@@ -23,8 +23,10 @@ package com.no1.taiwan.stationmusicfm.data.local.services
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.no1.taiwan.stationmusicfm.data.data.playlist.PlaylistInfoData
 import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
+import java.util.Date
 
 @Dao
 abstract class PlaylistDao : BaseDao<PlaylistInfoData> {
@@ -41,4 +43,29 @@ abstract class PlaylistDao : BaseDao<PlaylistInfoData> {
      */
     @Query("SELECT * FROM table_playlist_info WHERE id=:id")
     abstract fun retrievePlaylist(id: Int): PlaylistInfoData
+
+    /**
+     * Update a playlist by [id].
+     *
+     * @param id
+     * @param name
+     * @param trackNumber
+     */
+    @Transaction
+    open fun replaceBy(id: Int, name: String = "", trackNumber: Int = -1) {
+        if (name == "" && trackNumber == -1) return
+        val playlist = retrievePlaylist(id)
+        val newPlaylist = playlist.copy(name = name.takeIf { it != "" } ?: playlist.name,
+                                        trackCount = trackNumber.takeIf { it >= 0 } ?: playlist.trackCount,
+                                        updated = Date())
+        replace(newPlaylist)
+    }
+
+    /**
+     * Delete a playlist by [id] from the database.
+     *
+     * @param id
+     */
+    @Query("DELETE FROM table_playlist_info WHERE id=:id")
+    abstract fun releaseBy(id: Int)
 }

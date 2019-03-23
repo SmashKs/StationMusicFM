@@ -109,43 +109,29 @@ class LocalDataStore(
     //region Playlist
     override suspend fun fetchLocalMusics(parameterable: Parameterable) = localMusicDao.retrieveMusics()
 
-    override suspend fun addLocalMusic(parameterable: Parameterable): Boolean {
-        try {
-            val trackName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_NAME])
-            val artistName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_ARTIST_NAME])
-            val duration = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_DURATION])
-            val hasOwn = cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_HAS_OWN])
-            val remoteTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_REMOTE_TRACK_URI])
-            val localTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_LOCAL_TRACK_URI])
-            val coverUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_COVER_URI])
-            val playlistList = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_LIST])
-            localMusicDao.insertBy(LocalMusicData(0,
-                                                  trackName,
-                                                  artistName,
-                                                  duration,
-                                                  hasOwn,
-                                                  remoteTrackUri,
-                                                  localTrackUri,
-                                                  coverUri,
-                                                  playlistList))
-        }
-        catch (e: Exception) {
-            e.printStackTrace()
-            return false
-        }
-        return true
+    override suspend fun addLocalMusic(parameterable: Parameterable) = tryWrapper {
+        val trackName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_NAME])
+        val artistName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_ARTIST_NAME])
+        val duration = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_DURATION])
+        val hasOwn = cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_HAS_OWN])
+        val remoteTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_REMOTE_TRACK_URI])
+        val localTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_LOCAL_TRACK_URI])
+        val coverUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_COVER_URI])
+        val playlistList = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_LIST])
+        localMusicDao.insertBy(LocalMusicData(0,
+                                              trackName,
+                                              artistName,
+                                              duration,
+                                              hasOwn,
+                                              remoteTrackUri,
+                                              localTrackUri,
+                                              coverUri,
+                                              playlistList))
     }
 
-    override suspend fun deleteLocalMusic(parameterable: Parameterable): Boolean {
+    override suspend fun deleteLocalMusic(parameterable: Parameterable) = tryWrapper {
         val id = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_ID])
-        try {
-            localMusicDao.releaseBy(id)
-        }
-        catch (e: Exception) {
-            e.printStackTrace()
-            return false
-        }
-        return true
+        localMusicDao.releaseBy(id)
     }
 
     override suspend fun fetchPlaylists() = playlistDao.retrievePlaylists()
@@ -155,19 +141,26 @@ class LocalDataStore(
         return playlistDao.retrievePlaylist(id)
     }
 
-    override suspend fun addPlaylist(parameterable: Parameterable): Boolean {
+    override suspend fun addPlaylist(parameterable: Parameterable) = tryWrapper {
         val ids = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS])
         val names = cast<List<String>>(parameterable.toApiAnyParam()[PARAM_NAME_NAMES])
         val playlists = ids.zip(names)
             .map { (id, name) -> PlaylistInfoData(id, name) }
             .toTypedArray()
         playlistDao.insert(*playlists)
-        return true
     }
 
-    override suspend fun updatePlaylist(parameterable: Parameterable) = TODO()
+    override suspend fun updatePlaylist(parameterable: Parameterable) = tryWrapper {
+        val id = cast<Int>(parameterable.toApiAnyParam()[""])
+        val name = castOrNull<String>(parameterable.toApiAnyParam()[""]).orEmpty()
+        val trackNumbers = castOrNull<Int>(parameterable.toApiAnyParam()[""]) ?: -1
+        playlistDao.replaceBy(id, name, trackNumbers)
+    }
 
-    override suspend fun deletePlaylist(parameterable: Parameterable) = TODO()
+    override suspend fun deletePlaylist(parameterable: Parameterable) = tryWrapper {
+        val id = cast<Int>(parameterable.toApiAnyParam()[""])
+        playlistDao.releaseBy(id)
+    }
 
     override suspend fun fetchListenedHistories(parameterable: Parameterable): List<LocalMusicData> {
         val limit = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_LIMIT])
