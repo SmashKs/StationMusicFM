@@ -35,18 +35,20 @@ data class LocalMusicParams(
     private val localTrackUri: String = DEFAULT_STR,
     private val coverUri: String = DEFAULT_STR,
     private val playlistList: String = DEFAULT_STR,
+    private val addOrMinus: Boolean = true,  // True → add; False → minus
     private val id: Int = DEFAULT_INT
 ) : Parameterable {
     companion object {
-        const val PARAM_NAME_TRACK_NAME = "local_track_name"
-        const val PARAM_NAME_ARTIST_NAME = "local_artist_name"
-        const val PARAM_NAME_DURATION = "local_duration"
-        const val PARAM_NAME_HAS_OWN = "local_has_own"
-        const val PARAM_NAME_REMOTE_TRACK_URI = "local_remote_track_uri"
-        const val PARAM_NAME_LOCAL_TRACK_URI = "local_local_track_uri"
-        const val PARAM_NAME_COVER_URI = "local_cover_uri"
-        const val PARAM_NAME_PLAYLIST_LIST = "local_playlist_list"
-        const val PARAM_NAME_PLAYLIST_ID = "local_playlist_id"
+        const val PARAM_NAME_TRACK_NAME = "local track name"
+        const val PARAM_NAME_ARTIST_NAME = "local artist name"
+        const val PARAM_NAME_DURATION = "local duration"
+        const val PARAM_NAME_HAS_OWN = "local has own"
+        const val PARAM_NAME_REMOTE_TRACK_URI = "local remote track uri"
+        const val PARAM_NAME_LOCAL_TRACK_URI = "local local track uri"
+        const val PARAM_NAME_COVER_URI = "local cover uri"
+        const val PARAM_NAME_PLAYLIST_LIST = "local playlist list"
+        const val PARAM_NAME_PLAYLIST_ADD_OR_MINUS = "local playlist list add or minus"
+        const val PARAM_NAME_PLAYLIST_ID = "local playlist id"
     }
 
     override fun toApiParam() = UnsupportedOperation()
@@ -60,5 +62,6 @@ data class LocalMusicParams(
         PARAM_NAME_LOCAL_TRACK_URI to localTrackUri,
         PARAM_NAME_COVER_URI to coverUri,
         PARAM_NAME_PLAYLIST_LIST to playlistList,
+        PARAM_NAME_PLAYLIST_ADD_OR_MINUS to addOrMinus,
         PARAM_NAME_PLAYLIST_ID to id)
 }

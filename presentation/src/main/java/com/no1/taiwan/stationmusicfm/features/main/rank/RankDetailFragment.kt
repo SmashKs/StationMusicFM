@@ -41,6 +41,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
@@ -148,6 +149,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
             bottomSheet.dismiss()
         }
         bottomSheet.find<View>(R.id.ftv_to_favorite).setOnClickListener {
+            vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.Favorite().id)
             bottomSheet.dismiss()
         }
         bottomSheet.find<View>(R.id.ftv_music_info).setOnClickListener {

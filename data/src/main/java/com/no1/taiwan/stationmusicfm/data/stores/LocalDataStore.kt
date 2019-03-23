@@ -46,6 +46,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_DURATION
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_HAS_OWN
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_LOCAL_TRACK_URI
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_ADD_OR_MINUS
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_ID
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_LIST
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_REMOTE_TRACK_URI
@@ -118,6 +119,7 @@ class LocalDataStore(
         val localTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_LOCAL_TRACK_URI])
         val coverUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_COVER_URI])
         val playlistList = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_LIST])
+        val addOrMinus = cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_ADD_OR_MINUS])
         localMusicDao.insertBy(LocalMusicData(0,
                                               trackName,
                                               artistName,
@@ -126,7 +128,7 @@ class LocalDataStore(
                                               remoteTrackUri,
                                               localTrackUri,
                                               coverUri,
-                                              playlistList))
+                                              playlistList), addOrMinus)
     }
 
     override suspend fun deleteLocalMusic(parameterable: Parameterable) = tryWrapper {

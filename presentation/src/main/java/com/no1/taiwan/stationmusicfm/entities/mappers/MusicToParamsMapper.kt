@@ -30,7 +30,15 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class MusicToParamsMapper {
-    fun toParamsFrom(song: SongEntity) = song.run {
-        LocalMusicParams(title, artist, length, false, url, DEFAULT_STR, oriCoverUrl, DEFAULT_STR)
+    fun toParamsFrom(song: SongEntity, playlistIndex: List<Int> = emptyList(), addOrMinus: Boolean = true) = song.run {
+        LocalMusicParams(title,
+                         artist,
+                         length,
+                         false,
+                         url,
+                         DEFAULT_STR,
+                         oriCoverUrl,
+                         playlistIndex.takeIf { it.isNotEmpty() }?.joinToString(",") ?: DEFAULT_STR,
+                         addOrMinus)
     }
 }

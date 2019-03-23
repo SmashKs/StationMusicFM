@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
@@ -32,6 +33,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.MusicToParamsMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
@@ -58,13 +60,17 @@ class RankDetailViewModel(
         updateRankItemCase.exec(UpdateRankItemReq(RankParams(rankId, topTrackUri, numOfTracks)))
     }
 
-    fun runTaskAddToPlayHistory(song: SongEntity) = launchBehind {
-        addLocalMusicCase.exec(AddLocalMusicReq(MusicToParamsMapper().toParamsFrom(song)))
+    fun runTaskAddToPlayHistory(song: SongEntity, playlistIndex: Int = DEFAULT_INT) = launchBehind {
+        val playlistId = playlistIndex
+            .takeIf { it != DEFAULT_INT }
+            ?.let { listOf(playlistIndex) }
+            .orEmpty()
+        addLocalMusicCase.exec(AddLocalMusicReq(MusicToParamsMapper().toParamsFrom(song, playlistId)))
     }
 
     fun runTaskAddDownloadedTrackInfo(song: SongEntity, localUri: String) = launchBehind {
         val parameter = MusicToParamsMapper()
-            .toParamsFrom(song)
+            .toParamsFrom(song, listOf(PlaylistIndex.Downloaded().id))
             .copy(hasOwn = true, localTrackUri = localUri)
         addLocalMusicCase.exec(AddLocalMusicReq(parameter))
     }

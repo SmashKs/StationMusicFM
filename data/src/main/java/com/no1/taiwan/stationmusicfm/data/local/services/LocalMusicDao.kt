@@ -37,7 +37,7 @@ abstract class LocalMusicDao : BaseDao<LocalMusicData> {
      * @param newData
      */
     @Transaction
-    open fun insertBy(newData: LocalMusicData) {
+    open fun insertBy(newData: LocalMusicData, addOrMinus: Boolean) {
         val existMusic = retrieveMusic(newData.trackName, newData.artistName)
         var updatedData = newData
         // Update the download date if the data isn't download information.
@@ -49,13 +49,31 @@ abstract class LocalMusicDao : BaseDao<LocalMusicData> {
                                            existMusic?.lastListen ?: updatedData.lastListen)
         if (existMusic == null)
             insert(updatedData)
-        else
+        else {
+            val playlist = updatedData.playlistList.takeIf { it != DEFAULT_STR }
+                               ?.let {
+                                   // If there's no playlist, in the other words → the first adding.
+                                   if (existMusic.playlistList.isBlank())
+                                       it
+                                   else {
+                                       // To be a list of origin playlist from database.
+                                       val splitFromOrigin = existMusic.playlistList.split(",")
+                                       // To be a list of new updated playlist from user new adding.
+                                       val splitFromUpdated = updatedData.playlistList.split(",")
+                                       (if (addOrMinus)  // Add a new playlist into original playlist.
+                                           (splitFromOrigin + splitFromUpdated).distinct()
+                                       else  // Remove the playlist from original playlist.
+                                           splitFromOrigin.subtract(splitFromUpdated)).joinToString(",")
+                                   }
+                               } ?: existMusic.playlistList  // There's no new playlist inside of parameters, just put original playlist.
+
             replace(existMusic.copy(hasOwn = updatedData.hasOwn.takeIf { it } ?: existMusic.hasOwn,
                                     remoteTrackUri = updatedData.remoteTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.remoteTrackUri,
                                     localTrackUri = updatedData.localTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.localTrackUri,
                                     coverUri = updatedData.coverUri.takeIf { it != DEFAULT_STR } ?: existMusic.coverUri,
-                                    playlistList = updatedData.playlistList.takeIf { it != DEFAULT_STR } ?: existMusic.playlistList,
+                                    playlistList = playlist,
                                     lastListen = updatedData.lastListen))
+        }
     }
 
     /**
