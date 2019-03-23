@@ -25,6 +25,12 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
+import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddPlaylistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddPlaylistsReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsReq
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.internal.di.PresentationModule
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
@@ -32,6 +38,8 @@ import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
+import com.no1.taiwan.stationmusicfm.utils.presentations.exec
+import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
@@ -53,12 +61,20 @@ class PreprocessDataWorker(
         import(PresentationMapperModule.presentationUtilProvider())
     }
     private val gson: Gson by instance()
+    private val addPlaylistsCase: AddPlaylistsCase by instance()
+    private val fetchPlaylistsCase: FetchPlaylistsCase by instance()
 
     override fun doWork(): Result {
-        val json = applicationContext.assets.open("json/playlist.json").use {
-            it.bufferedReader().use(BufferedReader::readText)
+        val res = runBlocking {
+            if (fetchPlaylistsCase.exec(FetchPlaylistsReq(EmptyParams())).isNotEmpty()) return@runBlocking true
+            val json = applicationContext.assets.open("json/playlist.json").use {
+                it.bufferedReader().use(BufferedReader::readText)
+            }
+            val list = gson.fromJson(json, Array<PlaylistInfoEntity>::class.java).toList()
+            val ids = list.map(PlaylistInfoEntity::id)
+            val names = list.map(PlaylistInfoEntity::name)
+            addPlaylistsCase.exec(AddPlaylistsReq(PlaylistParams(ids, names)))
         }
-        val list = gson.fromJson(json, Array<PlaylistInfoEntity>::class.java).toList()
-        return Result.success()
+        return if (res) Result.success() else Result.failure()
     }
 }

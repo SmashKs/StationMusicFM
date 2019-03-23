@@ -37,9 +37,9 @@ class FetchPlaylistsRespCase(
 
     override suspend fun acquireCase() = attachParameter {
         if (it.parameters is EmptyParams)
-            listOf(repository.fetchPlaylist(it.parameters))
-        else
             repository.fetchPlaylists(it.parameters)
+        else
+            listOf(repository.fetchPlaylist(it.parameters))
     }
 
     class Request(val parameters: Parameterable = PlaylistParams()) : RequestValues
