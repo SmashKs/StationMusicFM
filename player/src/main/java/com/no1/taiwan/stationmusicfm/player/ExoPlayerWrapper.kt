@@ -56,7 +56,6 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     private val exoPlayer by lazy {
         Log.i(TAG, "init ExoPlayer")
         ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector()).apply {
-            prepare(playlist)
             addListener(LocalPlayerEventListener(this@ExoPlayerWrapper, this))
         }
     }
@@ -87,6 +86,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         }
     private var listener: ExoPlayerEventListener.PlayerEventListener? = null
     private var individualPlay = false
+    private var isPreparedList = false
 
     init {
         exoPlayer
@@ -105,7 +105,6 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     override fun play(uri: String): Boolean {
         // Play the media from the build-in [exoPlayer]'s playlist.
         if (uri.isBlank()) {
-            // FIXME(jieyi): 2019-03-23 The first time even playWhenReady is set true, it's still not work.
             playerState = if (isPlaying) Pause else Play
             exoPlayer.playWhenReady = !isPlaying
         }
@@ -115,6 +114,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             // Prepare the player with the source.
             exoPlayer.apply {
                 prepare(buildMediaSource(uri))
+                isPreparedList = false
                 playWhenReady = true
             }
             individualPlay = true
@@ -134,6 +134,11 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             // According to index to play the music from the playlist.
             exoPlayer.apply {
                 resetPlayerState()
+                // If it's not prepared yet then prepare the playlist.
+                if (!isPreparedList) {
+                    exoPlayer.prepare(playlist)
+                    isPreparedList = true
+                }
                 seekTo(index, C.TIME_UNSET)
             }
         }
@@ -204,6 +209,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     override fun addToPlaylist(list: List<String>): Boolean {
         if (individualPlay) {
             exoPlayer.prepare(playlist)
+            isPreparedList = true
             individualPlay = false
         }
         // Set backup list temporally because it might not be played.
