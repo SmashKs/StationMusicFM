@@ -141,12 +141,11 @@ object Deps {
         const val collectionKtx = "androidx.collection:collection-ktx:${Versions.KotlinAndroidExt.collectionKtx}"
         const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.KotlinAndroidExt.viewmodelKtx}"
         const val navigationCommonKtx =
-            "android.arch.navigation:navigation-common-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
+            "androidx.navigation:navigation-common-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
         const val navigationFragmentKtx =
-            "android.arch.navigation:navigation-fragment-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
-        const val navigationUiKtx =
-            "android.arch.navigation:navigation-ui-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
-        const val workerKtx = "android.arch.work:work-runtime-ktx:${Versions.KotlinAndroidExt.workKtx}"
+            "androidx.navigation:navigation-fragment-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
+        const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
+        const val workerKtx = "androidx.work:work-runtime-ktx:${Versions.KotlinAndroidExt.workKtx}"
         const val dynAnimKtx = "androidx.dynamicanimation-ktx:${Versions.KotlinAndroidExt.dynAnimKtx}"
         // Testing stub
         const val idlingEspresso = "androidx.test.espresso:espresso-idling-resource:${Versions.Test.espresso}"
@@ -187,9 +186,9 @@ object Deps {
         const val retrofit2AdapterCoroutine =
             "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.Network.adapterCoroutine}"
         // Database
-        const val room = "android.arch.persistence.room:runtime:${Versions.AndroidArchitectureComponent.room}"
-        const val roomAnnotation =
-            "android.arch.persistence.room:compiler:${Versions.AndroidArchitectureComponent.room}"
+        const val room = "androidx.room:room-runtime:${Versions.AndroidArchitectureComponent.room}"
+        const val roomKtx = "androidx.room:room-ktx:${Versions.AndroidArchitectureComponent.room}"
+        const val roomAnnotation = "androidx.room:room-compiler:${Versions.AndroidArchitectureComponent.room}"
         const val firebaseDB = Presentation.firebaseDB
         // MMKV
         const val mmkv = Presentation.mmkv

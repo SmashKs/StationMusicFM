@@ -39,10 +39,10 @@ object Versions {
      * Related Android component lib version.
      */
     object AndroidComponent {
-        const val material = "1.1.0-alpha03"
+        const val material = "1.1.0-alpha04"
         const val androidx = "1.0.0"
-        const val annotation = "1.0.2"
-        const val appCompat = "1.1.0-alpha02"
+        const val annotation = "1.1.0-alpha02"
+        const val appCompat = "1.1.0-alpha03"
         const val cardView = androidx
         const val recyclerView = appCompat
         const val constraintLayout = "2.0.0-alpha3"
@@ -74,19 +74,19 @@ object Versions {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
         const val kinfer = "2.1.9"
-        const val ktx = "1.1.0-alpha04"
+        const val ktx = "1.1.0-alpha05"
         const val fragmentKtx = ktx
         const val paletteKtx = "1.0.0"
-        const val collectionKtx = "1.1.0-alpha02"
+        const val collectionKtx = "1.1.0-alpha03"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
-        const val navigationKtx = "1.0.0-rc02"
-        const val workKtx = "1.0.0"
+        const val navigationKtx = "2.0.0"
+        const val workKtx = "2.0.0"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
     object AndroidArchitectureComponent {
-        const val aacLifecycle = "2.1.0-alpha02"
-        const val room = "2.1.0-alpha01"
+        const val aacLifecycle = "2.1.0-alpha03"
+        const val room = "2.1.0-alpha06"
     }
 
     /**
@@ -100,10 +100,10 @@ object Versions {
      * Related Firebase lib version.
      */
     object Firebase {
-        const val core = "16.0.7"
+        const val core = "16.0.8"
         const val database = "16.1.0"
         const val auth = "16.0.3"
-        const val messaging = "17.4.0"
+        const val messaging = "17.5.0"
 
         const val googleService = "4.2.0"
     }
@@ -116,9 +116,9 @@ object Versions {
      * Related database lib version.
      */
     object Database {
-        const val debug = "1.5.0"
+        const val debug = "1.5.1"
         const val debugDb = "1.0.6"
-        const val mmkv = "1.0.17"
+        const val mmkv = "1.0.18"
     }
 
     /**
@@ -128,7 +128,7 @@ object Versions {
         const val glide = "4.9.0"
         const val retrofit2 = "2.5.0"
         const val adapterCoroutine = "0.9.2"
-        const val okhttp3 = "3.13.1"
+        const val okhttp3 = "3.14.0"
         const val okhttpProfiler = "1.0.4"
         const val activityLauncher = "1.0.2"
         const val jsoup = "1.11.3"
@@ -165,7 +165,7 @@ object Versions {
         const val mockitoKotlin = "2.1.0"
         const val mockitoAndroid = "2.23.0"
         const val mockk = "v1.8.9.kotlin13"
-        const val byteBuddy = "1.9.10"
+        const val byteBuddy = "1.9.11"
     }
 
     /**
