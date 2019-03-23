@@ -124,6 +124,12 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         return playerState == Play
     }
 
+    /**
+     * Start playing a music according to the playlist index.
+     *
+     * @param index
+     * @return
+     */
     override fun play(index: Int): Boolean {
         // If play the difference track, it should be reset.
         if (duplicatedList[index] != curPlayingUri) {
@@ -227,6 +233,9 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         addToPlaylist(list)
     }
 
+    /**
+     * Set the repeat mode: normal play, repeat one music, repeat the whole playlist
+     */
     override fun setPlayMode(mode: Playlist.Mode) {
         playingMode = mode
         when (mode) {
@@ -246,18 +255,36 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         }
     }
 
+    /**
+     * seek the play time when the music is playing
+     */
     override fun seekTo(sec: Int) {
         exoPlayer.seekTo(sec.times(1000).toLong())
     }
 
+    /**
+     * The function is used to get the current state of the music player.
+     *
+     * @return [Standby]: the music player is waiting for the music.
+     *  [Play]: the music player is playing.
+     *  [Pause]: the music player is pausing.
+     */
     override fun getPlayerState() = playerState
 
+    /**
+     * The function is used to write the media file to local storage if the music player get the complete file.
+     *
+     * @return false is that writing file unsuccessful, otherwise, is that writing file successful.
+     */
     override fun writeToFile(url: String, filePath: String?): Boolean {
         val downloadHandler = DownloadHandler(url, filePath, listener)
         downloadHandler.start()
         return true
     }
 
+    /**
+     * The function is used to set up an event listener which monitor the activity of music player.
+     */
     override fun setEventListener(listener: ExoPlayerEventListener.PlayerEventListener) {
         this.listener = listener
     }

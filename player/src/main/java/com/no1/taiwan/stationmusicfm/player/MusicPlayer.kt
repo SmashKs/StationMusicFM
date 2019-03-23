@@ -125,6 +125,7 @@ interface MusicPlayer {
 
     /**
      * The function is used to write the media file to local storage if the music player get the complete file.
+     *
      * @return false is that writing file unsuccessful, otherwise, is that writing file successful.
      */
     fun writeToFile(url: String, filePath: String? = null): Boolean
