@@ -63,6 +63,7 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
             find<TextView>(R.id.ftv_track_name).text = model.title
             find<TextView>(R.id.ftv_artist_name).text = model.artist
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()
+            // TODO(jieyi): 2019-03-23 這邊在同個畫面，然後切換回來後沒辦法變成 play or pause
             setCurStateIcon(!player.isPlaying || player.curPlayingUri != model.url)
             setOnClickListener {
                 /**
