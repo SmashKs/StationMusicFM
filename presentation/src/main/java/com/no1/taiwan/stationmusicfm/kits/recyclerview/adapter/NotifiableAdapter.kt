@@ -64,9 +64,10 @@ class NotifiableAdapter(
      */
     override fun onViewAttachedToWindow(holder: MusicViewHolder) {
         super.onViewAttachedToWindow(holder)
+        // In the beginning we don't need to set again, this is for clicking an item then notify others.
+        if (playingPosition != -1)
         // For updating views are out of the screen but didn't go to attached scrap buffer.
-        // FIXME(jieyi): 2019-03-25 position will become `-1` when go other fragment and go back again.
-        castOrNull<Notifiable>(holder)?.notifyChange(playingPosition)
+            castOrNull<Notifiable>(holder)?.notifyChange(playingPosition)
         // OPTIMIZE(jieyi): 2019-03-15 Workaround for setting icon again because the viewpager shows again will
         //  call [notifyChange] to override the correct icon.
         castOrNull<HotTrackViewHolder>(holder)?.setOptionIcon()
