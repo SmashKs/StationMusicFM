@@ -65,6 +65,7 @@ class NotifiableAdapter(
     override fun onViewAttachedToWindow(holder: MusicViewHolder) {
         super.onViewAttachedToWindow(holder)
         // For updating views are out of the screen but didn't go to attached scrap buffer.
+        // FIXME(jieyi): 2019-03-25 position will become `-1` when go other fragment and go back again.
         castOrNull<Notifiable>(holder)?.notifyChange(playingPosition)
         // OPTIMIZE(jieyi): 2019-03-15 Workaround for setting icon again because the viewpager shows again will
         //  call [notifyChange] to override the correct icon.
