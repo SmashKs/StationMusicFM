@@ -27,4 +27,6 @@ import kotlinx.coroutines.Job
 
 interface LocalMusicDelegate {
     fun runTaskAddToPlayHistory(song: CommonMusicEntity.SongEntity, playlistIndex: Int = DEFAULT_INT): Job
+
+    fun runTaskAddDownloadedTrackInfo(song: CommonMusicEntity.SongEntity, localUri: String): Job
 }

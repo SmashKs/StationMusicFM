@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main.search
 
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
@@ -34,6 +35,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
@@ -41,19 +43,23 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_OPEN_BOTTOM_SHEET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.entity.transformLocalUri
+import com.no1.taiwan.stationmusicfm.utils.file.FilePathFactory
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
+import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -61,12 +67,13 @@ import org.kodein.di.generic.provider
 class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), SearchCommonOperations {
     override val viewmodelProviderSource get() = PROVIDER_FROM_CUSTOM_FRAGMENT
     override val viewmodelProviderFragment get() = requireParentFragment()
+    private var isFirstComing = true
+    private lateinit var tempSongEntity: SongEntity
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val player: MusicPlayer by instance()
-    private var isFirstComing = true
     private val rvScrollListener
         get() = object : RecyclerView.OnScrollListener() {
             /** The total number of items in the data set after the last load. */
@@ -97,6 +104,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 }
             }
         }
+    private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
 
     init {
         BusFragLongerLifeRegister(this)
@@ -156,6 +164,32 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     }
 
     /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        bottomSheet.apply {
+            find<View>(R.id.ftv_download).setOnClickListener {
+                if (::tempSongEntity.isInitialized) {
+                    parent.requireStoragePermission {
+                        val path = FilePathFactory.obtainMusicPath(tempSongEntity.encodeByName())
+                        // Save into internal storage.
+                        player.writeToFile(tempSongEntity.url, path)
+                        vm.runTaskAddDownloadedTrackInfo(tempSongEntity, path)
+                    }
+                }
+                dismiss()
+            }
+            find<View>(R.id.ftv_to_favorite).setOnClickListener {
+                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.Favorite().id)
+                dismiss()
+            }
+            find<View>(R.id.ftv_music_info).setOnClickListener {
+                dismiss()
+            }
+        }
+    }
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.
@@ -191,6 +225,16 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
             adapter.setStateMusicBy(position, res)
         // Add the play history into database.
         vm.runTaskAddToPlayHistory(song)
+    }
+
+    /**
+     * @param parameter
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder.initView]
+     */
+    @Subscribe(tags = [Tag(TAG_OPEN_BOTTOM_SHEET)])
+    fun openBottomSheetDialog(parameter: AnyParameters) {
+        tempSongEntity = cast(parameter[PARAMS_SONG_ENTITY])
+        bottomSheet.show()
     }
 
     private fun fetchAgainForFirstTime() {

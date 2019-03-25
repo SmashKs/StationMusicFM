@@ -21,11 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.rank
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -136,23 +133,25 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        bottomSheet.find<View>(R.id.ftv_download).setOnClickListener {
-            if (::tempSongEntity.isInitialized) {
-                requireStoragePermission {
-                    val path = FilePathFactory.obtainMusicPath(tempSongEntity.encodeByName())
-                    // Save into internal storage.
-                    player.writeToFile(tempSongEntity.url, path)
-                    vm.runTaskAddDownloadedTrackInfo(tempSongEntity, path)
+        bottomSheet.apply {
+            find<View>(R.id.ftv_download).setOnClickListener {
+                if (::tempSongEntity.isInitialized) {
+                    parent.requireStoragePermission {
+                        val path = FilePathFactory.obtainMusicPath(tempSongEntity.encodeByName())
+                        // Save into internal storage.
+                        player.writeToFile(tempSongEntity.url, path)
+                        vm.runTaskAddDownloadedTrackInfo(tempSongEntity, path)
+                    }
                 }
+                dismiss()
             }
-            bottomSheet.dismiss()
-        }
-        bottomSheet.find<View>(R.id.ftv_to_favorite).setOnClickListener {
-            vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.Favorite().id)
-            bottomSheet.dismiss()
-        }
-        bottomSheet.find<View>(R.id.ftv_music_info).setOnClickListener {
-            bottomSheet.dismiss()
+            find<View>(R.id.ftv_to_favorite).setOnClickListener {
+                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.Favorite().id)
+                dismiss()
+            }
+            find<View>(R.id.ftv_music_info).setOnClickListener {
+                dismiss()
+            }
         }
     }
 
@@ -196,14 +195,5 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     fun openBottomSheetDialog(parameter: AnyParameters) {
         tempSongEntity = cast(parameter[PARAMS_SONG_ENTITY])
         bottomSheet.show()
-    }
-
-    private fun requireStoragePermission(grantedBlock: (() -> Unit)? = null) {
-        if (ActivityCompat.checkSelfPermission(parent, WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            grantedBlock?.invoke()
-        }
-        else {
-            requestPermissions(arrayOf(WRITE_EXTERNAL_STORAGE), 1)
-        }
     }
 }

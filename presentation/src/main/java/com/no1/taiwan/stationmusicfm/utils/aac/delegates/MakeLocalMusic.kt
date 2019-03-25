@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.utils.aac.delegates
 
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.MusicToParamsMapper
@@ -30,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MakeLocalMusicHistory(
+class MakeLocalMusic(
     private val addLocalMusicCase: AddLocalMusicCase
 ) : LocalMusicDelegate {
     override fun runTaskAddToPlayHistory(song: CommonMusicEntity.SongEntity, playlistIndex: Int) = GlobalScope.launch {
@@ -40,4 +41,12 @@ class MakeLocalMusicHistory(
             .orEmpty()
         addLocalMusicCase.exec(AddLocalMusicReq(MusicToParamsMapper().toParamsFrom(song, playlistId)))
     }
+
+    override fun runTaskAddDownloadedTrackInfo(song: CommonMusicEntity.SongEntity, localUri: String) =
+        GlobalScope.launch {
+            val parameter = MusicToParamsMapper()
+                .toParamsFrom(song, listOf(PlaylistIndex.Downloaded().id))
+                .copy(hasOwn = true, localTrackUri = localUri)
+            addLocalMusicCase.exec(AddLocalMusicReq(parameter))
+        }
 }

@@ -39,7 +39,7 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.SearchHistories
 import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.LocalMusicDelegate
-import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusicHistory
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusic
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
@@ -54,9 +54,9 @@ class SearchViewModel(
     private val addSearchHistoryCase: AddSearchHistCase,
     private val deleteSearchHistoriesCase: DeleteSearchHistCase,
     private val fetchSearchHistoriesCase: FetchSearchHistsCase,
-    makeLocalMusicHistory: MakeLocalMusicHistory,
+    makeLocalMusic: MakeLocalMusic,
     diggerDelegate: PreziMapperDigger
-) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate by makeLocalMusicHistory {
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate by makeLocalMusic {
     private val _musics by lazy { RespMutableLiveData<MusicEntity>() }
     val musics: RespLiveData<MusicEntity> = _musics
     private val _histories by lazy { RespMutableLiveData<SearchHistories>() }

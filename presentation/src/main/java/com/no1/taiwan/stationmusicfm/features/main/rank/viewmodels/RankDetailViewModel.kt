@@ -22,19 +22,14 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
-import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemReq
-import com.no1.taiwan.stationmusicfm.entities.mappers.MusicToParamsMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
-import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.LocalMusicDelegate
-import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusicHistory
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusic
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
@@ -46,10 +41,9 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 class RankDetailViewModel(
     private val fetchRankMusicCase: FetchRankMusicCase,
     private val updateRankItemCase: UpdateRankItemCase,
-    private val addLocalMusicCase: AddLocalMusicCase,
-    makeLocalMusicHistory: MakeLocalMusicHistory,
+    makeLocalMusic: MakeLocalMusic,
     diggerDelegate: PreziMapperDigger
-) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate by makeLocalMusicHistory {
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate by makeLocalMusic {
     private val _rankMusic by lazy { RespMutableLiveData<MusicEntity>() }
     val rankMusic: RespLiveData<MusicEntity> = _rankMusic
     private val topTracksMapper by lazy { digMapper(MusicPMapper::class) }
@@ -60,12 +54,5 @@ class RankDetailViewModel(
 
     fun runTaskUpdateRankItem(rankId: Int, topTrackUri: String, numOfTracks: Int) = launchBehind {
         updateRankItemCase.exec(UpdateRankItemReq(RankParams(rankId, topTrackUri, numOfTracks)))
-    }
-
-    fun runTaskAddDownloadedTrackInfo(song: SongEntity, localUri: String) = launchBehind {
-        val parameter = MusicToParamsMapper()
-            .toParamsFrom(song, listOf(PlaylistIndex.Downloaded().id))
-            .copy(hasOwn = true, localTrackUri = localUri)
-        addLocalMusicCase.exec(AddLocalMusicReq(parameter))
     }
 }

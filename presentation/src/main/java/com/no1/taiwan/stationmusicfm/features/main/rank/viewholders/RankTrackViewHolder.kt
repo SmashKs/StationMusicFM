@@ -72,7 +72,10 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
                                                         PARAMS_SONG_ENTITY to song))
             }
             setOnLongClickListener {
-                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.openBottomSheetDialog] */
+                /**
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment.openBottomSheetDialog]
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.openBottomSheetDialog]
+                 */
                 emitter.post(TAG_OPEN_BOTTOM_SHEET, hashMapOf<String, Any>(PARAMS_SONG_ENTITY to song))
                 true
             }

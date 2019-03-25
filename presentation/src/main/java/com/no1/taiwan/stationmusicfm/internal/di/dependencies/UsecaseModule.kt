@@ -83,7 +83,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.DeletePlaylistsRes
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchListenedHistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchPlaylistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.UpdatePlaylistsRespCase
-import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusicHistory
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusic
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -139,6 +139,6 @@ object UsecaseModule {
     }
 
     fun delegateProvider() = Kodein.Module("Delegate Use Cases") {
-        bind<MakeLocalMusicHistory>() with singleton { MakeLocalMusicHistory(instance()) }
+        bind<MakeLocalMusic>() with singleton { MakeLocalMusic(instance()) }
     }
 }
