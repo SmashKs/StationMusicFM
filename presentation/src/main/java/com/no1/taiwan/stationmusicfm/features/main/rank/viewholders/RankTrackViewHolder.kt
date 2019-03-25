@@ -35,7 +35,6 @@ import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_OPEN_BOTTOM_SHEET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
@@ -69,8 +68,7 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment.playASong]
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.playASong]
                  */
-                emitter.post(TAG_PLAY_A_SONG, hashMapOf(PARAMS_TRACK_URI to model.url,
-                                                        PARAMS_LAYOUT_POSITION to position,
+                emitter.post(TAG_PLAY_A_SONG, hashMapOf(PARAMS_LAYOUT_POSITION to position,
                                                         PARAMS_SONG_ENTITY to song))
             }
             setOnLongClickListener {

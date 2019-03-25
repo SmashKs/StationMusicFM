@@ -34,6 +34,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
@@ -43,11 +44,12 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TRACK_URI
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.entity.transformLocalUri
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -126,10 +128,13 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 // Show the view stub.
                 switchStub(true)
                 // When search in the beginning, adapter whole list will be replaced.
-                if (vm.getCurPageNumber() == 0)
+                if (vm.getCurPageNumber() == 0) {
                     adapter.replaceWholeList(cast(it.items))
+                    player.clearPlaylist()
+                }
                 else
                     adapter.append(cast<MusicVisitables>(it.items))
+                it.items.transformLocalUri().let(player::addToPlaylist)
                 vm.increasePageNumber()  // after success fetching, auto increasing the page.
                 fetchAgainForFirstTime()
                 // Initialize the recycler view.
@@ -177,11 +182,15 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
      */
     @Subscribe(tags = [Tag(TAG_PLAY_A_SONG)])
     fun playASong(parameter: AnyParameters) {
-        val uri = cast<String>(parameter[PARAMS_TRACK_URI])
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
-
-        player.play(uri)
-        adapter.playingPosition = position
+        val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
+        val res = player.play(position)
+        if (res)
+            adapter.playingPosition = position  // For updating current views are showing on the recycler view.
+        else
+            adapter.setStateMusicBy(position, res)
+        // Add the play history into database.
+        vm.runTaskAddToPlayHistory(song)
     }
 
     private fun fetchAgainForFirstTime() {

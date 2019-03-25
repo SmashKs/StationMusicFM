@@ -59,6 +59,7 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.entity.transformLocalUri
 import com.no1.taiwan.stationmusicfm.utils.file.FilePathFactory
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -94,13 +95,11 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.rankMusic) {
             peel {
+                // Add the song list into the adapter.
                 songAdapter.append(cast<MusicVisitables>(it.songs))
-                bkg {
-                    it.songs.asSequence()
-                        .map { song -> FilePathFactory.getMusicPath(song.encodeByName()) ?: song.url }
-                        .toList()
-                        .let(player::addToPlaylist)
-                }
+                // Add the song list into the music player's playlist.
+                bkg { it.songs.transformLocalUri().let(player::addToPlaylist) }
+                // Update the rank thumbnail to the newest one(to rank top 1).
                 vm.runTaskUpdateRankItem(rankId, it.songs.first().oriCoverUrl, it.songs.size)
             } happenError {
                 loge(it)

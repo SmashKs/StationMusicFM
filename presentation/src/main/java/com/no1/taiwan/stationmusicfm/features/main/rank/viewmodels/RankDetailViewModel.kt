@@ -33,7 +33,8 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.MusicToParamsMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.LocalMusicDelegate
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusicHistory
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
@@ -46,8 +47,9 @@ class RankDetailViewModel(
     private val fetchRankMusicCase: FetchRankMusicCase,
     private val updateRankItemCase: UpdateRankItemCase,
     private val addLocalMusicCase: AddLocalMusicCase,
+    makeLocalMusicHistory: MakeLocalMusicHistory,
     diggerDelegate: PreziMapperDigger
-) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate by makeLocalMusicHistory {
     private val _rankMusic by lazy { RespMutableLiveData<MusicEntity>() }
     val rankMusic: RespLiveData<MusicEntity> = _rankMusic
     private val topTracksMapper by lazy { digMapper(MusicPMapper::class) }
@@ -58,14 +60,6 @@ class RankDetailViewModel(
 
     fun runTaskUpdateRankItem(rankId: Int, topTrackUri: String, numOfTracks: Int) = launchBehind {
         updateRankItemCase.exec(UpdateRankItemReq(RankParams(rankId, topTrackUri, numOfTracks)))
-    }
-
-    fun runTaskAddToPlayHistory(song: SongEntity, playlistIndex: Int = DEFAULT_INT) = launchBehind {
-        val playlistId = playlistIndex
-            .takeIf { it != DEFAULT_INT }
-            ?.let { listOf(playlistIndex) }
-            .orEmpty()
-        addLocalMusicCase.exec(AddLocalMusicReq(MusicToParamsMapper().toParamsFrom(song, playlistId)))
     }
 
     fun runTaskAddDownloadedTrackInfo(song: SongEntity, localUri: String) = launchBehind {

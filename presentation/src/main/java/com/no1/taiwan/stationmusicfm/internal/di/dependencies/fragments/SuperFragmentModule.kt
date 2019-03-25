@@ -77,13 +77,22 @@ object SuperFragmentModule {
             ExploreTrackViewModel::class.java to ExploreTrackViewModel(instance(), instance(), instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            SearchViewModel::class.java to SearchViewModel(instance(), instance(), instance(), instance(), instance())
+            SearchViewModel::class.java to SearchViewModel(instance(),
+                                                           instance(),
+                                                           instance(),
+                                                           instance(),
+                                                           instance(),
+                                                           instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
             RankIndexViewModel::class.java to RankIndexViewModel(instance(), instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            RankDetailViewModel::class.java to RankDetailViewModel(instance(), instance(), instance(), instance())
+            RankDetailViewModel::class.java to RankDetailViewModel(instance(),
+                                                                   instance(),
+                                                                   instance(),
+                                                                   instance(),
+                                                                   instance())
         }
     }
 }

@@ -66,6 +66,7 @@ class MusicApp : MultiDexApplication(), KodeinAware {
         import(UtilModule.utilProvider(applicationContext))
         /** usecases are bind here but the scope is depending on each layers.  */
         import(UsecaseModule.usecaseProvider())
+        import(UsecaseModule.delegateProvider())
         import(RepositoryModule.repositoryProvider(applicationContext))
         import(DataMapperModule.dataUtilProvider())
     }
