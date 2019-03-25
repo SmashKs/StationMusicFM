@@ -26,6 +26,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.kotlinknifer.logw
 import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
@@ -56,6 +57,17 @@ class ChartViewHolder(view: View) : MultiViewHolder<RankingIdForChartItem>(view)
             find<CardView>(R.id.mcv_chart).setOnClickListener {
                 emitter.post(TAG_RANK_DETAIL, hashMapOf(PARAMS_TO_RANK_ID to model.id,
                                                         PARAMS_COMMON_TITLE to model.title))
+                val location = IntArray(2)
+                it.getLocationOnScreen(location)
+                logw(location.toList())
+
+                emitter.post("test", hashMapOf(
+                    "left" to location[0],
+                    "top" to location[1],
+                    "width" to it.measuredWidth,
+                    "height" to it.measuredHeight,
+                    "uri" to model.topTrackUri
+                ))
             }
         }
     }

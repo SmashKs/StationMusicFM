@@ -43,7 +43,8 @@
         tools:replace="android:label">
         <activity
             android:name=".features.test.TestActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:theme="@style/Transparent"/>
         <activity
             android:name=".features.main.MainActivity">
         </activity>

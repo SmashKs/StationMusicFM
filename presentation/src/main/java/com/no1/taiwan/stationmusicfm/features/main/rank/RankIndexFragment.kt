@@ -22,7 +22,6 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank
 
 import android.os.Bundle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -31,6 +30,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
+import com.no1.taiwan.stationmusicfm.features.test.TestActivity
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_RANK
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_RANK_ID
@@ -41,6 +41,7 @@ import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegist
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
+import org.jetbrains.anko.support.v4.startActivity
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -98,7 +99,20 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
         val rankId = cast<Int>(params[PARAMS_TO_RANK_ID])
         val titleOfChart = cast<String>(params[PARAMS_COMMON_TITLE])
 
-        findNavController().navigate(R.id.action_frag_rank_index_to_frag_rank_detail,
-                                     RankDetailFragment.createBundle(rankId, titleOfChart))
+//        findNavController().navigate(R.id.action_frag_rank_index_to_frag_rank_detail,
+//                                     RankDetailFragment.createBundle(rankId, titleOfChart))
+    }
+
+    @Subscribe(tags = [Tag("test")])
+    fun gotoNewActivity(params: AnyParameters) {
+        val x = cast<Int>(params["left"])
+        val y = cast<Int>(params["top"])
+        val w = cast<Int>(params["width"])
+        val h = cast<Int>(params["height"])
+        val uri = cast<String>(params["uri"])
+        parent.apply {
+            startActivity<TestActivity>("x" to x, "y" to y, "w" to w, "h" to h, "uri" to uri)
+            overridePendingTransition(0, 0)
+        }
     }
 }

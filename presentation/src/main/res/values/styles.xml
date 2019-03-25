@@ -54,6 +54,12 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
+    <style name="Transparent" parent="MainTheme.Transitions">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <!-- Constraint Basic Setting -->
     <style name="Constraint"/>
 
