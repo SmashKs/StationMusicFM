@@ -173,5 +173,7 @@ class RemoteDataStore(
     override suspend fun deletePlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
     override suspend fun fetchListenedHistories(parameterable: Parameterable) = UnsupportedOperation()
+
+    override suspend fun fetchTypeOfHistories(parameterable: Parameterable) = UnsupportedOperation()
     //endregion
 }

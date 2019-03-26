@@ -21,11 +21,19 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
+import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -34,6 +42,27 @@ import org.kodein.di.generic.provider
 class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     private val adapter: MusicAdapter by instance()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(ObjectLabel.LINEAR_LAYOUT_VERTICAL)
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        observeNonNull(vm.playlist) {
+            peel {
+                logw(it)
+            } happenError {
+                loge(it)
+            } doWith this@MyMusicIndexFragment
+        }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        super.rendered(savedInstanceState)
+        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.Downloaded.ordinal))
+    }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all view components here.

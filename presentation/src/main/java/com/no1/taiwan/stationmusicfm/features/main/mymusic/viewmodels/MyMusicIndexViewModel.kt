@@ -21,6 +21,29 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels
 
-import androidx.lifecycle.ViewModel
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsReq
+import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.LocalMusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
+import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
+import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
+import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
+import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
+import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 
-class MyMusicIndexViewModel : ViewModel()
+class MyMusicIndexViewModel(
+    private val fetchTypeOfHistsCase: FetchTypeOfHistsCase,
+    diggerDelegate: PreziMapperDigger
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+    private val _playlist by lazy { RespMutableLiveData<List<LocalMusicEntity>>() }
+    val playlist: RespLiveData<List<LocalMusicEntity>> = _playlist
+    private val playlistMapper by lazy { digMapper(LocalMusicPMapper::class) }
+
+    fun runTaskFetchPlaylist(ids: List<Int>) = launchBehind {
+        _playlist reqData {
+            fetchTypeOfHistsCase.execListMapping(playlistMapper, FetchTypeOfHistsReq(PlaylistParams(ids)))
+        }
+    }
+}

@@ -21,11 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.domain.parameters.playlist
 
-import com.no1.taiwan.stationmusicfm.domain.parameters.TableId
-
-sealed class PlaylistIndex : TableId {
-    class Downloaded(override val id: Int = 1) : PlaylistIndex()
-    class Favorite(override val id: Int = 2) : PlaylistIndex()
-    class Uncategory(override val id: Int = 3) : PlaylistIndex()
-    class Else(override val id: Int) : PlaylistIndex()
+enum class PlaylistIndex {
+    Downloaded, Favorite, Uncategory, Else;
 }

@@ -45,7 +45,7 @@ class MakeLocalMusic(
     override fun runTaskAddDownloadedTrackInfo(song: CommonMusicEntity.SongEntity, localUri: String) =
         GlobalScope.launch {
             val parameter = MusicToParamsMapper()
-                .toParamsFrom(song, listOf(PlaylistIndex.Downloaded().id))
+                .toParamsFrom(song, listOf(PlaylistIndex.Downloaded.ordinal))
                 .copy(hasOwn = true, localTrackUri = localUri)
             addLocalMusicCase.exec(AddLocalMusicReq(parameter))
         }

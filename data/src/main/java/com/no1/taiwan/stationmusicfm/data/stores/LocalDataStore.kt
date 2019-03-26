@@ -51,6 +51,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_LIST
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_REMOTE_TRACK_URI
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_TRACK_NAME
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_IDS
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_NAMES
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
@@ -168,6 +169,15 @@ class LocalDataStore(
         val limit = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_LIMIT])
         return listenHistoryDao.retrieveHistories(limit)
     }
+
+    override suspend fun fetchTypeOfHistories(parameterable: Parameterable): List<LocalMusicData> {
+        val ids = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS])
+        if (ids.first() == PlaylistIndex.Downloaded.ordinal) {
+            return listenHistoryDao.retrieveDownloadedMusics()
+        }
+        return listenHistoryDao.retrieveTypeOfMusics(ids.first())
+    }
+
     //endregion
 
     //region UnsupportedOperationException

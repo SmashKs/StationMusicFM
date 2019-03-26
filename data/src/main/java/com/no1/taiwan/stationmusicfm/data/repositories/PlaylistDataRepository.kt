@@ -64,4 +64,7 @@ class PlaylistDataRepository constructor(
 
     override suspend fun fetchListenedHistories(parameters: Parameterable) =
         local.fetchListenedHistories(parameters).map(musicMapper::toModelFrom)
+
+    override suspend fun fetchTypeOfHistories(parameters: Parameterable) =
+        local.fetchTypeOfHistories(parameters).map(musicMapper::toModelFrom)
 }

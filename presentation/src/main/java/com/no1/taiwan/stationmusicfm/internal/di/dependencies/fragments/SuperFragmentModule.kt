@@ -26,6 +26,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArt
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreGenreViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
+import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankIndexViewModel
 import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewModel
@@ -89,6 +90,9 @@ object SuperFragmentModule {
         }
         bind<ViewModelEntry>().inSet() with provider {
             RankDetailViewModel::class.java to RankDetailViewModel(instance(), instance(), instance(), instance())
+        }
+        bind<ViewModelEntry>().inSet() with provider {
+            MyMusicIndexViewModel::class.java to MyMusicIndexViewModel(instance(), instance())
         }
     }
 }

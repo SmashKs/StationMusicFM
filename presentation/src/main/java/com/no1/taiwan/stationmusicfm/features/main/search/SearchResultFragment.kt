@@ -180,7 +180,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 dismiss()
             }
             find<View>(R.id.ftv_to_favorite).setOnClickListener {
-                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.Favorite().id)
+                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.Favorite.ordinal)
                 dismiss()
             }
             find<View>(R.id.ftv_music_info).setOnClickListener {

@@ -132,6 +132,9 @@ interface DataStore {
 
     suspend fun deletePlaylist(parameterable: Parameterable): Boolean
 
+    // ↓↓↓ Type of playlist of the musics. ↓↓↓
     suspend fun fetchListenedHistories(parameterable: Parameterable): List<LocalMusicData>
+
+    suspend fun fetchTypeOfHistories(parameterable: Parameterable): List<LocalMusicData>
     //endregion
 }

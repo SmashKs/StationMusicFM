@@ -131,7 +131,7 @@ class MainActivity : BaseActivity() {
     }
 
     fun requireStoragePermission(grantedBlock: (() -> Unit)? = null) {
-        if (ActivityCompat.checkSelfPermission(parent, WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
             grantedBlock?.invoke()
         }
         else {

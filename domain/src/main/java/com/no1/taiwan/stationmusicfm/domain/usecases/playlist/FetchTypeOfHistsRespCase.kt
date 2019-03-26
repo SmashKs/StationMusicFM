@@ -19,8 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain.parameters
+package com.no1.taiwan.stationmusicfm.domain.usecases.playlist
 
-interface TableId {
-    val id: Int
+import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
+import com.no1.taiwan.stationmusicfm.domain.repositories.PlaylistRepository
+import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsReq
+
+class FetchTypeOfHistsRespCase(
+    private val repository: PlaylistRepository
+) : FetchTypeOfHistsCase() {
+    /** Provide a common parameter variable for the children class. */
+    override var requestValues: FetchTypeOfHistsReq? = null
+
+    override suspend fun acquireCase() = attachParameter {
+        repository.fetchTypeOfHistories(it.parameters)
+    }
+
+    class Request(val parameters: Parameterable = PlaylistParams()) : RequestValues
 }

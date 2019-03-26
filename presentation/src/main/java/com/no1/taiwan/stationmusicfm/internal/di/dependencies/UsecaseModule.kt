@@ -50,6 +50,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopAlbumCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopArtistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTagTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTrackCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdatePlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.UpdateRankItemCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistRespCase
@@ -82,6 +83,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddPlaylistsRespCa
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.DeletePlaylistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchListenedHistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchPlaylistsRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchTypeOfHistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.UpdatePlaylistsRespCase
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusic
 import org.kodein.di.Kodein
@@ -131,6 +133,7 @@ object UsecaseModule {
         //region Playlist
         bind<AddLocalMusicCase>() with singleton { AddLocalMusicRespCase(instance()) }
         bind<FetchListenedHistCase>() with singleton { FetchListenedHistsRespCase(instance()) }
+        bind<FetchTypeOfHistsCase>() with singleton { FetchTypeOfHistsRespCase(instance()) }
         bind<FetchPlaylistsCase>() with singleton { FetchPlaylistsRespCase(instance()) }
         bind<AddPlaylistsCase>() with singleton { AddPlaylistsRespCase(instance()) }
         bind<UpdatePlaylistsCase>() with singleton { UpdatePlaylistsRespCase(instance()) }
