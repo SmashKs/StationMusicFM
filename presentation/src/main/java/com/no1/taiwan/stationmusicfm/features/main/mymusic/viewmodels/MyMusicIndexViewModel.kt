@@ -59,9 +59,7 @@ class MyMusicIndexViewModel(
     ) : TransformedLiveData<ResponseState<List<LocalMusicEntity>>, List<LocalMusicEntity>>() {
         override fun getTransformed(source: ResponseState<List<LocalMusicEntity>>) =
             if (source is ResponseState.Success<List<LocalMusicEntity>>)
-                source.data?.filter {
-                    PlaylistIndex.Favorite.ordinal.toString() in it.playlistList
-                }.orEmpty()
+                source.data?.filter { PlaylistIndex.Favorite.ordinal.toString() in it.playlistList }.orEmpty()
             else
                 emptyList()
     }
