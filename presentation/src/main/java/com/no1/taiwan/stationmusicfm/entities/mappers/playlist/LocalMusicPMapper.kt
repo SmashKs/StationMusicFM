@@ -52,8 +52,8 @@ class LocalMusicPMapper : LocalMusicPreziMap {
                         hasOwn,
                         remoteTrackUri,
                         localTrackUri,
-                        playlistList,
                         coverUri,
+                        playlistList,
                         created,
                         lastListen)
     }

@@ -44,7 +44,7 @@ abstract class ListenHistoryDao {
      * @param zeroTime
      * @return
      */
-    @Query("SELECT * FROM table_local_music WHERE local_track_uri <> '' AND last_listen_date>=:zeroTime ORDER BY last_listen_date ASC LIMIT :limit")
+    @Query("SELECT * FROM table_local_music WHERE local_track_uri<>'' AND last_listen_date>=:zeroTime ORDER BY last_listen_date ASC LIMIT :limit")
     abstract fun retrieveDownloadedMusics(limit: Int = 30, zeroTime: Date = Date(0)): List<LocalMusicData>
 
     /**

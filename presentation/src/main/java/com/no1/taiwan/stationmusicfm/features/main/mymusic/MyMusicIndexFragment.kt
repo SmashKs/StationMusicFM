@@ -52,6 +52,12 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
                 loge(it)
             } doWith this@MyMusicIndexFragment
         }
+        observeNonNull(vm.downloads) {
+            logw(this)
+        }
+        observeNonNull(vm.favorites) {
+            logw(this)
+        }
     }
 
     /**
@@ -61,7 +67,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.Downloaded.ordinal))
+        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.Favorite.ordinal))
     }
 
     /**
