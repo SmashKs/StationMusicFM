@@ -61,7 +61,7 @@ class MyMusicIndexViewModel(
             if (tempIds.contains(PlaylistIndex.Favorite.ordinal) && source is ResponseState.Success<List<LocalMusicEntity>>)
                 source.data?.filter { PlaylistIndex.Favorite.ordinal.toString() in it.playlistList }.orEmpty()
             else
-                emptyList()
+                null
     }
 
     inner class DownloadLiveData(
@@ -71,6 +71,6 @@ class MyMusicIndexViewModel(
             if (tempIds.contains(PlaylistIndex.Downloaded.ordinal) && source is ResponseState.Success<List<LocalMusicEntity>>)
                 source.data?.filter { it.localTrackUri.isNotBlank() }.orEmpty()
             else
-                emptyList()
+                null
     }
 }

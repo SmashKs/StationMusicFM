@@ -67,10 +67,16 @@ abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHoo
 
     override fun onInactive() = source.removeObserver(this)
 
+    /**
+     * The processing of the data changed or transformed.
+     * NOTE: If the [getTransformed] returns `null`, the data won't be changed; otherwise, change data.
+     *
+     * @param source
+     */
     override fun onChanged(source: S) {
-        GlobalScope.launch { postValue(getTransformed(source)) }
+        GlobalScope.launch { getTransformed(source)?.let(this@TransformedLiveData::postValue) }
     }
 
     @WorkerThread
-    protected abstract fun getTransformed(source: S): T
+    protected abstract fun getTransformed(source: S): T?
 }
