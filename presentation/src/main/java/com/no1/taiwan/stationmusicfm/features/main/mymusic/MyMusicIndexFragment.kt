@@ -47,7 +47,9 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     private val adapter: MusicAdapter by instance()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
-    private val footerCreatePlaylist by lazy { CreatePlaylistEntity() }
+    private val footerCreatePlaylist by lazy {
+        CreatePlaylistEntity(content = getString(R.string.fragment_playlist_create_list))
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -67,7 +69,6 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
         observeNonNull(vm.playlists) {
             peel {
                 adapter.append(cast<MusicVisitables>(it))
-                adapter.footerEntity = footerCreatePlaylist
             } happenError {
                 loge(it)
             } doWith this@MyMusicIndexFragment
@@ -91,6 +92,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         initRecyclerViewWith(find(R.id.rv_playlist), adapter, linearLayoutManager(), listOf(actionBarBlankDecoration))
+        adapter.footerEntity = footerCreatePlaylist
     }
 
     /**

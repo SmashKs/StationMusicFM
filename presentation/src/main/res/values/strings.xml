@@ -21,4 +21,6 @@
 
 <resources>
     <string name="app_name">StationMusicFM</string>
+
+    <string name="fragment_playlist_create_list">Create a new Playlist</string>
 </resources>

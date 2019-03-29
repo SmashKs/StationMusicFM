@@ -22,9 +22,13 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders
 
 import android.view.View
+import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.kotlinknifer.DrawableDirectionConst.DRAWABLE_DIRECTION_START
+import com.devrapid.kotlinknifer.addDrawable
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
+import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import org.jetbrains.anko.find
 
@@ -38,7 +42,10 @@ class CreatePlaylistViewHolder(view: View) : MultiViewHolder<CreatePlaylistEntit
      */
     override fun initView(model: CreatePlaylistEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
-            find<View>(R.id.ftv_new_playlist)
+            find<TextView>(R.id.ftv_new_playlist).apply {
+                text = model.content
+                model.iconRes.takeUnlessDefault { addDrawable(it, DRAWABLE_DIRECTION_START) }
+            }
         }
     }
 }
