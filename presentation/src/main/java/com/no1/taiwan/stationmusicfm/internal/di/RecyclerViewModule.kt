@@ -37,7 +37,9 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEn
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
+import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.AlbumOfGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreGenreViewHolder
@@ -47,7 +49,8 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotAlbumV
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.SimilarArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.TrackOfGenreViewHolder
-import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.MyMusicViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.CreatePlaylistViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.PlaylistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
@@ -158,7 +161,13 @@ object RecyclerViewModule {
             SearchHistoryEntity::class.hashCode() to (R.layout.item_search_history to ::SearchHistoryViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            LocalMusicEntity::class.hashCode() to (R.layout.item_playlist to ::MyMusicViewHolder)
+            PlaylistInfoEntity::class.hashCode() to (R.layout.item_playlist to ::PlaylistViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            CreatePlaylistEntity::class.hashCode() to (R.layout.item_new_playlist to ::CreatePlaylistViewHolder)
+        }
+        bind<ViewHolderEntry>().inSet() with provider {
+            LocalMusicEntity::class.hashCode() to (R.layout.item_playlist_music to ::PlaylistViewHolder)
         }
     }
 }

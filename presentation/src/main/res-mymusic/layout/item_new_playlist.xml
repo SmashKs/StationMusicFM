@@ -22,14 +22,26 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.main.mymusic.MyMusicIndexFragment">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+    tools:context=".features.main.mymusic.viewholders.CreatePlaylistViewHolder">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_playlist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_playlist_music"/>
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_new_playlist"
+        style="@style/MusicTextView.Bold"
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/md_two_unit"
+        android:drawablePadding="@dimen/md_two_half_unit"
+        android:gravity="center_vertical"
+        app:drawableStartCompat="@drawable/ic_playlist_add_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/fragment_playlist_create_list"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

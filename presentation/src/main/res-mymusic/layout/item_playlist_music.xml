@@ -26,47 +26,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/md_two_half_unit"
-    tools:context=".features.main.mymusic.viewholders.PlaylistViewHolder">
+    tools:context=".features.main.mymusic.viewholders.LocalMusicViewHolder">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_playlist_thumbnail"
-        android:layout_width="@dimen/md_eight_unit"
-        android:layout_height="@dimen/md_zero_unit"
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_music_name"
+        style="@style/MusicTextView.AnyWidth"
+        android:layout_marginBottom="@dimen/md_one_unit"
+        android:layout_marginEnd="@dimen/md_zero_unit"
+        android:layout_marginTop="@dimen/md_one_unit"
+        android:drawablePadding="@dimen/md_two_unit"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/ftv_number_of_tracks"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars"/>
+        tools:drawableStart="@drawable/ic_cloud_download_black"
+        tools:text="@tools:sample/full_names"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_playlist_name"
-        style="@style/MusicTextView.Bold.AnyWidth"
-        android:textSize="@dimen/text_size_normal"
-        app:layout_constraintBottom_toTopOf="@id/ftv_track_count"
-        app:layout_constraintEnd_toStartOf="@id/iv_detail"
-        app:layout_constraintStart_toEndOf="@id/iv_playlist_thumbnail"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="@tools:sample/lorem"/>
-
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_track_count"
-        style="@style/MusicTextView.AnyWidth"
-        android:layout_marginTop="@dimen/md_one_half_unit"
-        android:textSize="@dimen/text_size_sub"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_detail"
-        app:layout_constraintStart_toEndOf="@id/iv_playlist_thumbnail"
-        app:layout_constraintTop_toBottomOf="@id/ftv_playlist_name"
-        tools:text="32 songs"/>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_detail"
+        android:id="@+id/ftv_number_of_tracks"
+        style="@style/MusicTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_right_black"
+        android:drawablePadding="@dimen/md_one_half_unit"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/ftv_music_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:drawableEnd="@drawable/ic_arrow_right_black"
+        tools:text="@tools:sample/us_phones"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

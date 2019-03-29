@@ -92,7 +92,7 @@ object SuperFragmentModule {
             RankDetailViewModel::class.java to RankDetailViewModel(instance(), instance(), instance(), instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            MyMusicIndexViewModel::class.java to MyMusicIndexViewModel(instance(), instance())
+            MyMusicIndexViewModel::class.java to MyMusicIndexViewModel(instance(), instance(), instance())
         }
     }
 }

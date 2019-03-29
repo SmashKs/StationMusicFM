@@ -39,7 +39,7 @@ object Versions {
      * Related Android component lib version.
      */
     object AndroidComponent {
-        const val material = "1.1.0-alpha04"
+        const val material = "1.1.0-alpha05"
         const val androidx = "1.0.0"
         const val annotation = "1.1.0-alpha02"
         const val appCompat = "1.1.0-alpha03"
@@ -54,14 +54,14 @@ object Versions {
      */
     object Kotlin {
         const val kotlinLib = "1.3.30-eap-45"
-        const val kotlinCoroutine = "1.1.1"
+        const val kotlinCoroutine = "1.2.0-alpha"
     }
 
     /**
      * Related view component lib version.
      */
     object ViewComponent {
-        const val adaptiveRecyclerView = "1.0.12"
+        const val adaptiveRecyclerView = "1.0.13"
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.1.2"
         const val dialog = "1.0.6"
@@ -165,7 +165,7 @@ object Versions {
         const val mockitoKotlin = "2.1.0"
         const val mockitoAndroid = "2.23.0"
         const val mockk = "v1.8.9.kotlin13"
-        const val byteBuddy = "1.9.11"
+        const val byteBuddy = "1.9.12"
     }
 
     /**

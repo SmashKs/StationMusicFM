@@ -104,7 +104,9 @@ dependencies {
     }
     //endregion
 
-    implementation(dependencies.Deps.Data.firebaseDB)
+    //region Firebase
+    //implementation(dependencies.Deps.Data.firebaseDB)
+    //endregion
 }
 
 // Get a variable from local.properties.

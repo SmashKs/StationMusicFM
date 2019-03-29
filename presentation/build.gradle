@@ -67,6 +67,9 @@ android {
         preDexLibraries = true
         threadCount = 8
     }
+    packagingOptions {
+        exclude "META-INF/atomicfu.kotlin_module"
+    }
     testOptions {
         unitTests.returnDefaultValues = true
     }
@@ -139,9 +142,9 @@ dependencies {
     //endregion
 
     //region Firebase & Database
-    implementation(dependencies.Deps.Presentation.firebaseCore)
-    implementation(dependencies.Deps.Presentation.firebaseDB)
-    implementation(dependencies.Deps.Presentation.firebaseMessaging)
+    // implementation(dependencies.Deps.Presentation.firebaseCore)
+    // implementation(dependencies.Deps.Presentation.firebaseDB)
+    // implementation(dependencies.Deps.Presentation.firebaseMessaging)
     implementation(dependencies.Deps.Presentation.room)
     implementation(dependencies.Deps.Presentation.mmkv)
     //endregion
