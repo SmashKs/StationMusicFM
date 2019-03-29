@@ -22,14 +22,18 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.main.mymusic.MyMusicIndexFragment">
+    android:layout_height="wrap_content">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_playlist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_playlist_v1"/>
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        style="@style/MusicTextView.Bold.FitWidth"
+        android:layout_margin="@dimen/md_two_unit"
+        android:drawablePadding="@dimen/md_two_half_unit"
+        android:gravity="center_vertical"
+        app:drawableStartCompat="@drawable/ic_playlist_add_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Create a new Playlist"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

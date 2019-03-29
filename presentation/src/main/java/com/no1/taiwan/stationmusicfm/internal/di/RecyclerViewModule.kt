@@ -158,7 +158,7 @@ object RecyclerViewModule {
             SearchHistoryEntity::class.hashCode() to (R.layout.item_search_history to ::SearchHistoryViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            LocalMusicEntity::class.hashCode() to (R.layout.item_playlist to ::MyMusicViewHolder)
+            LocalMusicEntity::class.hashCode() to (R.layout.item_playlist_v1 to ::MyMusicViewHolder)
         }
     }
 }
