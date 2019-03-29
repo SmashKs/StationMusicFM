@@ -23,25 +23,31 @@ package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
+import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
 class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     private val adapter: MusicAdapter by instance()
-    private val linearLayoutManager: () -> LinearLayoutManager by provider(ObjectLabel.LINEAR_LAYOUT_VERTICAL)
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
+    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
+    private val footerCreatePlaylist by lazy { CreatePlaylistEntity() }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -58,6 +64,14 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
         observeNonNull(vm.favorites) {
             logw(this)
         }
+        observeNonNull(vm.playlists) {
+            peel {
+                adapter.append(cast<MusicVisitables>(it))
+                adapter.footerEntity = footerCreatePlaylist
+            } happenError {
+                loge(it)
+            } doWith this@MyMusicIndexFragment
+        }
     }
 
     /**
@@ -67,7 +81,8 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.Favorite.ordinal))
+//        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.Favorite.ordinal))
+        vm.runTaskFetchPlaylist()
     }
 
     /**
@@ -75,7 +90,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(R.id.rv_playlist), adapter, linearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_playlist), adapter, linearLayoutManager(), listOf(actionBarBlankDecoration))
     }
 
     /**

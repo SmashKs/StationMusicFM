@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders
 
 import android.view.View
+import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
@@ -39,8 +40,8 @@ class PlaylistViewHolder(view: View) : MultiViewHolder<PlaylistInfoEntity>(view)
     override fun initView(model: PlaylistInfoEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<View>(R.id.iv_playlist_thumbnail)
-            find<View>(R.id.ftv_playlist_name)
-            find<View>(R.id.ftv_track_count)
+            find<TextView>(R.id.ftv_playlist_name).text = model.name
+            find<TextView>(R.id.ftv_track_count).text = "${model.trackCount}"
             setOnClickListener {
             }
         }

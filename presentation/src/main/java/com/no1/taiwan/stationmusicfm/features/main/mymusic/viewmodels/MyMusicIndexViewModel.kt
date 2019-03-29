@@ -22,12 +22,17 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels
 
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
+import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.LocalMusicPMapper
-import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
+import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.PlaylistInfoPMapper
+import com.no1.taiwan.stationmusicfm.features.LocalMusics
+import com.no1.taiwan.stationmusicfm.features.Playlists
 import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.TransformedLiveData
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
@@ -37,15 +42,25 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 
 class MyMusicIndexViewModel(
+    private val fetchPlaylistsCase: FetchPlaylistsCase,
     private val fetchTypeOfHistsCase: FetchTypeOfHistsCase,
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
-    private val _playlist by lazy { RespMutableLiveData<List<LocalMusicEntity>>() }
-    val playlist: RespLiveData<List<LocalMusicEntity>> = _playlist
+    private val _playlists by lazy { RespMutableLiveData<Playlists>() }
+    val playlists: RespLiveData<Playlists> = _playlists
+    private val _playlist by lazy { RespMutableLiveData<LocalMusics>() }
+    val playlist: RespLiveData<LocalMusics> = _playlist
     val favorites = FavoriteLiveData(_playlist)
     val downloads = DownloadLiveData(_playlist)
     private val playlistMapper by lazy { digMapper(LocalMusicPMapper::class) }
+    private val playlistsMapper by lazy { digMapper(PlaylistInfoPMapper::class) }
     private lateinit var tempIds: List<Int>
+
+    fun runTaskFetchPlaylist() = launchBehind {
+        _playlists reqData {
+            fetchPlaylistsCase.execListMapping(playlistsMapper, FetchPlaylistsReq(EmptyParams()))
+        }
+    }
 
     fun runTaskFetchPlaylist(ids: List<Int>) = launchBehind {
         tempIds = ids
@@ -55,20 +70,20 @@ class MyMusicIndexViewModel(
     }
 
     inner class FavoriteLiveData(
-        override val source: RespMutableLiveData<List<LocalMusicEntity>>
-    ) : TransformedLiveData<ResponseState<List<LocalMusicEntity>>, List<LocalMusicEntity>>() {
-        override fun getTransformed(source: ResponseState<List<LocalMusicEntity>>) =
-            if (tempIds.contains(PlaylistIndex.Favorite.ordinal) && source is ResponseState.Success<List<LocalMusicEntity>>)
+        override val source: RespMutableLiveData<LocalMusics>
+    ) : TransformedLiveData<ResponseState<LocalMusics>, LocalMusics>() {
+        override fun getTransformed(source: ResponseState<LocalMusics>) =
+            if (tempIds.contains(PlaylistIndex.Favorite.ordinal) && source is ResponseState.Success<LocalMusics>)
                 source.data?.filter { PlaylistIndex.Favorite.ordinal.toString() in it.playlistList }.orEmpty()
             else
                 emptyList()
     }
 
     inner class DownloadLiveData(
-        override val source: RespMutableLiveData<List<LocalMusicEntity>>
-    ) : TransformedLiveData<ResponseState<List<LocalMusicEntity>>, List<LocalMusicEntity>>() {
-        override fun getTransformed(source: ResponseState<List<LocalMusicEntity>>) =
-            if (tempIds.contains(PlaylistIndex.Downloaded.ordinal) && source is ResponseState.Success<List<LocalMusicEntity>>)
+        override val source: RespMutableLiveData<LocalMusics>
+    ) : TransformedLiveData<ResponseState<LocalMusics>, LocalMusics>() {
+        override fun getTransformed(source: ResponseState<LocalMusics>) =
+            if (tempIds.contains(PlaylistIndex.Downloaded.ordinal) && source is ResponseState.Success<LocalMusics>)
                 source.data?.filter { it.localTrackUri.isNotBlank() }.orEmpty()
             else
                 emptyList()
