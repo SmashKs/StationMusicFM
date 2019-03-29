@@ -23,10 +23,12 @@ package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders
 
 import android.view.View
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
+import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import org.jetbrains.anko.find
 
-class MyMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view) {
+class PlaylistViewHolder(view: View) : MultiViewHolder<PlaylistInfoEntity>(view) {
     /**
      * Set the views' properties.
      *
@@ -34,6 +36,13 @@ class MyMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view) {
      * @param position  the index of a list.
      * @param adapter   parent adapter.
      */
-    override fun initView(model: LocalMusicEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(model: PlaylistInfoEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        itemView.apply {
+            find<View>(R.id.iv_playlist_thumbnail)
+            find<View>(R.id.ftv_playlist_name)
+            find<View>(R.id.ftv_track_count)
+            setOnClickListener {
+            }
+        }
     }
 }

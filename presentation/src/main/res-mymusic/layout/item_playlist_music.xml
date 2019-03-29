@@ -25,10 +25,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".features.main.mymusic.viewholders.LocalMusicViewHolder">
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_playlist_name"
+        android:id="@+id/ftv_music_name"
         style="@style/MusicTextView.AnyWidth"
         android:layout_marginBottom="@dimen/md_one_unit"
         android:layout_marginEnd="@dimen/md_zero_unit"
@@ -50,7 +51,7 @@
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ftv_playlist_name"
+        app:layout_constraintStart_toEndOf="@id/ftv_music_name"
         app:layout_constraintTop_toTopOf="parent"
         tools:drawableEnd="@drawable/ic_arrow_right_black"
         tools:text="@tools:sample/us_phones"/>

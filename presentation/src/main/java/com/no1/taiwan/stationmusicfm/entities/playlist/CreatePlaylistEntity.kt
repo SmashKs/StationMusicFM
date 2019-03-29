@@ -21,22 +21,16 @@
 
 package com.no1.taiwan.stationmusicfm.entities.playlist
 
+import androidx.annotation.DrawableRes
 import com.no1.taiwan.stationmusicfm.entities.Entity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
-import java.util.Date
 
-data class PlaylistInfoEntity(
-    val id: Int = 0,
-    val name: String = DEFAULT_STR,
-    val trackCount: Int = 0,
-    val created: Date = Date(),
-    val updated: Date = givenDate
+data class CreatePlaylistEntity(
+    @DrawableRes val iconRes: Int = DEFAULT_INT,
+    val content: String = DEFAULT_STR
 ) : Entity, MusicMultiVisitable {
-    companion object Constant {
-        private val givenDate = Date(0)
-    }
-
     override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
 }

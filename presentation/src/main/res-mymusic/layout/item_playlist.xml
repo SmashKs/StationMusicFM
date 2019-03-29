@@ -26,7 +26,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/md_two_half_unit">
+    android:padding="@dimen/md_two_half_unit"
+    tools:context=".features.main.mymusic.viewholders.PlaylistViewHolder">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_playlist_thumbnail"

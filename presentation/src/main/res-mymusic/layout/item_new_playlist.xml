@@ -25,9 +25,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".features.main.mymusic.viewholders.CreatePlaylistViewHolder">
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_new_playlist"
         style="@style/MusicTextView.Bold.FitWidth"
         android:layout_margin="@dimen/md_two_unit"
         android:drawablePadding="@dimen/md_two_half_unit"
