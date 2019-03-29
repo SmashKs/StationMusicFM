@@ -32,9 +32,8 @@
         android:id="@+id/iv_pic"
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
-        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:0.5"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
