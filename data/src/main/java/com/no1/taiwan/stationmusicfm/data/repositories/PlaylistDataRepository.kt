@@ -50,8 +50,11 @@ class PlaylistDataRepository constructor(
 
     override suspend fun deleteLocalMusic(parameters: Parameterable) = local.deleteLocalMusic(parameters)
 
-    override suspend fun fetchPlaylists(parameters: Parameterable) =
+    override suspend fun fetchPlaylists() =
         local.fetchPlaylists().map(playlistMapper::toModelFrom)
+
+    override suspend fun fetchTheNewestPlaylist() =
+        local.fetchTheNewestPlaylist().run(playlistMapper::toModelFrom)
 
     override suspend fun fetchPlaylist(parameters: Parameterable) =
         local.fetchPlaylist(parameters).run(playlistMapper::toModelFrom)

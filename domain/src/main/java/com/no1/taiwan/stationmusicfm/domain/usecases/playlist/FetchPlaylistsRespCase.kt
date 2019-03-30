@@ -21,9 +21,11 @@
 
 package com.no1.taiwan.stationmusicfm.domain.usecases.playlist
 
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_IDS
 import com.no1.taiwan.stationmusicfm.domain.repositories.PlaylistRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
@@ -37,9 +39,13 @@ class FetchPlaylistsRespCase(
 
     override suspend fun acquireCase() = attachParameter {
         if (it.parameters is EmptyParams)
-            repository.fetchPlaylists(it.parameters)
-        else
-            listOf(repository.fetchPlaylist(it.parameters))
+            repository.fetchPlaylists()
+        else {
+            if (cast<List<Int>>(it.parameters.toApiAnyParam()[PARAM_NAME_IDS]).isEmpty())
+                listOf(repository.fetchTheNewestPlaylist())
+            else
+                listOf(repository.fetchPlaylist(it.parameters))
+        }
     }
 
     class Request(val parameters: Parameterable = PlaylistParams()) : RequestValues

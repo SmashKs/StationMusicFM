@@ -25,12 +25,15 @@ import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddPlaylistsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddPlaylistsReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.LocalMusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.PlaylistInfoPMapper
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.LocalMusics
 import com.no1.taiwan.stationmusicfm.features.Playlists
 import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.TransformedLiveData
@@ -38,16 +41,22 @@ import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
+import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 
 class MyMusicIndexViewModel(
     private val fetchPlaylistsCase: FetchPlaylistsCase,
+    private val addPlaylistsCase: AddPlaylistsCase,
     private val fetchTypeOfHistsCase: FetchTypeOfHistsCase,
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _playlists by lazy { RespMutableLiveData<Playlists>() }
     val playlists: RespLiveData<Playlists> = _playlists
+    private val _newestPlaylist by lazy { RespMutableLiveData<Playlists>() }
+    val newestPlaylist = NewestPlaylistLiveData(_newestPlaylist)
+    private val _addPlaylistRes by lazy { RespMutableLiveData<Boolean>() }
+    val addPlaylistRes: RespLiveData<Boolean> = _addPlaylistRes
     private val _playlist by lazy { RespMutableLiveData<LocalMusics>() }
     val playlist: RespLiveData<LocalMusics> = _playlist
     val favorites = FavoriteLiveData(_playlist)
@@ -62,11 +71,33 @@ class MyMusicIndexViewModel(
         }
     }
 
+    fun runTaskFetchTheNewestPlaylist() = launchBehind {
+        _newestPlaylist reqData {
+            fetchPlaylistsCase.execListMapping(playlistsMapper, FetchPlaylistsReq(PlaylistParams()))
+        }
+    }
+
+    fun runTaskAddPlaylist(playlistName: String) = launchBehind {
+        _addPlaylistRes reqData {
+            addPlaylistsCase.exec(AddPlaylistsReq(PlaylistParams(listOf(0), listOf(playlistName))))
+        }
+    }
+
     fun runTaskFetchPlaylist(ids: List<Int>) = launchBehind {
         tempIds = ids
         _playlist reqData {
             fetchTypeOfHistsCase.execListMapping(playlistMapper, FetchTypeOfHistsReq(PlaylistParams(ids)))
         }
+    }
+
+    class NewestPlaylistLiveData(
+        override val source: RespMutableLiveData<Playlists>
+    ) : TransformedLiveData<ResponseState<Playlists>, PlaylistInfoEntity>() {
+        override fun getTransformed(source: ResponseState<Playlists>) =
+            if (source is ResponseState.Success<Playlists>)
+                source.data?.first()
+            else
+                null  // don't change.
     }
 
     inner class FavoriteLiveData(

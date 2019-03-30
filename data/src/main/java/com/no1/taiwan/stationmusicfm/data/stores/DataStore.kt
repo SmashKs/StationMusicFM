@@ -126,6 +126,8 @@ interface DataStore {
 
     suspend fun fetchPlaylist(parameterable: Parameterable): PlaylistInfoData
 
+    suspend fun fetchTheNewestPlaylist(): PlaylistInfoData
+
     suspend fun addPlaylist(parameterable: Parameterable): Boolean
 
     suspend fun updatePlaylist(parameterable: Parameterable): Boolean

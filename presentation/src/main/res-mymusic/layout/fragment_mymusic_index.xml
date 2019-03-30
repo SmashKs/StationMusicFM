@@ -31,5 +31,6 @@
         android:id="@+id/rv_playlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_playlist_music"/>
+        tools:itemCount="5"
+        tools:listitem="@layout/item_playlist"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

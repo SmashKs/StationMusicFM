@@ -36,7 +36,9 @@ interface PlaylistRepository {
 
     suspend fun deleteLocalMusic(parameters: Parameterable): Boolean
 
-    suspend fun fetchPlaylists(parameters: Parameterable): List<PlaylistInfoModel>
+    suspend fun fetchPlaylists(): List<PlaylistInfoModel>
+
+    suspend fun fetchTheNewestPlaylist(): PlaylistInfoModel
 
     suspend fun fetchPlaylist(parameters: Parameterable): PlaylistInfoModel
 

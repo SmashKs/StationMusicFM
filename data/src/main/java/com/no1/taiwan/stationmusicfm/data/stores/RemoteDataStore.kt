@@ -166,6 +166,8 @@ class RemoteDataStore(
 
     override suspend fun fetchPlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
+    override suspend fun fetchTheNewestPlaylist() = UnsupportedOperation()
+
     override suspend fun addPlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
     override suspend fun updatePlaylist(parameterable: Parameterable) = UnsupportedOperation()

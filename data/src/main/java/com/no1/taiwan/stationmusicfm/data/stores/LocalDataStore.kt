@@ -147,6 +147,8 @@ class LocalDataStore(
         return playlistDao.retrievePlaylist(id)
     }
 
+    override suspend fun fetchTheNewestPlaylist() = playlistDao.retrieveLatestPlaylist()
+
     override suspend fun addPlaylist(parameterable: Parameterable) = tryWrapper {
         val ids = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS])
         val names = cast<List<String>>(parameterable.toApiAnyParam()[PARAM_NAME_NAMES])
@@ -170,7 +172,7 @@ class LocalDataStore(
     }
 
     override suspend fun deletePlaylist(parameterable: Parameterable) = tryWrapper {
-        val id = cast<Int>(parameterable.toApiAnyParam()[""])
+        val id = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS]).first()
         playlistDao.releaseBy(id)
     }
 

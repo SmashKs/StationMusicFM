@@ -27,12 +27,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_CREATE_NEW_PLAYLIST
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -51,6 +56,10 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
         CreatePlaylistEntity(content = getString(R.string.fragment_playlist_create_list))
     }
 
+    init {
+        BusFragLifeRegister(this)
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.playlist) {
@@ -60,18 +69,32 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
                 loge(it)
             } doWith this@MyMusicIndexFragment
         }
-        observeNonNull(vm.downloads) {
-            logw(this)
-        }
-        observeNonNull(vm.favorites) {
-            logw(this)
-        }
         observeNonNull(vm.playlists) {
             peel {
                 adapter.append(cast<MusicVisitables>(it))
             } happenError {
                 loge(it)
             } doWith this@MyMusicIndexFragment
+        }
+        observeNonNull(vm.addPlaylistRes) {
+            peel {
+                if (!it) return@peel
+                vm.runTaskFetchTheNewestPlaylist()
+            } happenError {
+                loge(it)
+            } doWith this@MyMusicIndexFragment
+        }
+        observeNonNull(vm.newestPlaylist) {
+            adapter.append(this)
+        }
+
+        // FIXME(jieyi): 2019-03-30 Maybe not be here.
+        observeNonNull(vm.downloads) {
+            logw(this)
+        }
+        observeNonNull(vm.favorites) {
+            logw(this)
+            // TODO(jieyi): 2019-03-30 Combine four image into an image.
         }
     }
 
@@ -82,7 +105,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-//        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.FAVORITE.ordinal))
+        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.FAVORITE.ordinal))
         vm.runTaskFetchPlaylist()
     }
 
@@ -101,4 +124,9 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_mymusic_index
+
+    @Subscribe(tags = [Tag(TAG_CREATE_NEW_PLAYLIST)])
+    fun createNewPlaylist(playlistName: String) {
+        vm.runTaskAddPlaylist(playlistName)
+    }
 }

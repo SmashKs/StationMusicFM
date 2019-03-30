@@ -38,6 +38,9 @@ abstract class PlaylistDao : BaseDao<PlaylistInfoData> {
     @Query("SELECT * FROM table_playlist_info")
     abstract fun retrievePlaylists(): List<PlaylistInfoData>
 
+    @Query("SELECT * FROM table_playlist_info ORDER BY id DESC LIMIT 1")
+    abstract fun retrieveLatestPlaylist(): PlaylistInfoData
+
     /**
      * Get a data from the playlist table.
      *

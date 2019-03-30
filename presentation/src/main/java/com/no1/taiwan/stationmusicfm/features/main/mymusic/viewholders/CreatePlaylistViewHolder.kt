@@ -26,13 +26,17 @@ import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.devrapid.kotlinknifer.DrawableDirectionConst.DRAWABLE_DIRECTION_START
 import com.devrapid.kotlinknifer.addDrawable
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
 import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class CreatePlaylistViewHolder(view: View) : MultiViewHolder<CreatePlaylistEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -45,6 +49,8 @@ class CreatePlaylistViewHolder(view: View) : MultiViewHolder<CreatePlaylistEntit
             find<TextView>(R.id.ftv_new_playlist).apply {
                 text = model.content
                 model.iconRes.takeUnlessDefault { addDrawable(it, DRAWABLE_DIRECTION_START) }
+            }
+            setOnClickListener {
             }
         }
     }

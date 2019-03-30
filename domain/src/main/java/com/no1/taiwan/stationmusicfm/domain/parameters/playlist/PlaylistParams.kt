@@ -26,6 +26,7 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
 data class PlaylistParams(
+    // NOTE: ids and names' size must be the same.
     private val ids: List<Int> = emptyList(),
     private val names: List<String> = emptyList(),
     private val addOrMinus: Boolean = true,  // True → add; False → minus
