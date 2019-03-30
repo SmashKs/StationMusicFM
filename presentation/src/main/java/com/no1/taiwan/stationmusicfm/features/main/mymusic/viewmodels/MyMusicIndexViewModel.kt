@@ -73,8 +73,8 @@ class MyMusicIndexViewModel(
         override val source: RespMutableLiveData<LocalMusics>
     ) : TransformedLiveData<ResponseState<LocalMusics>, LocalMusics>() {
         override fun getTransformed(source: ResponseState<LocalMusics>) =
-            if (tempIds.contains(PlaylistIndex.Favorite.ordinal) && source is ResponseState.Success<LocalMusics>)
-                source.data?.filter { PlaylistIndex.Favorite.ordinal.toString() in it.playlistList }.orEmpty()
+            if (tempIds.contains(PlaylistIndex.FAVORITE.ordinal) && source is ResponseState.Success<LocalMusics>)
+                source.data?.filter { PlaylistIndex.FAVORITE.ordinal.toString() in it.playlistList }.orEmpty()
             else
                 null  // don't change.
     }
@@ -83,7 +83,7 @@ class MyMusicIndexViewModel(
         override val source: RespMutableLiveData<LocalMusics>
     ) : TransformedLiveData<ResponseState<LocalMusics>, LocalMusics>() {
         override fun getTransformed(source: ResponseState<LocalMusics>) =
-            if (tempIds.contains(PlaylistIndex.Downloaded.ordinal) && source is ResponseState.Success<LocalMusics>)
+            if (tempIds.contains(PlaylistIndex.DOWNLOADED.ordinal) && source is ResponseState.Success<LocalMusics>)
                 source.data?.filter { it.localTrackUri.isNotBlank() }.orEmpty()
             else
                 null  // don't change.

@@ -52,8 +52,11 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_REMOTE_TRACK_URI
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_TRACK_NAME
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_ADD_OR_MINUS
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_IDS
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_NAMES
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_TRACK_COUNT
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 import com.tencent.mmkv.MMKV
 
@@ -154,10 +157,16 @@ class LocalDataStore(
     }
 
     override suspend fun updatePlaylist(parameterable: Parameterable) = tryWrapper {
-        val id = cast<Int>(parameterable.toApiAnyParam()[""])
-        val name = castOrNull<String>(parameterable.toApiAnyParam()[""]).orEmpty()
-        val trackNumbers = castOrNull<Int>(parameterable.toApiAnyParam()[""]) ?: -1
+        val id = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS]).first()
+        val name = cast<List<String>>(parameterable.toApiAnyParam()[PARAM_NAME_NAMES]).first()
+        val trackNumbers = castOrNull<Int>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_COUNT]) ?: DEFAULT_INT
         playlistDao.replaceBy(id, name, trackNumbers)
+    }
+
+    override suspend fun updateCountOfPlaylist(parameterable: Parameterable) = tryWrapper {
+        val id = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS]).first()
+        val addOrMinus = cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_ADD_OR_MINUS])
+        playlistDao.apply { if (addOrMinus) increaseCountBy(id) else decreaseCountBy(id) }
     }
 
     override suspend fun deletePlaylist(parameterable: Parameterable) = tryWrapper {
@@ -172,7 +181,7 @@ class LocalDataStore(
 
     override suspend fun fetchTypeOfHistories(parameterable: Parameterable): List<LocalMusicData> {
         val ids = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS])
-        if (ids.first() == PlaylistIndex.Downloaded.ordinal) {
+        if (ids.first() == PlaylistIndex.DOWNLOADED.ordinal) {
             return listenHistoryDao.retrieveDownloadedMusics()
         }
         return listenHistoryDao.retrieveTypeOfMusics(ids.first())

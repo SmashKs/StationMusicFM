@@ -60,6 +60,8 @@ class PlaylistDataRepository constructor(
 
     override suspend fun updatePlaylist(parameters: Parameterable) = local.updatePlaylist(parameters)
 
+    override suspend fun updateCountOfPlaylist(parameters: Parameterable) = local.updateCountOfPlaylist(parameters)
+
     override suspend fun deletePlaylist(parameters: Parameterable) = local.deletePlaylist(parameters)
 
     override suspend fun fetchListenedHistories(parameters: Parameterable) =

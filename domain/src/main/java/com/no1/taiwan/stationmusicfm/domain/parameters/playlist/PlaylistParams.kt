@@ -22,21 +22,27 @@
 package com.no1.taiwan.stationmusicfm.domain.parameters.playlist
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
 data class PlaylistParams(
-    val ids: List<Int> = emptyList(),
-    val names: List<String> = emptyList()
+    private val ids: List<Int> = emptyList(),
+    private val names: List<String> = emptyList(),
+    private val addOrMinus: Boolean = true,  // True → add; False → minus
+    private val trackCount: Int = DEFAULT_INT
 ) : Parameterable {
     companion object {
         const val PARAM_NAME_IDS = "playlist id list"
         const val PARAM_NAME_NAMES = "playlist name list"
+        const val PARAM_NAME_ADD_OR_MINUS = "playlist increase or decrease track count"
+        const val PARAM_NAME_TRACK_COUNT = "playlist track count"
     }
 
     override fun toApiParam() = UnsupportedOperation()
 
-    override fun toApiAnyParam(): HashMap<String, Any> = hashMapOf(
-        PARAM_NAME_IDS to ids,
-        PARAM_NAME_NAMES to names)
+    override fun toApiAnyParam() = hashMapOf(PARAM_NAME_IDS to ids,
+                                             PARAM_NAME_NAMES to names,
+                                             PARAM_NAME_ADD_OR_MINUS to addOrMinus,
+                                             PARAM_NAME_TRACK_COUNT to trackCount)
 }
 

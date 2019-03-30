@@ -35,6 +35,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchSearchHistsReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.SearchHistoryPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.SearchHistories
 import com.no1.taiwan.stationmusicfm.utils.aac.data
@@ -70,7 +71,7 @@ class SearchViewModel(
 
     fun runTaskSearchMusic(keyword: String) = launchBehind {
         this@SearchViewModel.keyword.postValue(keyword)
-        if (page.value != -1) {  // -1 means to the end.
+        if (page.value != DEFAULT_INT) {  // -1 means to the end.
             _musics reqData {
                 fetchMusicCase.execMapping(musicMapper,
                                            FetchMusicReq(SrchSongParams(keyword, requireNotNull(page.value))))

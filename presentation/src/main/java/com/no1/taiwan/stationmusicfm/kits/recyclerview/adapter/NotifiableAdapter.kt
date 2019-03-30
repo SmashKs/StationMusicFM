@@ -27,6 +27,7 @@ import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.uiSwitch
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
@@ -65,7 +66,7 @@ class NotifiableAdapter(
     override fun onViewAttachedToWindow(holder: MusicViewHolder) {
         super.onViewAttachedToWindow(holder)
         // In the beginning we don't need to set again, this is for clicking an item then notify others.
-        if (playingPosition != -1)
+        if (playingPosition != DEFAULT_INT)
         // For updating views are out of the screen but didn't go to attached scrap buffer.
             castOrNull<Notifiable>(holder)?.notifyChange(playingPosition)
         // OPTIMIZE(jieyi): 2019-03-15 Workaround for setting icon again because the viewpager shows again will

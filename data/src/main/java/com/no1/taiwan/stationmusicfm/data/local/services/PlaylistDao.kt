@@ -26,6 +26,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.no1.taiwan.stationmusicfm.data.data.playlist.PlaylistInfoData
 import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import java.util.Date
 
 @Dao
@@ -44,6 +46,12 @@ abstract class PlaylistDao : BaseDao<PlaylistInfoData> {
     @Query("SELECT * FROM table_playlist_info WHERE id=:id")
     abstract fun retrievePlaylist(id: Int): PlaylistInfoData
 
+    @Query("UPDATE table_playlist_info SET track_count=track_count+1 WHERE id=:id")
+    abstract fun increaseCountBy(id: Int)
+
+    @Query("UPDATE table_playlist_info SET track_count=track_count-1 WHERE id=:id")
+    abstract fun decreaseCountBy(id: Int)
+
     /**
      * Update a playlist by [id].
      *
@@ -52,10 +60,10 @@ abstract class PlaylistDao : BaseDao<PlaylistInfoData> {
      * @param trackNumber
      */
     @Transaction
-    open fun replaceBy(id: Int, name: String = "", trackNumber: Int = -1) {
-        if (name == "" && trackNumber == -1) return
+    open fun replaceBy(id: Int, name: String = DEFAULT_STR, trackNumber: Int = DEFAULT_INT) {
+        if (name == DEFAULT_STR && trackNumber == DEFAULT_INT) return
         val playlist = retrievePlaylist(id)
-        val newPlaylist = playlist.copy(name = name.takeIf { it != "" } ?: playlist.name,
+        val newPlaylist = playlist.copy(name = name.takeIf { it != DEFAULT_STR } ?: playlist.name,
                                         trackCount = trackNumber.takeIf { it >= 0 } ?: playlist.trackCount,
                                         updated = Date())
         replace(newPlaylist)

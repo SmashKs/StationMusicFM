@@ -130,6 +130,8 @@ interface DataStore {
 
     suspend fun updatePlaylist(parameterable: Parameterable): Boolean
 
+    suspend fun updateCountOfPlaylist(parameterable: Parameterable): Boolean
+
     suspend fun deletePlaylist(parameterable: Parameterable): Boolean
 
     // ↓↓↓ Type of playlist of the musics. ↓↓↓

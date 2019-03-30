@@ -146,7 +146,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
                 dismiss()
             }
             find<View>(R.id.ftv_to_favorite).setOnClickListener {
-                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.Favorite.ordinal)
+                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.FAVORITE.ordinal)
                 dismiss()
             }
             find<View>(R.id.ftv_music_info).setOnClickListener {

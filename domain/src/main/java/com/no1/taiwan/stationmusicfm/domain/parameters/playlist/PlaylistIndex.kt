@@ -22,5 +22,5 @@
 package com.no1.taiwan.stationmusicfm.domain.parameters.playlist
 
 enum class PlaylistIndex {
-    Downloaded, Favorite, Uncategory, Else;
+    ELSE, DOWNLOADED, FAVORITE, UNCATEGORY;
 }

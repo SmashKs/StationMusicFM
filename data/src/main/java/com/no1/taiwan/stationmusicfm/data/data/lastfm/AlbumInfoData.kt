@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.data.data.lastfm
 import com.devrapid.kotlinshaver.trimMarginAndNewLine
 import com.google.gson.annotations.SerializedName
 import com.no1.taiwan.stationmusicfm.data.data.Data
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 
 data class AlbumInfoData(
     val album: AlbumData?
@@ -45,7 +46,7 @@ data class AlbumInfoData(
         val artist: ArtistInfoData.ArtistData?,
         @SerializedName("playcount")
         val playCount: String? = null,
-        val index: Int = -1
+        val index: Int = DEFAULT_INT
     ) : BaseAlbumData(), Data {
         override fun toString() = """
             |${this::class.java.simpleName}(

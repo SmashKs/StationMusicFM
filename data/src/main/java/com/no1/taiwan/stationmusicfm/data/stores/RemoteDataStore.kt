@@ -170,6 +170,8 @@ class RemoteDataStore(
 
     override suspend fun updatePlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
+    override suspend fun updateCountOfPlaylist(parameterable: Parameterable) = UnsupportedOperation()
+
     override suspend fun deletePlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
     override suspend fun fetchListenedHistories(parameterable: Parameterable) = UnsupportedOperation()

@@ -82,7 +82,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-//        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.Favorite.ordinal))
+//        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.FAVORITE.ordinal))
         vm.runTaskFetchPlaylist()
     }
 

@@ -21,8 +21,12 @@
 
 package com.no1.taiwan.stationmusicfm.domain.usecases.playlist
 
+import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_ADD_OR_MINUS
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_LIST
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.PlaylistRepository
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicReq
@@ -35,7 +39,17 @@ class AddLocalMusicRespCase(
     override var requestValues: AddLocalMusicReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        repository.addLocalMusic(it.parameters)
+        val addRes = repository.addLocalMusic(it.parameters)
+        // If add false, just return. It's unnecessary to increase the track count.
+        if (!addRes) return@attachParameter addRes
+        // Get the parameter and pass into `increasing` or `deceasing` track count operation.
+        val addOrMinus = cast<Boolean>(it.parameters.toApiAnyParam()[PARAM_NAME_PLAYLIST_ADD_OR_MINUS])
+        val playlistList = cast<String>(it.parameters.toApiAnyParam()[PARAM_NAME_PLAYLIST_LIST])
+        // Playlist list will be a string with multiple number so it needs to be separated by ",".
+        playlistList.split(",").forEach {
+            repository.updateCountOfPlaylist(PlaylistParams(listOf(it.toInt()), addOrMinus = addOrMinus))
+        }
+        true
     }
 
     class Request(val parameters: Parameterable = LocalMusicParams()) : RequestValues
