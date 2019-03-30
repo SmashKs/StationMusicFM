@@ -50,6 +50,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackV
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.SimilarArtistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.TrackOfGenreViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.CreatePlaylistViewHolder
+import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.LocalMusicViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.PlaylistViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.ChartViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder
@@ -167,7 +168,7 @@ object RecyclerViewModule {
             CreatePlaylistEntity::class.hashCode() to (R.layout.item_new_playlist to ::CreatePlaylistViewHolder)
         }
         bind<ViewHolderEntry>().inSet() with provider {
-            LocalMusicEntity::class.hashCode() to (R.layout.item_playlist_music to ::PlaylistViewHolder)
+            LocalMusicEntity::class.hashCode() to (R.layout.item_playlist_music to ::LocalMusicViewHolder)
         }
     }
 }

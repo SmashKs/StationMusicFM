@@ -24,12 +24,17 @@ package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders
 import android.view.View
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_PLAYLIST_DETAIL
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class PlaylistViewHolder(view: View) : MultiViewHolder<PlaylistInfoEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -41,8 +46,11 @@ class PlaylistViewHolder(view: View) : MultiViewHolder<PlaylistInfoEntity>(view)
         itemView.apply {
             find<View>(R.id.iv_playlist_thumbnail)
             find<TextView>(R.id.ftv_playlist_name).text = model.name
-            find<TextView>(R.id.ftv_track_count).text = "${model.trackCount}"
+            find<TextView>(R.id.ftv_track_count).text =
+                context.getString(R.string.viewholder_playlist_song).format(model.trackCount)
+            /** @event_to [com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicIndexFragment.gotoPlaylistDetail] */
             setOnClickListener {
+                emitter.post(TAG_TO_PLAYLIST_DETAIL, model.id)
             }
         }
     }

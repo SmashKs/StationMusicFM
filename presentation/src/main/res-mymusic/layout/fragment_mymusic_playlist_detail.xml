@@ -13,34 +13,24 @@
   ~ copies or substantial portions of the Software.
   ~
   ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-  ~ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  ~ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
   ~ PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
   ~ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<navigation
-    android:id="@+id/nav_rank"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/frag_music_index">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.main.mymusic.MyMusicDetailFragment">
 
-    <fragment
-        android:id="@+id/frag_music_index"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicIndexFragment"
-        android:label="My Music"
-        tools:layout="@layout/fragment_mymusic_index">
-        <action
-            android:id="@+id/action_frag_music_index_to_frag_music_detail"
-            app:destination="@id/frag_music_detail"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/frag_music_detail"
-        android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicDetailFragment"
-        android:label=""
-        tools:layout="@layout/fragment_mymusic_playlist_detail">
-    </fragment>
-</navigation>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_music"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_playlist_music"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

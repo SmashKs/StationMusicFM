@@ -22,23 +22,17 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
 import android.os.Bundle
-import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
-import com.hwangjr.rxbus.annotation.Subscribe
-import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
-import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
-import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
+import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_CREATE_NEW_PLAYLIST
-import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_PLAYLIST_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -50,13 +44,24 @@ import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
-class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
+class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
+    companion object Factory {
+        // The key name of the fragment initialization parameters.
+        private const val ARGUMENT_PLAYLIST_ID = "fragment argument playlist id"
+
+        /**
+         * Use this factory method to create a new instance of this fragment using the provided parameters.
+         *
+         * @return A new bundle of this fragment.
+         */
+        fun createBundle(playlistId: Int) = bundleOf(ARGUMENT_PLAYLIST_ID to playlistId)
+    }
+
+    // The fragment initialization parameters.
+    private val playlistId by extraNotNull<Int>(ARGUMENT_PLAYLIST_ID)
     private val adapter: MusicAdapter by instance()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
-    private val footerCreatePlaylist by lazy {
-        CreatePlaylistEntity(content = getString(R.string.fragment_playlist_create_list))
-    }
 
     init {
         BusFragLifeRegister(this)
@@ -66,37 +71,10 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.playlist) {
             peel {
-                logw(it)
-            } happenError {
-                loge(it)
-            } doWith this@MyMusicIndexFragment
-        }
-        observeNonNull(vm.playlists) {
-            peel {
                 adapter.append(cast<MusicVisitables>(it))
             } happenError {
                 loge(it)
-            } doWith this@MyMusicIndexFragment
-        }
-        observeNonNull(vm.addPlaylistRes) {
-            peel {
-                if (!it) return@peel
-                vm.runTaskFetchTheNewestPlaylist()
-            } happenError {
-                loge(it)
-            } doWith this@MyMusicIndexFragment
-        }
-        observeNonNull(vm.newestPlaylist) {
-            adapter.append(this)
-        }
-
-        // FIXME(jieyi): 2019-03-30 Maybe not be here.
-        observeNonNull(vm.downloads) {
-            logw(this)
-        }
-        observeNonNull(vm.favorites) {
-            logw(this)
-            // TODO(jieyi): 2019-03-30 Combine four image into an image.
+            } doWith this@MyMusicDetailFragment
         }
     }
 
@@ -107,8 +85,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.FAVORITE.ordinal))
-        vm.runTaskFetchPlaylist()
+        vm.runTaskFetchPlaylist(playlistId)
     }
 
     /**
@@ -116,8 +93,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(R.id.rv_playlist), adapter, linearLayoutManager(), listOf(actionBarBlankDecoration))
-        adapter.footerEntity = footerCreatePlaylist
+        initRecyclerViewWith(find(R.id.rv_music), adapter, linearLayoutManager(), listOf(actionBarBlankDecoration))
     }
 
     /**
@@ -125,19 +101,5 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      *
      * @return [LayoutRes] layout xml.
      */
-    override fun provideInflateView() = R.layout.fragment_mymusic_index
-
-    @Subscribe(tags = [Tag(TAG_CREATE_NEW_PLAYLIST)])
-    fun createNewPlaylist(playlistName: String) {
-        vm.runTaskAddPlaylist(playlistName)
-    }
-
-    /**
-     * @event_from [com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.PlaylistViewHolder.initView]
-     */
-    @Subscribe(tags = [Tag(TAG_TO_PLAYLIST_DETAIL)])
-    fun gotoPlaylistDetail(playlistId: Number) {
-        findNavController().navigate(R.id.action_frag_music_index_to_frag_music_detail,
-                                     MyMusicDetailFragment.createBundle(playlistId.toInt()))
-    }
+    override fun provideInflateView() = R.layout.fragment_mymusic_playlist_detail
 }

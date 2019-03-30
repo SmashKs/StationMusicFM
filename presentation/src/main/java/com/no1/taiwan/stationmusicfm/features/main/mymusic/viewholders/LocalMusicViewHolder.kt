@@ -22,13 +22,18 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders
 
 import android.view.View
+import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -38,7 +43,7 @@ class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view)
      */
     override fun initView(model: LocalMusicEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
-            find<View>(R.id.ftv_music_name)
+            find<TextView>(R.id.ftv_music_name).text = model.trackName
             find<View>(R.id.ftv_number_of_tracks)
             setOnClickListener {
             }
