@@ -22,16 +22,16 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicDetailViewModel
-import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -47,21 +47,20 @@ import org.kodein.di.generic.provider
 class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
     companion object Factory {
         // The key name of the fragment initialization parameters.
-        private const val ARGUMENT_PLAYLIST_ID = "fragment argument playlist id"
+        private const val ARGUMENT_PLAYLIST_INFO = "fragment argument playlist information entity"
 
         /**
          * Use this factory method to create a new instance of this fragment using the provided parameters.
          *
          * @return A new bundle of this fragment.
          */
-        fun createBundle(playlistId: Int) = bundleOf(ARGUMENT_PLAYLIST_ID to playlistId)
+        fun createBundle(playlistInfo: PlaylistInfoEntity) = bundleOf(ARGUMENT_PLAYLIST_INFO to playlistInfo)
     }
 
     // The fragment initialization parameters.
-    private val playlistId by extraNotNull<Int>(ARGUMENT_PLAYLIST_ID)
+    private val playlistInfo by extraNotNull<PlaylistInfoEntity>(ARGUMENT_PLAYLIST_INFO)
     private val adapter: MusicAdapter by instance()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
 
     init {
         BusFragLifeRegister(this)
@@ -85,7 +84,7 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.runTaskFetchPlaylist(playlistId)
+        vm.runTaskFetchPlaylist(playlistInfo.id)
     }
 
     /**
@@ -93,7 +92,10 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(R.id.rv_music), adapter, linearLayoutManager(), listOf(actionBarBlankDecoration))
+        initRecyclerViewWith(find(R.id.rv_music), adapter, linearLayoutManager())
+        find<TextView>(R.id.ftv_playlist_name).text = playlistInfo.name
+        find<TextView>(R.id.ftv_track_count).text =
+            getString(R.string.viewholder_playlist_song).format(playlistInfo.trackCount)
     }
 
     /**

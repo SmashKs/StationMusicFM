@@ -22,15 +22,75 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".features.main.mymusic.MyMusicDetailFragment">
 
+    <include
+        android:id="@+id/part_blank"
+        layout="@layout/part_actionbar_blank"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_playlist_thumbnail"
+        android:layout_width="@dimen/md_eight_unit"
+        android:layout_height="@dimen/md_eight_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/part_blank"
+        tools:src="@tools:sample/avatars"/>
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_playlist_name"
+        style="@style/MusicTextView.Bold.AnyWidth"
+        app:layout_constraintBottom_toTopOf="@id/ftv_track_count"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_playlist_thumbnail"
+        app:layout_constraintTop_toTopOf="@id/iv_playlist_thumbnail"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        tools:text="@tools:sample/lorem"/>
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_track_count"
+        style="@style/MusicTextView.AnyWidth"
+        app:layout_constraintBottom_toBottomOf="@id/iv_playlist_thumbnail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_playlist_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/ftv_playlist_name"
+        tools:text="@string/viewholder_playlist_song"/>
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_playlist_title"
+        style="@style/MusicTextView.AnyWidth"
+        android:layout_marginTop="@dimen/md_three_unit"
+        android:text="Track List"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_playlist_thumbnail"/>
+
+    <include
+        android:id="@+id/v_divider"
+        layout="@layout/part_thin_separate_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_dp"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_one_half_unit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ftv_playlist_title"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_music"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_divider"
         tools:itemCount="5"
         tools:listitem="@layout/item_playlist_music"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

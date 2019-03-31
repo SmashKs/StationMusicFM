@@ -21,19 +21,22 @@
 
 package com.no1.taiwan.stationmusicfm.entities.playlist
 
+import android.os.Parcelable
 import com.no1.taiwan.stationmusicfm.entities.Entity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
+import kotlinx.android.parcel.Parcelize
 import java.util.Date
 
+@Parcelize
 data class PlaylistInfoEntity(
     val id: Int = 0,
     val name: String = DEFAULT_STR,
     val trackCount: Int = 0,
     val created: Date = Date(),
     val updated: Date = givenDate
-) : Entity, MusicMultiVisitable {
+) : Entity, Parcelable, MusicMultiVisitable {
     companion object Constant {
         private val givenDate = Date(0)
     }

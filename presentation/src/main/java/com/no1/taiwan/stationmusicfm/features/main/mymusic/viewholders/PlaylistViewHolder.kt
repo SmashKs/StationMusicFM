@@ -50,7 +50,7 @@ class PlaylistViewHolder(view: View) : MultiViewHolder<PlaylistInfoEntity>(view)
                 context.getString(R.string.viewholder_playlist_song).format(model.trackCount)
             /** @event_to [com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicIndexFragment.gotoPlaylistDetail] */
             setOnClickListener {
-                emitter.post(TAG_TO_PLAYLIST_DETAIL, model.id)
+                emitter.post(TAG_TO_PLAYLIST_DETAIL, model.copy())
             }
         }
     }

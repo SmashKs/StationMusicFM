@@ -33,6 +33,7 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
@@ -136,8 +137,8 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      * @event_from [com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.PlaylistViewHolder.initView]
      */
     @Subscribe(tags = [Tag(TAG_TO_PLAYLIST_DETAIL)])
-    fun gotoPlaylistDetail(playlistId: Number) {
+    fun gotoPlaylistDetail(playlistInfo: PlaylistInfoEntity) {
         findNavController().navigate(R.id.action_frag_music_index_to_frag_music_detail,
-                                     MyMusicDetailFragment.createBundle(playlistId.toInt()))
+                                     MyMusicDetailFragment.createBundle(playlistInfo))
     }
 }
