@@ -75,6 +75,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
         observeNonNull(vm.playlists) {
             peel {
                 adapter.append(cast<MusicVisitables>(it))
+                adapter.footerEntity = footerCreatePlaylist
             } happenError {
                 loge(it)
             } doWith this@MyMusicIndexFragment
@@ -118,7 +119,6 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         initRecyclerViewWith(find(R.id.rv_playlist), adapter, linearLayoutManager(), listOf(actionBarBlankDecoration))
-        adapter.footerEntity = footerCreatePlaylist
     }
 
     /**
