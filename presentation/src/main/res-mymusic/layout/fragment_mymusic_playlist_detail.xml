@@ -48,6 +48,8 @@
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_playlist_name"
         style="@style/MusicTextView.Bold.AnyWidth"
+        android:layout_marginTop="@dimen/md_one_half_unit"
+        android:textSize="@dimen/text_size_title"
         app:layout_constraintBottom_toTopOf="@id/ftv_track_count"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_playlist_thumbnail"
