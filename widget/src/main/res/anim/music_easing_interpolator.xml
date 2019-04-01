@@ -20,21 +20,10 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <!-- New Version 1 -->
-    <color name="colorPrimaryV1">#584E67</color>
-    <color name="colorPrimaryLightV1">#857A95</color>
-    <color name="colorPrimaryDarkV1">#2F263C</color>
-    <color name="colorPrimaryTextV1">#15192C</color>
-    <color name="colorAccentV1">@color/colorSecondaryV1</color>
-    <color name="colorSecondaryV1">#EDD494</color>
-    <color name="colorSecondaryLightV1">#FFFFC5</color>
-    <color name="colorSecondaryDarkV1">#B9A365</color>
-    <color name="colorSecondaryTextV1">#FFFFFF</color>
-    <color name="colorNavigationBarV1">#4B3659</color>
-    <color name="colorBackgroundV1">#DDDDDD</color>
+<pathInterpolator
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:controlX1="0.42"
+    android:controlX2="0.58"
+    android:controlY1="0.0"
+    android:controlY2="1.0"/>
 
-    <color name="colorDivider">#BDBDBD</color>
-
-    <color name="kashmir_blue">#4E668F</color>
-</resources>
