@@ -53,7 +53,7 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.30-eap-45"
+        const val kotlinLib = "1.3.30-eap-125"
         const val kotlinCoroutine = "1.2.0-alpha"
     }
 
@@ -64,7 +64,8 @@ object Versions {
         const val adaptiveRecyclerView = "1.0.14"
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.1.2"
-        const val dialog = "1.0.6"
+        const val dialog = "1.0.7"
+        const val lottie = "3.0.0"
     }
 
     /**

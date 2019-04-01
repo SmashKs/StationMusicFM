@@ -120,6 +120,7 @@ object Deps {
         const val quickDialog = "com.devrapid.jieyi:dialogbuilder:${Versions.ViewComponent.dialog}"
         const val shapeOfView = "com.github.florent37:shapeofview:${Versions.ViewComponent.shapeOfView}"
         const val realtimeBlur = "com.github.mmin18:realtimeblurview:${Versions.ViewComponent.realtimeBlur}"
+        const val lottie = "com.airbnb.android:lottie:${Versions.ViewComponent.lottie}"
         // Android Jetpack
         const val materialDesign = "com.google.android.material:material:${Versions.AndroidComponent.material}"
         const val appcompat = "androidx.appcompat:appcompat:${Versions.AndroidComponent.appCompat}"

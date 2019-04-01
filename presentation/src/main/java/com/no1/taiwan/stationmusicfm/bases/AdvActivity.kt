@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.widget.components.dialog.LoadingDialog
 import org.kodein.di.generic.instance
 import java.lang.reflect.ParameterizedType
 
@@ -45,14 +46,14 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     /** The [ViewModelProviders.of] function for obtaining a [ViewModel]. */
     private val vmCreateMethod get() = vmProviders.javaClass.getMethod("get", vmConcreteClass.superclass.javaClass)
     /** Dialog loading view. */
-//    private val loadingView by lazy { LoadingDialog.getInstance(this) }
+    private val loadingView by lazy { LoadingDialog.getInstance(this) }
     /** Enable dialog loading view or use loading layout. */
     protected open var enableDialogLoading = true
 
     /**
      * Show a view with a progress bar indicating a loading process.
      */
-    override fun showLoading() = Unit
+    override fun showLoading() = loadingView.show()
 //        if (enableDialogLoading) loadingView.show() else showLoadingView()
 
     /**

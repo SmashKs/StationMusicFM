@@ -49,6 +49,7 @@ import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
@@ -84,14 +85,14 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topArtists) {
-            peel {
+            peelSkipLoading {
                 artistAdapter.append(cast<MusicVisitables>(it.artists))
             } happenError {
                 loge(it)
             } doWith this@ExploreIndexFragment
         }
         observeNonNull(vm.topTags) {
-            peel {
+            peelSkipLoading {
                 genreAdapter.append(cast<MusicVisitables>(it.tags))
             } happenError {
                 loge(it)

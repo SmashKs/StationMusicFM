@@ -163,6 +163,7 @@ dependencies {
     //region Third-party view components
     implementation(dependencies.Deps.Presentation.shapeOfView)
     implementation(dependencies.Deps.Presentation.realtimeBlur)
+    implementation(dependencies.Deps.Presentation.lottie)
     //endregion
 
     //region Debug

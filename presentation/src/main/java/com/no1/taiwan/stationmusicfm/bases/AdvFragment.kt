@@ -35,6 +35,7 @@ import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.isDefault
+import com.no1.taiwan.stationmusicfm.widget.components.dialog.LoadingDialog
 import org.jetbrains.anko.findOptional
 import org.kodein.di.generic.instance
 import java.lang.reflect.ParameterizedType
@@ -83,7 +84,7 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
         vmProvider(viewmodelProviderSource).javaClass.getMethod("get", vmConcreteClass.superclass.javaClass)
     }
     /** Dialog loading view. */
-//    private val loadingView by lazy { LoadingDialog.getInstance(this, true) }
+    private val loadingView by lazy { LoadingDialog.getInstance(this, true) }
     /** Enable dialog loading view or use loading layout. */
     protected open var enableDialogLoading = true
 
@@ -96,7 +97,7 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
 
     //region View Implementation for the Presenter.
     @UiThread
-    override fun showLoading() = Unit
+    override fun showLoading() = loadingView.show()
 //        if (enableDialogLoading) loadingView.show() else parent.showLoadingView()
 
     @UiThread

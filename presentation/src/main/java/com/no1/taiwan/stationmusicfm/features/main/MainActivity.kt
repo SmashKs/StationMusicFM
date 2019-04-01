@@ -56,7 +56,7 @@ class MainActivity : BaseActivity() {
     private val fragmentIndexNavigator get() = currentFragment.findNavController()
     private val bottomNavigation by lazy { find<BottomNavigationView>(R.id.bnv_navigation) }
     private val indexFragmentIds by lazy {
-        listOf(R.id.frag_explore_index, R.id.frag_mymusic, R.id.frag_rank_index, R.id.frag_search_index)
+        listOf(R.id.frag_explore_index, R.id.frag_music_index, R.id.frag_rank_index, R.id.frag_search_index)
     }
     var searchItem: MenuItem? = null
     var onQuerySubmit by SoftRef<(query: String) -> Unit>()
@@ -74,6 +74,7 @@ class MainActivity : BaseActivity() {
                 if (it.itemId == selectedItemId) return@setOnNavigationItemSelectedListener false
 
                 // Reassign to bottom navigation view.
+                // If we wanna use animation when changing to other navigation page.
                 NavigationUI.onNavDestinationSelected(it, navigator)
             }
         }
@@ -103,6 +104,7 @@ class MainActivity : BaseActivity() {
         fragmentIndexNavigator.navigateUp()
     }
 
+    //region Search a music functions
     fun performKeywordSubmit(query: String) {
         onQuerySubmit?.invoke(query)
         searchItem?.collapseActionView()
@@ -130,6 +132,7 @@ class MainActivity : BaseActivity() {
     fun hideSearchButton() {
         searchItem?.isVisible = false
     }
+    //endregion
 
     fun requireStoragePermission(grantedBlock: (() -> Unit)? = null) {
         if (ActivityCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
