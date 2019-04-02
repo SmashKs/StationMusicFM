@@ -28,6 +28,8 @@ internal interface EventListener {
 
     fun onCurrentTime(second: Int)
 
+    fun onChangeTrack(index: Int)
+
     fun onPlayerStateChanged(state: MusicPlayerState)
 
     fun onDownloadTrack(isSuccess: Boolean): Int

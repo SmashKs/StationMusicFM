@@ -24,7 +24,7 @@ package com.no1.taiwan.stationmusicfm.player.helpers
 import android.os.Environment
 import android.os.Environment.DIRECTORY_MUSIC
 import com.google.android.exoplayer2.util.Log
-import com.no1.taiwan.stationmusicfm.player.ExoPlayerEventListener
+import com.no1.taiwan.stationmusicfm.player.PlayerEventListener
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -34,7 +34,7 @@ import java.net.URL
 class DownloadHandler(
     private val url: String,
     filePath: String? = null,
-    eventListener: ExoPlayerEventListener.PlayerEventListener? = null
+    eventListener: PlayerEventListener? = null
 ) : Thread() {
     private val tag = "DownloadHandler"
     private val bufferSize = 2048
@@ -44,7 +44,7 @@ class DownloadHandler(
     private var totalSize: Int = -1
     private var path: String? = null
     private var file: File? = null
-    private var listener: ExoPlayerEventListener.PlayerEventListener? = null
+    private var listener: PlayerEventListener? = null
 
     init {
         path = when (filePath.isNullOrEmpty()) {

@@ -121,7 +121,7 @@ interface MusicPlayer {
     /**
      * The function is used to set up an event listener which monitor the activity of music player.
      */
-    fun setEventListener(listener: ExoPlayerEventListener.PlayerEventListener)
+    fun setEventListener(listener: PlayerEventListener)
 
     /**
      * The function is used to write the media file to local storage if the music player get the complete file.

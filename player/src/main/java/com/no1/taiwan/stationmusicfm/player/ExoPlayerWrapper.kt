@@ -32,9 +32,7 @@ import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Log
@@ -86,7 +84,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             }
             return true
         }
-    private var listener: ExoPlayerEventListener.PlayerEventListener? = null
+    private var listener: PlayerEventListener? = null
     private var individualPlay = false
     private var isPreparedList = false
 
@@ -287,7 +285,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     /**
      * The function is used to set up an event listener which monitor the activity of music player.
      */
-    override fun setEventListener(listener: ExoPlayerEventListener.PlayerEventListener) {
+    override fun setEventListener(listener: PlayerEventListener) {
         this.listener = listener
     }
 
@@ -312,11 +310,14 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         private val musicPlayer: ExoPlayerWrapper,
         private val exoPlayer: ExoPlayer
     ) : Player.EventListener {
-        override fun onTracksChanged(trackGroups: TrackGroupArray, trackSelections: TrackSelectionArray) {
-            println("=================================================")
-            println(trackGroups.toString())
-            println(trackSelections.toString())
-            println("=================================================")
+        private var currentIndex = -1
+
+        override fun onPositionDiscontinuity(reason: Int) {
+            val newIndex = exoPlayer.currentWindowIndex
+            if (newIndex != currentIndex) {
+                currentIndex = newIndex
+                // The index has changed; update the UI to show info for source at newIndex.
+            }
         }
 
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
