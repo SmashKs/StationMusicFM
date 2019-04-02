@@ -48,6 +48,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
+import com.no1.taiwan.stationmusicfm.player.PlayerEventListener
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
@@ -153,6 +154,13 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
                 dismiss()
             }
         }
+        player.setEventListener(PlayerEventListener {
+            onChangeTrack = {
+                // TODO(jieyi): 2019-04-03 Find the current play uri from the adapter.
+                if (tempSongEntity.url != player.curPlayingUri)
+                    songAdapter.playingPosition = it
+            }
+        })
     }
 
     /**

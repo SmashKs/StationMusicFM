@@ -24,7 +24,6 @@ package com.no1.taiwan.stationmusicfm.player
 import android.content.Context
 import android.net.Uri
 import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Timeline
@@ -56,7 +55,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     private val exoPlayer by lazy {
         Log.i(TAG, "init ExoPlayer")
         ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector()).apply {
-            addListener(LocalPlayerEventListener(this@ExoPlayerWrapper, this))
+            addListener(LocalPlayerEventListener(this@ExoPlayerWrapper))
         }
     }
     private lateinit var timer: PausableTimer
@@ -276,10 +275,13 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
      *
      * @return false is that writing file unsuccessful, otherwise, is that writing file successful.
      */
-    override fun writeToFile(url: String, filePath: String?): Boolean {
-        val downloadHandler = DownloadHandler(url, filePath, listener)
-        downloadHandler.start()
-        return true
+    override fun writeToFile(url: String, filePath: String?) = try {
+        DownloadHandler(url, filePath, listener).start()
+        true
+    }
+    catch (e: Exception) {
+        e.printStackTrace()
+        false
     }
 
     /**
@@ -307,25 +309,26 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     }
 
     private open class LocalPlayerEventListener(
-        private val musicPlayer: ExoPlayerWrapper,
-        private val exoPlayer: ExoPlayer
+        private val wrapper: ExoPlayerWrapper
     ) : Player.EventListener {
         private var currentIndex = -1
+        private val exoPlayer by lazy { wrapper.exoPlayer }
 
         override fun onPositionDiscontinuity(reason: Int) {
             val newIndex = exoPlayer.currentWindowIndex
             if (newIndex != currentIndex) {
                 currentIndex = newIndex
                 // The index has changed; update the UI to show info for source at newIndex.
+                wrapper.listener?.onChangeTrack(newIndex)
             }
         }
 
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-            musicPlayer.isPlaying = playWhenReady
+            wrapper.isPlaying = playWhenReady
         }
 
         override fun onLoadingChanged(isLoading: Boolean) {
-            musicPlayer.listener?.onBufferPercentage(exoPlayer.bufferedPercentage)
+            wrapper.listener?.onBufferPercentage(exoPlayer.bufferedPercentage)
         }
 
         override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int) {
@@ -333,16 +336,17 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             val threshold = 1_000_000  // Avoiding the bigger timeline comes, cause the running time is incorrect.
 
             if (exoPlayer.duration in 1..threshold) {
-                musicPlayer.listener?.onDurationChanged(exoPlayer.duration.div(millis).toInt())
-                musicPlayer.timer = PausableTimer(exoPlayer.duration.minus(exoPlayer.currentPosition), millis.toLong())
-                musicPlayer.timer.onTick = { millisUntilFinished ->
+                wrapper.listener?.onDurationChanged(exoPlayer.duration.div(millis).toInt())
+                wrapper.timer =
+                    PausableTimer(exoPlayer.duration.minus(exoPlayer.currentPosition), millis.toLong())
+                wrapper.timer.onTick = { millisUntilFinished ->
                     val time = (exoPlayer.duration - millisUntilFinished).div(millis).toInt()
-                    musicPlayer.listener?.onCurrentTime(time)
+                    wrapper.listener?.onCurrentTime(time)
                 }
-                musicPlayer.timer.onFinish = {
-                    musicPlayer.listener?.onCurrentTime(0)
+                wrapper.timer.onFinish = {
+                    wrapper.listener?.onCurrentTime(0)
                 }
-                musicPlayer.timer.start()
+                wrapper.timer.start()
             }
         }
     }
