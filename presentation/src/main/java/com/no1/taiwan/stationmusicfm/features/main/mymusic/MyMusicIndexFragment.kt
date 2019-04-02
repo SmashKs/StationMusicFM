@@ -75,7 +75,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
         observeNonNull(vm.playlists) {
             peelSkipLoading {
                 adapter.append(cast<MusicVisitables>(it))
-                adapter.footerEntity = footerCreatePlaylist
+                adapter.setFooter(footerCreatePlaylist)
             } happenError {
                 loge(it)
             } doWith this@MyMusicIndexFragment

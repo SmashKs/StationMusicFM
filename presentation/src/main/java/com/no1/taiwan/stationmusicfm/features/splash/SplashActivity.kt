@@ -52,7 +52,7 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Preload the typeface.
-        listOf("santio_regular.otf")
+        listOf("santio_regular.otf", "santio_bold.otf")
             .forEach { TypeFaceProvider.getTypeFace(applicationContext, it) }
 
         observeNonNull(workManager.getWorkInfoByIdLiveData(parserRequest.id)) {

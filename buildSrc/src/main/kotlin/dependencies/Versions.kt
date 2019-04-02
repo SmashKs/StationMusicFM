@@ -61,7 +61,7 @@ object Versions {
      * Related view component lib version.
      */
     object ViewComponent {
-        const val adaptiveRecyclerView = "1.0.14"
+        const val adaptiveRecyclerView = "1.0.15"
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.1.2"
         const val dialog = "1.0.7"
