@@ -20,23 +20,18 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<set
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/lottie_loading"
-        app:lottie_scale="0.1"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:duration="150"
+    android:shareInterpolator="@anim/music_easing_interpolator">
+    <scale
+        android:fromXScale="0.9"
+        android:fromYScale="0.9"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="1.0"
+        android:toYScale="1.0"/>
+    <alpha
+        android:fromAlpha="0"
+        android:toAlpha="1"/>
+</set>

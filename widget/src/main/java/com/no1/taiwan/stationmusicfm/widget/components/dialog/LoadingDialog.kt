@@ -31,27 +31,25 @@ import com.no1.taiwan.stationmusicfm.widget.R
 object LoadingDialog {
     fun getInstance(fragment: Fragment, cancelable: Boolean = false) =
         QuickDialogFragment.Builder(fragment) {
-            onStartBlock = {
-                val realWidth = ConstraintProperties.WRAP_CONTENT
-                val realHeight = ConstraintProperties.WRAP_CONTENT
-                it.dialog?.window?.setLayout(realWidth, realHeight)
-            }
             this.cancelable = cancelable
             builder()
         }.build()
 
     fun getInstance(activity: AppCompatActivity, cancelable: Boolean = false) =
         QuickDialogFragment.Builder(activity) {
-            onStartBlock = {
-                val realWidth = ConstraintProperties.WRAP_CONTENT
-                val realHeight = ConstraintProperties.WRAP_CONTENT
-                it.dialog?.window?.setLayout(realWidth, realHeight)
-            }
             this.cancelable = cancelable
             builder()
         }.build()
 
     private fun DialogFragmentTemplate.Builder.builder() {
+        onTransitionBlock = {
+            it.window?.attributes?.windowAnimations = R.style.Dialog_Fragment_Animation
+        }
+        onStartBlock = {
+            val realWidth = ConstraintProperties.WRAP_CONTENT
+            val realHeight = ConstraintProperties.WRAP_CONTENT
+            it.dialog?.window?.setLayout(realWidth, realHeight)
+        }
         viewResCustom = R.layout.dialog_loading
     }
 }
