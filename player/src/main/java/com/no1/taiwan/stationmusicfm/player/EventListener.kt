@@ -28,7 +28,7 @@ internal interface EventListener {
 
     fun onCurrentTime(second: Int)
 
-    fun onChangeTrack(index: Int)
+    fun onChangeTrack(oldIndex: Int, newIndex: Int)
 
     fun onPlayerStateChanged(state: MusicPlayerState)
 

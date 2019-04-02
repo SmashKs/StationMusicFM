@@ -25,7 +25,7 @@ class PlayerEventListener(func: PlayerEventListerBuilder.() -> Unit) : EventList
     class PlayerEventListerBuilder {
         var onDurationChanged: ((duration: Int) -> Unit)? = null
         var onBufferPercentage: ((percent: Int) -> Unit)? = null
-        var onChangeTrack: ((newIndex: Int) -> Unit)? = null
+        var onChangeTrack: ((oldIndex: Int, newIndex: Int) -> Unit)? = null
         var onCurrentTime: ((second: Int) -> Unit)? = null
         var onPlayerStateChanged: ((state: MusicPlayerState) -> Unit)? = null
         var onDownloadTrack: ((isSuccess: Boolean) -> Int)? = null
@@ -37,7 +37,7 @@ class PlayerEventListener(func: PlayerEventListerBuilder.() -> Unit) : EventList
 
     override fun onBufferPercentage(percent: Int) = func.onBufferPercentage?.invoke(percent) ?: Unit
 
-    override fun onChangeTrack(index: Int) = func.onChangeTrack?.invoke(index) ?: Unit
+    override fun onChangeTrack(oldIndex: Int, newIndex: Int) = func.onChangeTrack?.invoke(oldIndex, newIndex) ?: Unit
 
     override fun onCurrentTime(second: Int) = func.onCurrentTime?.invoke(second) ?: Unit
 

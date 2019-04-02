@@ -319,7 +319,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
             if (newIndex != currentIndex) {
                 currentIndex = newIndex
                 // The index has changed; update the UI to show info for source at newIndex.
-                wrapper.listener?.onChangeTrack(newIndex)
+                wrapper.listener?.onChangeTrack(currentIndex, newIndex)
             }
         }
 

@@ -40,6 +40,7 @@ import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels.RankDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
@@ -155,10 +156,12 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
             }
         }
         player.setEventListener(PlayerEventListener {
-            onChangeTrack = {
+            onChangeTrack = listener@{ oldIndex, newIndex ->
+                // In the beginning, avoid to change play position multiple times.
+                if (oldIndex == DEFAULT_INT) return@listener
                 // TODO(jieyi): 2019-04-03 Find the current play uri from the adapter.
                 if (tempSongEntity.url != player.curPlayingUri)
-                    songAdapter.playingPosition = it
+                    songAdapter.playingPosition = newIndex
             }
         })
     }
