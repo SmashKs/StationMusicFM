@@ -44,7 +44,7 @@ import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
-import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
@@ -66,14 +66,14 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.playlist) {
-            peel {
+            peelSkipLoading {
                 logw(it)
             } happenError {
                 loge(it)
             } doWith this@MyMusicIndexFragment
         }
         observeNonNull(vm.playlists) {
-            peel {
+            peelSkipLoading {
                 adapter.append(cast<MusicVisitables>(it))
                 adapter.footerEntity = footerCreatePlaylist
             } happenError {
@@ -81,8 +81,8 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
             } doWith this@MyMusicIndexFragment
         }
         observeNonNull(vm.addPlaylistRes) {
-            peel {
-                if (!it) return@peel
+            peelSkipLoading {
+                if (!it) return@peelSkipLoading
                 vm.runTaskFetchTheNewestPlaylist()
             } happenError {
                 loge(it)

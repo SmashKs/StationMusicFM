@@ -31,10 +31,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.devrapid.dialogbuilder.support.QuickDialogFragment
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.isDefault
+import com.no1.taiwan.stationmusicfm.kits.view.hideLoadingView
+import com.no1.taiwan.stationmusicfm.kits.view.hideRetryView
+import com.no1.taiwan.stationmusicfm.kits.view.showErrorView
+import com.no1.taiwan.stationmusicfm.kits.view.showLoadingView
+import com.no1.taiwan.stationmusicfm.kits.view.showRetryView
 import com.no1.taiwan.stationmusicfm.widget.components.dialog.LoadingDialog
 import org.jetbrains.anko.findOptional
 import org.kodein.di.generic.instance
@@ -97,27 +103,22 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
 
     //region View Implementation for the Presenter.
     @UiThread
-    override fun showLoading() = loadingView.show()
-//        if (enableDialogLoading) loadingView.show() else parent.showLoadingView()
+    override fun showLoading() = if (enableDialogLoading) loadingView?.show() ?: Unit else parent.showLoadingView()
 
     @UiThread
-    override fun hideLoading() = Unit
-//        if (enableDialogLoading)
-//            loadingView.takeUnless(QuickDialogFragment::isDismiss)?.dismiss() ?: Unit
-//        else
-//            parent.hideLoadingView()
+    override fun hideLoading() = if (enableDialogLoading)
+        loadingView?.takeUnless(QuickDialogFragment::isDismiss)?.dismissAllowingStateLoss() ?: Unit
+    else
+        parent.hideLoadingView()
 
     @UiThread
-    override fun showRetry() = Unit
-//        parent.showRetryView()
+    override fun showRetry() = parent.showRetryView()
 
     @UiThread
-    override fun hideRetry() = Unit
-//        parent.hideRetryView()
+    override fun hideRetry() = parent.hideRetryView()
 
     @UiThread
-    override fun showError(message: String) = Unit
-//        parent.showErrorView(message)
+    override fun showError(message: String) = parent.showErrorView(message)
     //endregion
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */

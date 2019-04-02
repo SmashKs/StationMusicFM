@@ -27,19 +27,24 @@ import androidx.fragment.app.Fragment
 import com.devrapid.dialogbuilder.support.DialogFragmentTemplate
 import com.devrapid.dialogbuilder.support.QuickDialogFragment
 import com.no1.taiwan.stationmusicfm.widget.R
+import java.lang.ref.WeakReference
 
 object LoadingDialog {
     fun getInstance(fragment: Fragment, cancelable: Boolean = false) =
-        QuickDialogFragment.Builder(fragment) {
-            this.cancelable = cancelable
-            builder()
-        }.build()
+        WeakReference(fragment).get()?.let {
+            QuickDialogFragment.Builder(it) {
+                this.cancelable = cancelable
+                builder()
+            }.build()
+        }
 
     fun getInstance(activity: AppCompatActivity, cancelable: Boolean = false) =
-        QuickDialogFragment.Builder(activity) {
-            this.cancelable = cancelable
-            builder()
-        }.build()
+        WeakReference(activity).get()?.let {
+            QuickDialogFragment.Builder(it) {
+                this.cancelable = cancelable
+                builder()
+            }.build()
+        }
 
     private fun DialogFragmentTemplate.Builder.builder() {
         onTransitionBlock = {

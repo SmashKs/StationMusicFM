@@ -24,7 +24,12 @@ package com.no1.taiwan.stationmusicfm.bases
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.devrapid.dialogbuilder.support.QuickDialogFragment
 import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.kits.view.hideRetryView
+import com.no1.taiwan.stationmusicfm.kits.view.showErrorView
+import com.no1.taiwan.stationmusicfm.kits.view.showLoadingView
+import com.no1.taiwan.stationmusicfm.kits.view.showRetryView
 import com.no1.taiwan.stationmusicfm.widget.components.dialog.LoadingDialog
 import org.kodein.di.generic.instance
 import java.lang.reflect.ParameterizedType
@@ -53,32 +58,31 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     /**
      * Show a view with a progress bar indicating a loading process.
      */
-    override fun showLoading() = loadingView.show()
-//        if (enableDialogLoading) loadingView.show() else showLoadingView()
+    override fun showLoading() =
+        if (enableDialogLoading) loadingView?.show() ?: Unit else showLoadingView()
 
     /**
      * Hide a loading view.
      */
-    override fun hideLoading() = Unit
-//        if (enableDialogLoading)
-//            loadingView.takeUnless(QuickDialogFragment::isDismiss)?.dismiss() ?: Unit
-//        else
-//            showLoadingView()
+    override fun hideLoading() = if (enableDialogLoading)
+        loadingView?.takeUnless(QuickDialogFragment::isDismiss)?.dismissAllowingStateLoss() ?: Unit
+    else
+        showLoadingView()
 
     /**
      * Show a retry view in case of an error when retrieving data.
      */
-    override fun showRetry() = Unit
+    override fun showRetry() = showRetryView()
 
     /**
      * Hide a retry view shown if there was an error when retrieving data.
      */
-    override fun hideRetry() = Unit
+    override fun hideRetry() = hideRetryView()
 
     /**
      * Show an error message
      *
      * @param message A string representing an error.
      */
-    override fun showError(message: String) = Unit
+    override fun showError(message: String) = showErrorView(message)
 }
