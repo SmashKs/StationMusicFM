@@ -33,6 +33,7 @@ object LoadingDialog {
     fun getInstance(fragment: Fragment, cancelable: Boolean = false) =
         WeakReference(fragment).get()?.let {
             QuickDialogFragment.Builder(it) {
+                tag = "fragment loading view"
                 this.cancelable = cancelable
                 builder()
             }.build()
@@ -41,6 +42,7 @@ object LoadingDialog {
     fun getInstance(activity: AppCompatActivity, cancelable: Boolean = false) =
         WeakReference(activity).get()?.let {
             QuickDialogFragment.Builder(it) {
+                tag = "activity loading view"
                 this.cancelable = cancelable
                 builder()
             }.build()

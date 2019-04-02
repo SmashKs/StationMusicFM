@@ -58,8 +58,10 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     /**
      * Show a view with a progress bar indicating a loading process.
      */
-    override fun showLoading() =
-        if (enableDialogLoading) loadingView?.show() ?: Unit else showLoadingView()
+    override fun showLoading() = if (enableDialogLoading)
+        loadingView?.takeUnless(QuickDialogFragment::getShowsDialog)?.show() ?: Unit
+    else
+        showLoadingView()
 
     /**
      * Hide a loading view.

@@ -31,8 +31,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.devrapid.dialogbuilder.support.QuickDialogFragment
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.isDefault
@@ -103,11 +103,15 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
 
     //region View Implementation for the Presenter.
     @UiThread
-    override fun showLoading() = if (enableDialogLoading) loadingView?.show() ?: Unit else parent.showLoadingView()
+    override fun showLoading() = if (enableDialogLoading)
+        loadingView?.takeIf { it.tag.isNull() }?.show() ?: Unit
+    else
+        parent.showLoadingView()
 
     @UiThread
-    override fun hideLoading() = if (enableDialogLoading)
-        loadingView?.takeUnless(QuickDialogFragment::isDismiss)?.dismissAllowingStateLoss() ?: Unit
+    override fun hideLoading() = if (enableDialogLoading) {
+        loadingView?.dialog?.dismiss() ?: Unit
+    }
     else
         parent.hideLoadingView()
 
