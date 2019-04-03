@@ -28,25 +28,25 @@
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_download"
-        style="@style/MusicTextView.Bold.FitWidth"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        android:paddingBottom="@dimen/md_two_unit"
-        android:paddingTop="@dimen/md_two_unit"
+        style="@style/BottomSheetView.Options.ItemView"
+        android:drawableStart="@drawable/ic_cloud_downloaded_black"
         android:text="Download"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_to_favorite"
-        style="@style/MusicTextView.Bold.FitWidth"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        android:paddingBottom="@dimen/md_two_unit"
-        android:paddingTop="@dimen/md_two_unit"
-        android:text="Add to Favorite"/>
+        style="@style/BottomSheetView.Options.ItemView"
+        android:drawableStart="@drawable/ic_playlist_add_black"
+        android:text="Add to Playlist"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_music_info"
-        style="@style/MusicTextView.Bold.FitWidth"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        android:paddingBottom="@dimen/md_two_unit"
-        android:paddingTop="@dimen/md_two_unit"
+        style="@style/BottomSheetView.Options.ItemView"
+        android:drawableStart="@drawable/ic_info_outline_black"
         android:text="Info"/>
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_music_delete"
+        style="@style/BottomSheetView.Options.ItemView"
+        android:drawableStart="@drawable/ic_delete_forever_black"
+        android:text="Delete"/>
 </LinearLayout>

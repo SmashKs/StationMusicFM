@@ -48,17 +48,17 @@ object TrackInfoEntity {
     }
 
     data class TracksTypeGenreEntity(
-        val tracks: List<TrackInfoEntity.TrackTypeGenreEntity> = emptyList(),
+        val tracks: List<TrackTypeGenreEntity> = emptyList(),
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 
     data class TracksEntity(
-        val tracks: List<TrackInfoEntity.TrackEntity> = emptyList(),
+        val tracks: List<TrackEntity> = emptyList(),
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 
     data class TracksWithStreamableEntity(
-        val tracks: List<TrackInfoEntity.TrackWithStreamableEntity> = emptyList(),
+        val tracks: List<TrackWithStreamableEntity> = emptyList(),
         val attr: CommonLastFmEntity.AttrEntity = CommonLastFmEntity.AttrEntity()
     ) : Entity
 

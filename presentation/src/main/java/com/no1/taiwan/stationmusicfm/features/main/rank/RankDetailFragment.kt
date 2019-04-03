@@ -159,8 +159,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
             onChangeTrack = listener@{ oldIndex, newIndex ->
                 // In the beginning, avoid to change play position multiple times.
                 if (oldIndex == DEFAULT_INT) return@listener
-                // TODO(jieyi): 2019-04-03 Find the current play uri from the adapter.
-                if (tempSongEntity.url != player.curPlayingUri)
+                if (songAdapter.retrieveTrackUri(oldIndex) != player.curPlayingUri)
                     songAdapter.playingPosition = newIndex
             }
         })

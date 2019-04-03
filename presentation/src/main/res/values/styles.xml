@@ -178,4 +178,15 @@
         <item name="android:layout_width">@dimen/md_zero_unit</item>
     </style>
     <!-- END TextView -->
+
+    <!-- START Bottom Sheet View -->
+    <style name="BottomSheetView.Options.ItemView" parent="MusicTextView.Bold.FitWidth">
+        <item name="android:layout_marginEnd">@dimen/md_zero_unit</item>
+        <item name="android:layout_marginStart">@dimen/md_zero_unit</item>
+        <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">@dimen/md_two_unit</item>
+        <item name="android:drawablePadding">@dimen/md_two_unit</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <!-- END Bottom Sheet View -->
 </resources>

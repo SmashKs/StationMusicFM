@@ -27,6 +27,7 @@ import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.uiSwitch
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.HotTrackViewHolder
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
@@ -84,6 +85,14 @@ class NotifiableAdapter(
         if (playingPosition < 0) return
         when (val data = dataList[playingPosition]) {
             is TrackWithStreamableEntity -> data.url = uri
+        }
+    }
+
+    fun retrieveTrackUri(index: Int): String? {
+        if (playingPosition < 0) return null
+        return when (val data = dataList[index]) {
+            is CommonMusicEntity.SongEntity -> data.url
+            else -> null
         }
     }
 
