@@ -26,7 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.no1.taiwan.stationmusicfm.R
 
 object BottomSheetFactory {
-    fun createMusicSheet(activity: Activity) = BottomSheetDialog(activity).apply {
+    fun createMusicSheet(activity: Activity) = BottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
         setContentView(R.layout.bottomsheet_music_info)
     }
 }

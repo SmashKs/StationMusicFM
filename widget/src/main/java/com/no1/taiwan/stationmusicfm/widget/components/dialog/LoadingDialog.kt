@@ -50,12 +50,18 @@ object LoadingDialog {
 
     private fun DialogFragmentTemplate.Builder.builder() {
         onTransitionBlock = {
+            // Set the dialog transition animation.
             it.window?.attributes?.windowAnimations = R.style.Dialog_Fragment_Animation
         }
         onStartBlock = {
             val realWidth = ConstraintProperties.WRAP_CONTENT
             val realHeight = ConstraintProperties.WRAP_CONTENT
-            it.dialog?.window?.setLayout(realWidth, realHeight)
+            it.dialog?.window?.apply {
+                // Set the dialog size.
+                setLayout(realWidth, realHeight)
+                // Set the dialog to round background.
+                setBackgroundDrawableResource(R.drawable.dialog_round_background)
+            }
         }
         viewResCustom = R.layout.dialog_loading
     }
