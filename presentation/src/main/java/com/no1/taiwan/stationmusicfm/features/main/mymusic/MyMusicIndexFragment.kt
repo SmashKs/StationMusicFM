@@ -72,6 +72,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
                 loge(it)
             } doWith this@MyMusicIndexFragment
         }
+        // FIXME(jieyi): 2019-04-04 會加進好幾次一樣的 playlist.
         observeNonNull(vm.playlists) {
             peelSkipLoading {
                 adapter.append(cast<MusicVisitables>(it))

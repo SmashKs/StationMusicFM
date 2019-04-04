@@ -55,6 +55,7 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_OPEN_BOTTOM_SHEET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
@@ -84,6 +85,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
     private val player: MusicPlayer by instance()
     private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
+    private val playlistBottomSheet by lazy { BottomSheetFactory.createAddPlaylist(parent) }
 
     init {
         BusFragLongerLifeRegister(this)
@@ -150,7 +152,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
             find<View>(R.id.ftv_to_playlist).setOnClickListener {
                 //                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.FAVORITE.ordinal)
                 dismiss()
-                BottomSheetFactory.createAddPlaylist(parent).show()
+                playlistBottomSheet.show()
             }
             find<View>(R.id.ftv_music_info).setOnClickListener {
                 dismiss()
@@ -201,7 +203,6 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     }
 
     /**
-     *
      * @param parameter
      * @event_from [com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackViewHolder.initView]
      */
@@ -209,5 +210,14 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     fun openBottomSheetDialog(parameter: AnyParameters) {
         tempSongEntity = cast(parameter[PARAMS_SONG_ENTITY])
         bottomSheet.assignDownloadIcon(FilePathFactory.getMusicPath(tempSongEntity.encodeByName()).isNull()).show()
+    }
+
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.kits.bottomsheet.viewholders.BottomPlaylistViewHolder.initView]
+     */
+    @Subscribe(tags = [Tag(TAG_SAVING_PLAYLIST)])
+    fun keepHistory(index: Number) {
+        vm.runTaskAddToPlayHistory(tempSongEntity, index.toInt())
+        playlistBottomSheet.dismiss()
     }
 }

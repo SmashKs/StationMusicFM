@@ -24,12 +24,17 @@ package com.no1.taiwan.stationmusicfm.kits.bottomsheet.viewholders
 import android.view.View
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistBottomSheetEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_PLAYLIST
 import org.jetbrains.anko.find
+import org.kodein.di.generic.instance
 
 class BottomPlaylistViewHolder(view: View) : MultiViewHolder<PlaylistBottomSheetEntity>(view) {
+    private val emitter: Bus by instance()
+
     /**
      * Set the views' properties.
      *
@@ -40,6 +45,10 @@ class BottomPlaylistViewHolder(view: View) : MultiViewHolder<PlaylistBottomSheet
     override fun initView(model: PlaylistBottomSheetEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             find<TextView>(R.id.ftv_playlist_name).text = model.name
+            setOnClickListener {
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.keepHistory] */
+                emitter.post(TAG_SAVING_PLAYLIST, model.id)
+            }
         }
     }
 }

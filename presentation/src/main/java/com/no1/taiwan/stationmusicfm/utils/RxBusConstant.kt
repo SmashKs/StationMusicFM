@@ -33,6 +33,7 @@ object RxBusConstant {
         const val TAG_SAVING_SEARCH_HIST = "saving the searching history"
         const val TAG_PLAY_A_SONG = "play a song for asking the exo player"
         const val TAG_OPEN_BOTTOM_SHEET = "open bottom sheet dialog"
+        const val TAG_SAVING_PLAYLIST = "saving the playlist"
     }
 
     object Parameter {

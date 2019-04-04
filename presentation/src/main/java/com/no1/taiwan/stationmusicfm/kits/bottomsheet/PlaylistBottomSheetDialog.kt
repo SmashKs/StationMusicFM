@@ -30,6 +30,7 @@ import com.devrapid.kotlinshaver.uiSwitch
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.domain.parameters.EmptyParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
@@ -38,7 +39,6 @@ import com.no1.taiwan.stationmusicfm.internal.di.Dispatcher
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.find
@@ -67,9 +67,17 @@ class PlaylistBottomSheetDialog(
             layoutManager = this@PlaylistBottomSheetDialog.layoutManager
         }
         GlobalScope.launch {
-            val playlist = fetchPlaylistsCase.exec(FetchPlaylistsReq(EmptyParams())).map(playlistMapper::toEntityFrom)
+            val playlist = fetchPlaylistsCase.exec(FetchPlaylistsReq(EmptyParams()))
+                .map(playlistMapper::toEntityFrom)
+                .filter {
+                    // Filter the [DOWNLOADED] and [UNCATEGORY] tag.
+                    when (it.id) {
+                        PlaylistIndex.DOWNLOADED.ordinal, PlaylistIndex.UNCATEGORY.ordinal -> false
+                        else -> true
+                    }
+                }
             uiSwitch {
-                adapter.append(cast<MusicVisitables>(playlist))
+                adapter.replaceWholeList(cast(playlist))
             }
         }
     }
