@@ -19,18 +19,21 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.kits.bottomsheet
+package com.no1.taiwan.stationmusicfm.entities.mappers.playlist
 
-import android.app.Activity
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.domain.models.playlist.PlaylistInfoModel
+import com.no1.taiwan.stationmusicfm.entities.PlaylistToBottomEntityPreziMap
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistBottomSheetEntity
+import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
-object BottomSheetFactory {
-    fun createMusicSheet(activity: Activity) = BottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_music_info)
+/**
+ * A transforming mapping between [PlaylistInfoModel] and [PlaylistBottomSheetEntity].
+ * The different layers have their own data objects, the objects should transform and fit each layers.
+ */
+class PlaylistInfoToBottomEntityPMapper : PlaylistToBottomEntityPreziMap {
+    override fun toEntityFrom(model: PlaylistInfoModel) = model.run {
+        PlaylistBottomSheetEntity(id, name)
     }
 
-    fun createAddPlaylist(activity: Activity) = PlaylistBottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_playlist)
-    }
+    override fun toModelFrom(entity: PlaylistBottomSheetEntity) = UnsupportedOperation()
 }

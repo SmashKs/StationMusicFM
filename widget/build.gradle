@@ -61,6 +61,7 @@ dependencies {
     implementation(dependencies.Dependencies.kotlinAndroid.values())
 
     implementation(dependencies.Deps.Widget.appcompat)
+    implementation(dependencies.Deps.Widget.cardview)
     implementation(dependencies.Deps.Presentation.lottie)
     implementation(dependencies.Deps.Presentation.arv)
     implementation(dependencies.Deps.Widget.quickDialog)

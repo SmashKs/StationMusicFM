@@ -57,6 +57,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.SearchHistoryPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.LocalMusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.PlaylistInfoPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.PlaylistInfoToBottomEntityPMapper
 import com.no1.taiwan.stationmusicfm.internal.di.PreziMapperEntry
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -152,5 +153,6 @@ object PresentationMapperModule {
         bind<PreziMapperEntry>().inSet() with singleton { SearchHistoryPMapper::class.java to SearchHistoryPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { LocalMusicPMapper::class.java to LocalMusicPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { PlaylistInfoPMapper::class.java to PlaylistInfoPMapper() }
+        bind<PreziMapperEntry>().inSet() with singleton { PlaylistInfoToBottomEntityPMapper::class.java to PlaylistInfoToBottomEntityPMapper() }
     }
 }

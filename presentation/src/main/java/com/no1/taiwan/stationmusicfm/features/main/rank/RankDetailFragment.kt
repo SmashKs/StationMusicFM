@@ -38,7 +38,6 @@ import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
-import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
@@ -147,11 +146,15 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
                 }
                 dismiss()
             }
-            find<View>(R.id.ftv_to_favorite).setOnClickListener {
-                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.FAVORITE.ordinal)
+            find<View>(R.id.ftv_to_playlist).setOnClickListener {
+                //                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.FAVORITE.ordinal)
                 dismiss()
+                BottomSheetFactory.createAddPlaylist(parent).show()
             }
             find<View>(R.id.ftv_music_info).setOnClickListener {
+                dismiss()
+            }
+            find<View>(R.id.ftv_music_delete).setOnClickListener {
                 dismiss()
             }
         }

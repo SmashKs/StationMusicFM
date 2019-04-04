@@ -20,10 +20,17 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <dimen name="one_dp">1dp</dimen>
-    <dimen name="md_one_half_unit">4dp</dimen>
-    <dimen name="md_one_unit">8dp</dimen>
-    <dimen name="md_two_unit">16dp</dimen>
-    <dimen name="md_seven_unit">56dp</dimen>
-</resources>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".kits.bottomsheet.viewholders.BottomPlaylistViewHolder">
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_playlist_name"
+        style="@style/MusicTextView.Sub.FitWidth"
+        android:layout_height="wrap_content"
+        tools:text="@tools:sample/full_names"/>
+</LinearLayout>

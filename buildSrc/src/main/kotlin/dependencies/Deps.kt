@@ -213,7 +213,7 @@ object Deps {
      */
     object Widget {
         const val appcompat = Presentation.appcompat
-
+        const val cardview = Presentation.cardview
         const val quickDialog = Presentation.quickDialog
         const val constraintLayout = Presentation.constraintLayout
     }

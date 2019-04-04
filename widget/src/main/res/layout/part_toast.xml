@@ -20,10 +20,24 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <dimen name="one_dp">1dp</dimen>
-    <dimen name="md_one_half_unit">4dp</dimen>
-    <dimen name="md_one_unit">8dp</dimen>
-    <dimen name="md_two_unit">16dp</dimen>
-    <dimen name="md_seven_unit">56dp</dimen>
-</resources>
+<androidx.cardview.widget.CardView
+    android:id="@+id/cv_toast_base"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/md_one_unit"
+    app:cardBackgroundColor="@color/shark"
+    app:cardCornerRadius="@dimen/md_one_half_unit"
+    app:cardElevation="@dimen/md_one_half_unit">
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_toast_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/md_two_unit"
+        android:textColor="@android:color/white"
+        tools:text="This is toast msg!!"/>
+</androidx.cardview.widget.CardView>
+

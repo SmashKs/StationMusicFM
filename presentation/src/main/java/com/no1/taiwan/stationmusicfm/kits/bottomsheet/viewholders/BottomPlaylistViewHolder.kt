@@ -19,18 +19,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.kits.bottomsheet
+package com.no1.taiwan.stationmusicfm.kits.bottomsheet.viewholders
 
-import android.app.Activity
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import android.view.View
+import android.widget.TextView
+import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistBottomSheetEntity
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import org.jetbrains.anko.find
 
-object BottomSheetFactory {
-    fun createMusicSheet(activity: Activity) = BottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_music_info)
-    }
-
-    fun createAddPlaylist(activity: Activity) = PlaylistBottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_playlist)
+class BottomPlaylistViewHolder(view: View) : MultiViewHolder<PlaylistBottomSheetEntity>(view) {
+    /**
+     * Set the views' properties.
+     *
+     * @param model a data model after input from a list.
+     * @param position the index of a list.
+     * @param adapter parent adapter.
+     */
+    override fun initView(model: PlaylistBottomSheetEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+        itemView.apply {
+            find<TextView>(R.id.ftv_playlist_name).text = model.name
+        }
     }
 }

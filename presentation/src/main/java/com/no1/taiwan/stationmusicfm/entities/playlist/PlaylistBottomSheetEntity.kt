@@ -19,18 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.kits.bottomsheet
+package com.no1.taiwan.stationmusicfm.entities.playlist
 
-import android.app.Activity
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.Entity
+import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
-object BottomSheetFactory {
-    fun createMusicSheet(activity: Activity) = BottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_music_info)
-    }
-
-    fun createAddPlaylist(activity: Activity) = PlaylistBottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_playlist)
-    }
+data class PlaylistBottomSheetEntity(
+    val id: Int = 0,
+    val name: String = DEFAULT_STR
+) : Entity, MusicMultiVisitable {
+    override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
 }

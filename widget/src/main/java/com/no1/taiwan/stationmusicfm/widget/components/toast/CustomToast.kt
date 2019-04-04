@@ -19,18 +19,33 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.kits.bottomsheet
+package com.no1.taiwan.stationmusicfm.widget.components.toast
 
 import android.app.Activity
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.no1.taiwan.stationmusicfm.R
+import android.content.Context
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.no1.taiwan.stationmusicfm.widget.R
 
-object BottomSheetFactory {
-    fun createMusicSheet(activity: Activity) = BottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_music_info)
+fun Fragment.toastX(msg: String = "") = requireActivity().buildCustomToast(msg)
+
+fun Activity.toastX(msg: String) = buildCustomToast(msg)
+
+fun Fragment.toastLongX(msg: String = "") = requireActivity().buildCustomToast(msg, Toast.LENGTH_LONG)
+
+fun Activity.toastLongX(msg: String) = buildCustomToast(msg, Toast.LENGTH_LONG)
+
+private fun Context.buildCustomToast(msg: String, durationTime: Int = Toast.LENGTH_SHORT) = run {
+    val layout = LayoutInflater.from(this).inflate(R.layout.part_toast, null).apply {
+        findViewById<TextView>(R.id.ftv_toast_msg).apply { text = msg }
     }
 
-    fun createAddPlaylist(activity: Activity) = PlaylistBottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_playlist)
+    Toast(this).apply {
+        setGravity(Gravity.BOTTOM, 0, resources?.getDimension(R.dimen.md_two_unit)?.toInt() ?: 0)
+        duration = durationTime
+        view = layout
     }
-}
+}.apply { show() }

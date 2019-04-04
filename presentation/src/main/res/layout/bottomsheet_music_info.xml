@@ -22,9 +22,11 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".kits.bottomsheet.BottomSheetFactory">
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_download"
@@ -33,7 +35,7 @@
         android:text="Download"/>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_to_favorite"
+        android:id="@+id/ftv_to_playlist"
         style="@style/BottomSheetView.Options.ItemView"
         android:drawableStart="@drawable/ic_playlist_add_black"
         android:text="Add to Playlist"/>

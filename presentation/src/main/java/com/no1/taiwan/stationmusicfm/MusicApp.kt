@@ -24,17 +24,11 @@ package com.no1.taiwan.stationmusicfm
 import android.content.Context
 import androidx.multidex.MultiDexApplication
 import androidx.work.WorkManager
-import com.no1.taiwan.stationmusicfm.internal.di.AppModule
-import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
-import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
-import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
-import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
+import com.no1.taiwan.stationmusicfm.internal.di.Dispatcher
 import com.no1.taiwan.stationmusicfm.ktx.delegate.MmkvPrefs
 import com.no1.taiwan.stationmusicfm.services.WorkerRequestFactory
 import com.tencent.mmkv.MMKV
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.instance
 
 /**
@@ -59,17 +53,7 @@ class MusicApp : MultiDexApplication(), KodeinAware {
     /**
      * A Kodein Aware class must be within reach of a Kodein object.
      */
-    override val kodein = Kodein.lazy {
-        import(androidXModule(this@MusicApp))
-        import(AppModule.appProvider(applicationContext))
-        /** bindings */
-        import(UtilModule.utilProvider(applicationContext))
-        /** usecases are bind here but the scope is depending on each layers.  */
-        import(UsecaseModule.usecaseProvider())
-        import(UsecaseModule.delegateProvider())
-        import(RepositoryModule.repositoryProvider(applicationContext))
-        import(DataMapperModule.dataUtilProvider())
-    }
+    override val kodein = Dispatcher.importIntoApp(this)
 
     override fun onCreate() {
         super.onCreate()

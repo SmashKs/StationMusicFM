@@ -47,6 +47,7 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.RankChartEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
+import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistBottomSheetEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 
 typealias PreziMapper = Mapper<*, *>
@@ -100,3 +101,4 @@ typealias SearchHistoryPreziMap = Mapper<SearchHistModel, SearchHistoryEntity>
 
 typealias LocalMusicPreziMap = Mapper<LocalMusicModel, LocalMusicEntity>
 typealias PlaylistPreziMap = Mapper<PlaylistInfoModel, PlaylistInfoEntity>
+typealias PlaylistToBottomEntityPreziMap = Mapper<PlaylistInfoModel, PlaylistBottomSheetEntity>
