@@ -25,7 +25,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.toTimeString
 import com.hwangjr.rxbus.Bus
@@ -98,7 +97,6 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
      * @param isIdle
      */
     private fun setCurStateIcon(isIdle: Boolean) {
-        logd(layoutPosition, isIdle)
         itemView.apply {
             find<ImageView>(R.id.iv_play).apply {
                 image = (if (isIdle)

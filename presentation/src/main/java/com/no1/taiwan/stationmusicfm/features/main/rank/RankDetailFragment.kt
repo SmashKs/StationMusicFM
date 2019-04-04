@@ -32,6 +32,7 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.isNotNull
 import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -65,6 +66,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
+import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
 import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -140,6 +142,12 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         bottomSheet.apply {
             find<View>(R.id.ftv_download).setOnClickListener {
                 if (::tempSongEntity.isInitialized) {
+                    // The track has downloaded, just return and dismiss the bottom sheet view.
+                    if (FilePathFactory.getMusicPath(tempSongEntity.encodeByName()).isNotNull()) {
+                        toastX("You have downloaded it already.")
+                        dismiss()
+                        return@setOnClickListener
+                    }
                     parent.requireStoragePermission {
                         val path = FilePathFactory.obtainMusicPath(tempSongEntity.encodeByName())
                         // Save into internal storage.
@@ -150,8 +158,8 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
                 dismiss()
             }
             find<View>(R.id.ftv_to_playlist).setOnClickListener {
-                //                vm.runTaskAddToPlayHistory(tempSongEntity, PlaylistIndex.FAVORITE.ordinal)
                 dismiss()
+                // Open the playlist for adding.
                 playlistBottomSheet.show()
             }
             find<View>(R.id.ftv_music_info).setOnClickListener {
