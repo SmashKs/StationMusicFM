@@ -78,7 +78,7 @@ class MainActivity : BaseActivity() {
                 NavigationUI.onNavDestinationSelected(it, navigator)
             }
         }
-        R.color.transparent
+        android.R.color.transparent
     }
 
     override fun provideLayoutId() = R.layout.activity_main

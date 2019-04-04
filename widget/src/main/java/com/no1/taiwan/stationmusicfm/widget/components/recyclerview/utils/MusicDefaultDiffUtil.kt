@@ -19,22 +19,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.kits.recyclerview
+package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils
 
-import com.devrapid.kotlinshaver.cast
-import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
-class RankDiffUtil : MusicMultiDiffUtil() {
+class MusicDefaultDiffUtil : MusicMultiDiffUtil() {
     override var newList = mutableListOf<MusicMultiVisitable>()
     override var oldList = mutableListOf<MusicMultiVisitable>()
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(oldList[oldItemPosition]).topTrackUri
+        newList[newItemPosition].hashCode() == oldList[oldItemPosition].hashCode()
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(oldList[oldItemPosition]).topTrackUri
+        newList[newItemPosition] == oldList[oldItemPosition]
 
     override fun getNewListSize() = newList.size
 

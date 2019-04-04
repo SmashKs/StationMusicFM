@@ -20,11 +20,7 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <dimen name="one_dp">1dp</dimen>
-    <dimen name="md_zero_unit">0dp</dimen>
-    <dimen name="md_one_half_unit">4dp</dimen>
-    <dimen name="md_one_unit">8dp</dimen>
-    <dimen name="md_two_unit">16dp</dimen>
-    <dimen name="md_seven_unit">56dp</dimen>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@android:color/darker_gray" android:state_enabled="false"/>
+    <item android:color="@color/shark"/>
+</selector>

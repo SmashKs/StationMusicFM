@@ -22,20 +22,22 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
 import android.os.Bundle
+import androidx.constraintlayout.widget.ConstraintProperties
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.dialogbuilder.support.QuickDialogFragment
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_CREATE_NEW_PLAYLIST
@@ -46,13 +48,12 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
 class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
-    private val adapter: MusicAdapter by instance()
+    private val adapter: MusicAdapter by instance(ADAPTER_PLAYLIST)
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val footerCreatePlaylist by lazy {
@@ -67,20 +68,21 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.playlist) {
             peelSkipLoading {
-                logw(it)
+                logd(it)
             } happenError {
                 loge(it)
             } doWith this@MyMusicIndexFragment
         }
-        // FIXME(jieyi): 2019-04-04 會加進好幾次一樣的 playlist.
         observeNonNull(vm.playlists) {
             peelSkipLoading {
-                adapter.append(cast<MusicVisitables>(it))
+                adapter.replaceWholeList(cast(it))
                 adapter.setFooter(footerCreatePlaylist)
             } happenError {
                 loge(it)
             } doWith this@MyMusicIndexFragment
         }
+        //region 🔖 The reaction of creating a new playlist.
+        // STEP 1. For creating a new playlist.
         observeNonNull(vm.addPlaylistRes) {
             peelSkipLoading {
                 if (!it) return@peelSkipLoading
@@ -89,16 +91,14 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
                 loge(it)
             } doWith this@MyMusicIndexFragment
         }
-        observeNonNull(vm.newestPlaylist) {
-            adapter.append(this)
-        }
+        // STEP 2. Refreshing the recyclerview for displaying the new playlist.
+        observeNonNull(vm.newestPlaylist) { adapter.append(this) }
+        //endregion
 
         // FIXME(jieyi): 2019-03-30 Maybe not be here.
         observeNonNull(vm.downloads) {
-            logw(this)
         }
         observeNonNull(vm.favorites) {
-            logw(this)
             // TODO(jieyi): 2019-03-30 Combine four image into an image.
         }
     }
@@ -110,7 +110,6 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
-        vm.runTaskFetchPlaylist(listOf(PlaylistIndex.FAVORITE.ordinal))
         vm.runTaskFetchPlaylist()
     }
 
@@ -129,9 +128,29 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun provideInflateView() = R.layout.fragment_mymusic_index
 
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.CreatePlaylistViewHolder.initView]
+     */
     @Subscribe(tags = [Tag(TAG_CREATE_NEW_PLAYLIST)])
     fun createNewPlaylist(playlistName: String) {
-        vm.runTaskAddPlaylist(playlistName)
+//        vm.runTaskAddPlaylist(playlistName)
+        QuickDialogFragment.Builder(this) {
+            onTransitionBlock = {
+                // Set the dialog transition animation.
+                it.window?.attributes?.windowAnimations = R.style.Dialog_Fragment_Animation
+            }
+            onStartBlock = {
+                val realWidth = ConstraintProperties.WRAP_CONTENT
+                val realHeight = ConstraintProperties.WRAP_CONTENT
+                it.dialog?.window?.apply {
+                    // Set the dialog size.
+                    setLayout(realWidth, realHeight)
+                    // Set the dialog to round background.
+                    setBackgroundDrawableResource(R.drawable.dialog_round_background)
+                }
+            }
+            viewResCustom = R.layout.dialog_create_playlist
+        }.build().show()
     }
 
     /**

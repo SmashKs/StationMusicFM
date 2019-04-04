@@ -207,12 +207,13 @@ object Deps {
     }
     //endregion
 
-    //region Ext
+    //region Widget
     /**
      * The necessary libs only for the widget module.
      */
     object Widget {
         const val appcompat = Presentation.appcompat
+        const val material = Presentation.materialDesign
         const val cardview = Presentation.cardview
         const val quickDialog = Presentation.quickDialog
         const val constraintLayout = Presentation.constraintLayout

@@ -70,14 +70,14 @@ class SeparateLineWithTitle @JvmOverloads constructor(
             lineColor = getColor(R.styleable.SeparateLineWithTitle_sltLineColor, lineColor)
             lineHeight = getDimension(R.styleable.SeparateLineWithTitle_sltLineHeight, lineHeight)
         }.recycle()
-        setBackgroundColor(resources.getColor(R.color.transparent))
+        setBackgroundColor(resources.getColor(android.R.color.transparent))
         addView(FontTextView(context, attrs, defStyleAttr).apply {
             tvTitle = this
             text = title
             setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize)
             setTextColor(titleColor)
             if (textFont.isNotBlank()) setFont(textFont)
-            setBackgroundResource(R.color.transparent)
+            setBackgroundResource(android.R.color.transparent)
         })
         addView(View(context, attrs, defStyleAttr).apply {
             vSeparate = this

@@ -224,8 +224,8 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      * @event_from [com.no1.taiwan.stationmusicfm.kits.bottomsheet.viewholders.BottomPlaylistViewHolder.initView]
      */
     @Subscribe(tags = [Tag(TAG_SAVING_PLAYLIST)])
-    fun keepHistory(index: Number) {
-        vm.runTaskAddToPlayHistory(tempSongEntity, index.toInt())
+    fun keepHistory(playlistId: Number) {
+        vm.runTaskAddToPlayHistory(tempSongEntity, playlistId.toInt())
         playlistBottomSheet.dismiss()
     }
 }

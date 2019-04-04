@@ -31,6 +31,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
 import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_CREATE_NEW_PLAYLIST
 import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
@@ -51,6 +52,8 @@ class CreatePlaylistViewHolder(view: View) : MultiViewHolder<CreatePlaylistEntit
                 model.iconRes.takeUnlessDefault { addDrawable(it, DRAWABLE_DIRECTION_START) }
             }
             setOnClickListener {
+                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicIndexFragment.createNewPlaylist] */
+                emitter.post(TAG_CREATE_NEW_PLAYLIST, model.content)
             }
         }
     }

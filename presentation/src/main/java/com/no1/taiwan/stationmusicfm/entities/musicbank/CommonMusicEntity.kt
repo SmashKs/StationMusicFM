@@ -63,7 +63,7 @@ object CommonMusicEntity {
 
         fun encodeByName() = Base64.encodeToString((artist.split(" ") + title.split(" "))
                                                        .joinToString("_")
-                                                       .toByteArray(), Base64.NO_WRAP)
+                                                       .toByteArray(), Base64.NO_WRAP).replace("/", "_")
     }
 
     data class PlayListEntity(

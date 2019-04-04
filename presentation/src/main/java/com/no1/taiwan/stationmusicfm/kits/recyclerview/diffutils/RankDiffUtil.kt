@@ -19,27 +19,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.internal.di.tags
+package com.no1.taiwan.stationmusicfm.kits.recyclerview.diffutils
 
-/**
- * The tags for identifying the same object data type in Dependency Injection.
- */
-object ObjectLabel {
-    const val LINEAR_LAYOUT_VERTICAL = "vertical"
-    const val LINEAR_LAYOUT_HORIZONTAL = "horizontal"
+import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 
-    const val FRAGMENT_BUS_SHORT_LIFE = "fragment short life from onResume to onPause"
-    const val FRAGMENT_BUS_LONG_LIFE = "fragment long life from onStart to onDestroy"
+class RankDiffUtil : MusicMultiDiffUtil() {
+    override var newList = mutableListOf<MusicMultiVisitable>()
+    override var oldList = mutableListOf<MusicMultiVisitable>()
 
-    const val UTIL_DIFF_KEYWORD = "recycler diff util keyword"
-    const val UTIL_DIFF_RANK = "recycler diff util rank"
-    const val UTIL_DIFF_PLAYLIST = "recycler diff util playlist"
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(oldList[oldItemPosition]).topTrackUri
 
-    const val ITEM_DECORATION_ACTION_BAR_BLANK = "recycler item decoration action bar blank"
-    const val ITEM_DECORATION_SEPARATOR = "recycler item decoration separator"
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(oldList[oldItemPosition]).topTrackUri
 
-    const val ADAPTER_HISTORY = "for history adapter"
-    const val ADAPTER_RANK = "for rank adapter"
-    const val ADAPTER_PLAYLIST = "for playlist adapter"
-    const val ADAPTER_TRACK = "for changeable adapter"
+    override fun getNewListSize() = newList.size
+
+    override fun getOldListSize() = oldList.size
 }

@@ -58,16 +58,19 @@ import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.RankTrackVie
 import com.no1.taiwan.stationmusicfm.features.main.rank.viewholders.TopperViewHolder
 import com.no1.taiwan.stationmusicfm.features.main.search.viewholders.SearchHistoryViewHolder
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTORY
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_RANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_RANK
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.viewholders.BottomPlaylistViewHolder
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.RankDiffUtil
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.HistoryAdapter
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.diffutils.PlaylistDiffUtil
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.diffutils.RankDiffUtil
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
@@ -75,7 +78,7 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.ViewHolderEn
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters.MultiTypeAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.ActionBarBlankDecoration
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.SeparateLineDecoration
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDiffUtil
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDefaultDiffUtil
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.inSet
@@ -109,12 +112,16 @@ object RecyclerViewModule {
             HistoryAdapter(instance(), instance(UTIL_DIFF_KEYWORD))
         }
         bind<MusicAdapter>(ADAPTER_RANK) with provider { MultiTypeAdapter(instance(), instance(UTIL_DIFF_RANK)) }
+        bind<MusicAdapter>(ADAPTER_PLAYLIST) with provider {
+            MultiTypeAdapter(instance(), instance(UTIL_DIFF_PLAYLIST))
+        }
         bind<NotifiableAdapter>(ADAPTER_TRACK) with provider { NotifiableAdapter(instance()) }
     }
 
     private fun diffUtilProvider() = Module("Recycler View DiffUtil") {
-        bind<MusicMultiDiffUtil>(UTIL_DIFF_KEYWORD) with instance(MusicDiffUtil())
+        bind<MusicMultiDiffUtil>(UTIL_DIFF_KEYWORD) with instance(MusicDefaultDiffUtil())
         bind<MusicMultiDiffUtil>(UTIL_DIFF_RANK) with instance(RankDiffUtil())
+        bind<MusicMultiDiffUtil>(UTIL_DIFF_PLAYLIST) with instance(PlaylistDiffUtil())
     }
 
     private fun decorationProvider() = Module("Recycler View Item Decoration") {

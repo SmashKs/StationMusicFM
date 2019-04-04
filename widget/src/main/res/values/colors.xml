@@ -21,6 +21,7 @@
   -->
 
 <resources>
-    <color name="transparent">#00000000</color>
     <color name="shark">#1F2532</color>
+
+    <color name="dove_gray">#8B8589</color>
 </resources>
