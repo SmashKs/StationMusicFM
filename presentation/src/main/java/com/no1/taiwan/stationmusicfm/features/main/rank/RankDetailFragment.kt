@@ -46,6 +46,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
+import com.no1.taiwan.stationmusicfm.kits.bottomsheet.assignDownloadIcon
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.player.PlayerEventListener
@@ -207,6 +208,6 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     @Subscribe(tags = [Tag(TAG_OPEN_BOTTOM_SHEET)])
     fun openBottomSheetDialog(parameter: AnyParameters) {
         tempSongEntity = cast(parameter[PARAMS_SONG_ENTITY])
-        bottomSheet.show()
+        bottomSheet.assignDownloadIcon(FilePathFactory.getMusicPath(tempSongEntity.encodeByName()).isNull()).show()
     }
 }

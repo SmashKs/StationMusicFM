@@ -37,5 +37,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_playlists"
         android:layout_width="match_parent"
-        android:layout_height="160dp"/>
+        android:layout_height="160dp"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_playlist_on_bottom_sheet"/>
 </LinearLayout>

@@ -21,17 +21,15 @@
 
 package com.no1.taiwan.stationmusicfm.kits.bottomsheet
 
-import android.app.Activity
+import android.widget.TextView
+import com.devrapid.kotlinknifer.DrawableDirectionConst.DRAWABLE_DIRECTION_START
+import com.devrapid.kotlinknifer.addDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.no1.taiwan.stationmusicfm.R
+import org.jetbrains.anko.findOptional
 
-object BottomSheetFactory {
-    fun createMusicSheet(activity: Activity) =
-        BottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-            setContentView(R.layout.bottomsheet_music_info)
-        }
-
-    fun createAddPlaylist(activity: Activity) = PlaylistBottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-        setContentView(R.layout.bottomsheet_playlist)
-    }
+fun BottomSheetDialog.assignDownloadIcon(isDownload: Boolean) = apply {
+    val tvDownload = findOptional<TextView>(R.id.ftv_download) ?: return@apply
+    val downloadDrawable = if (isDownload) R.drawable.ic_cloud_download_black else R.drawable.ic_cloud_downloaded_black
+    tvDownload.addDrawable(downloadDrawable, DRAWABLE_DIRECTION_START)
 }

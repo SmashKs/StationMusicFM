@@ -30,7 +30,8 @@
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_playlist_name"
-        style="@style/MusicTextView.Sub.FitWidth"
+        style="@style/MusicTextView.FitWidth"
         android:layout_height="wrap_content"
+        android:padding="@dimen/md_one_unit"
         tools:text="@tools:sample/full_names"/>
 </LinearLayout>
