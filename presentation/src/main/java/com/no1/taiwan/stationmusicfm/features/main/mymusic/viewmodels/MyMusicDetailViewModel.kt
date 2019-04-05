@@ -26,6 +26,8 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.LocalMusicPMapper
 import com.no1.taiwan.stationmusicfm.features.LocalMusics
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.LocalMusicDelegate
+import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusic
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
@@ -35,8 +37,9 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 
 class MyMusicDetailViewModel(
     private val fetchTypeOfHistsCase: FetchTypeOfHistsCase,
+    makeLocalMusic: MakeLocalMusic,
     diggerDelegate: PreziMapperDigger
-) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate by makeLocalMusic {
     private val _playlist by lazy { RespMutableLiveData<LocalMusics>() }
     val playlist: RespLiveData<LocalMusics> = _playlist
     private val playlistMapper by lazy { digMapper(LocalMusicPMapper::class) }

@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHook<T> {
     protected abstract val source: LiveData<S>
 
+    //region The Code comes from [SilentLiveData].
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         super.observe(owner, observer)
         try {
@@ -62,6 +63,7 @@ abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHoo
         // Set wrapper's version.
         fieldLastVersion.set(objectWrapper, objectVersion)
     }
+    //endregion
 
     override fun onActive() = source.observeForever(this)
 

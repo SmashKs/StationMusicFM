@@ -53,6 +53,10 @@ class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view)
             find<TextView>(R.id.ftv_track_duration).text = model.duration.toTimeString()
             setOnClickListener {
             }
+            setOnLongClickListener {
+                emitter.post("delete", model)
+                true
+            }
         }
     }
 }

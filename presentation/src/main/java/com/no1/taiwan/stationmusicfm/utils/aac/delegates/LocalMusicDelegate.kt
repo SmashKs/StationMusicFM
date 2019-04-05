@@ -22,11 +22,22 @@
 package com.no1.taiwan.stationmusicfm.utils.aac.delegates
 
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
+import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import kotlinx.coroutines.Job
 
 interface LocalMusicDelegate {
-    fun runTaskAddToPlayHistory(song: CommonMusicEntity.SongEntity, playlistIndex: Int = DEFAULT_INT): Job
+    fun runTaskAddOrUpdateToPlayHistory(
+        song: CommonMusicEntity.SongEntity,
+        playlistIndex: Int = DEFAULT_INT,
+        addOrMinus: Boolean = true
+    ): Job
+
+    fun runTaskUpdateToPlayHistory(
+        song: LocalMusicEntity,
+        playlistIndex: Int = DEFAULT_INT,
+        addOrMinus: Boolean = true
+    ): Job
 
     fun runTaskAddDownloadedTrackInfo(song: CommonMusicEntity.SongEntity, localUri: String): Job
 }

@@ -22,17 +22,23 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.extraNotNull
+import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -40,6 +46,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
+import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -61,6 +68,8 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
     private val playlistInfo by extraNotNull<PlaylistInfoEntity>(ARGUMENT_PLAYLIST_INFO)
     private val adapter: MusicAdapter by instance()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
+    private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
+    private lateinit var tempSongEntity: LocalMusicEntity
 
     init {
         BusFragLifeRegister(this)
@@ -96,6 +105,22 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
         find<TextView>(R.id.ftv_playlist_name).text = playlistInfo.name
         find<TextView>(R.id.ftv_track_count).text =
             getString(R.string.viewholder_playlist_song).format(playlistInfo.trackCount)
+        bottomSheet.also {
+            it.find<View>(R.id.ftv_download).gone()
+            it.find<View>(R.id.ftv_to_playlist).gone()
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        bottomSheet.also {
+            it.find<View>(R.id.ftv_music_delete).setOnClickListener {
+                vm.runTaskUpdateToPlayHistory(tempSongEntity, playlistInfo.id, false)
+                bottomSheet.dismiss()
+            }
+        }
     }
 
     /**
@@ -104,4 +129,10 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_mymusic_playlist_detail
+
+    @Subscribe(tags = [Tag("delete")])
+    fun openBottomSheetOptions(entity: LocalMusicEntity) {
+        tempSongEntity = entity
+        bottomSheet.show()
+    }
 }

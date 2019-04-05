@@ -21,32 +21,51 @@
 
 package com.no1.taiwan.stationmusicfm.utils.aac.delegates
 
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddOrUpdateLocalMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddOrUpdateLocalMusicReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.MusicToParamsMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
+import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MakeLocalMusic(
-    private val addLocalMusicCase: AddLocalMusicCase
+    private val addLocalMusicCase: AddOrUpdateLocalMusicCase
 ) : LocalMusicDelegate {
-    override fun runTaskAddToPlayHistory(song: CommonMusicEntity.SongEntity, playlistIndex: Int) = GlobalScope.launch {
-        val playlistId = playlistIndex
-            .takeIf { it != DEFAULT_INT }
-            ?.let { listOf(it) }
-            .orEmpty()
-        addLocalMusicCase.exec(AddLocalMusicReq(MusicToParamsMapper().toParamsFrom(song, playlistId)))
+    override fun runTaskAddOrUpdateToPlayHistory(
+        song: CommonMusicEntity.SongEntity,
+        playlistIndex: Int,
+        addOrMinus: Boolean
+    ) = GlobalScope.launch {
+        execAddOrUpdateToPlayHistory(playlistIndex) { MusicToParamsMapper().toParamsWith(song, it, addOrMinus) }
     }
+
+    override fun runTaskUpdateToPlayHistory(song: LocalMusicEntity, playlistIndex: Int, addOrMinus: Boolean) =
+        GlobalScope.launch {
+            execAddOrUpdateToPlayHistory(playlistIndex) { MusicToParamsMapper().toParamsWith(song, it, addOrMinus) }
+        }
 
     override fun runTaskAddDownloadedTrackInfo(song: CommonMusicEntity.SongEntity, localUri: String) =
         GlobalScope.launch {
             val parameter = MusicToParamsMapper()
-                .toParamsFrom(song, listOf(PlaylistIndex.DOWNLOADED.ordinal))
+                .toParamsWith(song, listOf(PlaylistIndex.DOWNLOADED.ordinal))
                 .copy(hasOwn = true, localTrackUri = localUri)
-            addLocalMusicCase.exec(AddLocalMusicReq(parameter))
+            addLocalMusicCase.exec(AddOrUpdateLocalMusicReq(parameter))
         }
+
+    private suspend fun execAddOrUpdateToPlayHistory(
+        playlistIndex: Int,
+        transformBlock: (playlistId: List<Int>) -> LocalMusicParams
+    ) {
+        val playlistId = playlistIndex
+            .takeIf { it != DEFAULT_INT }
+            ?.let { listOf(it) }
+            .orEmpty()
+        val parameters = transformBlock(playlistId)
+        addLocalMusicCase.exec(AddOrUpdateLocalMusicReq(parameters))
+    }
 }

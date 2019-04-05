@@ -28,18 +28,18 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams.Companion.PARAM_NAME_PLAYLIST_LIST
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.PlaylistRepository
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddLocalMusicReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddOrUpdateLocalMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddOrUpdateLocalMusicReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
 
-class AddLocalMusicRespCase(
+class AddOrUpdateLocalMusicRespCase(
     private val repository: PlaylistRepository
-) : AddLocalMusicCase() {
+) : AddOrUpdateLocalMusicCase() {
     /** Provide a common parameter variable for the children class. */
-    override var requestValues: AddLocalMusicReq? = null
+    override var requestValues: AddOrUpdateLocalMusicReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        val addRes = repository.addLocalMusic(it.parameters)
+        val addRes = repository.addOrUpdateLocalMusic(it.parameters)
         // If add false, just return. It's unnecessary to increase the track count.
         if (!addRes) return@attachParameter addRes
         // Get the parameter and pass into `increasing` or `deceasing` track count operation.

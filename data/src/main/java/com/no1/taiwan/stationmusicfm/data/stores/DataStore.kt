@@ -108,7 +108,7 @@ interface DataStore {
     //endregion
 
     //region Search History
-    suspend fun createSearchHistory(parameterable: Parameterable): Boolean
+    suspend fun createOrModifySearchHistory(parameterable: Parameterable): Boolean
 
     suspend fun getSearchHistories(parameterable: Parameterable): List<SearchHistoryData>
 
@@ -116,29 +116,29 @@ interface DataStore {
     //endregion
 
     //region Playlist
-    suspend fun fetchLocalMusics(parameterable: Parameterable): List<LocalMusicData>
+    suspend fun getLocalMusics(parameterable: Parameterable): List<LocalMusicData>
 
-    suspend fun addLocalMusic(parameterable: Parameterable): Boolean
+    suspend fun createOrModifyLocalMusic(parameterable: Parameterable): Boolean
 
-    suspend fun deleteLocalMusic(parameterable: Parameterable): Boolean
+    suspend fun removeLocalMusic(parameterable: Parameterable): Boolean
 
-    suspend fun fetchPlaylists(): List<PlaylistInfoData>
+    suspend fun getPlaylists(): List<PlaylistInfoData>
 
-    suspend fun fetchPlaylist(parameterable: Parameterable): PlaylistInfoData
+    suspend fun getPlaylist(parameterable: Parameterable): PlaylistInfoData
 
-    suspend fun fetchTheNewestPlaylist(): PlaylistInfoData
+    suspend fun getTheNewestPlaylist(): PlaylistInfoData
 
-    suspend fun addPlaylist(parameterable: Parameterable): Boolean
+    suspend fun createPlaylist(parameterable: Parameterable): Boolean
 
-    suspend fun updatePlaylist(parameterable: Parameterable): Boolean
+    suspend fun modifyPlaylist(parameterable: Parameterable): Boolean
 
-    suspend fun updateCountOfPlaylist(parameterable: Parameterable): Boolean
+    suspend fun modifyCountOfPlaylist(parameterable: Parameterable): Boolean
 
-    suspend fun deletePlaylist(parameterable: Parameterable): Boolean
+    suspend fun removePlaylist(parameterable: Parameterable): Boolean
 
     // ↓↓↓ Type of playlist of the musics. ↓↓↓
-    suspend fun fetchListenedHistories(parameterable: Parameterable): List<LocalMusicData>
+    suspend fun getListenedHistories(parameterable: Parameterable): List<LocalMusicData>
 
-    suspend fun fetchTypeOfHistories(parameterable: Parameterable): List<LocalMusicData>
+    suspend fun getTypeOfHistories(parameterable: Parameterable): List<LocalMusicData>
     //endregion
 }

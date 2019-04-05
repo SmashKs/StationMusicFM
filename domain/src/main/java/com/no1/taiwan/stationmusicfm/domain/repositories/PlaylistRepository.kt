@@ -32,7 +32,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 interface PlaylistRepository {
     suspend fun fetchLocalMusics(parameters: Parameterable): List<LocalMusicModel>
 
-    suspend fun addLocalMusic(parameters: Parameterable): Boolean
+    suspend fun addOrUpdateLocalMusic(parameters: Parameterable): Boolean
 
     suspend fun deleteLocalMusic(parameters: Parameterable): Boolean
 

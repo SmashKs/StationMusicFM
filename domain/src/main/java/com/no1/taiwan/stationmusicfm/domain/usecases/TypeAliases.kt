@@ -34,7 +34,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.others.RankingIdModel
 import com.no1.taiwan.stationmusicfm.domain.models.others.SearchHistModel
 import com.no1.taiwan.stationmusicfm.domain.models.playlist.LocalMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.playlist.PlaylistInfoModel
-import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddSearchHistRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.history.AddOrUpdateSearchHistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.DeleteSearchHistRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.history.FetchSearchHistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchAlbumRespCase
@@ -59,7 +59,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespC
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchSongsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.UpdateRankItemRespCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddLocalMusicRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddOrUpdateLocalMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.AddPlaylistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.DeletePlaylistsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.playlist.FetchListenedHistsRespCase
@@ -117,21 +117,21 @@ typealias FetchTrackCase = DeferredUsecase<TrackInfoModel.TrackModel, FetchTrack
 
 typealias AddRankIdsReq = AddRankIdsRespCase.Request
 typealias FetchRankIdsReq = FetchRankIdsRespCase.Request
-typealias AddSearchHistReq = AddSearchHistRespCase.Request
+typealias AddOrUpdateSearchHistReq = AddOrUpdateSearchHistRespCase.Request
 typealias DeleteSearchHistReq = DeleteSearchHistRespCase.Request
 typealias FetchSearchHistsReq = FetchSearchHistsRespCase.Request
 typealias UpdateRankItemReq = UpdateRankItemRespCase.Request
 
 typealias AddRankIdsCase = DeferredUsecase<Boolean, AddRankIdsReq>
 typealias FetchRankIdsCase = DeferredUsecase<List<RankingIdModel>, FetchRankIdsReq>
-typealias AddSearchHistCase = DeferredUsecase<Boolean, AddSearchHistReq>
+typealias AddOrUpdateSearchHistCase = DeferredUsecase<Boolean, AddOrUpdateSearchHistReq>
 typealias DeleteSearchHistCase = DeferredUsecase<Boolean, DeleteSearchHistReq>
 typealias FetchSearchHistsCase = DeferredUsecase<List<SearchHistModel>, FetchSearchHistsReq>
 typealias UpdateRankItemCase = DeferredUsecase<Boolean, UpdateRankItemReq>
 
 // Playlist
 
-typealias AddLocalMusicReq = AddLocalMusicRespCase.Request
+typealias AddOrUpdateLocalMusicReq = AddOrUpdateLocalMusicRespCase.Request
 typealias FetchListenedHistReq = FetchListenedHistsRespCase.Request
 typealias FetchTypeOfHistsReq = FetchTypeOfHistsRespCase.Request
 typealias FetchPlaylistsReq = FetchPlaylistsRespCase.Request
@@ -139,7 +139,7 @@ typealias AddPlaylistsReq = AddPlaylistsRespCase.Request
 typealias UpdatePlaylistsReq = UpdatePlaylistsRespCase.Request
 typealias DeletePlaylistsReq = DeletePlaylistsRespCase.Request
 
-typealias AddLocalMusicCase = DeferredUsecase<Boolean, AddLocalMusicReq>
+typealias AddOrUpdateLocalMusicCase = DeferredUsecase<Boolean, AddOrUpdateLocalMusicReq>
 typealias FetchListenedHistCase = DeferredUsecase<List<LocalMusicModel>, FetchListenedHistReq>
 typealias FetchTypeOfHistsCase = DeferredUsecase<List<LocalMusicModel>, FetchTypeOfHistsReq>
 typealias FetchPlaylistsCase = DeferredUsecase<List<PlaylistInfoModel>, FetchPlaylistsReq>

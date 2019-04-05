@@ -88,7 +88,7 @@ class LocalDataStore(
     //endregion
 
     //region Search History
-    override suspend fun createSearchHistory(parameterable: Parameterable) = tryWrapper {
+    override suspend fun createOrModifySearchHistory(parameterable: Parameterable) = tryWrapper {
         val keyword = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD])
         searchingHistoryDao.insertBy(keyword)
     }
@@ -112,9 +112,9 @@ class LocalDataStore(
     //endregion
 
     //region Playlist
-    override suspend fun fetchLocalMusics(parameterable: Parameterable) = localMusicDao.retrieveMusics()
+    override suspend fun getLocalMusics(parameterable: Parameterable) = localMusicDao.retrieveMusics()
 
-    override suspend fun addLocalMusic(parameterable: Parameterable) = tryWrapper {
+    override suspend fun createOrModifyLocalMusic(parameterable: Parameterable) = tryWrapper {
         val trackName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_NAME])
         val artistName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_ARTIST_NAME])
         val duration = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_DURATION])
@@ -135,21 +135,21 @@ class LocalDataStore(
                                               playlistList), addOrMinus)
     }
 
-    override suspend fun deleteLocalMusic(parameterable: Parameterable) = tryWrapper {
+    override suspend fun removeLocalMusic(parameterable: Parameterable) = tryWrapper {
         val id = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_ID])
         localMusicDao.releaseBy(id)
     }
 
-    override suspend fun fetchPlaylists() = playlistDao.retrievePlaylists()
+    override suspend fun getPlaylists() = playlistDao.retrievePlaylists()
 
-    override suspend fun fetchPlaylist(parameterable: Parameterable): PlaylistInfoData {
+    override suspend fun getPlaylist(parameterable: Parameterable): PlaylistInfoData {
         val id = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_ID])
         return playlistDao.retrievePlaylist(id)
     }
 
-    override suspend fun fetchTheNewestPlaylist() = playlistDao.retrieveLatestPlaylist()
+    override suspend fun getTheNewestPlaylist() = playlistDao.retrieveLatestPlaylist()
 
-    override suspend fun addPlaylist(parameterable: Parameterable) = tryWrapper {
+    override suspend fun createPlaylist(parameterable: Parameterable) = tryWrapper {
         val ids = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS])
         val names = cast<List<String>>(parameterable.toApiAnyParam()[PARAM_NAME_NAMES])
         val playlists = ids.zip(names)
@@ -158,37 +158,36 @@ class LocalDataStore(
         playlistDao.insert(*playlists)
     }
 
-    override suspend fun updatePlaylist(parameterable: Parameterable) = tryWrapper {
+    override suspend fun modifyPlaylist(parameterable: Parameterable) = tryWrapper {
         val id = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS]).first()
         val name = cast<List<String>>(parameterable.toApiAnyParam()[PARAM_NAME_NAMES]).first()
         val trackNumbers = castOrNull<Int>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_COUNT]) ?: DEFAULT_INT
         playlistDao.replaceBy(id, name, trackNumbers)
     }
 
-    override suspend fun updateCountOfPlaylist(parameterable: Parameterable) = tryWrapper {
+    override suspend fun modifyCountOfPlaylist(parameterable: Parameterable) = tryWrapper {
         val id = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS]).first()
         val addOrMinus = cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_ADD_OR_MINUS])
         playlistDao.apply { if (addOrMinus) increaseCountBy(id) else decreaseCountBy(id) }
     }
 
-    override suspend fun deletePlaylist(parameterable: Parameterable) = tryWrapper {
+    override suspend fun removePlaylist(parameterable: Parameterable) = tryWrapper {
         val id = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS]).first()
         playlistDao.releaseBy(id)
     }
 
-    override suspend fun fetchListenedHistories(parameterable: Parameterable): List<LocalMusicData> {
+    override suspend fun getListenedHistories(parameterable: Parameterable): List<LocalMusicData> {
         val limit = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_LIMIT])
         return listenHistoryDao.retrieveHistories(limit)
     }
 
-    override suspend fun fetchTypeOfHistories(parameterable: Parameterable): List<LocalMusicData> {
+    override suspend fun getTypeOfHistories(parameterable: Parameterable): List<LocalMusicData> {
         val ids = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS])
         if (ids.first() == PlaylistIndex.DOWNLOADED.ordinal) {
             return listenHistoryDao.retrieveDownloadedMusics()
         }
         return listenHistoryDao.retrieveTypeOfMusics(ids.first())
     }
-
     //endregion
 
     //region UnsupportedOperationException

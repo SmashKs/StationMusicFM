@@ -41,8 +41,8 @@ class HistoryDataRepository(
 ) : HistoryRepository, DataMapperDigger by diggerDelegate {
     private val searchHistMapper by lazy { digMapper(SearchHistoryDMapper::class) }
 
-    override suspend fun addSearchHistory(parameters: Parameterable) =
-        local.createSearchHistory(parameters)
+    override suspend fun addOrUpdateSearchHistory(parameters: Parameterable) =
+        local.createOrModifySearchHistory(parameters)
 
     override suspend fun fetchSearchHistories(parameters: Parameterable) =
         local.getSearchHistories(parameters).map(searchHistMapper::toModelFrom)

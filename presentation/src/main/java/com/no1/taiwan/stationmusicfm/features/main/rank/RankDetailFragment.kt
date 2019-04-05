@@ -207,7 +207,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
         else
             songAdapter.setStateMusicBy(position, res)
         // Add the play history into database.
-        vm.runTaskAddToPlayHistory(song)
+        vm.runTaskAddOrUpdateToPlayHistory(song)
     }
 
     /**
@@ -225,7 +225,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     @Subscribe(tags = [Tag(TAG_SAVING_PLAYLIST)])
     fun keepHistory(playlistId: Number) {
-        vm.runTaskAddToPlayHistory(tempSongEntity, playlistId.toInt())
+        vm.runTaskAddOrUpdateToPlayHistory(tempSongEntity, playlistId.toInt())
         playlistBottomSheet.dismiss()
     }
 }

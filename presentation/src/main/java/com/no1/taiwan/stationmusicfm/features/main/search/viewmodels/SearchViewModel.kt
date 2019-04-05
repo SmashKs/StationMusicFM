@@ -24,8 +24,8 @@ package com.no1.taiwan.stationmusicfm.features.main.search.viewmodels
 import androidx.lifecycle.MutableLiveData
 import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SrchSongParams
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddOrUpdateSearchHistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddOrUpdateSearchHistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.DeleteSearchHistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
@@ -52,7 +52,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 
 class SearchViewModel(
     private val fetchMusicCase: FetchMusicCase,
-    private val addSearchHistoryCase: AddSearchHistCase,
+    private val addSearchHistoryCase: AddOrUpdateSearchHistCase,
     private val deleteSearchHistoriesCase: DeleteSearchHistCase,
     private val fetchSearchHistoriesCase: FetchSearchHistsCase,
     makeLocalMusic: MakeLocalMusic,
@@ -81,7 +81,7 @@ class SearchViewModel(
 
     fun runTaskAddHistory(keyword: String) = launchBehind {
         this@SearchViewModel.keyword.postValue(keyword)
-        addSearchHistoryCase.exec(AddSearchHistReq(SearchHistParams(keyword)))
+        addSearchHistoryCase.exec(AddOrUpdateSearchHistReq(SearchHistParams(keyword)))
     }
 
     fun runTaskFetchHistories() = launchBehind {

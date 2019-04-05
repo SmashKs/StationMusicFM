@@ -44,32 +44,32 @@ class PlaylistDataRepository constructor(
     private val playlistMapper by lazy { digMapper(PlaylistInfoDMapper::class) }
 
     override suspend fun fetchLocalMusics(parameters: Parameterable) =
-        local.fetchLocalMusics(parameters).map(musicMapper::toModelFrom)
+        local.getLocalMusics(parameters).map(musicMapper::toModelFrom)
 
-    override suspend fun addLocalMusic(parameters: Parameterable) = local.addLocalMusic(parameters)
+    override suspend fun addOrUpdateLocalMusic(parameters: Parameterable) = local.createOrModifyLocalMusic(parameters)
 
-    override suspend fun deleteLocalMusic(parameters: Parameterable) = local.deleteLocalMusic(parameters)
+    override suspend fun deleteLocalMusic(parameters: Parameterable) = local.removeLocalMusic(parameters)
 
     override suspend fun fetchPlaylists() =
-        local.fetchPlaylists().map(playlistMapper::toModelFrom)
+        local.getPlaylists().map(playlistMapper::toModelFrom)
 
     override suspend fun fetchTheNewestPlaylist() =
-        local.fetchTheNewestPlaylist().run(playlistMapper::toModelFrom)
+        local.getTheNewestPlaylist().run(playlistMapper::toModelFrom)
 
     override suspend fun fetchPlaylist(parameters: Parameterable) =
-        local.fetchPlaylist(parameters).run(playlistMapper::toModelFrom)
+        local.getPlaylist(parameters).run(playlistMapper::toModelFrom)
 
-    override suspend fun addPlaylist(parameters: Parameterable) = local.addPlaylist(parameters)
+    override suspend fun addPlaylist(parameters: Parameterable) = local.createPlaylist(parameters)
 
-    override suspend fun updatePlaylist(parameters: Parameterable) = local.updatePlaylist(parameters)
+    override suspend fun updatePlaylist(parameters: Parameterable) = local.modifyPlaylist(parameters)
 
-    override suspend fun updateCountOfPlaylist(parameters: Parameterable) = local.updateCountOfPlaylist(parameters)
+    override suspend fun updateCountOfPlaylist(parameters: Parameterable) = local.modifyCountOfPlaylist(parameters)
 
-    override suspend fun deletePlaylist(parameters: Parameterable) = local.deletePlaylist(parameters)
+    override suspend fun deletePlaylist(parameters: Parameterable) = local.removePlaylist(parameters)
 
     override suspend fun fetchListenedHistories(parameters: Parameterable) =
-        local.fetchListenedHistories(parameters).map(musicMapper::toModelFrom)
+        local.getListenedHistories(parameters).map(musicMapper::toModelFrom)
 
     override suspend fun fetchTypeOfHistories(parameters: Parameterable) =
-        local.fetchTypeOfHistories(parameters).map(musicMapper::toModelFrom)
+        local.getTypeOfHistories(parameters).map(musicMapper::toModelFrom)
 }

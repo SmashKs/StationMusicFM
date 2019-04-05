@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.entities.mappers
 
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.LocalMusicParams
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
+import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 
 /**
@@ -30,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class MusicToParamsMapper {
-    fun toParamsFrom(song: SongEntity, playlistIndex: List<Int> = emptyList(), addOrMinus: Boolean = true) = song.run {
+    fun toParamsWith(song: SongEntity, playlistIndex: List<Int> = emptyList(), addOrMinus: Boolean = true) = song.run {
         LocalMusicParams(title,
                          artist,
                          length,
@@ -41,4 +42,18 @@ class MusicToParamsMapper {
                          playlistIndex.takeIf { it.isNotEmpty() }?.joinToString(",") ?: DEFAULT_STR,
                          addOrMinus)
     }
+
+    fun toParamsWith(entity: LocalMusicEntity, playlistIndex: List<Int> = emptyList(), addOrMinus: Boolean = true) =
+        entity.run {
+            LocalMusicParams(trackName,
+                             artistName,
+                             duration,
+                             hasOwn,
+                             remoteTrackUri,
+                             localTrackUri,
+                             coverUri,
+                             playlistIndex.takeIf { it.isNotEmpty() }?.joinToString(",") ?: DEFAULT_STR,
+                             addOrMinus,
+                             id)
+        }
 }

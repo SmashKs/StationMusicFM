@@ -24,18 +24,18 @@ package com.no1.taiwan.stationmusicfm.domain.usecases.history
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.history.SearchHistParams
 import com.no1.taiwan.stationmusicfm.domain.repositories.HistoryRepository
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddSearchHistReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddOrUpdateSearchHistCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddOrUpdateSearchHistReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase.RequestValues
 
-class AddSearchHistRespCase(
+class AddOrUpdateSearchHistRespCase(
     private val repository: HistoryRepository
-) : AddSearchHistCase() {
+) : AddOrUpdateSearchHistCase() {
     /** Provide a common parameter variable for the children class. */
-    override var requestValues: AddSearchHistReq? = null
+    override var requestValues: AddOrUpdateSearchHistReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        repository.addSearchHistory(it.parameters)
+        repository.addOrUpdateSearchHistory(it.parameters)
     }
 
     class Request(val parameters: Parameterable = SearchHistParams()) : RequestValues

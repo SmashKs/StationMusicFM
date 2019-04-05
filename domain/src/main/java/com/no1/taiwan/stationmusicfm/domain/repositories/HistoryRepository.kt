@@ -29,7 +29,7 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 interface HistoryRepository {
-    suspend fun addSearchHistory(parameters: Parameterable): Boolean
+    suspend fun addOrUpdateSearchHistory(parameters: Parameterable): Boolean
 
     suspend fun fetchSearchHistories(parameters: Parameterable): List<SearchHistModel>
 

@@ -150,34 +150,34 @@ class RemoteDataStore(
 
     override suspend fun modifyRankingData(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun createSearchHistory(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun createOrModifySearchHistory(parameterable: Parameterable) = UnsupportedOperation()
 
     override suspend fun getSearchHistories(parameterable: Parameterable) = UnsupportedOperation()
 
     override suspend fun removeSearchHistory(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun fetchLocalMusics(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun getLocalMusics(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun addLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun createOrModifyLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun deleteLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun removeLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun fetchPlaylists() = UnsupportedOperation()
+    override suspend fun getPlaylists() = UnsupportedOperation()
 
-    override suspend fun fetchPlaylist(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun getPlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun fetchTheNewestPlaylist() = UnsupportedOperation()
+    override suspend fun getTheNewestPlaylist() = UnsupportedOperation()
 
-    override suspend fun addPlaylist(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun createPlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun updatePlaylist(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun modifyPlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun updateCountOfPlaylist(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun modifyCountOfPlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun deletePlaylist(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun removePlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun fetchListenedHistories(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun getListenedHistories(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun fetchTypeOfHistories(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun getTypeOfHistories(parameterable: Parameterable) = UnsupportedOperation()
     //endregion
 }
