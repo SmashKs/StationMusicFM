@@ -21,8 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.ktx.acc.livedata
 
-class SilentMutableLiveData<T> : SilentLiveData<T>(),
-                                 SilentHook<T> {
+class SilentMutableLiveData<T> : SilentLiveData<T>(), SilentHook<T> {
     public override fun postValue(value: T) {
         super.postValue(value)
     }

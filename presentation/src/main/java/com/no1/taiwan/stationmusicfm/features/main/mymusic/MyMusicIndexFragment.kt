@@ -136,12 +136,12 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     @Subscribe(tags = [Tag(TAG_CREATE_NEW_PLAYLIST)])
     fun createNewPlaylist(playlistName: String) {
-//        vm.runTaskAddPlaylist(playlistName)
         InputDialog.createDialog(this) { v, dialogFragment ->
             v.find<TextView>(R.id.ftv_dialog_subtitle)
             v.find<Button>(R.id.btn_cancel).setOnClickListener { dialogFragment.dismiss() }
             v.find<Button>(R.id.btn_ok).setOnClickListener {
-                v.find<EditText>(R.id.et_playlist_name).text.toString()
+                val name = v.find<EditText>(R.id.et_playlist_name).text.toString()
+                vm.runTaskAddPlaylist(name)
                 dialogFragment.dismiss()
             }
         }?.show()

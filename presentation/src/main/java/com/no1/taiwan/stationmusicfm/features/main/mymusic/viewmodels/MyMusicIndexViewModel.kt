@@ -94,8 +94,12 @@ class MyMusicIndexViewModel(
         override val source: RespMutableLiveData<Playlists>
     ) : TransformedLiveData<ResponseState<Playlists>, PlaylistInfoEntity>() {
         override fun getTransformed(source: ResponseState<Playlists>) =
-            if (source is ResponseState.Success<Playlists>)
-                source.data?.first()
+            if (source is ResponseState.Success<Playlists>) {
+                val newestPlaylist = source.data?.first()
+                // Avoiding to emit again when come back to index fragment.
+                this@NewestPlaylistLiveData.source.postValue(ResponseState.Success(null))
+                newestPlaylist
+            }
             else
                 null  // don't change.
     }
