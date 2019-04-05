@@ -22,11 +22,12 @@
 package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
 import android.os.Bundle
-import androidx.constraintlayout.widget.ConstraintProperties
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.devrapid.dialogbuilder.support.QuickDialogFragment
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
@@ -47,7 +48,9 @@ import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
+import com.no1.taiwan.stationmusicfm.widget.components.dialog.InputDialog
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -134,23 +137,14 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     @Subscribe(tags = [Tag(TAG_CREATE_NEW_PLAYLIST)])
     fun createNewPlaylist(playlistName: String) {
 //        vm.runTaskAddPlaylist(playlistName)
-        QuickDialogFragment.Builder(this) {
-            onTransitionBlock = {
-                // Set the dialog transition animation.
-                it.window?.attributes?.windowAnimations = R.style.Dialog_Fragment_Animation
+        InputDialog.createDialog(this) { v, dialogFragment ->
+            v.find<TextView>(R.id.ftv_dialog_subtitle)
+            v.find<Button>(R.id.btn_cancel).setOnClickListener { dialogFragment.dismiss() }
+            v.find<Button>(R.id.btn_ok).setOnClickListener {
+                v.find<EditText>(R.id.et_playlist_name).text.toString()
+                dialogFragment.dismiss()
             }
-            onStartBlock = {
-                val realWidth = ConstraintProperties.WRAP_CONTENT
-                val realHeight = ConstraintProperties.WRAP_CONTENT
-                it.dialog?.window?.apply {
-                    // Set the dialog size.
-                    setLayout(realWidth, realHeight)
-                    // Set the dialog to round background.
-                    setBackgroundDrawableResource(R.drawable.dialog_round_background)
-                }
-            }
-            viewResCustom = R.layout.dialog_create_playlist
-        }.build().show()
+        }?.show()
     }
 
     /**

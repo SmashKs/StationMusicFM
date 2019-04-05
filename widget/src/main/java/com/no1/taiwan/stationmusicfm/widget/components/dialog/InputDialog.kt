@@ -21,30 +21,21 @@
 
 package com.no1.taiwan.stationmusicfm.widget.components.dialog
 
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.devrapid.dialogbuilder.support.QuickDialogFragment
 import com.no1.taiwan.stationmusicfm.widget.R
 import java.lang.ref.WeakReference
 
-object LoadingDialog {
-    fun getInstance(fragment: Fragment, cancelable: Boolean = false) =
+object InputDialog {
+    fun createDialog(fragment: Fragment, viewBlock: (view: View, dialogFragment: DialogFragment) -> Unit) =
         WeakReference(fragment).get()?.let {
-            QuickDialogFragment.Builder(it) {
+            QuickDialogFragment.Builder(fragment) {
                 defaultBuilder()
-                tag = "fragment loading view"
-                this.cancelable = cancelable
-                viewResCustom = R.layout.dialog_loading
-            }.build()
-        }
-
-    fun getInstance(activity: AppCompatActivity, cancelable: Boolean = false) =
-        WeakReference(activity).get()?.let {
-            QuickDialogFragment.Builder(it) {
-                defaultBuilder()
-                tag = "activity loading view"
-                this.cancelable = cancelable
-                viewResCustom = R.layout.dialog_loading
+                viewResCustom = R.layout.dialog_create_playlist
+                fetchComponents = viewBlock
+                cancelable = false
             }.build()
         }
 }

@@ -21,30 +21,23 @@
 
 package com.no1.taiwan.stationmusicfm.widget.components.dialog
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.devrapid.dialogbuilder.support.QuickDialogFragment
+import androidx.constraintlayout.widget.ConstraintProperties
+import com.devrapid.dialogbuilder.support.DialogFragmentTemplate
 import com.no1.taiwan.stationmusicfm.widget.R
-import java.lang.ref.WeakReference
 
-object LoadingDialog {
-    fun getInstance(fragment: Fragment, cancelable: Boolean = false) =
-        WeakReference(fragment).get()?.let {
-            QuickDialogFragment.Builder(it) {
-                defaultBuilder()
-                tag = "fragment loading view"
-                this.cancelable = cancelable
-                viewResCustom = R.layout.dialog_loading
-            }.build()
+internal fun DialogFragmentTemplate.Builder.defaultBuilder() {
+    onTransitionBlock = {
+        // Set the dialog transition animation.
+        it.window?.attributes?.windowAnimations = R.style.Dialog_Fragment_Animation
+    }
+    onStartBlock = {
+        val realWidth = ConstraintProperties.WRAP_CONTENT
+        val realHeight = ConstraintProperties.WRAP_CONTENT
+        it.dialog?.window?.apply {
+            // Set the dialog size.
+            setLayout(realWidth, realHeight)
+            // Set the dialog to round background.
+            setBackgroundDrawableResource(R.drawable.dialog_round_background)
         }
-
-    fun getInstance(activity: AppCompatActivity, cancelable: Boolean = false) =
-        WeakReference(activity).get()?.let {
-            QuickDialogFragment.Builder(it) {
-                defaultBuilder()
-                tag = "activity loading view"
-                this.cancelable = cancelable
-                viewResCustom = R.layout.dialog_loading
-            }.build()
-        }
+    }
 }
