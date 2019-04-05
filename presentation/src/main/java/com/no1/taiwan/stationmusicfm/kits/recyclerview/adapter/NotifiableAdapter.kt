@@ -21,11 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter
 
-import androidx.recyclerview.widget.RecyclerView
-import com.devrapid.kotlinknifer.SoftRef
-import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.castOrNull
-import com.devrapid.kotlinshaver.uiSwitch
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
@@ -40,18 +36,11 @@ class NotifiableAdapter(
     override var typeFactory: MultiTypeFactory,
     externalDiffUtil: MusicMultiDiffUtil? = null
 ) : MultiTypeAdapter(typeFactory, externalDiffUtil) {
-    private var recyclerView by SoftRef<RecyclerView>()
     var playingPosition = -1
         set(value) {
             field = value
             // Update all child views which are showing on the screen.
-            bkg {
-                recyclerView?.apply {
-                    repeat(childCount) {
-                        uiSwitch { castOrNull<Notifiable>(getChildViewHolder(getChildAt(it)))?.notifyChange(value) }
-                    }
-                }
-            }
+            runBackgroundUpdate { castOrNull<Notifiable>(it)?.notifyChange(value) }
         }
 
     /**
@@ -75,12 +64,6 @@ class NotifiableAdapter(
         castOrNull<HotTrackViewHolder>(holder)?.setOptionIcon()
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        // For catching the recycle view.
-        this.recyclerView = recyclerView
-    }
-
     fun reassignTrackUri(uri: String) {
         if (playingPosition < 0) return
         when (val data = dataList[playingPosition]) {
@@ -98,15 +81,6 @@ class NotifiableAdapter(
 
     fun setStateMusicBy(position: Int, isSuccessToPlay: Boolean) {
         // Update all child views which are showing on the screen.
-        bkg {
-            recyclerView?.apply {
-                repeat(childCount) {
-                    uiSwitch {
-                        castOrNull<Notifiable>(getChildViewHolder(getChildAt(it)))?.notifyChange(position,
-                                                                                                 isSuccessToPlay)
-                    }
-                }
-            }
-        }
+        runBackgroundUpdate { castOrNull<Notifiable>(it)?.notifyChange(position, isSuccessToPlay) }
     }
 }

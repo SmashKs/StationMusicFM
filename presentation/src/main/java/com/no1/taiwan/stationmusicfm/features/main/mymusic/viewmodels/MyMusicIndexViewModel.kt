@@ -96,7 +96,7 @@ class MyMusicIndexViewModel(
         override fun getTransformed(source: ResponseState<Playlists>) =
             if (source is ResponseState.Success<Playlists>) {
                 val newestPlaylist = source.data?.first()
-                // Avoiding to emit again when come back to index fragment so set to null value.
+                // Avoiding emitting again when come back to index fragment so set to null value.
                 this@NewestPlaylistLiveData.source.postValue(ResponseState.Success(null))
                 newestPlaylist
             }

@@ -30,12 +30,13 @@ import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
-class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view) {
+class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view), Notifiable {
     private val emitter: Bus by instance()
 
     /**
@@ -47,7 +48,7 @@ class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view)
      */
     override fun initView(model: LocalMusicEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
-            find<TextView>(R.id.ftv_playlist_index).text = (position + 1).toString()
+            find<TextView>(R.id.ftv_playlist_index).text = (layoutPosition + 1).toString()
             find<TextView>(R.id.ftv_music_name).text = model.trackName
             find<ImageView>(R.id.iv_thumbnail).loadByAny(model.coverUri)
             find<TextView>(R.id.ftv_artist_name).text = model.artistName
@@ -60,5 +61,13 @@ class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view)
                 true
             }
         }
+    }
+
+    override fun notifyChange(position: Int) {
+        itemView.find<TextView>(R.id.ftv_playlist_index).text = (layoutPosition + 1).toString()
+    }
+
+    override fun notifyChange(position: Int, isSuccessToPlay: Boolean) {
+        // Do noop.
     }
 }

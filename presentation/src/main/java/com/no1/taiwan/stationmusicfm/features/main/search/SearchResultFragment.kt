@@ -96,7 +96,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 }
                 if (!isLoading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
                     // End has been reached
-                    // NOTE(jieyi): totalItemCount is set for avoiding the first page to load again and again.
+                    // NOTE(jieyi): totalItemCount is set for avoiding that the first page to load again and again.
                     //  If there's only few items(1 ~ 7) will trigger load more in the beginning.
                     if (vm.getCurPageNumber() > 1)
                         vm.runTaskSearchMusic(vm.keyword.value.orEmpty())

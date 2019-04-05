@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
@@ -30,6 +31,11 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDi
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicViewHolder
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.AdapterItemTouchHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.ref.SoftReference
 
 /**
  * The common recyclerview adapter for the multi-type object. Avoid that we create
@@ -47,6 +53,13 @@ open class MultiTypeAdapter(
         get() = externalDiffUtil ?: super.diffUtil
         set(_) = UnsupportedOperation("We don't allow this method to use!")
     protected var viewType = DEFAULT_INT
+    private lateinit var recyclerView: SoftReference<RecyclerView>
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        // For catching the recycle view.
+        this.recyclerView = SoftReference(recyclerView)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {
         this.viewType = viewType
@@ -59,5 +72,22 @@ open class MultiTypeAdapter(
     }
 
     override fun onItemMoved(fromPosition: Int, toPosition: Int) {
+    }
+
+    /**
+     * For loop on the background for not stopping the main thread. In the meantime, update the each viewholders.
+     *
+     * @param updateBlock (view: RecyclerView.ViewHolder) -> Unit
+     */
+    protected fun runBackgroundUpdate(updateBlock: (view: RecyclerView.ViewHolder) -> Unit) {
+        GlobalScope.launch {
+            recyclerView.get()?.apply {
+                repeat(childCount) {
+                    withContext(Dispatchers.Main) {
+                        updateBlock(getChildViewHolder(getChildAt(it)))
+                    }
+                }
+            }
+        }
     }
 }

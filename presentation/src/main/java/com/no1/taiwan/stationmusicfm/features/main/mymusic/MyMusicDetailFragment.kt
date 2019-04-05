@@ -37,15 +37,16 @@ import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicDetailViewModel
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK_OF_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.TrackOfPlaylistNotifiableAdapter
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
 import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
@@ -67,9 +68,10 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
 
     // The fragment initialization parameters.
     private val playlistInfo by extraNotNull<PlaylistInfoEntity>(ARGUMENT_PLAYLIST_INFO)
-    private val adapter: MusicAdapter by instance()
+    private val adapter: TrackOfPlaylistNotifiableAdapter by instance(ADAPTER_TRACK_OF_PLAYLIST)
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
+    private var hasDelete = false
     private lateinit var tempSongEntity: LocalMusicEntity
 
     init {
@@ -81,6 +83,11 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
         observeNonNull(vm.playlist) {
             peel {
                 adapter.replaceWholeList(cast(it))
+                if (hasDelete) {
+                    adapter.updateViewHolderItems()
+                    toastX("Success")
+                    hasDelete = false
+                }
             } happenError {
                 loge(it)
             } doWith this@MyMusicDetailFragment
@@ -88,9 +95,9 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
         // After removing a music from the playlist.
         observeNonNull(vm.removeRes) {
             if (this) {
+                hasDelete = true
                 // If remove the data from database is success then refresh the playlist.
                 vm.executeRemoveLiveDataMusic(tempSongEntity.copy())
-                toastX("Success")
             }
         }
     }

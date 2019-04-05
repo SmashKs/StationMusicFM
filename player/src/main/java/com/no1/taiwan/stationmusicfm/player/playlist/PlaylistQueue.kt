@@ -91,7 +91,7 @@ class PlaylistQueue : Playlist<String> {
 
     private fun rollNewIndex(): Int {
         if (index == randomNumber || randomNumber == -1 /* at the initial */) {
-            // Avoid to get the same number again.
+            // Avoid getting the same number again.
             while (true) {
                 randomNumber = (0 until size).random()
                 if (randomNumber != index) break

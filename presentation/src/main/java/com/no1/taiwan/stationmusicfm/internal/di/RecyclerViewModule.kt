@@ -61,6 +61,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_RANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK_OF_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
@@ -69,6 +70,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_RANK
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.viewholders.BottomPlaylistViewHolder
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.HistoryAdapter
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.TrackOfPlaylistNotifiableAdapter
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.diffutils.PlaylistDiffUtil
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.diffutils.RankDiffUtil
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
@@ -108,14 +110,17 @@ object RecyclerViewModule {
         bind<MultiTypeFactory>() with singleton { MultiTypeFactory(instance()) }
         // *** Adapters
         bind<MusicAdapter>() with provider { MultiTypeAdapter(instance()) }
-        bind<HistoryAdapter>(ADAPTER_HISTORY) with provider {
-            HistoryAdapter(instance(), instance(UTIL_DIFF_KEYWORD))
-        }
         bind<MusicAdapter>(ADAPTER_RANK) with provider { MultiTypeAdapter(instance(), instance(UTIL_DIFF_RANK)) }
         bind<MusicAdapter>(ADAPTER_PLAYLIST) with provider {
             MultiTypeAdapter(instance(), instance(UTIL_DIFF_PLAYLIST))
         }
         bind<NotifiableAdapter>(ADAPTER_TRACK) with provider { NotifiableAdapter(instance()) }
+        bind<HistoryAdapter>(ADAPTER_HISTORY) with provider {
+            HistoryAdapter(instance(), instance(UTIL_DIFF_KEYWORD))
+        }
+        bind<TrackOfPlaylistNotifiableAdapter>(ADAPTER_TRACK_OF_PLAYLIST) with provider {
+            TrackOfPlaylistNotifiableAdapter(instance())
+        }
     }
 
     private fun diffUtilProvider() = Module("Recycler View DiffUtil") {

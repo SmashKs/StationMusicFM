@@ -42,4 +42,5 @@ object ObjectLabel {
     const val ADAPTER_RANK = "for rank adapter"
     const val ADAPTER_PLAYLIST = "for playlist adapter"
     const val ADAPTER_TRACK = "for changeable adapter"
+    const val ADAPTER_TRACK_OF_PLAYLIST = "for changeable adapter in playlist"
 }
