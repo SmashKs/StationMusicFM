@@ -22,7 +22,8 @@
 
 <resources>
     <!-- Default transition animation duration -->
-    <integer name="anim_transition_duration">400</integer>
+    <integer name="anim_transition_duration">200</integer>
 
+    <!-- Default dialog animation duration -->
     <integer name="anim_dialog_duration">150</integer>
 </resources>

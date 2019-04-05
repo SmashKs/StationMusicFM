@@ -25,5 +25,5 @@
     <solid
         android:color="@android:color/white"/>
     <corners
-        android:radius="8dp"/>
+        android:radius="@dimen/fragment_dialog_corner_radius"/>
 </shape>
