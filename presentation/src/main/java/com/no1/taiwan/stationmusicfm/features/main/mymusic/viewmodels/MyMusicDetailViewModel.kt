@@ -21,11 +21,16 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels
 
+import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchTypeOfHistsReq
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.LocalMusicPMapper
+import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
+import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.features.LocalMusics
+import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.SilentLiveData
+import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.SilentMutableLiveData
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.LocalMusicDelegate
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.MakeLocalMusic
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
@@ -37,16 +42,36 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 
 class MyMusicDetailViewModel(
     private val fetchTypeOfHistsCase: FetchTypeOfHistsCase,
-    makeLocalMusic: MakeLocalMusic,
+    private val makeLocalMusic: MakeLocalMusic,
     diggerDelegate: PreziMapperDigger
-) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate by makeLocalMusic {
+) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate {
     private val _playlist by lazy { RespMutableLiveData<LocalMusics>() }
     val playlist: RespLiveData<LocalMusics> = _playlist
+    private val _removeRes by lazy { SilentMutableLiveData<Boolean>() }
+    val removeRes: SilentLiveData<Boolean> = _removeRes
     private val playlistMapper by lazy { digMapper(LocalMusicPMapper::class) }
+
+    override fun runTaskAddOrUpdateToPlayHistory(song: SongEntity, playlistIndex: Int, addOrMinus: Boolean) =
+        launchBehind { makeLocalMusic.runTaskAddOrUpdateToPlayHistory(song, playlistIndex, addOrMinus).await() }
+
+    override fun runTaskUpdateToPlayHistory(song: LocalMusicEntity, playlistIndex: Int, addOrMinus: Boolean) =
+        launchBehind {
+            val result = makeLocalMusic.runTaskUpdateToPlayHistory(song, playlistIndex, addOrMinus).await()
+            _removeRes.postValue(result)
+        }
+
+    override fun runTaskAddDownloadedTrackInfo(song: SongEntity, localUri: String) =
+        launchBehind { makeLocalMusic.runTaskAddDownloadedTrackInfo(song, localUri).await() }
 
     fun runTaskFetchPlaylist(id: Int) = launchBehind {
         _playlist reqData {
             fetchTypeOfHistsCase.execListMapping(playlistMapper, FetchTypeOfHistsReq(PlaylistParams(listOf(id))))
         }
+    }
+
+    fun executeRemoveLiveDataMusic(entity: LocalMusicEntity) = launchBehind {
+        val value = _playlist.value as? ResponseState.Success ?: return@launchBehind
+        val data = value.data?.filter { it.id != entity.id }.orEmpty()
+        _playlist.postValue(ResponseState.Success(data))
     }
 }

@@ -31,6 +31,7 @@ object RxBusConstant {
         const val TAG_CREATE_NEW_PLAYLIST = "create a new playlist"
         const val TAG_REMOVING_SEARCH_HIST = "removing the searching history"
         const val TAG_SAVING_SEARCH_HIST = "saving the searching history"
+        const val TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST = "removing a music from a playlist"
         const val TAG_PLAY_A_SONG = "play a song for asking the exo player"
         const val TAG_OPEN_BOTTOM_SHEET = "open bottom sheet dialog"
         const val TAG_SAVING_PLAYLIST = "saving the playlist"

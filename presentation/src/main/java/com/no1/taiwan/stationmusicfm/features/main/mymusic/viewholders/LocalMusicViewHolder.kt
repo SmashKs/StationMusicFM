@@ -30,6 +30,7 @@ import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
@@ -53,8 +54,9 @@ class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view)
             find<TextView>(R.id.ftv_track_duration).text = model.duration.toTimeString()
             setOnClickListener {
             }
+            /** @event_to [com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicDetailFragment.openBottomSheetOptions] */
             setOnLongClickListener {
-                emitter.post("delete", model)
+                emitter.post(TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST, model)
                 true
             }
         }

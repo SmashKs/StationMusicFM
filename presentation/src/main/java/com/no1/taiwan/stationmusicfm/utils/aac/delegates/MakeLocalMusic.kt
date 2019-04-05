@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.async
 
 class MakeLocalMusic(
     private val addLocalMusicCase: AddOrUpdateLocalMusicCase
@@ -40,17 +40,17 @@ class MakeLocalMusic(
         song: CommonMusicEntity.SongEntity,
         playlistIndex: Int,
         addOrMinus: Boolean
-    ) = GlobalScope.launch {
+    ) = GlobalScope.async {
         execAddOrUpdateToPlayHistory(playlistIndex) { MusicToParamsMapper().toParamsWith(song, it, addOrMinus) }
     }
 
     override fun runTaskUpdateToPlayHistory(song: LocalMusicEntity, playlistIndex: Int, addOrMinus: Boolean) =
-        GlobalScope.launch {
+        GlobalScope.async {
             execAddOrUpdateToPlayHistory(playlistIndex) { MusicToParamsMapper().toParamsWith(song, it, addOrMinus) }
         }
 
     override fun runTaskAddDownloadedTrackInfo(song: CommonMusicEntity.SongEntity, localUri: String) =
-        GlobalScope.launch {
+        GlobalScope.async {
             val parameter = MusicToParamsMapper()
                 .toParamsWith(song, listOf(PlaylistIndex.DOWNLOADED.ordinal))
                 .copy(hasOwn = true, localTrackUri = localUri)
@@ -60,12 +60,12 @@ class MakeLocalMusic(
     private suspend fun execAddOrUpdateToPlayHistory(
         playlistIndex: Int,
         transformBlock: (playlistId: List<Int>) -> LocalMusicParams
-    ) {
+    ): Boolean {
         val playlistId = playlistIndex
             .takeIf { it != DEFAULT_INT }
             ?.let { listOf(it) }
             .orEmpty()
         val parameters = transformBlock(playlistId)
-        addLocalMusicCase.exec(AddOrUpdateLocalMusicReq(parameters))
+        return addLocalMusicCase.exec(AddOrUpdateLocalMusicReq(parameters))
     }
 }

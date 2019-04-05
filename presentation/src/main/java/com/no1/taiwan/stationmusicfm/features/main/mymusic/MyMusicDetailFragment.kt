@@ -39,13 +39,14 @@ import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
-import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
+import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
 import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -79,10 +80,18 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
     override fun bindLiveData() {
         observeNonNull(vm.playlist) {
             peel {
-                adapter.append(cast<MusicVisitables>(it))
+                adapter.replaceWholeList(cast(it))
             } happenError {
                 loge(it)
             } doWith this@MyMusicDetailFragment
+        }
+        // After removing a music from the playlist.
+        observeNonNull(vm.removeRes) {
+            if (this) {
+                // If remove the data from database is success then refresh the playlist.
+                vm.executeRemoveLiveDataMusic(tempSongEntity.copy())
+                toastX("Success")
+            }
         }
     }
 
@@ -130,7 +139,10 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
      */
     override fun provideInflateView() = R.layout.fragment_mymusic_playlist_detail
 
-    @Subscribe(tags = [Tag("delete")])
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.mymusic.viewholders.LocalMusicViewHolder.initView]
+     */
+    @Subscribe(tags = [Tag(TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST)])
     fun openBottomSheetOptions(entity: LocalMusicEntity) {
         tempSongEntity = entity
         bottomSheet.show()
