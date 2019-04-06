@@ -24,6 +24,7 @@ package com.no1.taiwan.stationmusicfm.ktx.acc.livedata
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.no1.taiwan.BuildConfig
 
 abstract class SilentLiveData<T> : LiveData<T>(), SilentHook<T> {
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
@@ -32,7 +33,8 @@ abstract class SilentLiveData<T> : LiveData<T>(), SilentHook<T> {
             beSilent(observer)
         }
         catch (e: Exception) {
-            e.printStackTrace()
+            if (BuildConfig.DEBUG)
+                e.printStackTrace()
         }
     }
 

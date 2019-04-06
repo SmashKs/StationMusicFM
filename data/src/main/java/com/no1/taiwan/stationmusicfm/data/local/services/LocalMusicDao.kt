@@ -60,8 +60,12 @@ abstract class LocalMusicDao : BaseDao<LocalMusicData> {
                                        val splitFromOrigin = existMusic.playlistList.split(",")
                                        // To be a list of new updated playlist from user new adding.
                                        val splitFromUpdated = updatedData.playlistList.split(",")
-                                       (if (addOrMinus)  // Add a new playlist into original playlist.
+                                       (if (addOrMinus) {  // Add a new playlist into original playlist.
+                                           if (splitFromUpdated.size == 1 && splitFromUpdated.first() in splitFromOrigin) {
+                                               throw Exception("Insert the a data fail because duplicate!!")
+                                           }
                                            (splitFromOrigin + splitFromUpdated).distinct()
+                                       }
                                        else  // Remove the playlist from original playlist.
                                            splitFromOrigin.subtract(splitFromUpdated)).joinToString(",")
                                    }

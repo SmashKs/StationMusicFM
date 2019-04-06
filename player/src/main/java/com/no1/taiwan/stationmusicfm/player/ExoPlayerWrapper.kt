@@ -280,7 +280,8 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         true
     }
     catch (e: Exception) {
-        e.printStackTrace()
+        if (BuildConfig.DEBUG)
+            e.printStackTrace()
         false
     }
 

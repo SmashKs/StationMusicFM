@@ -25,6 +25,7 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.no1.taiwan.BuildConfig
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -38,7 +39,8 @@ abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHoo
             beSilent(observer)
         }
         catch (e: Exception) {
-            e.printStackTrace()
+            if (BuildConfig.DEBUG)
+                e.printStackTrace()
         }
     }
 

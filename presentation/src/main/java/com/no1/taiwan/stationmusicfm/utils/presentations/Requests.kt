@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.utils.presentations
 
+import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import kotlinx.coroutines.runBlocking
 
@@ -111,6 +112,7 @@ private inline fun <E> tryResp(block: () -> ResponseState<E>) = try {
     block()
 }
 catch (e: Exception) {
-    e.printStackTrace()
+    if (BuildConfig.DEBUG)
+        e.printStackTrace()
     ResponseState.Error<E>(msg = e.message ?: "Unknown error has happened.")
 }

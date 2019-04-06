@@ -23,6 +23,7 @@ package com.no1.taiwan.stationmusicfm.data.stores
 
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.castOrNull
+import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.data.mappers.others.SearchHistoryDMapper
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
@@ -254,7 +255,8 @@ class LocalDataStore(
             tryBlock()
         }
         catch (e: Exception) {
-            e.printStackTrace()
+            if (BuildConfig.DEBUG)
+                e.printStackTrace()
             return false
         }
         return true
