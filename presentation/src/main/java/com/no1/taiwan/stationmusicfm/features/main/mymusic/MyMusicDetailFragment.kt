@@ -23,9 +23,11 @@ package com.no1.taiwan.stationmusicfm.features.main.mymusic
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
@@ -38,12 +40,15 @@ import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK_OF_PLAYLIST
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.TrackOfPlaylistNotifiableAdapter
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -69,6 +74,7 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
     // The fragment initialization parameters.
     private val playlistInfo by extraNotNull<PlaylistInfoEntity>(ARGUMENT_PLAYLIST_INFO)
     private val adapter: TrackOfPlaylistNotifiableAdapter by instance(ADAPTER_TRACK_OF_PLAYLIST)
+    private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR)
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
     private var hasDelete = false
@@ -76,6 +82,7 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
 
     init {
         BusFragLifeRegister(this)
+        SearchShowingLifeRegister(this)
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -83,11 +90,8 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
         observeNonNull(vm.playlist) {
             peel {
                 adapter.replaceWholeList(cast(it))
-                if (hasDelete) {
-                    adapter.updateViewHolderItems()
-                    toastX("Success")
-                    hasDelete = false
-                }
+                if (hasDelete)
+                    onDeletedMusicFromPlaylist(it.size)
             } happenError {
                 loge(it)
             } doWith this@MyMusicDetailFragment
@@ -117,10 +121,11 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(R.id.rv_music), adapter, linearLayoutManager())
+        initRecyclerViewWith(find(R.id.rv_music), adapter, linearLayoutManager(), decoration)
         find<TextView>(R.id.ftv_playlist_name).text = playlistInfo.name
         find<TextView>(R.id.ftv_track_count).text =
             getString(R.string.viewholder_playlist_song).format(playlistInfo.trackCount)
+        find<ImageView>(R.id.iv_playlist_thumbnail).loadByAny(R.drawable.thumbnail_default_playlist)
         bottomSheet.also {
             it.find<View>(R.id.ftv_download).gone()
             it.find<View>(R.id.ftv_to_playlist).gone()
@@ -153,5 +158,14 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
     fun openBottomSheetOptions(entity: LocalMusicEntity) {
         tempSongEntity = entity
         bottomSheet.show()
+    }
+
+    private fun onDeletedMusicFromPlaylist(count: Int) {
+        // Update the recycler view.
+        adapter.updateViewHolderItems()
+        // Update number of the songs displaying.
+        find<TextView>(R.id.ftv_track_count).text = getString(R.string.viewholder_playlist_song).format(count)
+        hasDelete = false
+        toastX("Success")
     }
 }

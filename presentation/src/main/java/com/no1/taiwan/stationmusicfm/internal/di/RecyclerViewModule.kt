@@ -63,6 +63,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_RANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK_OF_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
+import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYWORD
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_PLAYLIST
@@ -80,6 +81,7 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.ViewHolderEn
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters.MultiTypeAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.ActionBarBlankDecoration
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.SeparateLineDecoration
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.decorations.TrackOfPlaylistSeparateLineDecoration
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.utils.MusicDefaultDiffUtil
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
@@ -132,6 +134,9 @@ object RecyclerViewModule {
     private fun decorationProvider() = Module("Recycler View Item Decoration") {
         bind<RecyclerView.ItemDecoration>(ITEM_DECORATION_ACTION_BAR_BLANK) with provider { ActionBarBlankDecoration() }
         bind<RecyclerView.ItemDecoration>(ITEM_DECORATION_SEPARATOR) with provider { SeparateLineDecoration(MusicApp.appContext) }
+        bind<RecyclerView.ItemDecoration>(ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR) with provider {
+            TrackOfPlaylistSeparateLineDecoration(MusicApp.appContext)
+        }
     }
 
     private fun viewHolderProvider() = Module("Viewholder Module") {

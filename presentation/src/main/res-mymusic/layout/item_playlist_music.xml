@@ -26,7 +26,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/md_one_unit"
     android:paddingTop="@dimen/md_one_unit"
     tools:context=".features.main.mymusic.viewholders.LocalMusicViewHolder">
 

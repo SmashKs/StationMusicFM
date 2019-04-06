@@ -44,6 +44,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_CREATE_NEW_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_PLAYLIST_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -65,6 +66,7 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
 
     init {
         BusFragLifeRegister(this)
+        SearchHidingLifeRegister(this)
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */

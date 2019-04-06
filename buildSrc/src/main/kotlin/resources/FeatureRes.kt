@@ -27,6 +27,7 @@ package resources
 object FeatureRes {
     val dirs = arrayOf(
         "src/main/res-icons",
+        "src/main/res-images",
         "src/main/res-splash",
         "src/main/res-theme",
         "src/main/res-rank",
