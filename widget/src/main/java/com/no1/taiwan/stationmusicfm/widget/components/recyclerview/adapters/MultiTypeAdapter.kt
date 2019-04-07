@@ -34,7 +34,6 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.Adap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.lang.ref.SoftReference
 
 /**
@@ -80,12 +79,10 @@ open class MultiTypeAdapter(
      * @param updateBlock (view: RecyclerView.ViewHolder) -> Unit
      */
     protected fun runBackgroundUpdate(updateBlock: (view: RecyclerView.ViewHolder) -> Unit) {
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Main.immediate) {
             recyclerView.get()?.apply {
                 repeat(childCount) {
-                    withContext(Dispatchers.Main) {
-                        updateBlock(getChildViewHolder(getChildAt(it)))
-                    }
+                    updateBlock(getChildViewHolder(getChildAt(it)))
                 }
             }
         }
