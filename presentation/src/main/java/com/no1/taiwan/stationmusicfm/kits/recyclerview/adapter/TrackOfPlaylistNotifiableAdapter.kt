@@ -39,7 +39,7 @@ class TrackOfPlaylistNotifiableAdapter(
             // NOTE(jieyi): Avoid updating is too fast to be correct. That's why it should delay for a while.
             delay(150)
             // It will change whole items, position can be ignored.
-            runBackgroundUpdate {
+            executeUpdate {
                 castOrNull<Notifiable>(it)?.notifyChange(DEFAULT_INT)
             }
         }

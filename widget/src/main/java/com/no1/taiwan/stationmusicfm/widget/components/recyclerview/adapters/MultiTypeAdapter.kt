@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.widget.components.recyclerview.adapters
 
 import android.view.ViewGroup
+import androidx.annotation.UiThread
 import androidx.recyclerview.widget.RecyclerView
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
@@ -78,7 +79,8 @@ open class MultiTypeAdapter(
      *
      * @param updateBlock (view: RecyclerView.ViewHolder) -> Unit
      */
-    protected fun runBackgroundUpdate(updateBlock: (view: RecyclerView.ViewHolder) -> Unit) {
+    @UiThread
+    protected fun executeUpdate(updateBlock: (view: RecyclerView.ViewHolder) -> Unit) {
         GlobalScope.launch(Dispatchers.Main.immediate) {
             recyclerView.get()?.apply {
                 repeat(childCount) {

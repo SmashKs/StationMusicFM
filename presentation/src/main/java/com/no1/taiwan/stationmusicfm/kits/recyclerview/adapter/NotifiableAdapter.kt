@@ -40,7 +40,7 @@ class NotifiableAdapter(
         set(value) {
             field = value
             // Update all child views which are showing on the screen.
-            runBackgroundUpdate { castOrNull<Notifiable>(it)?.notifyChange(value) }
+            executeUpdate { castOrNull<Notifiable>(it)?.notifyChange(value) }
         }
 
     /**
@@ -81,6 +81,6 @@ class NotifiableAdapter(
 
     fun setStateMusicBy(position: Int, isSuccessToPlay: Boolean) {
         // Update all child views which are showing on the screen.
-        runBackgroundUpdate { castOrNull<Notifiable>(it)?.notifyChange(position, isSuccessToPlay) }
+        executeUpdate { castOrNull<Notifiable>(it)?.notifyChange(position, isSuccessToPlay) }
     }
 }
