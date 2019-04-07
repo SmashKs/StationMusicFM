@@ -35,6 +35,7 @@ import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
@@ -48,6 +49,7 @@ import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.file.FilePathFactory
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -165,6 +167,9 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
         adapter.updateViewHolderItems()
         // Update number of the songs displaying.
         find<TextView>(R.id.ftv_track_count).text = getString(R.string.viewholder_playlist_song).format(count)
+        // Only the music was downloaded, it should be deleted.
+        if (playlistInfo.id == PlaylistIndex.DOWNLOADED.ordinal)
+            FilePathFactory.removeMusic(FilePathFactory.obtainMusicPath(tempSongEntity.encodeByName()))
         hasDelete = false
         toastX("Success")
     }

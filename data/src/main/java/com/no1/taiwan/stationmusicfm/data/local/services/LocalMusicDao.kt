@@ -26,6 +26,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.no1.taiwan.stationmusicfm.data.data.playlist.LocalMusicData
 import com.no1.taiwan.stationmusicfm.data.local.config.BaseDao
+import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import java.util.Date
 
@@ -70,10 +71,16 @@ abstract class LocalMusicDao : BaseDao<LocalMusicData> {
                                            splitFromOrigin.subtract(splitFromUpdated)).joinToString(",")
                                    }
                                } ?: existMusic.playlistList  // There's no new playlist inside of parameters, just put original playlist.
-
+            // If remove a track from playlist and the track was downloaded, we should clean the [LocalTrackUri] to be blank.
+            val localTrackUri =
+                if (!addOrMinus && PlaylistIndex.DOWNLOADED.ordinal.toString() in existMusic.playlistList) {
+                    DEFAULT_STR
+                }
+                else
+                    updatedData.localTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.localTrackUri
             replace(existMusic.copy(hasOwn = updatedData.hasOwn.takeIf { it } ?: existMusic.hasOwn,
                                     remoteTrackUri = updatedData.remoteTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.remoteTrackUri,
-                                    localTrackUri = updatedData.localTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.localTrackUri,
+                                    localTrackUri = localTrackUri,
                                     coverUri = updatedData.coverUri.takeIf { it != DEFAULT_STR } ?: existMusic.coverUri,
                                     playlistList = playlist,
                                     lastListen = updatedData.lastListen))

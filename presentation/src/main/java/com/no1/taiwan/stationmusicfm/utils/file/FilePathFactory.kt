@@ -34,4 +34,10 @@ object FilePathFactory {
     }
 
     fun getMusicPath(fileName: String) = obtainMusicPath(fileName).takeIf { File(it).exists() }
+
+    fun removeMusic(filePath: String): Boolean {
+        val fileDelete = File(filePath)
+        if (!fileDelete.exists()) return false
+        return fileDelete.delete()
+    }
 }
