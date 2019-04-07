@@ -21,7 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.widget.components.dialog
 
+import android.util.DisplayMetrics
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintProperties
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.devrapid.dialogbuilder.support.QuickDialogFragment
@@ -33,6 +35,19 @@ object InputDialog {
         WeakReference(fragment).get()?.let {
             QuickDialogFragment.Builder(fragment) {
                 defaultBuilder()
+                onStartBlock = {
+                    val (width, _) = DisplayMetrics().apply {
+                        it.requireActivity().windowManager.defaultDisplay.getMetrics(this)
+                    }.run { widthPixels to heightPixels }
+                    val realWidth = (width * .78f).toInt()
+                    val realHeight = ConstraintProperties.WRAP_CONTENT
+                    it.dialog?.window?.apply {
+                        // Set the dialog size.
+                        setLayout(realWidth, realHeight)
+                        // Set the dialog to round background.
+                        setBackgroundDrawableResource(R.drawable.dialog_round_background)
+                    }
+                }
                 viewResCustom = R.layout.dialog_create_playlist
                 fetchComponents = viewBlock
                 cancelable = false
