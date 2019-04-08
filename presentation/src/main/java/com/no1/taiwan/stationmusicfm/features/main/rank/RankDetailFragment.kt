@@ -86,12 +86,20 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
     private val player: MusicPlayer by instance()
-    private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
+    private val optionsBottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
     private val playlistBottomSheet by lazy { BottomSheetFactory.createAddPlaylist(parent) }
 
     init {
         BusFragLongerLifeRegister(this)
         SearchHidingLifeRegister(this)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        player.apply {
+            clearPlaylist()
+            setEventListener(null)
+        }
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -139,7 +147,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        bottomSheet.apply {
+        optionsBottomSheet.apply {
             find<View>(R.id.ftv_download).setOnClickListener {
                 if (::tempSongEntity.isInitialized) {
                     // The track has downloaded, just return and dismiss the bottom sheet view.
@@ -186,11 +194,6 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      */
     override fun provideInflateView() = R.layout.fragment_rank_detail
 
-    override fun onDetach() {
-        super.onDetach()
-        player.clearPlaylist()
-    }
-
     /**
      * Play a track by [MusicPlayer].
      *
@@ -217,7 +220,9 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     @Subscribe(tags = [Tag(TAG_OPEN_BOTTOM_SHEET)])
     fun openBottomSheetDialog(parameter: AnyParameters) {
         tempSongEntity = cast(parameter[PARAMS_SONG_ENTITY])
-        bottomSheet.assignDownloadIcon(FilePathFactory.getMusicPath(tempSongEntity.encodeByName()).isNull()).show()
+        optionsBottomSheet
+            .assignDownloadIcon(FilePathFactory.getMusicPath(tempSongEntity.encodeByName()).isNull())
+            .show()
     }
 
     /**

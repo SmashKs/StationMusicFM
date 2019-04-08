@@ -45,7 +45,7 @@ import com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment
 import org.jetbrains.anko.find
 
-class MainActivity : BaseActivity() {
+open class MainActivity : BaseActivity() {
     private val navigator by lazy { findNavController(R.id.frag_nav_main) }
     private val currentFragment
         get() = supportFragmentManager
@@ -72,7 +72,8 @@ class MainActivity : BaseActivity() {
             setOnNavigationItemSelectedListener {
                 // Avoid the reselect.
                 if (it.itemId == selectedItemId) return@setOnNavigationItemSelectedListener false
-
+                // Pop all fragments from the back stack.
+                while (navigator.popBackStack());
                 // Reassign to bottom navigation view.
                 // If we wanna use animation when changing to other navigation page.
                 NavigationUI.onNavDestinationSelected(it, navigator)

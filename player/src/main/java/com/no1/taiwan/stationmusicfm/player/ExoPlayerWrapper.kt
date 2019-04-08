@@ -288,7 +288,7 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
     /**
      * The function is used to set up an event listener which monitor the activity of music player.
      */
-    override fun setEventListener(listener: PlayerEventListener) {
+    override fun setEventListener(listener: PlayerEventListener?) {
         this.listener = listener
     }
 

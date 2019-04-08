@@ -46,7 +46,10 @@ class BottomPlaylistViewHolder(view: View) : MultiViewHolder<PlaylistBottomSheet
         itemView.apply {
             find<TextView>(R.id.ftv_playlist_name).text = model.name
             setOnClickListener {
-                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.keepHistory] */
+                /**
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment.keepHistory]
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment.keepHistory]
+                 */
                 emitter.post(TAG_SAVING_PLAYLIST, model.id)
             }
         }
