@@ -52,16 +52,22 @@
         app:layout_constraintTop_toBottomOf="@id/ftv_dialog_title"
         tools:text="@tools:sample/lorem[20]"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_playlist_name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_playlist_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/md_two_unit"
         android:layout_marginStart="@dimen/md_two_unit"
-        android:hint="Please input playlist name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ftv_dialog_subtitle"/>
+        app:layout_constraintTop_toBottomOf="@id/ftv_dialog_subtitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_playlist_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Please input playlist name"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_cancel"
@@ -75,7 +81,7 @@
         app:backgroundTint="@color/selector_button_borderless_background"
         app:iconTint="@color/selector_button_borderless_text_color"
         app:layout_constraintEnd_toStartOf="@id/btn_ok"
-        app:layout_constraintTop_toBottomOf="@id/et_playlist_name"
+        app:layout_constraintTop_toBottomOf="@id/til_playlist_name"
         app:rippleColor="@null"/>
 
     <com.google.android.material.button.MaterialButton
@@ -91,6 +97,6 @@
         app:iconTint="@color/selector_button_borderless_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_playlist_name"
+        app:layout_constraintTop_toBottomOf="@id/til_playlist_name"
         app:rippleColor="@null"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
