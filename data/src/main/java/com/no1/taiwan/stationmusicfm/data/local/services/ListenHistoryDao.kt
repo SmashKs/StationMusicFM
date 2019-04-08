@@ -49,13 +49,14 @@ abstract class ListenHistoryDao {
 
     /**
      * Get data which in the playlist from the the music table.
+     * NOTE(jieyi): `LIKE` query should plus with ('%'||xxx||'%') for matching SQL query.
      *
      * @param playlistId
      * @param limit
      * @param zeroTime
      * @return
      */
-    @Query("SELECT * FROM table_local_music WHERE playlist_list LIKE :playlistId AND last_listen_date>=:zeroTime ORDER BY last_listen_date ASC LIMIT :limit")
+    @Query("SELECT * FROM table_local_music WHERE playlist_list LIKE '%'||:playlistId||'%' AND last_listen_date>=:zeroTime ORDER BY last_listen_date ASC LIMIT :limit")
     abstract fun retrieveTypeOfMusics(playlistId: Int, limit: Int = 30, zeroTime: Date = Date(0)): List<LocalMusicData>
 
     /**
