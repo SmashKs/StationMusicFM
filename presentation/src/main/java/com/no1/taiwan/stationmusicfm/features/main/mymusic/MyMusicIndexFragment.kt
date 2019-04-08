@@ -51,6 +51,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
 import com.no1.taiwan.stationmusicfm.widget.components.dialog.InputDialog
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
+import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
 import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -90,7 +91,10 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
         // STEP 1. For creating a new playlist.
         observeNonNull(vm.addPlaylistRes) {
             peelSkipLoading {
-                if (!it) return@peelSkipLoading
+                if (!it) {
+                    toastX("There's had the same playlist name you created!")
+                    return@peelSkipLoading
+                }
                 vm.runTaskFetchTheNewestPlaylist()
             } happenError {
                 loge(it)
