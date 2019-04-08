@@ -184,17 +184,10 @@ class LocalDataStore(
 
     override suspend fun getTypeOfHistories(parameterable: Parameterable): List<LocalMusicData> {
         val ids = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS])
-        println("=================================================")
-        println(ids)
-        println("=================================================")
         if (ids.first() == PlaylistIndex.DOWNLOADED.ordinal) {
             return listenHistoryDao.retrieveDownloadedMusics()
         }
-        return listenHistoryDao.retrieveTypeOfMusics(ids.first()).apply {
-            println("=================================================")
-            println(this)
-            println("=================================================")
-        }
+        return listenHistoryDao.retrieveTypeOfMusics(ids.first())
     }
     //endregion
 
