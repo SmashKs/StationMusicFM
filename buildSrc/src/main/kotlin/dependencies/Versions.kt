@@ -41,11 +41,11 @@ object Versions {
     object AndroidComponent {
         const val material = "1.1.0-alpha05"
         const val androidx = "1.0.0"
-        const val annotation = "1.1.0-alpha02"
-        const val appCompat = "1.1.0-alpha03"
+        const val annotation = "1.1.0-beta01"
+        const val appCompat = "1.1.0-alpha04"
         const val cardView = androidx
         const val recyclerView = appCompat
-        const val constraintLayout = "2.0.0-alpha3"
+        const val constraintLayout = "2.0.0-alpha4"
         const val coordinatorLayout = "1.1.0-alpha01"
     }
 
@@ -53,15 +53,15 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.30-eap-125"
-        const val kotlinCoroutine = "1.2.0-alpha"
+        const val kotlinLib = "1.3.30-eap-164"
+        const val kotlinCoroutine = "1.2.0-alpha-2"
     }
 
     /**
      * Related view component lib version.
      */
     object ViewComponent {
-        const val adaptiveRecyclerView = "1.0.15"
+        const val adaptiveRecyclerView = "1.0.16"
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.1.2"
         const val dialog = "1.0.7"
@@ -76,17 +76,17 @@ object Versions {
         const val anko = "0.10.8"
         const val kinfer = "2.1.9"
         const val ktx = "1.1.0-alpha05"
-        const val fragmentKtx = ktx
+        const val fragmentKtx = "1.1.0-alpha06"
         const val paletteKtx = "1.0.0"
-        const val collectionKtx = "1.1.0-alpha03"
+        const val collectionKtx = "1.1.0-beta01"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
-        const val navigationKtx = "2.0.0"
-        const val workKtx = "2.0.0"
+        const val navigationKtx = "2.1.0-alpha02"
+        const val workKtx = "2.0.1-rc01"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
     object AndroidArchitectureComponent {
-        const val aacLifecycle = "2.1.0-alpha03"
+        const val aacLifecycle = "2.1.0-alpha04"
         const val room = "2.1.0-alpha06"
     }
 
