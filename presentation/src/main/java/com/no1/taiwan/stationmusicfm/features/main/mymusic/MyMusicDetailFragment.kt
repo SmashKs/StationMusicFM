@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -131,6 +132,7 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
         bottomSheet.also {
             it.find<View>(R.id.ftv_download).gone()
             it.find<View>(R.id.ftv_to_playlist).gone()
+            it.find<View>(R.id.ftv_music_delete).visible()
         }
     }
 
@@ -138,9 +140,13 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
+        super.componentListenersBinding()
         bottomSheet.also {
             it.find<View>(R.id.ftv_music_delete).setOnClickListener {
                 vm.runTaskUpdateToPlayHistory(tempSongEntity, playlistInfo.id, false)
+                bottomSheet.dismiss()
+            }
+            it.find<View>(R.id.ftv_music_info).setOnClickListener {
                 bottomSheet.dismiss()
             }
         }

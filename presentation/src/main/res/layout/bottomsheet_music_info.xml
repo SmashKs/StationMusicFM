@@ -50,5 +50,7 @@
         android:id="@+id/ftv_music_delete"
         style="@style/BottomSheetView.Options.ItemView"
         android:drawableStart="@drawable/ic_delete_forever_black"
-        android:text="Delete"/>
+        android:text="Delete"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 </LinearLayout>

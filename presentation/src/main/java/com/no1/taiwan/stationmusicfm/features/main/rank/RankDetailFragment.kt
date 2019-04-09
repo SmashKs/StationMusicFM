@@ -147,6 +147,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
+        super.componentListenersBinding()
         optionsBottomSheet.apply {
             find<View>(R.id.ftv_download).setOnClickListener {
                 if (::tempSongEntity.isInitialized) {
