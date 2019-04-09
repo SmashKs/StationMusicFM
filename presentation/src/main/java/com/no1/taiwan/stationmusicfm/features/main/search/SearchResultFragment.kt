@@ -22,7 +22,6 @@
 package com.no1.taiwan.stationmusicfm.features.main.search
 
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
@@ -30,7 +29,6 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.obtainViewStub
 import com.devrapid.kotlinknifer.showViewStub
 import com.devrapid.kotlinshaver.cast
-import com.devrapid.kotlinshaver.isNotNull
 import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
@@ -64,8 +62,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
-import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
-import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -81,7 +77,6 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val player: MusicPlayer by instance()
     private val optionsBottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
-    private val playlistBottomSheet by lazy { BottomSheetFactory.createAddPlaylist(parent) }
     private val rvScrollListener
         get() = object : RecyclerView.OnScrollListener() {
             /** The total number of items in the data set after the last load. */
@@ -179,32 +174,8 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
      */
     override fun componentListenersBinding() {
         super.componentListenersBinding()
-        optionsBottomSheet.apply {
-            find<View>(R.id.ftv_download).setOnClickListener {
-                if (::tempSongEntity.isInitialized) {
-                    // The track has downloaded, just return and dismiss the bottom sheet view.
-                    if (FilePathFactory.getMusicPath(tempSongEntity.encodeByName()).isNotNull()) {
-                        toastX("You have downloaded it already.")
-                        dismiss()
-                        return@setOnClickListener
-                    }
-                    parent.requireStoragePermission {
-                        val path = FilePathFactory.obtainMusicPath(tempSongEntity.encodeByName())
-                        // Save into internal storage.
-                        player.writeToFile(tempSongEntity.url, path)
-                        vm.runTaskAddDownloadedTrackInfo(tempSongEntity, path)
-                    }
-                }
-                dismiss()
-            }
-            find<View>(R.id.ftv_to_playlist).setOnClickListener {
-                dismiss()
-                // Open the playlist for adding.
-                playlistBottomSheet.show()
-            }
-            find<View>(R.id.ftv_music_info).setOnClickListener {
-                dismiss()
-            }
+        optionsBottomSheet.onDownloaded = {
+            vm.runTaskAddDownloadedTrackInfo(tempSongEntity, it)
         }
         player.setEventListener(PlayerEventListener {
             onChangeTrack = listener@{ oldIndex, newIndex ->
@@ -261,9 +232,10 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     @Subscribe(tags = [Tag(TAG_OPEN_BOTTOM_SHEET)])
     fun openBottomSheetDialog(parameter: AnyParameters) {
         tempSongEntity = cast(parameter[PARAMS_SONG_ENTITY])
-        optionsBottomSheet
-            .assignDownloadIcon(FilePathFactory.getMusicPath(tempSongEntity.encodeByName()).isNull())
-            .show()
+        optionsBottomSheet.run {
+            songEntity = tempSongEntity
+            assignDownloadIcon(FilePathFactory.getMusicPath(tempSongEntity.encodeByName()).isNull())
+        }.show()
     }
 
     /**
@@ -272,7 +244,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     @Subscribe(tags = [Tag(TAG_SAVING_PLAYLIST)])
     fun keepHistory(playlistId: Number) {
         vm.runTaskAddOrUpdateToPlayHistory(tempSongEntity, playlistId.toInt())
-        playlistBottomSheet.dismiss()
+        optionsBottomSheet.dismissPlaylist()
     }
 
     private fun fetchAgainForFirstTime() {

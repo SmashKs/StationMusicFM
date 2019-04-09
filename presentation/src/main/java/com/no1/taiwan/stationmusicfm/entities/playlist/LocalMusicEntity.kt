@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.entities.playlist
 
 import com.no1.taiwan.stationmusicfm.entities.Entity
+import com.no1.taiwan.stationmusicfm.entities.MusicEncoder
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.utils.file.MusicEncode
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
@@ -40,8 +41,10 @@ data class LocalMusicEntity(
     val coverUri: String = DEFAULT_STR,
     val created: Date = Date(),
     val lastListen: Date = Date()
-) : Entity, MusicMultiVisitable {
+) : Entity, MusicEncoder, MusicMultiVisitable {
     override fun type(typeFactory: MultiTypeFactory) = typeFactory.type(this)
 
-    fun encodeByName() = MusicEncode.encodeMusicBy(artistName, trackName)
+    override fun encodeByName() = MusicEncode.encodeMusicBy(artistName, trackName)
+
+    override fun getMusicUri() = remoteTrackUri
 }

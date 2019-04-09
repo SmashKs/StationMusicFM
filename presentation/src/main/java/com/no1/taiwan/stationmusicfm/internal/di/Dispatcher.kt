@@ -53,7 +53,9 @@ object Dispatcher {
         import(PresentationMapperModule.presentationUtilProvider())
     }
 
+    // TODO(jieyi): 2019-04-10 Separate more for detail.
     fun importIntoBottomSheet(context: Context) = Kodein.lazy {
+        import(AppModule.appProvider(context.applicationContext))
         /** bindings */
         import(UtilModule.utilProvider(context))
         import(PresentationModule.kitsProvider())

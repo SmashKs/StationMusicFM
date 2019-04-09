@@ -19,19 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.kits.bottomsheet
+package com.no1.taiwan.stationmusicfm.entities
 
-import android.app.Activity
-import com.no1.taiwan.stationmusicfm.R
-
-object BottomSheetFactory {
-    fun createMusicSheet(activity: Activity) =
-        MusicOptionsBottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-            setContentView(R.layout.bottomsheet_music_info)
-        }
-
-    fun createAddPlaylist(activity: Activity) =
-        PlaylistBottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
-            setContentView(R.layout.bottomsheet_playlist)
-        }
+interface MusicEncoder {
+    fun encodeByName(): String
+    fun getMusicUri(): String
 }

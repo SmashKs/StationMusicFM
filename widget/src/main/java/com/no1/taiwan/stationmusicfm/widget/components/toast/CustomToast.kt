@@ -30,11 +30,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.no1.taiwan.stationmusicfm.widget.R
 
-fun Fragment.toastX(msg: String = "") = requireActivity().buildCustomToast(msg)
+fun Context.toastX(msg: String = "") = buildCustomToast(msg)
+
+fun Fragment.toastX(msg: String = "") = requireContext().buildCustomToast(msg)
 
 fun Activity.toastX(msg: String) = buildCustomToast(msg)
 
-fun Fragment.toastLongX(msg: String = "") = requireActivity().buildCustomToast(msg, Toast.LENGTH_LONG)
+fun Context.toastLongX(msg: String = "") = buildCustomToast(msg, Toast.LENGTH_LONG)
+
+fun Fragment.toastLongX(msg: String = "") = requireContext().buildCustomToast(msg, Toast.LENGTH_LONG)
 
 fun Activity.toastLongX(msg: String) = buildCustomToast(msg, Toast.LENGTH_LONG)
 
