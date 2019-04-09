@@ -174,9 +174,6 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
             find<View>(R.id.ftv_music_info).setOnClickListener {
                 dismiss()
             }
-            find<View>(R.id.ftv_music_delete).setOnClickListener {
-                dismiss()
-            }
         }
         player.setEventListener(PlayerEventListener {
             onChangeTrack = listener@{ oldIndex, newIndex ->
