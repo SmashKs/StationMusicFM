@@ -23,7 +23,6 @@ package com.no1.taiwan.stationmusicfm.kits.recyclerview.scrolllisteners
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.cast
 
 class LoadMoreScrollListener : RecyclerView.OnScrollListener() {
@@ -49,7 +48,6 @@ class LoadMoreScrollListener : RecyclerView.OnScrollListener() {
             }
         }
         if (!isLoading && totalItemCount - visibleItemCount <= firstVisibleItem + VISIBLE_THRESHOLD) {
-            logw(fetchMoreBlock)
             // End has been reached
             fetchMoreBlock?.invoke()
             isLoading = true

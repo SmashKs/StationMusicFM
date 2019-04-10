@@ -25,6 +25,7 @@ import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.castOrNull
@@ -37,6 +38,7 @@ import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.scrolllisteners.LoadMoreScrollListener
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
@@ -68,10 +70,31 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
     private val trackAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
     private val genreAdapter: MusicAdapter by instance()
+    private val artistLoadMoreListener: LoadMoreScrollListener by instance()
+    private val trackLoadMoreListener: LoadMoreScrollListener by instance()
 
     init {
         BusFragLifeRegister(this)
         SearchHidingLifeRegister(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (trackLoadMoreListener.fetchMoreBlock.isNull())
+            trackLoadMoreListener.fetchMoreBlock = {
+                vm.runTaskFetchTopTrack()
+            }
+        if (artistLoadMoreListener.fetchMoreBlock.isNull())
+            artistLoadMoreListener.fetchMoreBlock = {
+                vm.runTaskFetchTopArtist()
+            }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        // Release the function pointer.
+        trackLoadMoreListener.fetchMoreBlock = null
+        artistLoadMoreListener.fetchMoreBlock = null
     }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
@@ -121,8 +144,16 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(R.id.rv_tracks), trackAdapter, verLinearLayoutManager())
-        initRecyclerViewWith(find(R.id.rv_artists), artistAdapter, horLinearLayoutManager())
+        find<RecyclerView>(R.id.rv_tracks).apply {
+            initRecyclerViewWith(this, trackAdapter, verLinearLayoutManager())
+            clearOnScrollListeners()
+            addOnScrollListener(trackLoadMoreListener)
+        }
+        find<RecyclerView>(R.id.rv_artists).apply {
+            initRecyclerViewWith(this, artistAdapter, horLinearLayoutManager())
+            clearOnScrollListeners()
+            addOnScrollListener(artistLoadMoreListener)
+        }
         initRecyclerViewWith(find(R.id.rv_genres), genreAdapter, girdLayoutManager())
     }
 

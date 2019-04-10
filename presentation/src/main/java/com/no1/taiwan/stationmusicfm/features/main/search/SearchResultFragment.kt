@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.obtainViewStub
 import com.devrapid.kotlinknifer.showViewStub
 import com.devrapid.kotlinshaver.cast
@@ -242,7 +241,6 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         if (vm.getCurPageNumber() == 1) {
             find<RecyclerView>(R.id.v_result).apply {
                 clearOnScrollListeners()
-                logw("??????????????????????????????????????")
                 addOnScrollListener(rvScrollListener)
             }
         }
