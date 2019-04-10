@@ -31,17 +31,10 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import org.jetbrains.anko.support.v4.find
 
 class PagerBioFragment : BasePagerFragment() {
-    // Really prevent the opening.
-    private var isFirstTime = true
-
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.artistLiveData) {
             peel {
-                if (!isTheSameArtist && isFirstTime && vm.lastFindMbid?.isNotBlank() == true) {
-                    isFirstTime = false
-                    return@peel
-                }
                 find<TextView>(R.id.ftv_bio).text = it.bio.content.parseAsHtml().toSpannable()
             } doWith this@PagerBioFragment
         }
@@ -51,6 +44,7 @@ class PagerBioFragment : BasePagerFragment() {
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
+        // Don't call the super function.
     }
 
     /**

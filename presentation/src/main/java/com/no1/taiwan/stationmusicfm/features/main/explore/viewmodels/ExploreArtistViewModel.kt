@@ -91,8 +91,9 @@ class ExploreArtistViewModel(
     private val photosMapper by lazy { digMapper(ArtistPhotosPMapper::class) }
     private val musicMapper by lazy { digMapper(MusicPMapper::class) }
 
-    private val _lastFindMbid by lazy { MutableLiveData<String>() }
-    val lastFindMbid get() = _lastFindMbid.value
+    // last search data type first: mbid, second: artist name.
+    private val _lastFind by lazy { MutableLiveData<Pair<String, String>>() }
+    val lastFind get() = _lastFind.value
 
     fun runTaskFetchArtistInfo(mbid: String, name: String) = launchBehind {
         val parameters = ArtistParams(mbid, name)
@@ -108,7 +109,7 @@ class ExploreArtistViewModel(
             _albumsLiveData.postValue(ResponseState.Success(album))
             _similarArtistsLiveData.postValue(ResponseState.Success(similarArtist))
             _tracksLiveData.postValue(ResponseState.Success(tracks))
-            _lastFindMbid.postValue(mbid)
+            _lastFind.postValue(Pair(mbid, name))
 
             ArtistMixInfo(artist, album, similarArtist, tracks)
         }

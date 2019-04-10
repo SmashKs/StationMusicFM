@@ -96,7 +96,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     private val adapterFragments by lazy {
         listOf(PagerBioFragment(), PagerAlbumFragment(), PagerTrackFragment(), PagerSimilarArtistFragment()).onEach {
             it.withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource,
-                             ARGUMENT_IS_THE_SAME_ARTIST to (mbid == vm.lastFindMbid))
+                             ARGUMENT_IS_THE_SAME_ARTIST to (artistName == vm.lastFind?.second))
         }
     }
 
@@ -127,9 +127,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         vm.apply {
             // 1. `artistInfoLiveData.value.isNull()` is for avoiding the back fragment again and search it.
             if (artistInfoLiveData.value.isNull() ||
-                // 2. `mbid != vm.lastFindMbid` is for avoiding searching the same artist.
+                // 2. `mbid != vm.lastFind` is for avoiding searching the same artist.
                 // 3. `isFirstTime` is for the first time open this fragment.
-                mbid != vm.lastFindMbid) {
+                mbid != vm.lastFind?.first) {
                 runTaskFetchArtistInfo(mbid, artistName)
                 // Pre-load the photos.
                 runTaskFetchArtistPhoto(artistName)
