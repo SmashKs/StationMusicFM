@@ -46,7 +46,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATIO
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.assignDownloadIcon
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.NotifiableAdapter
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.player.PlayerEventListener
 import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE

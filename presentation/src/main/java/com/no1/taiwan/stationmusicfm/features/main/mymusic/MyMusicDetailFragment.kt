@@ -45,7 +45,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK_
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.TrackOfPlaylistNotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.TrackOfPlaylistNotifiableAdapter
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister

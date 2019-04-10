@@ -69,11 +69,12 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_KEYW
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.UTIL_DIFF_RANK
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.viewholders.BottomPlaylistViewHolder
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.HistoryAdapter
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.TrackOfPlaylistNotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.HistoryAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.NotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.TrackOfPlaylistNotifiableAdapter
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.diffutils.PlaylistDiffUtil
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.diffutils.RankDiffUtil
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.scrolllisteners.LoadMoreScrollListener
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MultiTypeFactory
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDiffUtil
@@ -99,6 +100,7 @@ object RecyclerViewModule {
         import(adapterProvider())
         import(diffUtilProvider())
         import(decorationProvider())
+        import(scrollListenerProvider())
         import(mappingProvider())
         import(viewHolderProvider())
     }
@@ -137,6 +139,10 @@ object RecyclerViewModule {
         bind<RecyclerView.ItemDecoration>(ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR) with provider {
             TrackOfPlaylistSeparateLineDecoration(MusicApp.appContext)
         }
+    }
+
+    private fun scrollListenerProvider() = Module("Recycler View Scroll Listener") {
+        bind<LoadMoreScrollListener>() with provider { LoadMoreScrollListener() }
     }
 
     private fun viewHolderProvider() = Module("Viewholder Module") {

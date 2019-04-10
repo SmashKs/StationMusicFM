@@ -31,7 +31,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.NotifiableAdapter
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 

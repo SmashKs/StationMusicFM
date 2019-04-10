@@ -35,7 +35,7 @@ import com.no1.taiwan.stationmusicfm.features.main.search.viewmodels.SearchViewM
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTORY
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.HistoryAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.HistoryAdapter
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister

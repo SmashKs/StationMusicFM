@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.obtainViewStub
 import com.devrapid.kotlinknifer.showViewStub
 import com.devrapid.kotlinshaver.cast
@@ -45,7 +46,8 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATIO
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.assignDownloadIcon
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter.NotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.NotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.scrolllisteners.LoadMoreScrollListener
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.player.PlayerEventListener
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
@@ -75,38 +77,9 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
+    private val rvScrollListener: LoadMoreScrollListener by instance()
     private val player: MusicPlayer by instance()
     private val optionsBottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent, viewLifecycleOwner) }
-    private val rvScrollListener
-        get() = object : RecyclerView.OnScrollListener() {
-            /** The total number of items in the data set after the last load. */
-            private var previousTotal = 0
-            /** True if we are still waiting for the last set of data to load. */
-            private var isLoading = true
-            private val visibleThreshold = 4
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val visibleItemCount = recyclerView.childCount
-                val totalItemCount = requireNotNull(recyclerView.layoutManager).itemCount
-                val firstVisibleItem =
-                    cast<LinearLayoutManager>(recyclerView.layoutManager).findFirstVisibleItemPosition()
-
-                if (isLoading) {
-                    if (totalItemCount > previousTotal) {
-                        isLoading = false
-                        previousTotal = totalItemCount
-                    }
-                }
-                if (!isLoading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
-                    // End has been reached
-                    // NOTE: totalItemCount is set for avoiding that the first page to load again and again.
-                    //  If there's only few items(1 ~ 7) will trigger load more in the beginning.
-                    if (vm.getCurPageNumber() > 1)
-                        vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
-                    isLoading = true
-                }
-            }
-        }
 
     init {
         BusFragLongerLifeRegister(this)
@@ -115,6 +88,8 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
 
     override fun onResume() {
         super.onResume()
+        if (rvScrollListener.fetchMoreBlock.isNull())
+            rvScrollListener.fetchMoreBlock = ::fetchMore
         parent.onQuerySubmit = {
             vm.resetPageNumber()
             vm.runTaskAddHistory(it)
@@ -125,6 +100,8 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         super.onDetach()
         // Reset the page number for searching again.
         vm.resetPageNumber()
+        // Release the function pointer.
+        rvScrollListener.fetchMoreBlock = null
         player.apply {
             clearPlaylist()
             setEventListener(null)
@@ -265,9 +242,17 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         if (vm.getCurPageNumber() == 1) {
             find<RecyclerView>(R.id.v_result).apply {
                 clearOnScrollListeners()
+                logw("??????????????????????????????????????")
                 addOnScrollListener(rvScrollListener)
             }
         }
+    }
+
+    private fun fetchMore() {
+        // NOTE: totalItemCount is set for avoiding that the first page to load again and again.
+        //  If there's only few items(1 ~ 7) will trigger load more in the beginning.
+        if (vm.getCurPageNumber() > 1)
+            vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
     }
 
     private fun switchStub(isResult: Boolean) {

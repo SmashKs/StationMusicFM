@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.kits.recyclerview.adapter
+package com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters
 
 import com.devrapid.kotlinshaver.castOrNull
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackWithStreamableEntity
