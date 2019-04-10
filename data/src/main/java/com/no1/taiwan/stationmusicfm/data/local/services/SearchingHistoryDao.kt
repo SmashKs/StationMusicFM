@@ -48,7 +48,7 @@ abstract class SearchingHistoryDao : BaseDao<SearchHistoryData> {
     /**
      * Get all data from the History table.
      */
-    @Query("SELECT * FROM table_history ORDER BY updated ASC LIMIT :limit")
+    @Query("SELECT * FROM table_history ORDER BY updated DESC LIMIT :limit")
     abstract fun retrieveHistories(limit: Int = 30): List<SearchHistoryData>
 
     /**
