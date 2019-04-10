@@ -49,7 +49,7 @@ abstract class ListenHistoryDao {
 
     /**
      * Get data which in the playlist from the the music table.
-     * NOTE(jieyi): `LIKE` query should plus with ('%'||xxx||'%') for matching SQL query.
+     * NOTE: `LIKE` query should plus with ('%'||xxx||'%') for matching SQL query.
      *
      * @param playlistId
      * @param limit

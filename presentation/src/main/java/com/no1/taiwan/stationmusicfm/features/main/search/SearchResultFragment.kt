@@ -76,7 +76,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
     private val player: MusicPlayer by instance()
-    private val optionsBottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
+    private val optionsBottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent, viewLifecycleOwner) }
     private val rvScrollListener
         get() = object : RecyclerView.OnScrollListener() {
             /** The total number of items in the data set after the last load. */
@@ -99,7 +99,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                 }
                 if (!isLoading && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
                     // End has been reached
-                    // NOTE(jieyi): totalItemCount is set for avoiding that the first page to load again and again.
+                    // NOTE: totalItemCount is set for avoiding that the first page to load again and again.
                     //  If there's only few items(1 ~ 7) will trigger load more in the beginning.
                     if (vm.getCurPageNumber() > 1)
                         vm.runTaskSearchMusic(vm.keyword.value.orEmpty())

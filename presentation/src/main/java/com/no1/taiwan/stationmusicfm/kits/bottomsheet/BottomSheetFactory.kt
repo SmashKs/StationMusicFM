@@ -22,11 +22,12 @@
 package com.no1.taiwan.stationmusicfm.kits.bottomsheet
 
 import android.app.Activity
+import androidx.lifecycle.LifecycleOwner
 import com.no1.taiwan.stationmusicfm.R
 
 object BottomSheetFactory {
-    fun createMusicSheet(activity: Activity) =
-        MusicOptionsBottomSheetDialog(activity, R.style.BottomSheetDialog).apply {
+    fun createMusicSheet(activity: Activity, lifecycleOwner: LifecycleOwner) =
+        MusicOptionsBottomSheetDialog(activity, lifecycleOwner, R.style.BottomSheetDialog).apply {
             setContentView(R.layout.bottomsheet_music_info)
         }
 

@@ -79,7 +79,7 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
     private val adapter: TrackOfPlaylistNotifiableAdapter by instance(ADAPTER_TRACK_OF_PLAYLIST)
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR)
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
+    private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent, viewLifecycleOwner) }
     private var hasDelete = false
     private lateinit var tempSongEntity: LocalMusicEntity
 
@@ -141,14 +141,8 @@ class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
      */
     override fun componentListenersBinding() {
         super.componentListenersBinding()
-        bottomSheet.also {
-            it.find<View>(R.id.ftv_music_delete).setOnClickListener {
-                vm.runTaskUpdateToPlayHistory(tempSongEntity, playlistInfo.id, false)
-                bottomSheet.dismiss()
-            }
-            it.find<View>(R.id.ftv_music_info).setOnClickListener {
-                bottomSheet.dismiss()
-            }
+        bottomSheet.onDeleted = {
+            vm.runTaskUpdateToPlayHistory(tempSongEntity, playlistInfo.id, false)
         }
     }
 

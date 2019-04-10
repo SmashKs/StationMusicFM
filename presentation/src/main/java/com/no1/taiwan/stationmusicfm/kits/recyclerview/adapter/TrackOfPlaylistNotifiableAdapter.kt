@@ -36,7 +36,7 @@ class TrackOfPlaylistNotifiableAdapter(
 ) : MultiTypeAdapter(typeFactory, externalDiffUtil) {
     fun updateViewHolderItems() {
         bkg {
-            // NOTE(jieyi): Avoid updating is too fast to be correct. That's why it should delay for a while.
+            // NOTE: Avoid updating is too fast to be correct. That's why it should delay for a while.
             delay(150)
             // It will change whole items, position can be ignored.
             executeUpdate {

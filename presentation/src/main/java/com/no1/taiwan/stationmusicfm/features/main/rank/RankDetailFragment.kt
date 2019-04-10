@@ -81,7 +81,7 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val songAdapter: NotifiableAdapter by instance(ADAPTER_TRACK)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
-    private val optionsBottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent) }
+    private val optionsBottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent, viewLifecycleOwner) }
     private val player: MusicPlayer by instance()
 
     init {
