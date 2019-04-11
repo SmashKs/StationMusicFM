@@ -44,9 +44,14 @@ abstract class BasePagerFragment : AdvFragment<MainActivity, ExploreArtistViewMo
     protected val girdLayoutManager: () -> GridLayoutManager by provider(null, 2)
     protected val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     protected val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
-
+    protected var enterCount = 0
     //region Parameter
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     protected val searchArtistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     //endregion
+
+    override fun onResume() {
+        super.onResume()
+        enterCount++
+    }
 }
