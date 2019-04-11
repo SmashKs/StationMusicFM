@@ -35,8 +35,13 @@ class PagerAlbumFragment : BasePagerFragment() {
         super.bindLiveData()
         observeNonNull(vm.albumsLiveData) {
             peel {
-                if (it.albums.isEmpty() || it.albums.first().artist.name != searchArtistName) return@peel
-                adapter.append(cast<MusicVisitables>(it.albums))
+                // When `count` is 0 that means only the same artist searched can be appended because it doesn't
+                // need to fetch again from the remote server.
+                // Otherwise `count` is 1 will prevent adding again and again.
+                if ((enterCount == 0 && it.albums.firstOrNull()?.artist?.name == searchArtistName) ||
+                    (enterCount == 1 && it.albums.isNotEmpty() && adapter.itemCount == 0)) {
+                    adapter.append(cast<MusicVisitables>(it.albums))
+                }
             } doWith this@PagerAlbumFragment
         }
     }
