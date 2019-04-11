@@ -61,8 +61,10 @@ class MyMusicIndexViewModel(
     val playlist: RespLiveData<LocalMusics> = _playlist
     val favorites = FavoriteLiveData(_playlist)
     val downloads = DownloadLiveData(_playlist)
+    //region Mappers
     private val playlistMapper by lazy { digMapper(LocalMusicPMapper::class) }
     private val playlistsMapper by lazy { digMapper(PlaylistInfoPMapper::class) }
+    //endregion
     private lateinit var tempIds: List<Int>
 
     fun runTaskFetchPlaylist() = launchBehind {

@@ -42,7 +42,9 @@ class RankIndexViewModel(
     private val _rankIds by lazy { RespMutableLiveData<RankingIds>() }
     val rankTopper = RankingIdLiveData(_rankIds)
     val rankElse = RankingIdForChartLiveData(_rankIds)
+    //region Mappers
     private val rankingIdMapper by lazy { digMapper(RankingPMapper::class) }
+    //endregion
 
     fun runTaskFetchRankIds() = launchBehind {
         _rankIds reqData { fetchRankIdsCase.execListMapping(rankingIdMapper, FetchRankIdsReq()) }

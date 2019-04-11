@@ -49,7 +49,9 @@ class MyMusicDetailViewModel(
     val playlist: RespLiveData<LocalMusics> = _playlist
     private val _removeRes by lazy { SilentMutableLiveData<Boolean>() }
     val removeRes: SilentLiveData<Boolean> = _removeRes
+    //region Mappers
     private val playlistMapper by lazy { digMapper(LocalMusicPMapper::class) }
+    //endregion
 
     override fun runTaskAddOrUpdateToPlayHistory(song: SongEntity, playlistIndex: Int, addOrMinus: Boolean) =
         launchBehind { makeLocalMusic.runTaskAddOrUpdateToPlayHistory(song, playlistIndex, addOrMinus).await() }

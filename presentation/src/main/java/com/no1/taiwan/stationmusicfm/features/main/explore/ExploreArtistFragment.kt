@@ -72,9 +72,8 @@ import org.kodein.di.generic.instance
 class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
     companion object {
         const val ARGUMENT_VM_DEPENDENT = "fragment argument view model provider source"
-        const val ARGUMENT_IS_THE_SAME_ARTIST = "fragment argument is the same artist?"
+        const val ARGUMENT_ARTIST_NAME = "fragment argument artist name"
         private const val ARGUMENT_MBID = "fragment argument mbid"
-        private const val ARGUMENT_ARTIST_NAME = "fragment argument artist name"
 
         fun createBundle(mbid: String, name: String, vmProvider: Int) = bundleOf(ARGUMENT_MBID to mbid,
                                                                                  ARGUMENT_ARTIST_NAME to name,
@@ -96,7 +95,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     private val adapterFragments by lazy {
         listOf(PagerBioFragment(), PagerAlbumFragment(), PagerTrackFragment(), PagerSimilarArtistFragment()).onEach {
             it.withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource,
-                             ARGUMENT_IS_THE_SAME_ARTIST to (artistName == vm.lastFind?.second))
+                             ARGUMENT_ARTIST_NAME to artistName)
         }
     }
 
@@ -127,9 +126,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         vm.apply {
             // 1. `artistInfoLiveData.value.isNull()` is for avoiding the back fragment again and search it.
             if (artistInfoLiveData.value.isNull() ||
-                // 2. `mbid != vm.lastFind` is for avoiding searching the same artist.
+                // 2. `artistName != vm.artistLiveData.value?.data?.name` is for avoiding searching the same artist.
                 // 3. `isFirstTime` is for the first time open this fragment.
-                mbid != vm.lastFind?.first) {
+                artistName != vm.artistLiveData.value?.data?.name) {
                 runTaskFetchArtistInfo(mbid, artistName)
                 // Pre-load the photos.
                 runTaskFetchArtistPhoto(artistName)

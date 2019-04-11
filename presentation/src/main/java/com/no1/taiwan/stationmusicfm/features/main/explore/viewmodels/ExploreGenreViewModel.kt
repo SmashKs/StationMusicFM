@@ -64,10 +64,12 @@ class ExploreGenreViewModel(
     val topTracksLiveData: RespLiveData<TracksTypeGenreEntity> = _topTracksLiveData
     private val _tagInfoLiveData by lazy { RespMutableLiveData<GenreMixInfo>() }
     val tagInfoLiveData: RespLiveData<GenreMixInfo> = _tagInfoLiveData
+    //region Mappers
     private val tagMapper by lazy { digMapper(TagPMapper::class) }
     private val artistsMapper by lazy { digMapper(ArtistsPMapper::class) }
     private val albumsMapper by lazy { digMapper(TopAlbumTypeGenrePMapper::class) }
     private val tracksMapper by lazy { digMapper(TracksTypeGenrePMapper::class) }
+    //endregion
 
     fun runTaskFetchGenreInfo(tagName: String) = launchBehind {
         val parameters = TagParams(tagName)

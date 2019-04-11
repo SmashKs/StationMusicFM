@@ -64,10 +64,12 @@ class SearchViewModel(
     val histories: RespLiveData<SearchHistories> = _histories
     private val _removeRes by lazy { RespMutableLiveData<Boolean>() }
     val removeRes: RespLiveData<Boolean> = _removeRes
-    private val musicMapper by lazy { digMapper(MusicPMapper::class) }
-    private val historyMapper by lazy { digMapper(SearchHistoryPMapper::class) }
     private val page by lazy { MutableLiveData(0) }
     val keyword by lazy { MutableLiveData(DEFAULT_STR) }
+    //region Mappers
+    private val musicMapper by lazy { digMapper(MusicPMapper::class) }
+    private val historyMapper by lazy { digMapper(SearchHistoryPMapper::class) }
+    //endregion
 
     fun runTaskSearchMusic(keyword: String) = launchBehind {
         this@SearchViewModel.keyword.postValue(keyword)

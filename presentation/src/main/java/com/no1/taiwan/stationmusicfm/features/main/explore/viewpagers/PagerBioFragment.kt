@@ -35,6 +35,8 @@ class PagerBioFragment : BasePagerFragment() {
     override fun bindLiveData() {
         observeNonNull(vm.artistLiveData) {
             peel {
+                // Because the previous data is showed before the newest data will be fetched.
+                if (searchArtistName != it.name) return@peel
                 find<TextView>(R.id.ftv_bio).text = it.bio.content.parseAsHtml().toSpannable()
             } doWith this@PagerBioFragment
         }

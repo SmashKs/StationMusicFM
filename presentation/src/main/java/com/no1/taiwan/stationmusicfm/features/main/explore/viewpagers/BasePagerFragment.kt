@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.extraNotNull
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
-import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.Companion.ARGUMENT_IS_THE_SAME_ARTIST
+import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.Companion.ARGUMENT_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment.Companion.ARGUMENT_VM_DEPENDENT
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
@@ -47,6 +47,6 @@ abstract class BasePagerFragment : AdvFragment<MainActivity, ExploreArtistViewMo
 
     //region Parameter
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
-    protected val isTheSameArtist by extraNotNull<Boolean>(ARGUMENT_IS_THE_SAME_ARTIST)
+    protected val searchArtistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     //endregion
 }

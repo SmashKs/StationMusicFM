@@ -47,8 +47,10 @@ class ExploreAlbumViewModel(
     val albumLiveData: NotifLiveData<AlbumEntity> = _albumLiveData
     private val _artistLiveData by lazy { NotifMutableLiveData<ArtistEntity>() }
     val artistLiveData: NotifLiveData<ArtistEntity> = _artistLiveData
+    //region Mappers
     private val albumMapper by lazy { digMapper(AlbumPMapper::class) }
     private val artistMapper by lazy { digMapper(ArtistPMapper::class) }
+    //endregion
 
     fun runTaskFetchAlbum(mbid: String, albumName: String, artistName: String) =
         launchBehind {

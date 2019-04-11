@@ -46,7 +46,9 @@ class RankDetailViewModel(
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate, LocalMusicDelegate by makeLocalMusic {
     private val _rankMusic by lazy { RespMutableLiveData<MusicEntity>() }
     val rankMusic: RespLiveData<MusicEntity> = _rankMusic
+    //region Mappers
     private val topTracksMapper by lazy { digMapper(MusicPMapper::class) }
+    //endregion
 
     fun runTaskFetchTopTrack(rankId: Int) = launchBehind {
         _rankMusic reqData { fetchRankMusicCase.execMapping(topTracksMapper, FetchRankMusicReq(RankParams(rankId))) }

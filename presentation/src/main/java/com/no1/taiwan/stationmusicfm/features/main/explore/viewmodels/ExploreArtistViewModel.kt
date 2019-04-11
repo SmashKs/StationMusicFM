@@ -21,7 +21,6 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels
 
-import androidx.lifecycle.MutableLiveData
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.SrchSongParams
@@ -78,22 +77,22 @@ class ExploreArtistViewModel(
     val similarArtistsLiveData: NotifLiveData<ArtistsSimilarEntity> = _similarArtistsLiveData
     private val _tracksLiveData by lazy { NotifMutableLiveData<TracksWithStreamableEntity>() }
     val tracksLiveData: NotifLiveData<TracksWithStreamableEntity> = _tracksLiveData
+    // Mixed all information (artist, album, similar artist, tracks) into one data.
     private val _artistInfoLiveData by lazy { RespMutableLiveData<ArtistMixInfo>() }
     val artistInfoLiveData: RespLiveData<ArtistMixInfo> = _artistInfoLiveData
     private val _photosLiveData by lazy { RespMutableLiveData<PhotosEntity>() }
     val photosLiveData: RespLiveData<PhotosEntity> = _photosLiveData
+    // For playing a song by another usecase to find the track uri.
     private val _musics by lazy { NotifMutableLiveData<MusicEntity>() }
     val foundMusic by lazy { MusicLiveData(_musics) }
+    //region Mappers
     private val artistMapper by lazy { digMapper(ArtistPMapper::class) }
     private val topAlbumMapper by lazy { digMapper(TopAlbumPMapper::class) }
     private val artistsSimilarMapper by lazy { digMapper(ArtistsSimilarPMapper::class) }
     private val tracksWithStreamableMapper by lazy { digMapper(TracksWithStreamablePMapper::class) }
     private val photosMapper by lazy { digMapper(ArtistPhotosPMapper::class) }
     private val musicMapper by lazy { digMapper(MusicPMapper::class) }
-
-    // last search data type first: mbid, second: artist name.
-    private val _lastFind by lazy { MutableLiveData<Pair<String, String>>() }
-    val lastFind get() = _lastFind.value
+    //endregion
 
     fun runTaskFetchArtistInfo(mbid: String, name: String) = launchBehind {
         val parameters = ArtistParams(mbid, name)
@@ -109,7 +108,6 @@ class ExploreArtistViewModel(
             _albumsLiveData.postValue(ResponseState.Success(album))
             _similarArtistsLiveData.postValue(ResponseState.Success(similarArtist))
             _tracksLiveData.postValue(ResponseState.Success(tracks))
-            _lastFind.postValue(Pair(mbid, name))
 
             ArtistMixInfo(artist, album, similarArtist, tracks)
         }

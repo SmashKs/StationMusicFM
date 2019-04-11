@@ -54,9 +54,11 @@ class ExploreIndexViewModel(
     val topArtists: RespLiveData<ArtistsEntity> = _topArtists
     private val _topTags by lazy { RespMutableLiveData<TagsEntity>() }
     val topTags: RespLiveData<TagsEntity> = _topTags
+    //region Mappers
     private val topTracksMapper by lazy { digMapper(TracksPMapper::class) }
     private val topArtistsMapper by lazy { digMapper(ArtistsPMapper::class) }
     private val topTagsMapper by lazy { digMapper(TagsPMapper::class) }
+    //endregion
 
     fun runTaskFetchTopTrack(limit: Int = Pager.LIMIT) = launchBehind {
         var params = FetchChartTopTrackReq()

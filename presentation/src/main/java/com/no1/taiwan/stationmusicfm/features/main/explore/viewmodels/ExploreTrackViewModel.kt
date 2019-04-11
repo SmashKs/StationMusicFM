@@ -49,8 +49,10 @@ class ExploreTrackViewModel(
     val similarTracksLiveData: RespLiveData<TracksEntity> = _similarTracksLiveData
     private val _trackInfoLiveData by lazy { RespMutableLiveData<Pair<TrackEntity, TracksEntity>>() }
     val trackInfoLiveData: RespLiveData<Pair<TrackEntity, TracksEntity>> = _trackInfoLiveData
+    //region Mappers
     private val trackMapper by lazy { digMapper(TrackPMapper::class) }
     private val tracksMapper by lazy { digMapper(TracksPMapper::class) }
+    //endregion
 
     fun runTaskFetchTrack(mbid: String, artistName: String, trackName: String) = launchBehind {
         val parameters = TrackParams(mbid, trackName, artistName)
