@@ -26,6 +26,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 
 class PagerSimilarArtistFragment : BasePagerFragment() {
@@ -35,7 +36,7 @@ class PagerSimilarArtistFragment : BasePagerFragment() {
         observeNonNull(vm.similarArtistsLiveData) {
             peel {
                 if (it.artists.isEmpty()) return@peel
-                adapter.replaceWholeList(cast(it.artists))
+                adapter.append(cast<MusicVisitables>(it.artists))
             } doWith this@PagerSimilarArtistFragment
         }
     }

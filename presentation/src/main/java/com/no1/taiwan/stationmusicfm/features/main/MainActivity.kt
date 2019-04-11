@@ -21,12 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.features.main
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -134,15 +131,6 @@ open class MainActivity : BaseActivity() {
         searchItem?.isVisible = false
     }
     //endregion
-
-    fun requireStoragePermission(grantedBlock: (() -> Unit)? = null) {
-        if (ActivityCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
-            grantedBlock?.invoke()
-        }
-        else {
-            ActivityCompat.requestPermissions(this, arrayOf(WRITE_EXTERNAL_STORAGE), 1)
-        }
-    }
 
     private fun searchViewSetting() {
         cast<SearchView>(searchItem?.actionView).apply {

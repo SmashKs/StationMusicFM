@@ -35,6 +35,7 @@ import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 
@@ -52,7 +53,7 @@ class PagerTrackFragment : BasePagerFragment() {
         super.bindLiveData()
         observeNonNull(vm.tracksLiveData) {
             peel {
-                adapter.replaceWholeList(cast(it.tracks))
+                adapter.append(cast<MusicVisitables>(it.tracks))
             } doWith this@PagerTrackFragment
         }
         observeNonNull(vm.foundMusic) {
