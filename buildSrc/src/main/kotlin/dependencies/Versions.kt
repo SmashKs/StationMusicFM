@@ -53,7 +53,7 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.30-eap-164"
+        const val kotlinLib = "1.3.30"
         const val kotlinCoroutine = "1.2.0-alpha-2"
     }
 
@@ -81,7 +81,7 @@ object Versions {
         const val collectionKtx = "1.1.0-beta01"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
         const val navigationKtx = "2.1.0-alpha02"
-        const val workKtx = "2.0.1-rc01"
+        const val workKtx = "2.1.0"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
@@ -129,8 +129,8 @@ object Versions {
         const val glide = "4.9.0"
         const val retrofit2 = "2.5.0"
         const val adapterCoroutine = "0.9.2"
-        const val okhttp3 = "3.14.0"
-        const val okhttpProfiler = "1.0.4"
+        const val okhttp3 = "3.14.1"
+        const val okhttpProfiler = "1.0.5"
         const val activityLauncher = "1.0.2"
         const val jsoup = "1.11.3"
     }
