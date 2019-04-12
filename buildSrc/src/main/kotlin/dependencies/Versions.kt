@@ -81,7 +81,7 @@ object Versions {
         const val collectionKtx = "1.1.0-beta01"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
         const val navigationKtx = "2.1.0-alpha02"
-        const val workKtx = "2.1.0"
+        const val workKtx = "2.0.1"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
