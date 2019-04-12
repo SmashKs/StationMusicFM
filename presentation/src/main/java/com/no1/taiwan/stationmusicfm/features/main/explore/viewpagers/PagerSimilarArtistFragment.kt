@@ -35,8 +35,9 @@ class PagerSimilarArtistFragment : BasePagerFragment() {
         super.bindLiveData()
         observeNonNull(vm.similarArtistsLiveData) {
             peel {
-                if (it.artists.isEmpty()) return@peel
-                adapter.append(cast<MusicVisitables>(it.artists))
+                if (enterCount <= 1 && it.artists.isNotEmpty() && adapter.itemCount == 0) {
+                    adapter.append(cast<MusicVisitables>(it.artists))
+                }
             } doWith this@PagerSimilarArtistFragment
         }
     }

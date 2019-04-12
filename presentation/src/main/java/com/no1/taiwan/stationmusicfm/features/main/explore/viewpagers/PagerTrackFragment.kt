@@ -53,7 +53,8 @@ class PagerTrackFragment : BasePagerFragment() {
         super.bindLiveData()
         observeNonNull(vm.tracksLiveData) {
             peel {
-                adapter.append(cast<MusicVisitables>(it.tracks))
+                if (enterCount <= 1 && it.tracks.isNotEmpty() && adapter.itemCount == 0)
+                    adapter.append(cast<MusicVisitables>(it.tracks))
             } doWith this@PagerTrackFragment
         }
         observeNonNull(vm.foundMusic) {
