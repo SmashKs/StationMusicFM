@@ -86,6 +86,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
     }
     private var switchOfPhotos = false
+    private var hasFirstFetch = false
     //region Parameter
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
@@ -125,13 +126,15 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         super.rendered(savedInstanceState)
         vm.apply {
             // 1. `artistInfoLiveData.value.isNull()` is for avoiding the back fragment again and search it.
-            if (artistInfoLiveData.value.isNull() ||
-                // 2. `artistName != vm.artistLiveData.value?.data?.name` is for avoiding searching the same artist.
+            if ((artistInfoLiveData.value.isNull() ||
+                 // 2. `artistName != vm.artistLiveData.value?.data?.name` is for avoiding searching the same artist.
+                 artistName != vm.artistLiveData.value?.data?.name) &&
                 // 3. `isFirstTime` is for the first time open this fragment.
-                artistName != vm.artistLiveData.value?.data?.name) {
+                !hasFirstFetch) {
                 runTaskFetchArtistInfo(mbid, artistName)
                 // Pre-load the photos.
                 runTaskFetchArtistPhoto(artistName)
+                hasFirstFetch = true
             }
             else {
                 setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
