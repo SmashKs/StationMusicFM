@@ -32,7 +32,7 @@ import com.devrapid.kotlinknifer.SoftRef
 import com.devrapid.kotlinshaver.cast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.AdvFragment.Companion.PROVIDER_FROM_ACTIVITY
+import com.no1.taiwan.stationmusicfm.bases.AdvFragment.Companion.PROVIDER_FROM_CUSTOM_FRAGMENT
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment
@@ -114,7 +114,7 @@ open class MainActivity : BaseActivity() {
                 fragmentIndexNavigator.navigate(R.id.action_frag_explore_artist_self,
                                                 ExploreArtistFragment.createBundle(DEFAULT_STR,
                                                                                    query,
-                                                                                   PROVIDER_FROM_ACTIVITY))
+                                                                                   PROVIDER_FROM_CUSTOM_FRAGMENT))
             }
             is ExploreGenreFragment -> {
                 fragmentIndexNavigator.navigate(R.id.action_frag_explore_tag_self,
