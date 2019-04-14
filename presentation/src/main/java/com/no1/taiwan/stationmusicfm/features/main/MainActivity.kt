@@ -21,6 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.features.main
 
+import android.text.Spannable
+import android.text.style.ImageSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AutoCompleteTextView
@@ -29,6 +31,7 @@ import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.text.toSpannable
 import androidx.core.view.children
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -36,6 +39,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.devrapid.kotlinknifer.SoftRef
 import com.devrapid.kotlinknifer.changeColor
+import com.devrapid.kotlinknifer.toBitmap
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.cast
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -152,9 +156,13 @@ open class MainActivity : BaseActivity() {
              * @return true if the item should expand, false if expansion should be suppressed.
              */
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                val (iconColorRes, textColorRes) = when (currentFragment) {
-                    is ExploreArtistFragment -> android.R.color.white to R.color.alto_alpha_80
-                    else -> R.color.colorPrimaryDarkV1 to android.R.color.darker_gray
+                val (iconColorRes, textColorRes, hint) = when (currentFragment) {
+                    is ExploreArtistFragment -> Triple(android.R.color.white,
+                                                       R.color.alto_alpha_80,
+                                                       "   a keyword of an artist...")
+                    else -> Triple(R.color.colorPrimaryDarkV1,
+                                   android.R.color.darker_gray,
+                                   "   a keyword of artist, album, tracks...")
                 }
                 val iconColor = ContextCompat.getColor(this@MainActivity, iconColorRes)
                 val textColor = ContextCompat.getColor(this@MainActivity, textColorRes)
@@ -178,6 +186,12 @@ open class MainActivity : BaseActivity() {
                         find<AutoCompleteTextView>(R.id.search_src_text).also {
                             it.setTextColor(iconColor)
                             it.setHintTextColor(textColor)
+                            it.hint = hint.toSpannable().apply {
+                                setSpan(ImageSpan(this@MainActivity, magnifierIcon.toBitmap()),
+                                        1,
+                                        2,
+                                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            }
                         }
                     }
                 }
@@ -194,7 +208,6 @@ open class MainActivity : BaseActivity() {
             override fun onMenuItemActionCollapse(item: MenuItem) = true
         })
         cast<SearchView>(searchItem?.actionView).apply {
-            queryHint = "a keyword of artist, album, tracks..."
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     performKeywordSubmit(query)
