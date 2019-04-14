@@ -77,7 +77,9 @@
         app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
         app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop"
         app:layout_constraintTop_toTopOf="@id/iv_artist_backdrop"
-        app:layout_constraintVertical_bias=".66">
+        app:layout_constraintVertical_bias=".66"
+        app:shape_circle_borderColor="@android:color/white"
+        app:shape_circle_borderWidth="2dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_artist_thumbnail"

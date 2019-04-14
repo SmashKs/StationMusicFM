@@ -23,12 +23,20 @@ package com.no1.taiwan.stationmusicfm.features.main
 
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.AutoCompleteTextView
+import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.devrapid.kotlinknifer.SoftRef
+import com.devrapid.kotlinknifer.changeColor
+import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.cast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
@@ -40,6 +48,9 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreGenreFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchCommonOperations
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.find
 
 open class MainActivity : BaseActivity() {
@@ -133,6 +144,50 @@ open class MainActivity : BaseActivity() {
     //endregion
 
     private fun searchViewSetting() {
+        searchItem?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            /**
+             * Called when a menu item with [MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW]
+             * is expanded.
+             * @param item Item that was expanded
+             * @return true if the item should expand, false if expansion should be suppressed.
+             */
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                val iconColor = ContextCompat.getColor(this@MainActivity, when (currentFragment) {
+                    is ExploreArtistFragment -> android.R.color.white
+                    else -> R.color.colorPrimaryDarkV1
+                })
+                val backIcon = R.drawable.ic_arrow_back_black
+                    .toDrawable(this@MainActivity)
+                    .changeColor(iconColor)
+                val closeIcon = R.drawable.ic_close_black
+                    .toDrawable(this@MainActivity)
+                    .changeColor(iconColor)
+                // Because delay to find back icon. If in the same UI thread, it's impossible to aware [Toolbar]'s
+                // layout changes.
+                CoroutineScope(Dispatchers.Main).launch {
+                    cast<ImageButton>(this@MainActivity.find<Toolbar>(R.id.tb_header).children.toList()[1]).apply {
+                        setImageDrawable(backIcon)
+                    }
+                    cast<SearchView>(item.actionView).apply {
+                        find<ImageView>(R.id.search_close_btn).setImageDrawable(closeIcon)
+                        find<AutoCompleteTextView>(R.id.search_src_text).also {
+                            it.setTextColor(iconColor)
+//                            it.setHintTextColor(iconColor)
+                        }
+                    }
+                }
+
+                return true
+            }
+
+            /**
+             * Called when a menu item with [MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW]
+             * is collapsed.
+             * @param item Item that was collapsed
+             * @return true if the item should collapse, false if collapsing should be suppressed.
+             */
+            override fun onMenuItemActionCollapse(item: MenuItem) = true
+        })
         cast<SearchView>(searchItem?.actionView).apply {
             queryHint = "a keyword of artist, album, tracks..."
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
