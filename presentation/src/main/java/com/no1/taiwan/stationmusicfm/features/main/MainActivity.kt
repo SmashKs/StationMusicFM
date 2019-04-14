@@ -152,16 +152,21 @@ open class MainActivity : BaseActivity() {
              * @return true if the item should expand, false if expansion should be suppressed.
              */
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                val iconColor = ContextCompat.getColor(this@MainActivity, when (currentFragment) {
-                    is ExploreArtistFragment -> android.R.color.white
-                    else -> R.color.colorPrimaryDarkV1
-                })
+                val (iconColorRes, textColorRes) = when (currentFragment) {
+                    is ExploreArtistFragment -> android.R.color.white to R.color.alto_alpha_80
+                    else -> R.color.colorPrimaryDarkV1 to android.R.color.darker_gray
+                }
+                val iconColor = ContextCompat.getColor(this@MainActivity, iconColorRes)
+                val textColor = ContextCompat.getColor(this@MainActivity, textColorRes)
                 val backIcon = R.drawable.ic_arrow_back_black
                     .toDrawable(this@MainActivity)
                     .changeColor(iconColor)
                 val closeIcon = R.drawable.ic_close_black
                     .toDrawable(this@MainActivity)
                     .changeColor(iconColor)
+                val magnifierIcon = R.drawable.ic_search_black
+                    .toDrawable(this@MainActivity)
+                    .changeColor(textColor)
                 // Because delay to find back icon. If in the same UI thread, it's impossible to aware [Toolbar]'s
                 // layout changes.
                 CoroutineScope(Dispatchers.Main).launch {
@@ -172,7 +177,7 @@ open class MainActivity : BaseActivity() {
                         find<ImageView>(R.id.search_close_btn).setImageDrawable(closeIcon)
                         find<AutoCompleteTextView>(R.id.search_src_text).also {
                             it.setTextColor(iconColor)
-//                            it.setHintTextColor(iconColor)
+                            it.setHintTextColor(textColor)
                         }
                     }
                 }
