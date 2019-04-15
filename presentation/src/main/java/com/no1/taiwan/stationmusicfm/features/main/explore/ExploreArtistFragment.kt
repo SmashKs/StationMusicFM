@@ -108,13 +108,16 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.artistInfoLiveData) {
-            peel { (artist, _, _, _) ->
+            peel { (artist, _, _, _, photos) ->
                 setArtistInfo(artist)
+                switchOfPhotos = true
             } happenError {
                 loge(it)
             } doWith this@ExploreArtistFragment
         }
-        observeNonNull(vm.photosLiveData) { peel { switchOfPhotos = true } doWith this@ExploreArtistFragment }
+//        observeNonNull(vm.photosLiveData) {
+//            peelSkipLoading { switchOfPhotos = true } doWith this@ExploreArtistFragment
+//        }
     }
 
     /**

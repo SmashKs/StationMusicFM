@@ -28,7 +28,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
-import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
 import com.no1.taiwan.stationmusicfm.utils.textview.setHighlightLink
 import org.jetbrains.anko.support.v4.find
 
@@ -37,7 +37,7 @@ class PagerBioFragment : BasePagerFragment() {
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.artistLiveData) {
-            peel {
+            peelSkipLoading {
                 // The previous data is showed (Auto emit when artist live data isn't null) before the newest
                 // data will be fetched when count is 0.
                 // That's why count is 1 then it's allowed passing. If the same artist, fetching the same

@@ -50,6 +50,10 @@ infix fun <E> RespMutableLiveData<E>.reqData(usecaseRes: suspend () -> E) = preP
     tryResp { ResponseState.Success(usecaseRes()) }.let(this@reqData::postValue)
 }
 
+/**
+ * A transformer wrapper for the [RespMutableLiveData]. This function is more flexibility than
+ * [reqData].
+ */
 infix fun <E> RespMutableLiveData<E>.reqDataWrap(usecaseRes: suspend () -> ResponseState<E>) = preProc {
     // Fetching the data from the data layer.
     tryResp { usecaseRes() }.let(this@reqDataWrap::postValue)
@@ -90,6 +94,10 @@ infix fun <E> NotifMutableLiveData<E>.reqData(usecaseRes: suspend () -> E) = pre
     tryResp { ResponseState.Success(usecaseRes()) }.let(this@reqData::postValue)
 }
 
+/**
+ * A transformer wrapper for the [RespMutableLiveData]. This function is more flexibility than
+ * [reqData].
+ */
 infix fun <E> NotifMutableLiveData<E>.reqDataWrap(usecaseRes: suspend () -> ResponseState<E>) = preProc {
     // Fetching the data from the data layer.
     tryResp { usecaseRes() }.let(this@reqDataWrap::postValue)

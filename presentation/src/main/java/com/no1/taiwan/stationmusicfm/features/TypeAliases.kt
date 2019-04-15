@@ -31,8 +31,9 @@ import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.ext.Quadruple
+import com.no1.taiwan.stationmusicfm.ext.Quintuple
 
-typealias ArtistMixInfo = Quadruple<ArtistInfoEntity.ArtistEntity, AlbumInfoEntity.TopAlbumsEntity, ArtistInfoEntity.ArtistsSimilarEntity, TrackInfoEntity.TracksWithStreamableEntity>
+typealias ArtistMixInfo = Quintuple<ArtistInfoEntity.ArtistEntity, AlbumInfoEntity.TopAlbumsEntity, ArtistInfoEntity.ArtistsSimilarEntity, TrackInfoEntity.TracksWithStreamableEntity, ArtistInfoEntity.PhotosEntity>
 typealias GenreMixInfo = Quadruple<TagInfoEntity.TagEntity, ArtistInfoEntity.ArtistsEntity, AlbumInfoEntity.TopAlbumsEntity, TrackInfoEntity.TracksTypeGenreEntity>
 
 // ***

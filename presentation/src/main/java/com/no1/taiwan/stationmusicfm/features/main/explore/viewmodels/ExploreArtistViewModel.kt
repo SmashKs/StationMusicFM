@@ -103,13 +103,16 @@ class ExploreArtistViewModel(
                 fetchSimilarArtistCase.execMapping(artistsSimilarMapper, FetchSimilarArtistReq(parameters))
             val tracks =
                 fetchArtistTopTrackCase.execMapping(tracksWithStreamableMapper, FetchArtistTopTrackReq(parameters))
+            val photos = fetchArtistPhotoCase.execMapping(photosMapper,
+                                                          FetchArtistPhotoReq(ArtistParams(artistName = name)))
             // If success to get them assign to each livedata.
             _artistLiveData.postValue(ResponseState.Success(artist))
             _albumsLiveData.postValue(ResponseState.Success(album))
             _similarArtistsLiveData.postValue(ResponseState.Success(similarArtist))
             _tracksLiveData.postValue(ResponseState.Success(tracks))
+            _photosLiveData.postValue(ResponseState.Success(photos))
 
-            ArtistMixInfo(artist, album, similarArtist, tracks)
+            ArtistMixInfo(artist, album, similarArtist, tracks, photos)
         }
     }
 
