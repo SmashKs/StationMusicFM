@@ -63,7 +63,11 @@
         android:id="@+id/frag_explore_track"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreTrackFragment"
         android:label="Explore"
-        tools:layout="@layout/fragment_explore_track"/>
+        tools:layout="@layout/fragment_explore_track">
+        <action
+            android:id="@+id/action_frag_explore_track_self"
+            app:destination="@id/frag_explore_track"/>
+    </fragment>
 
     <fragment
         android:id="@+id/frag_explore_tag"

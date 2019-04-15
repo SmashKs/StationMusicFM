@@ -30,17 +30,27 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.core.text.toSpannable
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.decorateGradientMask
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.isNull
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
+import com.no1.taiwan.stationmusicfm.domain.AnyParameters
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant
+import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
+import com.no1.taiwan.stationmusicfm.utils.aac.data
+import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
@@ -65,13 +75,15 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
                                                                                          ARGUMENT_TRACK_NAME to trackName)
     }
 
-    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val adapter: MusicAdapter by instance()
+    private var isFirstTimeFetching = true
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
     private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     private val trackName by extraNotNull<String>(ARGUMENT_TRACK_NAME)
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
+    private val adapter: MusicAdapter by instance()
 
     init {
+        BusFragLifeRegister(this)
         SearchHidingLifeRegister(this)
     }
 
@@ -79,18 +91,8 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     override fun bindLiveData() {
         observeNonNull(vm.trackInfoLiveData) {
             peel { (track, similarTracks) ->
-                find<TextView>(R.id.ftv_track_name).text = track.name
-                find<TextView>(R.id.ftv_track_wiki).apply {
-                    text = track.wiki.summary.parseAsHtml().toSpannable()
-                    setHighlightLink()
-                }
-                track.album.images.takeIf { it.isNotEmpty() }?.let {
-                    find<ImageView>(R.id.iv_track_backdrop).loadAnyDecorator(it.last().text) { bitmap, _ ->
-                        val shader = LinearGradient(0f, 0f, 0f, bitmap.height.toFloat(),
-                                                    Color.TRANSPARENT, Color.BLACK, Shader.TileMode.CLAMP)
-                        bitmap.decorateGradientMask(shader)
-                    }
-                }
+                isFirstTimeFetching = false
+                displayInformation(track)
                 adapter.append(cast<MusicVisitables>(similarTracks.tracks))
             } happenError {
                 loge(it)
@@ -117,6 +119,9 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         initRecyclerViewWith(find(R.id.rv_similar_tracks), adapter, linearLayoutManager())
+        if (!isFirstTimeFetching) {
+            vm.trackInfoLiveData.data()?.first?.let(::displayInformation)
+        }
     }
 
     /**
@@ -132,4 +137,32 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_explore_track
+
+    /**
+     * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.ExploreTrackViewHolder.initView]
+     * @param params
+     */
+    @Subscribe(tags = [Tag(TAG_TO_DETAIL)])
+    fun gotoSelf(params: AnyParameters) {
+        val mbid = castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_COMMON_MBID]).orEmpty()
+        val artistName = castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME]).orEmpty()
+        val trackName = castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME]).orEmpty()
+        findNavController().navigate(R.id.action_frag_explore_track_self,
+                                     ExploreTrackFragment.createBundle(mbid, artistName, trackName))
+    }
+
+    private fun displayInformation(track: TrackInfoEntity.TrackEntity) {
+        find<TextView>(R.id.ftv_track_name).text = track.name
+        find<TextView>(R.id.ftv_track_wiki).apply {
+            text = track.wiki.summary.parseAsHtml().toSpannable()
+            setHighlightLink()
+        }
+        track.album.images.takeIf { it.isNotEmpty() }?.let {
+            find<ImageView>(R.id.iv_track_backdrop).loadAnyDecorator(it.last().text) { bitmap, _ ->
+                val shader = LinearGradient(0f, 0f, 0f, bitmap.height.toFloat(),
+                                            Color.TRANSPARENT, Color.BLACK, Shader.TileMode.CLAMP)
+                bitmap.decorateGradientMask(shader)
+            }
+        }
+    }
 }

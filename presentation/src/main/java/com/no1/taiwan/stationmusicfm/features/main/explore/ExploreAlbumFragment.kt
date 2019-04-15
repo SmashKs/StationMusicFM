@@ -199,7 +199,6 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
         val mbid = castOrNull<String>(params[PARAMS_COMMON_MBID]).orEmpty()
         val artistName = castOrNull<String>(params[PARAMS_COMMON_ARTIST_NAME]).orEmpty()
         val trackName = castOrNull<String>(params[PARAMS_TO_TRACK_NAME]).orEmpty()
-
         findNavController().navigate(R.id.action_frag_explore_album_to_frag_explore_track,
                                      ExploreTrackFragment.createBundle(mbid, artistName, trackName))
     }

@@ -58,8 +58,11 @@ class ExploreTrackViewHolder(view: View) : MultiViewHolder<TrackEntity>(view) {
             find<TextView>(R.id.ftv_track_name).text = model.name
             find<TextView>(R.id.ftv_name).text = model.artist.name
             find<CardView>(R.id.mcv_track).setOnClickListener {
-                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
-                /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment.gotoTrackDetailFragment] */
+                /**
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment]
+                 * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment.gotoTrackDetailFragment]
+                 * @enevt_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreTrackFragment.gotoSelf]
+                 */
                 emitter.post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_TRACK,
                                                       PARAMS_COMMON_MBID to model.mbid,
                                                       PARAMS_COMMON_ARTIST_NAME to model.artist.name,

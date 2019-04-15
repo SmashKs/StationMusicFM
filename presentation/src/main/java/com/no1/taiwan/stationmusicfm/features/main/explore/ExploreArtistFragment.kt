@@ -128,7 +128,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
             // 1. `artistInfoLiveData.value.isNull()` is for avoiding the back fragment again and search it.
             if ((artistInfoLiveData.value.isNull() ||
                  // 2. `artistName != vm.artistLiveData.value?.data?.name` is for avoiding searching the same artist.
-                 artistName != vm.artistLiveData.value?.data?.name) &&
+                 artistName != vm.artistLiveData.data()?.name) &&
                 // 3. `isFirstTime` is for the first time open this fragment.
                 !hasFirstFetch) {
                 runTaskFetchArtistInfo(mbid, artistName)
