@@ -47,6 +47,7 @@ import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.utils.textview.setHighlightLink
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import org.jetbrains.anko.support.v4.find
@@ -79,7 +80,10 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
         observeNonNull(vm.trackInfoLiveData) {
             peel { (track, similarTracks) ->
                 find<TextView>(R.id.ftv_track_name).text = track.name
-                find<TextView>(R.id.ftv_track_wiki).text = track.wiki.summary.parseAsHtml().toSpannable()
+                find<TextView>(R.id.ftv_track_wiki).apply {
+                    text = track.wiki.summary.parseAsHtml().toSpannable()
+                    setHighlightLink()
+                }
                 track.album.images.takeIf { it.isNotEmpty() }?.let {
                     find<ImageView>(R.id.iv_track_backdrop).loadAnyDecorator(it.last().text) { bitmap, _ ->
                         val shader = LinearGradient(0f, 0f, 0f, bitmap.height.toFloat(),

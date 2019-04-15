@@ -65,6 +65,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.utils.textview.setHighlightLink
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
@@ -115,7 +116,10 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
             peel {
                 find<TextView>(R.id.ftv_published_at).text = it.wiki.published
                 find<TextView>(R.id.ftv_tags).text = it.tags.map(TagInfoEntity.TagEntity::name).joinToString("\n")
-                find<TextView>(R.id.ftv_album_wiki).text = it.wiki.summary.parseAsHtml()
+                find<TextView>(R.id.ftv_album_wiki).apply {
+                    text = it.wiki.summary.parseAsHtml()
+                    setHighlightLink()
+                }
                 bkg {
                     val tracks = it.tracks.map {
                         TrackInfoEntity.TrackWithStreamableEntity().apply {

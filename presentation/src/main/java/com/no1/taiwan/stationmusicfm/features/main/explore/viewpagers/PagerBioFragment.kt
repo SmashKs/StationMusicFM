@@ -29,6 +29,7 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
+import com.no1.taiwan.stationmusicfm.utils.textview.setHighlightLink
 import org.jetbrains.anko.support.v4.find
 
 class PagerBioFragment : BasePagerFragment() {
@@ -43,7 +44,10 @@ class PagerBioFragment : BasePagerFragment() {
                 // data again isn't expected, at this condition, count will be 0.
                 if ((enterCount == 0 && searchArtistName == it.name) || enterCount == 1) {
                     bio = it.bio.content.parseAsHtml().toSpannable()
-                    find<TextView>(R.id.ftv_bio).text = bio
+                    find<TextView>(R.id.ftv_bio).apply {
+                        text = bio
+                        setHighlightLink()
+                    }
                 }
             } doWith this@PagerBioFragment
         }
@@ -57,7 +61,10 @@ class PagerBioFragment : BasePagerFragment() {
         // After view come again, we should show again. If count is less than 1, instead here, the callback
         // will show.
         if (enterCount >= 1 && bio.isNotBlank()) {
-            find<TextView>(R.id.ftv_bio).text = bio
+            find<TextView>(R.id.ftv_bio).apply {
+                text = bio
+                setHighlightLink()
+            }
         }
     }
 
