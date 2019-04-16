@@ -21,8 +21,11 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers
 
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -30,6 +33,18 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitab
 import org.jetbrains.anko.support.v4.find
 
 class PagerAlbumFragment : BasePagerFragment() {
+    override fun onResume() {
+        super.onResume()
+        if (scrollListener.fetchMoreBlock.isNull())
+            scrollListener.fetchMoreBlock = ::fetchMore
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        // Release the function pointer.
+        scrollListener.fetchMoreBlock = null
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()
@@ -40,6 +55,11 @@ class PagerAlbumFragment : BasePagerFragment() {
                 // Otherwise `count` is 1 will prevent adding again and again.
                 if ((enterCount == 0 && it.albums.firstOrNull()?.artist?.name == searchArtistName) ||
                     (enterCount == 1 && it.albums.isNotEmpty() && adapter.itemCount == 0)) {
+                    adapter.append(cast<MusicVisitables>(it.albums))
+                }
+                // After run fetch more function, [countShouldBe] will must be larger than current.
+                val countShouldBe = Pager.LIMIT * it.attr.page.toInt()
+                if (enterCount > 0 && it.attr.page.toInt() > 1 && countShouldBe > adapter.itemCount) {
                     adapter.append(cast<MusicVisitables>(it.albums))
                 }
             } doWith this@PagerAlbumFragment
@@ -54,9 +74,24 @@ class PagerAlbumFragment : BasePagerFragment() {
     }
 
     /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        super.componentListenersBinding()
+        find<RecyclerView>(R.id.rv_hot_album).apply {
+            clearOnScrollListeners()
+            addOnScrollListener(scrollListener)
+        }
+    }
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.viewpager_album
+
+    private fun fetchMore() {
+        vm.runTaskFetchHotAlbum(searchArtistName)
+    }
 }

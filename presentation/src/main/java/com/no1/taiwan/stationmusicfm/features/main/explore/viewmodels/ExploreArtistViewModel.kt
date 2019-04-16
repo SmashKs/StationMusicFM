@@ -49,8 +49,10 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamabl
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
+import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 import com.no1.taiwan.stationmusicfm.features.ArtistMixInfo
 import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.TransformedLiveData
+import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.NotifLiveData
@@ -119,6 +121,19 @@ class ExploreArtistViewModel(
     fun runTaskFetchArtistPhoto(artistName: String) = launchBehind {
         _photosLiveData reqData {
             fetchArtistPhotoCase.execMapping(photosMapper, FetchArtistPhotoReq(ArtistParams(artistName = artistName)))
+        }
+    }
+
+    fun runTaskFetchHotAlbum(name: String, limit: Int = Pager.LIMIT) = launchBehind {
+        val parameter = _albumsLiveData.data()?.attr?.let {
+            autoIncreaseParams(it, limit)?.let {
+                ArtistParams(artistName = name).apply {
+                    page = it.page
+                }
+            }
+        }
+        _albumsLiveData reqData {
+            fetchArtistTopAlbumCase.execMapping(topAlbumMapper, FetchArtistTopAlbumReq(parameter!!))
         }
     }
 

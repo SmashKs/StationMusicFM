@@ -32,6 +32,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArt
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.NotifiableAdapter
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.scrolllisteners.LoadMoreScrollListener
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -41,14 +42,15 @@ abstract class BasePagerFragment : AdvFragment<MainActivity, ExploreArtistViewMo
     // Always get parent fragment's lifecycle for providing a viewmodel.
     override val viewmodelProviderFragment get() = requireParentFragment()
 
-    protected val girdLayoutManager: () -> GridLayoutManager by provider(null, 2)
-    protected val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    protected val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
-    protected var enterCount = 0
     //region Parameter
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     protected val searchArtistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     //endregion
+    protected val girdLayoutManager: () -> GridLayoutManager by provider(null, 2)
+    protected val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
+    protected val scrollListener: LoadMoreScrollListener by instance()
+    protected val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
+    protected var enterCount = 0
 
     override fun onResume() {
         super.onResume()
