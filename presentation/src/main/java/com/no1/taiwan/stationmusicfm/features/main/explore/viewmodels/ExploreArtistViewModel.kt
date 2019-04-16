@@ -137,6 +137,32 @@ class ExploreArtistViewModel(
         }
     }
 
+    fun runTaskFetchHotTrack(name: String, limit: Int = Pager.LIMIT) = launchBehind {
+        val parameter = _tracksLiveData.data()?.attr?.let {
+            autoIncreaseParams(it, limit)?.let {
+                ArtistParams(artistName = name).apply {
+                    page = it.page
+                }
+            }
+        }
+        _tracksLiveData reqData {
+            fetchArtistTopTrackCase.execMapping(tracksWithStreamableMapper, FetchArtistTopTrackReq(parameter!!))
+        }
+    }
+
+    fun runTaskFetchSimilarArtist(name: String, limit: Int = Pager.LIMIT) = launchBehind {
+        val parameter = _similarArtistsLiveData.data()?.attr?.let {
+            autoIncreaseParams(it, limit)?.let {
+                ArtistParams(artistName = name).apply {
+                    page = it.page
+                }
+            }
+        }
+        _similarArtistsLiveData reqData {
+            fetchSimilarArtistCase.execMapping(artistsSimilarMapper, FetchSimilarArtistReq(parameter!!))
+        }
+    }
+
     fun runTaskSearchMusic(wholeKeyword: String) = launchBehind {
         _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(wholeKeyword))) }
     }

@@ -21,7 +21,9 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers
 
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.isNull
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -30,6 +32,18 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitab
 import org.jetbrains.anko.support.v4.find
 
 class PagerSimilarArtistFragment : BasePagerFragment() {
+    override fun onResume() {
+        super.onResume()
+        if (scrollListener.fetchMoreBlock.isNull())
+            scrollListener.fetchMoreBlock = ::fetchMore
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        // Release the function pointer.
+        scrollListener.fetchMoreBlock = null
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()
@@ -38,6 +52,11 @@ class PagerSimilarArtistFragment : BasePagerFragment() {
                 if (enterCount <= 1 && it.artists.isNotEmpty() && adapter.itemCount == 0) {
                     adapter.append(cast<MusicVisitables>(it.artists))
                 }
+                // After run fetch more function, [countShouldBe] will must be larger than current.
+//                val countShouldBe = Pager.LIMIT * it.attr.page.toInt()
+//                if (enterCount > 0 && it.attr.page.toInt() > 1 && countShouldBe > adapter.itemCount) {
+//                    adapter.append(cast<MusicVisitables>(it.artists))
+//                }
             } doWith this@PagerSimilarArtistFragment
         }
     }
@@ -47,6 +66,10 @@ class PagerSimilarArtistFragment : BasePagerFragment() {
      */
     override fun viewComponentBinding() {
         initRecyclerViewWith(find(R.id.rv_similar_artists), adapter, girdLayoutManager())
+        find<RecyclerView>(R.id.rv_similar_artists).apply {
+            clearOnScrollListeners()
+            addOnScrollListener(scrollListener)
+        }
     }
 
     /**
@@ -55,4 +78,8 @@ class PagerSimilarArtistFragment : BasePagerFragment() {
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.viewpager_similar_artist
+
+    private fun fetchMore() {
+        vm.runTaskFetchSimilarArtist(searchArtistName)
+    }
 }
