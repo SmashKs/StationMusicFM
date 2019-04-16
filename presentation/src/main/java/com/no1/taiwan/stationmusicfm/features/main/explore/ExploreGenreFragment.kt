@@ -73,12 +73,14 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
         fun createBundle(tagName: String) = bundleOf(ARGUMENT_TAG_NAME to tagName)
     }
 
+    //region Parameter
+    private val tagName by extraNotNull<String>(ARGUMENT_TAG_NAME)
+    //endregion
     private val verLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val horLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
     private val albumAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
     private val trackAdapter: MusicAdapter by instance()
-    private val tagName by extraNotNull<String>(ARGUMENT_TAG_NAME)
 
     init {
         BusFragLifeRegister(this)

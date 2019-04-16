@@ -115,9 +115,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 loge(it)
             } doWith this@ExploreArtistFragment
         }
-//        observeNonNull(vm.photosLiveData) {
-//            peelSkipLoading { switchOfPhotos = true } doWith this@ExploreArtistFragment
-//        }
     }
 
     /**
@@ -135,8 +132,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 // 3. `isFirstTime` is for the first time open this fragment.
                 !hasFirstFetch) {
                 runTaskFetchArtistInfo(mbid, artistName)
-                // Pre-load the photos.
-                runTaskFetchArtistPhoto(artistName)
                 hasFirstFetch = true
             }
             else {

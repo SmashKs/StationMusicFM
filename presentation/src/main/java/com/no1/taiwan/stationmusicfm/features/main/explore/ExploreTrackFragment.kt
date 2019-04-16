@@ -76,9 +76,11 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     }
 
     private var isFirstTimeFetching = true
+    //region Parameter
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
     private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     private val trackName by extraNotNull<String>(ARGUMENT_TRACK_NAME)
+    //endregion
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: MusicAdapter by instance()
 

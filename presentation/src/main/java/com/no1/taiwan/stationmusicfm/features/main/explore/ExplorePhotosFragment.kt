@@ -30,18 +30,24 @@ import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.bases.BaseFragment
+import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExplorePhotoViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
+import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
+import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
+import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
+import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
 import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
-class ExplorePhotosFragment : BaseFragment<MainActivity>() {
+class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>() {
     companion object {
         private const val ARGUMENT_ARTIST_NAME = "fragment argument name"
         private const val ARGUMENT_ARTIST_PHOTOS = "fragment argument photo"
@@ -54,13 +60,25 @@ class ExplorePhotosFragment : BaseFragment<MainActivity>() {
     override val backDrawable by lazy {
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
     }
-    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
-    private val adapter: MusicAdapter by instance()
+    //region Parameter
     private val name by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     private val preloadList by extraNotNull<ArrayList<PhotoEntity>>(ARGUMENT_ARTIST_PHOTOS)
+    //endregion
+    private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
+    private val adapter: MusicAdapter by instance()
 
     init {
         SearchHidingLifeRegister(this)
+    }
+
+    override fun bindLiveData() {
+        observeNonNull(vm.photosLiveData) {
+            peel {
+                adapter.append(cast<MusicVisitables>(it))
+            } happenError {
+                toastX("Unknown error happens.")
+            } doWith this@ExplorePhotosFragment
+        }
     }
 
     /**

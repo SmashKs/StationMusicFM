@@ -25,6 +25,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreAlb
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreGenreViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreIndexViewModel
+import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExplorePhotoViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicDetailViewModel
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicIndexViewModel
@@ -77,6 +78,9 @@ object SuperFragmentModule {
         }
         bind<ViewModelEntry>().inSet() with provider {
             ExploreTrackViewModel::class.java to ExploreTrackViewModel(instance(), instance(), instance())
+        }
+        bind<ViewModelEntry>().inSet() with provider {
+            ExplorePhotoViewModel::class.java to ExplorePhotoViewModel(instance(), instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
             SearchViewModel::class.java to SearchViewModel(instance(),

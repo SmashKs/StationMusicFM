@@ -36,10 +36,11 @@ import com.devrapid.kotlinshaver.cast
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
+import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistIndex
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
-import com.no1.taiwan.stationmusicfm.features.main.IndexFragment
+import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicDetailViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_TRACK_OF_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR
@@ -61,7 +62,7 @@ import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
-class MyMusicDetailFragment : IndexFragment<MyMusicDetailViewModel>() {
+class MyMusicDetailFragment : AdvFragment<MainActivity, MyMusicDetailViewModel>() {
     companion object Factory {
         // The key name of the fragment initialization parameters.
         private const val ARGUMENT_PLAYLIST_INFO = "fragment argument playlist information entity"

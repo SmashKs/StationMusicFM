@@ -116,12 +116,6 @@ class ExploreArtistViewModel(
         }
     }
 
-    fun runTaskFetchArtistPhoto(artistName: String) = launchBehind {
-        _photosLiveData reqData {
-            fetchArtistPhotoCase.execMapping(photosMapper, FetchArtistPhotoReq(ArtistParams(artistName = artistName)))
-        }
-    }
-
     fun runTaskSearchMusic(wholeKeyword: String) = launchBehind {
         _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(wholeKeyword))) }
     }
