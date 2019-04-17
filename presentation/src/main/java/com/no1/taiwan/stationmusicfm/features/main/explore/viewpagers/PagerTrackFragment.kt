@@ -21,12 +21,15 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers
 
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.isNull
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.annotation.Tag
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.domain.AnyParameters
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
+import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SEARCH_KEYWORD
@@ -48,6 +51,18 @@ class PagerTrackFragment : BasePagerFragment() {
         BusFragLifeRegister(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (scrollListener.fetchMoreBlock.isNull())
+            scrollListener.fetchMoreBlock = ::fetchMore
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        // Release the function pointer.
+        scrollListener.fetchMoreBlock = null
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()
@@ -55,6 +70,12 @@ class PagerTrackFragment : BasePagerFragment() {
             peel {
                 if (enterCount <= 1 && it.tracks.isNotEmpty() && adapter.itemCount == 0)
                     adapter.append(cast<MusicVisitables>(it.tracks))
+                // FIXME(jieyi): 2019-04-17 [vm.tracksLiveData] will be update after fetching more.
+                // After run fetch more function, [countShouldBe] will must be larger than current.
+                val countShouldBe = Pager.LIMIT * it.attr.page.toInt()
+                if (enterCount > 0 && it.attr.page.toInt() > 1 && countShouldBe > adapter.itemCount) {
+                    adapter.append(cast<MusicVisitables>(it.tracks))
+                }
             } doWith this@PagerTrackFragment
         }
         observeNonNull(vm.foundMusic) {
@@ -71,6 +92,10 @@ class PagerTrackFragment : BasePagerFragment() {
      */
     override fun viewComponentBinding() {
         initRecyclerViewWith(find(R.id.rv_hot_track), adapter, linearLayoutManager())
+        find<RecyclerView>(R.id.rv_hot_track).apply {
+            clearOnScrollListeners()
+            addOnScrollListener(scrollListener)
+        }
     }
 
     /**
@@ -90,5 +115,9 @@ class PagerTrackFragment : BasePagerFragment() {
         playingTrackPosition = cast(parameter[PARAMS_LAYOUT_POSITION])
         vm.runTaskSearchMusic(keyword)
         isSearching = true
+    }
+
+    private fun fetchMore() {
+        vm.runTaskFetchHotTrack(searchArtistName)
     }
 }
