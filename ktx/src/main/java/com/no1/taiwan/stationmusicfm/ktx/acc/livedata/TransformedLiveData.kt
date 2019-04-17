@@ -26,7 +26,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.no1.taiwan.BuildConfig
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHook<T> {
@@ -78,7 +79,7 @@ abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHoo
      * @param source
      */
     override fun onChanged(source: S) {
-        GlobalScope.launch { getTransformed(source)?.let(this@TransformedLiveData::postValue) }
+        CoroutineScope(Dispatchers.IO).launch { getTransformed(source)?.let(this@TransformedLiveData::postValue) }
     }
 
     @WorkerThread

@@ -32,8 +32,8 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiDi
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicMultiVisitable
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicViewHolder
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.helpers.AdapterItemTouchHelper
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.ref.SoftReference
 
@@ -81,7 +81,7 @@ open class MultiTypeAdapter(
      */
     @UiThread
     protected fun executeUpdate(updateBlock: (view: RecyclerView.ViewHolder) -> Unit) {
-        GlobalScope.launch(Dispatchers.Main.immediate) {
+        CoroutineScope(Dispatchers.Main.immediate).launch {
             recyclerView.get()?.apply {
                 repeat(childCount) {
                     updateBlock(getChildViewHolder(getChildAt(it)))

@@ -30,7 +30,8 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
 class MakeLocalMusic(
@@ -40,17 +41,17 @@ class MakeLocalMusic(
         song: CommonMusicEntity.SongEntity,
         playlistIndex: Int,
         addOrMinus: Boolean
-    ) = GlobalScope.async {
+    ) = CoroutineScope(Dispatchers.IO).async {
         execAddOrUpdateToPlayHistory(playlistIndex) { MusicToParamsMapper().toParamsWith(song, it, addOrMinus) }
     }
 
     override fun runTaskUpdateToPlayHistory(song: LocalMusicEntity, playlistIndex: Int, addOrMinus: Boolean) =
-        GlobalScope.async {
+        CoroutineScope(Dispatchers.IO).async {
             execAddOrUpdateToPlayHistory(playlistIndex) { MusicToParamsMapper().toParamsWith(song, it, addOrMinus) }
         }
 
     override fun runTaskAddDownloadedTrackInfo(song: CommonMusicEntity.SongEntity, localUri: String) =
-        GlobalScope.async {
+        CoroutineScope(Dispatchers.IO).async {
             val parameter = MusicToParamsMapper()
                 .toParamsWith(song, listOf(PlaylistIndex.DOWNLOADED.ordinal))
                 .copy(hasOwn = true, localTrackUri = localUri)
