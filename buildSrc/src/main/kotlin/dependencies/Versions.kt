@@ -74,7 +74,7 @@ object Versions {
     object KotlinAndroidExt {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
-        const val kinfer = "2.1.9"
+        const val kinfer = "2.1.10"
         const val ktx = "1.1.0-alpha05"
         const val fragmentKtx = "1.1.0-alpha06"
         const val paletteKtx = "1.0.0"

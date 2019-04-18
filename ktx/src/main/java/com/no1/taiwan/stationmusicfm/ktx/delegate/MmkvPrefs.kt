@@ -63,18 +63,19 @@ class MmkvPrefs<T>(
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
         val name = property.name
 
-        prefs.also {
+        prefs.also { mmkv ->
+            @Suppress("UNCHECKED_CAST")
             when (defaultValue) {
-                is Boolean -> it.encode(name, value as Boolean)
-                is Int -> it.encode(name, value as Int)
-                is Long -> it.encode(name, value as Long)
-                is Float -> it.encode(name, value as Float)
-                is Double -> it.encode(name, defaultValue as Double)
-                is String -> it.encode(name, value as String)
-                is ByteArray -> it.encode(name, value as ByteArray)
-                is Set<*> -> it.encode(name, value as Set<String>)
+                is Boolean -> mmkv.encode(name, value as Boolean)
+                is Int -> mmkv.encode(name, value as Int)
+                is Long -> mmkv.encode(name, value as Long)
+                is Float -> mmkv.encode(name, value as Float)
+                is Double -> mmkv.encode(name, defaultValue as Double)
+                is String -> mmkv.encode(name, value as String)
+                is ByteArray -> mmkv.encode(name, value as ByteArray)
+                is Set<*> -> mmkv.encode(name, value as Set<String>)
                 // Using json format to serialize an object to a string.
-                else -> it.encode(name, gson.toJson(value))
+                else -> mmkv.encode(name, gson.toJson(value))
             }
             this.onChange?.invoke()
         }.apply()

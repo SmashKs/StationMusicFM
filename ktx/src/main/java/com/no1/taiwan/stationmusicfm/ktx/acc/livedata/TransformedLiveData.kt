@@ -25,6 +25,7 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.devrapid.kotlinshaver.accessible
 import com.no1.taiwan.BuildConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,20 +49,19 @@ abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHoo
     override fun beSilent(observer: Observer<in T>) {
         // Get wrapper's version.
         val classLiveData = LiveData::class.java
-        val fieldObservers = classLiveData.getDeclaredField("mObservers").apply { isAccessible = true }
+        val fieldObservers = classLiveData.getDeclaredField("mObservers").accessible()
         val objectObservers = fieldObservers.get(this)
         val classObservers = objectObservers.javaClass
-        val methodGet = classObservers.getDeclaredMethod("get", Any::class.java).apply { isAccessible = true }
+        val methodGet = classObservers.getDeclaredMethod("get", Any::class.java).accessible()
         val objectWrapperEntry = methodGet.invoke(objectObservers, observer)
         lateinit var objectWrapper: Any
         if (objectWrapperEntry is Map.Entry<*, *>) {
             objectWrapper = requireNotNull(objectWrapperEntry.value)
         }
         val classObserverWrapper = objectWrapper.javaClass.superclass
-        val fieldLastVersion = requireNotNull(classObserverWrapper?.getDeclaredField("mLastVersion"))
-        fieldLastVersion.isAccessible = true
+        val fieldLastVersion = requireNotNull(classObserverWrapper?.getDeclaredField("mLastVersion")).accessible()
         // Get LiveData's version.
-        val fieldVersion = classLiveData.getDeclaredField("mVersion").apply { isAccessible = true }
+        val fieldVersion = classLiveData.getDeclaredField("mVersion").accessible()
         val objectVersion = fieldVersion.get(this)
         // Set wrapper's version.
         fieldLastVersion.set(objectWrapper, objectVersion)
