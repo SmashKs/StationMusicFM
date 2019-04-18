@@ -54,6 +54,7 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
 import org.jetbrains.anko.support.v4.find
+import org.jetbrains.anko.support.v4.findOptional
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -133,7 +134,7 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
 
     private fun loadImageIntoSwitcher(position: Int) {
         parent.loadDrawableIntoListener(preloadList[position].url.toUri()) { resource, _ ->
-            find<ImageSwitcher>(R.id.is_backdrop).setImageDrawable(resource)
+            findOptional<ImageSwitcher>(R.id.is_backdrop)?.setImageDrawable(resource)
         }
     }
 }

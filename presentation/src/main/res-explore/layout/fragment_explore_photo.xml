@@ -38,7 +38,10 @@
         android:id="@+id/rv_photos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="80dp"
+        android:layout_marginBottom="@dimen/md_three_unit"
+        android:layout_marginEnd="@dimen/md_three_unit"
+        android:layout_marginStart="@dimen/md_three_unit"
+        android:layout_marginTop="@dimen/md_ten_unit"
         tools:itemCount="6"
         tools:listitem="@layout/item_explore_photo"
         tools:orientation="horizontal"/>
