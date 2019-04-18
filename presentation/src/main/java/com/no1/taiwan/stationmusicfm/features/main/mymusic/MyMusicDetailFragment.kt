@@ -75,14 +75,15 @@ class MyMusicDetailFragment : AdvFragment<MainActivity, MyMusicDetailViewModel>(
         fun createBundle(playlistInfo: PlaylistInfoEntity) = bundleOf(ARGUMENT_PLAYLIST_INFO to playlistInfo)
     }
 
-    // The fragment initialization parameters.
+    private var hasDelete = false
+    private lateinit var tempSongEntity: LocalMusicEntity
+    //region Arguments
     private val playlistInfo by extraNotNull<PlaylistInfoEntity>(ARGUMENT_PLAYLIST_INFO)
+    //endregion
     private val adapter: TrackOfPlaylistNotifiableAdapter by instance(ADAPTER_TRACK_OF_PLAYLIST)
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR)
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent, viewLifecycleOwner) }
-    private var hasDelete = false
-    private lateinit var tempSongEntity: LocalMusicEntity
 
     init {
         BusFragLifeRegister(this)

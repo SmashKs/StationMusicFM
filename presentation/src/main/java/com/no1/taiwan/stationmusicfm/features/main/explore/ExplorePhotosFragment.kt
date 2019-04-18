@@ -30,6 +30,8 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.toDrawable
@@ -40,6 +42,8 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotoEntit
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExplorePhotoViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.snaphelper.SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE
+import com.no1.taiwan.stationmusicfm.kits.recyclerview.snaphelper.attachSnapHelperWithListener
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadDrawableIntoListener
@@ -71,6 +75,7 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
     //endregion
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
     private val adapter: MusicAdapter by instance()
+    private val snapHelper = LinearSnapHelper()
 
     init {
         SearchHidingLifeRegister(this)
@@ -100,6 +105,7 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
         // Preload from the previous fragment.
         adapter.append(cast<MusicVisitables>(preloadList))
         initRecyclerViewWith(find(R.id.rv_photos), adapter, linearLayoutManager())
+        loadImageIntoSwitcher(0)
     }
 
     /**
@@ -107,9 +113,8 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
      */
     override fun componentListenersBinding() {
         super.componentListenersBinding()
-        parent.loadDrawableIntoListener(preloadList.first().url.toUri()) { resource, _ ->
-            find<ImageSwitcher>(R.id.is_backdrop).setImageDrawable(resource)
-        }
+        find<RecyclerView>(R.id.rv_photos)
+            .attachSnapHelperWithListener(snapHelper, NOTIFY_ON_SCROLL_STATE_IDLE, ::loadImageIntoSwitcher)
     }
 
     /**
@@ -125,4 +130,10 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_explore_photo
+
+    private fun loadImageIntoSwitcher(position: Int) {
+        parent.loadDrawableIntoListener(preloadList[position].url.toUri()) { resource, _ ->
+            find<ImageSwitcher>(R.id.is_backdrop).setImageDrawable(resource)
+        }
+    }
 }
