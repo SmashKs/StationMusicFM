@@ -82,6 +82,13 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
     }
 
     /**
+     * Set fragment title into action bar.
+     *
+     * @return [String] action bar title.
+     */
+    override fun actionBarTitle() = getString(R.string.fragment_title_rank)
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.

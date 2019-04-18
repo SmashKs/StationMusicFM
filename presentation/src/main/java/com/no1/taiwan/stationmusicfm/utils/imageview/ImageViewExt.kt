@@ -30,22 +30,18 @@ import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.utils.resoureces.gContext
-
-@GlideModule
-class MusicGlideModule : AppGlideModule()
 
 fun ImageView.loadByString(str: String, context: Context = gContext()) =
     glideTemplate(context) { load(str) }
@@ -124,7 +120,7 @@ fun ImageView.loadAnyDecorator(
         }
     })
 
-fun ImageView.loadAnyWithListener(
+fun ImageView.loadAnyWithBitmapListener(
     uri: Any,
     context: Context = gContext(),
     failBlock: ((e: GlideException?) -> Unit)? = null,
@@ -155,3 +151,21 @@ fun ImageView.loadAnyWithListener(
             return true
         }
     }).into(this)
+
+fun Context.loadDrawableIntoListener(
+    uri: Any,
+    onLoadCleared: ((placeholder: Drawable?) -> Unit)? = null,
+    onResourceReady: ((resource: Drawable, transition: Transition<in Drawable>?) -> Unit)? = null
+) = Glide.with(this)
+    .asDrawable()
+    .load(uri)
+    .apply(glideMusicOptions())
+    .into(object : CustomTarget<Drawable>() {
+        override fun onLoadCleared(placeholder: Drawable?) {
+            onLoadCleared?.invoke(placeholder)
+        }
+
+        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+            onResourceReady?.invoke(resource, transition)
+        }
+    })

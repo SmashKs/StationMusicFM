@@ -22,6 +22,16 @@
 <resources>
     <string name="app_name">StationMusicFM</string>
 
+    <!-- region Fragment Title -->
+    <string name="fragment_title_explore">Explore</string>
+    <string name="fragment_title_photo">Photo</string>
+    <string name="fragment_title_my_music">My Music</string>
+    <string name="fragment_title_playlist">Playlist</string>
+    <string name="fragment_title_rank">Rank</string>
+    <string name="fragment_title_search_track">Search</string>
+    <string name="fragment_title_search_track_result">Result</string>
+    <!-- endregion -->
+
     <string name="fragment_playlist_create_list">Create a new Playlist</string>
 
     <string name="viewholder_playlist_song">%1$d songs</string>

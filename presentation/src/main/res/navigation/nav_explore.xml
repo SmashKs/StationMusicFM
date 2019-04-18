@@ -30,7 +30,6 @@
     <fragment
         android:id="@+id/frag_explore_index"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment"
-        android:label="Explore"
         tools:layout="@layout/fragment_explore_index">
         <action
             android:id="@+id/action_frag_explore_index_to_frag_explore_track"
@@ -46,7 +45,6 @@
     <fragment
         android:id="@+id/frag_explore_artist"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment"
-        android:label="artistName"
         tools:layout="@layout/fragment_explore_artist">
         <action
             android:id="@+id/action_frag_explore_artist_self"
@@ -62,7 +60,6 @@
     <fragment
         android:id="@+id/frag_explore_track"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreTrackFragment"
-        android:label="Explore"
         tools:layout="@layout/fragment_explore_track">
         <action
             android:id="@+id/action_frag_explore_track_self"
@@ -72,7 +69,6 @@
     <fragment
         android:id="@+id/frag_explore_tag"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreGenreFragment"
-        android:label="Explore"
         tools:layout="@layout/fragment_explore_genre">
         <action
             android:id="@+id/action_frag_explore_tag_to_frag_explore_album"
@@ -88,7 +84,6 @@
     <fragment
         android:id="@+id/frag_explore_album"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment"
-        android:label="Explore"
         tools:layout="@layout/fragment_explore_album">
         <action
             android:id="@+id/action_frag_explore_album_to_frag_explore_track"
@@ -98,6 +93,5 @@
     <fragment
         android:id="@+id/frag_explore_photo"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExplorePhotosFragment"
-        android:label="Photo"
         tools:layout="@layout/fragment_explore_photo"/>
 </navigation>

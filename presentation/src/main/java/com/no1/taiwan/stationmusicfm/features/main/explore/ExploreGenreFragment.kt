@@ -73,7 +73,7 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
         fun createBundle(tagName: String) = bundleOf(ARGUMENT_TAG_NAME to tagName)
     }
 
-    //region Parameter
+    //region Arguments
     private val tagName by extraNotNull<String>(ARGUMENT_TAG_NAME)
     //endregion
     private val verLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)

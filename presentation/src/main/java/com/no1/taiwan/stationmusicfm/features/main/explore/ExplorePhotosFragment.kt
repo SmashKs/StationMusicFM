@@ -22,6 +22,11 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.graphics.Color
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.FrameLayout
+import android.widget.ImageSwitcher
+import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +42,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExplorePho
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
+import com.no1.taiwan.stationmusicfm.utils.imageview.loadDrawableIntoListener
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -53,14 +59,13 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
         private const val ARGUMENT_ARTIST_PHOTOS = "fragment argument photo"
 
         fun createBundle(artistName: String, list: List<PhotoEntity>) =
-            bundleOf(ARGUMENT_ARTIST_NAME to artistName,
-                     ARGUMENT_ARTIST_PHOTOS to list)
+            bundleOf(ARGUMENT_ARTIST_NAME to artistName, ARGUMENT_ARTIST_PHOTOS to list)
     }
 
     override val backDrawable by lazy {
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
     }
-    //region Parameter
+    //region Arguments
     private val name by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     private val preloadList by extraNotNull<ArrayList<PhotoEntity>>(ARGUMENT_ARTIST_PHOTOS)
     //endregion
@@ -86,9 +91,25 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        find<ImageSwitcher>(R.id.is_backdrop).setFactory {
+            ImageView(requireContext()).apply {
+                layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+                scaleType = ImageView.ScaleType.CENTER_CROP
+            }
+        }
         // Preload from the previous fragment.
         adapter.append(cast<MusicVisitables>(preloadList))
         initRecyclerViewWith(find(R.id.rv_photos), adapter, linearLayoutManager())
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        super.componentListenersBinding()
+        parent.loadDrawableIntoListener(preloadList.first().url.toUri()) { resource, _ ->
+            find<ImageSwitcher>(R.id.is_backdrop).setImageDrawable(resource)
+        }
     }
 
     /**

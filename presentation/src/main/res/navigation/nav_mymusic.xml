@@ -30,7 +30,6 @@
     <fragment
         android:id="@+id/frag_music_index"
         android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicIndexFragment"
-        android:label="My Music"
         tools:layout="@layout/fragment_mymusic_index">
         <action
             android:id="@+id/action_frag_music_index_to_frag_music_detail"
@@ -40,7 +39,6 @@
     <fragment
         android:id="@+id/frag_music_detail"
         android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicDetailFragment"
-        android:label="Playlist"
         tools:layout="@layout/fragment_mymusic_playlist_detail">
     </fragment>
 </navigation>

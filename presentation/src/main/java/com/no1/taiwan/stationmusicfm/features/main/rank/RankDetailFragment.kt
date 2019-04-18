@@ -77,7 +77,9 @@ class RankDetailFragment : AdvFragment<MainActivity, RankDetailViewModel>() {
     }
 
     private lateinit var tempSongEntity: SongEntity
+    //region Arguments
     private val rankId by extraNotNull<Int>(ARGUMENT_RANK_ID)
+    //endregion
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val songAdapter: NotifiableAdapter by instance(ADAPTER_TRACK)
     private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)

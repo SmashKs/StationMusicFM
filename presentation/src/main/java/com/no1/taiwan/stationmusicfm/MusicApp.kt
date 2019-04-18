@@ -44,7 +44,9 @@ class MusicApp : MultiDexApplication(), KodeinAware {
     private val workManager: WorkManager by instance()
     private val initRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_INIT) }
     private val initDataRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_INIT_DATA) }
-    private val parserRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_CHART_CHECKER) }
+    private val parserRequest by lazy {
+        WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_CHART_CHECKER)
+    }
 
     init {
         appContext = this

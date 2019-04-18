@@ -228,7 +228,6 @@ formatting:
     active: true
     autoCorrect: true
     indentSize: 4
-    continuationIndentSize: 4
   MaximumLineLength:
     active: true
     maxLineLength: 120
@@ -506,7 +505,7 @@ style:
     active: true
     excludeAnnotatedClasses: "dagger.Module"
   UnnecessaryApply:
-    active: true
+    active: false
   UnnecessaryInheritance:
     active: true
   UnnecessaryLet:

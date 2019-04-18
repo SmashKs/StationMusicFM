@@ -164,6 +164,13 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     }
 
     /**
+     * Set fragment title into action bar.
+     *
+     * @return [String] action bar title.
+     */
+    override fun actionBarTitle() = getString(R.string.fragment_title_search_track_result)
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.

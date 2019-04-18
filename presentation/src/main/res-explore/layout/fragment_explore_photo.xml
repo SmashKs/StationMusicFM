@@ -27,10 +27,18 @@
     android:layout_height="match_parent"
     tools:context=".features.main.explore.ExploreTrackFragment">
 
+    <ImageSwitcher
+        android:id="@+id/is_backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_photos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="80dp"
         tools:itemCount="6"
         tools:listitem="@layout/item_explore_photo"
         tools:orientation="horizontal"/>

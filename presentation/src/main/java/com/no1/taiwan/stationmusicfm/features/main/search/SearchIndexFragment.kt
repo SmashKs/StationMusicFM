@@ -114,6 +114,13 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
     }
 
     /**
+     * Set fragment title into action bar.
+     *
+     * @return [String] action bar title.
+     */
+    override fun actionBarTitle() = getString(R.string.fragment_title_search_track)
+
+    /**
      * Set the parentView for inflating.
      *
      * @return [LayoutRes] layout xml.

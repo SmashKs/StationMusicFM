@@ -30,24 +30,20 @@
     <fragment
         android:id="@+id/frag_explore"
         android:name="com.no1.taiwan.stationmusicfm.features.main.explore.ExploreDispatcherFragment"
-        android:label="Explore"
         tools:layout="@layout/fragment_explore_dispatcher"/>
 
     <fragment
         android:id="@+id/frag_mymusic"
         android:name="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicDispatcherFragment"
-        android:label="MyMusic"
         tools:layout="@layout/fragment_mymusic_dispatcher"/>
 
     <fragment
         android:id="@+id/frag_rank"
         android:name="com.no1.taiwan.stationmusicfm.features.main.rank.RankDispatcherFragment"
-        android:label="Rank"
         tools:layout="@layout/fragment_rank_dispatcher"/>
 
     <fragment
         android:id="@+id/frag_search"
         android:name="com.no1.taiwan.stationmusicfm.features.main.search.SearchDispatcherFragment"
-        android:label="Search"
         tools:layout="@layout/fragment_search_dispatcher"/>
 </navigation>

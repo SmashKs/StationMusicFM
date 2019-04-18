@@ -24,17 +24,17 @@
     <item
         android:id="@id/frag_explore"
         android:icon="@drawable/ic_explore_music"
-        android:title="Explore"/>
+        android:title="@string/fragment_title_explore"/>
     <item
         android:id="@id/frag_mymusic"
         android:icon="@drawable/ic_headset_black"
-        android:title="MyMusic"/>
+        android:title="@string/fragment_title_my_music"/>
     <item
         android:id="@id/frag_rank"
         android:icon="@drawable/ic_library_music_black"
-        android:title="Rank"/>
+        android:title="@string/fragment_title_rank"/>
     <item
         android:id="@id/frag_search"
         android:icon="@drawable/ic_find_in_page_black"
-        android:title="Search"/>
+        android:title="@string/fragment_title_search_track"/>
 </menu>

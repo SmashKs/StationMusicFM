@@ -95,7 +95,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
     override val backDrawable by lazy {
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
     }
-    //region Parameter
+    //region Arguments
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
     private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     private val albumName by extraNotNull<String>(ARGUMENT_ALBUM_NAME)

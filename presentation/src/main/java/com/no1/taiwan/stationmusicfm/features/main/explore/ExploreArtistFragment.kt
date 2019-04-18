@@ -87,7 +87,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     }
     private var switchOfPhotos = false
     private var hasFirstFetch = false
-    //region Parameter
+    //region Arguments
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
     private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)

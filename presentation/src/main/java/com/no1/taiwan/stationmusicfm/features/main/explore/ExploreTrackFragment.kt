@@ -76,7 +76,7 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     }
 
     private var isFirstTimeFetching = true
-    //region Parameter
+    //region Arguments
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
     private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     private val trackName by extraNotNull<String>(ARGUMENT_TRACK_NAME)
@@ -150,7 +150,7 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
         val artistName = castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME]).orEmpty()
         val trackName = castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME]).orEmpty()
         findNavController().navigate(R.id.action_frag_explore_track_self,
-                                     ExploreTrackFragment.createBundle(mbid, artistName, trackName))
+                                     createBundle(mbid, artistName, trackName))
     }
 
     private fun displayInformation(track: TrackInfoEntity.TrackEntity) {

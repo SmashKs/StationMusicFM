@@ -30,7 +30,6 @@
     <fragment
         android:id="@+id/frag_rank_index"
         android:name="com.no1.taiwan.stationmusicfm.features.main.rank.RankIndexFragment"
-        android:label="Rank"
         tools:layout="@layout/fragment_rank_index">
         <action
             android:id="@+id/action_frag_rank_index_to_frag_rank_detail"
@@ -40,6 +39,5 @@
     <fragment
         android:id="@+id/frag_rank_detail"
         android:name="com.no1.taiwan.stationmusicfm.features.main.rank.RankDetailFragment"
-        android:label="Rank"
         tools:layout="@layout/fragment_rank_detail"/>
 </navigation>

@@ -42,7 +42,7 @@ abstract class BasePagerFragment : AdvFragment<MainActivity, ExploreArtistViewMo
     // Always get parent fragment's lifecycle for providing a viewmodel.
     override val viewmodelProviderFragment get() = requireParentFragment()
 
-    //region Parameter
+    //region Arguments
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     protected val searchArtistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
     //endregion
