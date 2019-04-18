@@ -36,15 +36,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars"/>
 
-    <com.github.mmin18.widget.RealtimeBlurView
-        android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="@dimen/md_zero_unit"
-        app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"
-        app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop"
-        app:layout_constraintStart_toStartOf="@id/iv_artist_backdrop"
-        app:layout_constraintTop_toTopOf="@id/iv_artist_backdrop"
-        app:realtimeBlurRadius="20dp"
-        app:realtimeOverlayColor="#88000000"/>
+    <!--<com.github.mmin18.widget.RealtimeBlurView-->
+    <!--android:layout_width="@dimen/md_zero_unit"-->
+    <!--android:layout_height="@dimen/md_zero_unit"-->
+    <!--app:layout_constraintBottom_toBottomOf="@id/iv_artist_backdrop"-->
+    <!--app:layout_constraintEnd_toEndOf="@id/iv_artist_backdrop"-->
+    <!--app:layout_constraintStart_toStartOf="@id/iv_artist_backdrop"-->
+    <!--app:layout_constraintTop_toTopOf="@id/iv_artist_backdrop"-->
+    <!--app:realtimeBlurRadius="20dp"-->
+    <!--app:realtimeOverlayColor="#88000000"/>-->
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_tags"

@@ -108,7 +108,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.artistInfoLiveData) {
-            peel { (artist, _, _, _, photos) ->
+            peel { (artist, _, _, _, _) ->
                 setArtistInfo(artist)
                 switchOfPhotos = true
             } happenError {
@@ -131,11 +131,11 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                  artistName != vm.artistLiveData.data()?.name) &&
                 // 3. `isFirstTime` is for the first time open this fragment.
                 !hasFirstFetch) {
-                runTaskFetchArtistInfo(mbid, artistName)
+//                runTaskFetchArtistInfo(mbid, artistName)
                 hasFirstFetch = true
             }
             else {
-                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
+//                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
             }
         }
     }

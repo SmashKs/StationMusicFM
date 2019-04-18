@@ -19,25 +19,18 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.domain
+package com.no1.taiwan.stationmusicfm.ktx.timing
 
-import com.no1.taiwan.stationmusicfm.domain.usecases.BaseUsecase
-import kotlinx.coroutines.Deferred
+import com.devrapid.kotlinshaver.cast
+import kotlin.system.measureTimeMillis
 
 /**
- * A base abstract class for wrapping a coroutine [Deferred] object and do the error handling
- * when an error or cancellation happened.
+ * Executes the given [block] and returns elapsed time in milliseconds.
  */
-abstract class DeferredUsecase<T : Any, R : BaseUsecase.RequestValues> : BaseUsecase<R> {
-    internal abstract suspend fun acquireCase(): T
-
-    open suspend fun execute(parameter: R? = null) = let {
-        parameter?.let { requestValues = it }
-
-        // If the parent job was cancelled that will happened an exception, that's
-        // why we should create a new job instead.
-        acquireCase()
+inline fun <reified T> measureTimeMillisReturn(block: () -> T): Pair<T, Long> {
+    var ret: T? = null
+    val time = measureTimeMillis {
+        ret = block()
     }
-
-    protected suspend fun attachParameter(λ: suspend (R) -> T) = requireNotNull(requestValues?.run { λ(this) })
+    return Pair(cast(ret), time)
 }

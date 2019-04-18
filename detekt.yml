@@ -225,7 +225,7 @@ formatting:
     active: true
     autoCorrect: true
   Indentation:
-    active: true
+    active: false
     autoCorrect: true
     indentSize: 4
   MaximumLineLength:
@@ -244,7 +244,7 @@ formatting:
     active: true
     autoCorrect: true
   NoItParamInMultilineLambda:
-    active: true
+    active: false
   NoLineBreakAfterElse:
     active: true
     autoCorrect: true
@@ -286,7 +286,7 @@ formatting:
     active: true
     autoCorrect: true
   SpacingAroundKeyword:
-    active: true
+    active: false
     autoCorrect: true
   SpacingAroundOperators:
     active: true
