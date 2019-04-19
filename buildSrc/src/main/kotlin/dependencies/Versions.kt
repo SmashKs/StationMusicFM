@@ -45,7 +45,7 @@ object Versions {
         const val appCompat = "1.1.0-alpha04"
         const val cardView = androidx
         const val recyclerView = appCompat
-        const val constraintLayout = "2.0.0-alpha4"
+        const val constraintLayout = "2.0.0-alpha3"
         const val coordinatorLayout = "1.1.0-alpha01"
     }
 

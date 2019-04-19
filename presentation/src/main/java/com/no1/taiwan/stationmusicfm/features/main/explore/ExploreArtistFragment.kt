@@ -131,11 +131,11 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                  artistName != vm.artistLiveData.data()?.name) &&
                 // 3. `isFirstTime` is for the first time open this fragment.
                 !hasFirstFetch) {
-//                runTaskFetchArtistInfo(mbid, artistName)
+                runTaskFetchArtistInfo(mbid, artistName)
                 hasFirstFetch = true
             }
             else {
-//                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
+                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
             }
         }
     }

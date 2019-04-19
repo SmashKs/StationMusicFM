@@ -33,7 +33,11 @@
         tools:layout="@layout/fragment_search_index">
         <action
             android:id="@+id/action_frag_search_index_to_frag_search_result"
-            app:destination="@id/frag_search_result"/>
+            app:destination="@id/frag_search_result"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment

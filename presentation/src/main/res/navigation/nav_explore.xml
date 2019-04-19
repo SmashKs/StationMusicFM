@@ -33,13 +33,25 @@
         tools:layout="@layout/fragment_explore_index">
         <action
             android:id="@+id/action_frag_explore_index_to_frag_explore_track"
-            app:destination="@id/frag_explore_track"/>
+            app:destination="@id/frag_explore_track"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_frag_explore_index_to_frag_explore_tag"
-            app:destination="@id/frag_explore_tag"/>
+            app:destination="@id/frag_explore_tag"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_frag_explore_index_to_frag_explore_artist"
-            app:destination="@id/frag_explore_artist"/>
+            app:destination="@id/frag_explore_artist"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
@@ -48,13 +60,25 @@
         tools:layout="@layout/fragment_explore_artist">
         <action
             android:id="@+id/action_frag_explore_artist_self"
-            app:destination="@id/frag_explore_artist"/>
+            app:destination="@id/frag_explore_artist"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_frag_explore_artist_to_frag_explore_photo"
-            app:destination="@id/frag_explore_photo"/>
+            app:destination="@id/frag_explore_photo"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_frag_explore_artist_to_frag_explore_album"
-            app:destination="@id/frag_explore_album"/>
+            app:destination="@id/frag_explore_album"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
@@ -63,7 +87,11 @@
         tools:layout="@layout/fragment_explore_track">
         <action
             android:id="@+id/action_frag_explore_track_self"
-            app:destination="@id/frag_explore_track"/>
+            app:destination="@id/frag_explore_track"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
@@ -72,13 +100,25 @@
         tools:layout="@layout/fragment_explore_genre">
         <action
             android:id="@+id/action_frag_explore_tag_to_frag_explore_album"
-            app:destination="@id/frag_explore_album"/>
+            app:destination="@id/frag_explore_album"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_frag_explore_tag_to_frag_explore_track"
-            app:destination="@id/frag_explore_track"/>
+            app:destination="@id/frag_explore_track"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_frag_explore_tag_self"
-            app:destination="@id/frag_explore_tag"/>
+            app:destination="@id/frag_explore_tag"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
@@ -87,7 +127,11 @@
         tools:layout="@layout/fragment_explore_album">
         <action
             android:id="@+id/action_frag_explore_album_to_frag_explore_track"
-            app:destination="@id/frag_explore_track"/>
+            app:destination="@id/frag_explore_track"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
