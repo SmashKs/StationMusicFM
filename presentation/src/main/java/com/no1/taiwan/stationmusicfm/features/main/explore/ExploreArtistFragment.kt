@@ -135,6 +135,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 hasFirstFetch = true
             }
             else {
+                switchOfPhotos = true
                 setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
             }
         }
