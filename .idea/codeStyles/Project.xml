@@ -87,6 +87,8 @@
       <option name="KEEP_TRAILING_SPACES" value="2" />
       <option name="CODE_KEEP_TRAILING_SPACES" value="2" />
       <option name="FORMAT_WITH_SOFT_WRAP" value="1" />
+      <option name="VERBATIM_MINIMIZE_INDENT" value="true" />
+      <option name="CODE_FENCE_MINIMIZE_INDENT" value="true" />
       <option name="DEFINITION_MARKER_SPACES" value="4" />
       <option name="FOOTNOTE_PLACEMENT" value="4" />
       <option name="REFERENCE_PLACEMENT" value="4" />
