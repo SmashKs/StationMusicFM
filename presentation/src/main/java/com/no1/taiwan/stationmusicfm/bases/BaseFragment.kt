@@ -25,6 +25,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import androidx.annotation.UiThread
@@ -72,7 +74,8 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
     private lateinit var job: Job
     @Suppress("UNCHECKED_CAST")
     protected val parent
-        get() = requireActivity() as A  // If there's no parent, forcing crashing the app.
+        // If there's no parent, forcing crashing the app.
+        get() = requireActivity() as A
     // Set action bar's back icon color into all fragments are inheriting advFragment.
     protected open val backDrawable by lazy {
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(getColor(R.color.colorPrimaryTextV1))
@@ -80,7 +83,28 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
 
     private val actionTitle by extra<String>(COMMON_TITLE)
 
-    //region Fragment lifecycle
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        // Focusing on entering animation ([enter] == true) with animation ([nextAnim] != 0).
+        if (!enter || nextAnim == 0) return super.onCreateAnimation(transit, enter, nextAnim)
+        val anim = AnimationUtils.loadAnimation(activity, nextAnim)
+        anim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+                onTransitionStart(animation)
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+                onTransitionRepeat(animation)
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                onTransitionEnd(animation)
+                anim.setAnimationListener(null)
+            }
+        })
+
+        return anim
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically
@@ -199,6 +223,30 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
      */
     @UiThread
     protected open fun provideActionBarResource(): Toolbar? = null
+
+    /**
+     * The event for starting the view transition animation.
+     *
+     * @param animation
+     */
+    @UiThread
+    protected open fun onTransitionStart(animation: Animation) = Unit
+
+    /**
+     * The event for repeating the view transition animation.
+     *
+     * @param animation
+     */
+    @UiThread
+    protected open fun onTransitionRepeat(animation: Animation) = Unit
+
+    /**
+     * The event for ending the view transition animation.
+     *
+     * @param animation
+     */
+    @UiThread
+    protected open fun onTransitionEnd(animation: Animation) = Unit
     //endregion
 
     /**
