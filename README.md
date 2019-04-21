@@ -1,4 +1,4 @@
-<h1 align="center"> TimelineCards </h1>
+<h1 align="center"> StationMusicFM </h1>
 <p align="center">
 <a href="https://opensource.org/licenses/MIT"><img alt="Licence" src="https://img.shields.io/badge/license-MIT-green.svg" /></a>
 </p>
@@ -15,6 +15,11 @@ Talking is wasting time XD Let's just see the Demo.
 
 Explore Function - All tracks, artists, photos data comes from [last.fm](https://www.last.fm/) . It lets me be able to
 get so much information of them.
+
+# TODO
+
+- [ ] Playing View function for showing current playing music.
+- [ ] Notification of playing a music.
 
 # Licence
 
