@@ -11,17 +11,35 @@ album. Basically, it's a demo app but all the basic functions we provide.
 
 Talking is wasting time XD Let's just see the Demo.
 
-# Data Source
+# Screenshots
 
-Explore Function - All tracks, artists, photos data comes from [last.fm](https://www.last.fm/) . It lets me be able to
-get so much information of them.
-
-# Demo
 1. Main View
 2. Explore
 3. My Music
 4. Rank
 5. Searching
+
+# Data Source
+
+Explore Function - All tracks, artists, photos data comes from [last.fm](https://www.last.fm/) . It lets me be able to
+get so much information of them.
+
+# Modules
+
+We're using [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) for this
+project.
+
+- Presentation - This is the main Android application module.
+- Domain - A pure kotlin library without Android SDK.
+- Data - Android library with Firebase, Database for data fetching.
+- BuildSrc - Kts build source, version, third-party libraries path.
+- Ext
+- Ktx
+- Widget
+- Player - A [ExoPlayer](https://github.com/google/ExoPlayer) wrapped library.
+
+# Libraries Used
+
 
 # TODO
 
