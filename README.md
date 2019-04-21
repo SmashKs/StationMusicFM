@@ -5,9 +5,9 @@
 
 # Introduction
 
-This project music app provides the functions that listening online musics, downloading a music from remote server,
-checking top charts for artists or tracks or albums in this week, and searching a music for yourself. Basically, it's a
-demo app but all the basic functions we provide.
+A showcase of music app which provides the functions that listening online musics, downloading a music from remote
+server, checking top charts of artists, tracks, albums in this week. Also, with searching function for a track, artist,
+album. Basically, it's a demo app but all the basic functions we provide.
 
 Talking is wasting time XD Let's just see the Demo.
 
@@ -15,6 +15,13 @@ Talking is wasting time XD Let's just see the Demo.
 
 Explore Function - All tracks, artists, photos data comes from [last.fm](https://www.last.fm/) . It lets me be able to
 get so much information of them.
+
+# Demo
+1. Main View
+2. Explore
+3. My Music
+4. Rank
+5. Searching
 
 # TODO
 
