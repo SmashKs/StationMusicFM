@@ -22,8 +22,8 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -86,7 +86,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(Color.WHITE)
     }
     private var switchOfPhotos = false
-    private var hasFirstFetch = false
     //region Arguments
     private val vmProviderSource by extraNotNull<Int>(ARGUMENT_VM_DEPENDENT)
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
@@ -118,30 +117,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     }
 
     /**
-     * Initialize doing some methods or actions here.
-     *
-     * @param savedInstanceState previous status.
-     */
-    override fun rendered(savedInstanceState: Bundle?) {
-        super.rendered(savedInstanceState)
-        vm.apply {
-            // 1. `artistInfoLiveData.value.isNull()` is for avoiding the back fragment again and search it.
-            if ((artistInfoLiveData.value.isNull() ||
-                 // 2. `artistName != vm.artistLiveData.value?.data?.name` is for avoiding searching the same artist.
-                 artistName != vm.artistLiveData.data()?.name) &&
-                // 3. `isFirstTime` is for the first time open this fragment.
-                !hasFirstFetch) {
-                runTaskFetchArtistInfo(mbid, artistName)
-                hasFirstFetch = true
-            }
-            else {
-                switchOfPhotos = true
-                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
-            }
-        }
-    }
-
-    /**
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
@@ -165,6 +140,29 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
             findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
                                          ExplorePhotosFragment.createBundle(vm.artistLiveData.data()?.name.orEmpty(),
                                                                             vm.photosLiveData.data()?.photos.orEmpty()))
+        }
+    }
+
+    /**
+     * The event for ending the view transition animation.
+     *
+     * @param animation
+     */
+    override fun onTransitionEnd(animation: Animation) {
+        vm.apply {
+            // 1. `artistInfoLiveData.value.isNull()` is for avoiding the back fragment again and search it.
+            if ((artistInfoLiveData.value.isNull() ||
+                 // 2. `artistName != vm.artistLiveData.value?.data?.name` is for avoiding searching the same artist.
+                 artistName != vm.artistLiveData.data()?.name) &&
+                // 3. `isFirstTime` is for the first time open this fragment.
+                firstTimeEnter) {
+                runTaskFetchArtistInfo(mbid, artistName)
+            }
+            else {
+                switchOfPhotos = true
+                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
+            }
+            firstTimeEnter = false
         }
     }
 

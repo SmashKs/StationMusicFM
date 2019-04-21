@@ -93,6 +93,7 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     private val loadingView by lazy { LoadingDialog.getInstance(this, true) }
     /** Enable dialog loading view or use loading layout. */
     protected open var enableDialogLoading = true
+    protected open var firstTimeEnter = true
 
     //region Fragment's lifecycle.
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

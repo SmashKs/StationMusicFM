@@ -75,7 +75,6 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
                                                                                          ARGUMENT_TRACK_NAME to trackName)
     }
 
-    private var isFirstTimeFetching = true
     //region Arguments
     private val mbid by extraNotNull<String>(ARGUMENT_MBID)
     private val artistName by extraNotNull<String>(ARGUMENT_ARTIST_NAME)
@@ -93,7 +92,7 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     override fun bindLiveData() {
         observeNonNull(vm.trackInfoLiveData) {
             peel { (track, similarTracks) ->
-                isFirstTimeFetching = false
+                firstTimeEnter = false
                 displayInformation(track)
                 adapter.append(cast<MusicVisitables>(similarTracks.tracks))
             } happenError {
@@ -121,7 +120,7 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         initRecyclerViewWith(find(R.id.rv_similar_tracks), adapter, linearLayoutManager())
-        if (!isFirstTimeFetching) {
+        if (!firstTimeEnter) {
             vm.trackInfoLiveData.data()?.first?.let(::displayInformation)
         }
     }

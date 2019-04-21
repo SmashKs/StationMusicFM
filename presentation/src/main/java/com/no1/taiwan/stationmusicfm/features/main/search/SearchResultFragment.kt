@@ -70,7 +70,6 @@ import org.kodein.di.generic.provider
 class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), SearchCommonOperations {
     override val viewmodelProviderSource get() = PROVIDER_FROM_CUSTOM_FRAGMENT
     override val viewmodelProviderFragment get() = requireParentFragment()
-    private var isFirstComing = true
     private lateinit var tempSongEntity: SongEntity
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
@@ -180,7 +179,7 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         // It needs to reset again when phone rotated the screen.
-        isFirstComing = true
+        firstTimeEnter = true
     }
 
     override fun keepKeywordIntoViewModel(keyword: String) = vm.keyword.postValue(keyword)
@@ -237,12 +236,12 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     }
 
     private fun initRecyclerView() {
-        if (isFirstComing) {
+        if (firstTimeEnter) {
             initRecyclerViewWith(find(R.id.v_result),
                                  adapter,
                                  linearLayoutManager(),
                                  listOf(decoration, actionBarBlankDecoration))
-            isFirstComing = false
+            firstTimeEnter = false
         }
         // Reset the listener again when search again on this [SearchResultFragment].
         if (vm.getCurPageNumber() == 1) {
