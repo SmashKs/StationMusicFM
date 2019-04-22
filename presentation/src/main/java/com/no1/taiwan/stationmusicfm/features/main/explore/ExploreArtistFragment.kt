@@ -33,6 +33,7 @@ import androidx.viewpager.widget.ViewPager
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.showViewStub
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.isNull
 import com.google.android.material.tabs.TabLayout
@@ -61,8 +62,8 @@ import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingByColorLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
-import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
+import com.no1.taiwan.stationmusicfm.utils.presentations.muteErrorDoWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
@@ -111,35 +112,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 setArtistInfo(artist)
                 switchOfPhotos = true
             } happenError {
+                showViewStub(R.id.vs_no_artist, R.id.v_no_artist)
                 loge(it)
-            } doWith this@ExploreArtistFragment
-        }
-    }
-
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
-    override fun viewComponentBinding() {
-        super.viewComponentBinding()
-        find<ViewPager>(R.id.vp_container).also {
-            it.adapter = SimpleFragmentPagerAdapter(childFragmentManager, adapterFragments)
-            find<TabLayout>(R.id.tl_category).apply {
-                setupWithViewPager(it)
-                repeat(tabCount) { getTabAt(it)?.customView = getTabView(it) }
-            }
-        }
-    }
-
-    /**
-     * For separating the huge function code in [rendered]. Initialize all component listeners here.
-     */
-    override fun componentListenersBinding() {
-        super.componentListenersBinding()
-        find<ImageView>(R.id.iv_artist_backdrop).setOnClickListener {
-            if (!switchOfPhotos) return@setOnClickListener
-            findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
-                                         ExplorePhotosFragment.createBundle(vm.artistLiveData.data()?.name.orEmpty(),
-                                                                            vm.photosLiveData.data()?.photos.orEmpty()))
+            } muteErrorDoWith this@ExploreArtistFragment
         }
     }
 
@@ -162,7 +137,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                 switchOfPhotos = true
                 setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
             }
-            firstTimeEnter = false
         }
     }
 
@@ -181,10 +155,30 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     override fun provideInflateView() = R.layout.fragment_explore_artist
 
     private fun setArtistInfo(artist: ArtistEntity) {
+        showViewStub(R.id.vs_artist, R.id.v_artist)
         find<ImageView>(R.id.iv_artist_backdrop).loadByAny(artist.images.last().text)
         find<ImageView>(R.id.iv_artist_thumbnail).loadByAny(artist.images.last().text)
         find<TextView>(R.id.ftv_tags).text = artist.tags.joinToString("\n", transform = TagEntity::name)
         find<TextView>(R.id.ftv_mics).text = artist.listeners
+
+        // FIXME(jieyi): 2019-04-23 There's a bug when comes back this fragment again.
+        if (firstTimeEnter) {
+            find<ViewPager>(R.id.vp_container).also {
+                it.adapter = SimpleFragmentPagerAdapter(childFragmentManager, adapterFragments)
+                find<TabLayout>(R.id.tl_category).apply {
+                    setupWithViewPager(it)
+                    repeat(tabCount) { getTabAt(it)?.customView = getTabView(it) }
+                }
+            }
+
+            find<ImageView>(R.id.iv_artist_backdrop).setOnClickListener {
+                if (!switchOfPhotos) return@setOnClickListener
+                findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
+                                             ExplorePhotosFragment.createBundle(vm.artistLiveData.data()?.name.orEmpty(),
+                                                                                vm.photosLiveData.data()?.photos.orEmpty()))
+            }
+            firstTimeEnter = false
+        }
     }
 
     private fun getTabView(position: Int) = inflater.inflate(R.layout.tabitem_introduction, null).apply {

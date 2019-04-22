@@ -21,23 +21,15 @@
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    style="@style/Constraint.MatchParent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.main.explore.ExploreArtistFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ViewStub
-        android:id="@+id/vs_no_artist"
-        style="@style/Constraint.MatchParent"
-        android:inflatedId="@+id/v_no_artist"
-        android:layout="@layout/stub_no_artist"
-        tools:visibility="visible"/>
-
-    <ViewStub
-        android:id="@+id/vs_artist"
-        style="@style/Constraint.MatchParent"
-        android:inflatedId="@+id/v_artist"
-        android:layout="@layout/stub_has_artist"
-        tools:visibility="visible"/>
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_error_msg"
+        style="@style/MusicTextView.FitWidth"
+        android:gravity="center"
+        android:text="couldn't find any result...😞"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
