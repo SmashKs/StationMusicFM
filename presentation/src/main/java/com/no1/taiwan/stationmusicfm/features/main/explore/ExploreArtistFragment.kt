@@ -22,7 +22,9 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.graphics.Color
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
@@ -105,6 +107,14 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         SearchShowingByColorLifeRegister(this)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        vm.artistInfoLiveData.data()?.first?.let {
+            showViewStub(R.id.vs_artist, R.id.v_artist)
+            setArtistInfo(it)
+        }
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.artistInfoLiveData) {
@@ -162,23 +172,21 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         find<TextView>(R.id.ftv_mics).text = artist.listeners
 
         // FIXME(jieyi): 2019-04-23 There's a bug when comes back this fragment again.
-        if (firstTimeEnter) {
-            find<ViewPager>(R.id.vp_container).also {
-                it.adapter = SimpleFragmentPagerAdapter(childFragmentManager, adapterFragments)
-                find<TabLayout>(R.id.tl_category).apply {
-                    setupWithViewPager(it)
-                    repeat(tabCount) { getTabAt(it)?.customView = getTabView(it) }
-                }
+        find<ViewPager>(R.id.vp_container).also {
+            it.adapter = SimpleFragmentPagerAdapter(childFragmentManager, adapterFragments)
+            find<TabLayout>(R.id.tl_category).apply {
+                setupWithViewPager(it)
+                repeat(tabCount) { getTabAt(it)?.customView = getTabView(it) }
             }
-
-            find<ImageView>(R.id.iv_artist_backdrop).setOnClickListener {
-                if (!switchOfPhotos) return@setOnClickListener
-                findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
-                                             ExplorePhotosFragment.createBundle(vm.artistLiveData.data()?.name.orEmpty(),
-                                                                                vm.photosLiveData.data()?.photos.orEmpty()))
-            }
-            firstTimeEnter = false
         }
+
+        find<ImageView>(R.id.iv_artist_backdrop).setOnClickListener {
+            if (!switchOfPhotos) return@setOnClickListener
+            findNavController().navigate(R.id.action_frag_explore_artist_to_frag_explore_photo,
+                                         ExplorePhotosFragment.createBundle(vm.artistLiveData.data()?.name.orEmpty(),
+                                                                            vm.photosLiveData.data()?.photos.orEmpty()))
+        }
+        firstTimeEnter = false
     }
 
     private fun getTabView(position: Int) = inflater.inflate(R.layout.tabitem_introduction, null).apply {
