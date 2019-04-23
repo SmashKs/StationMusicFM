@@ -109,8 +109,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // For back here, the view needs to be set again.
         vm.artistInfoLiveData.data()?.first?.let {
-            showViewStub(R.id.vs_artist, R.id.v_artist)
             setArtistInfo(it)
         }
     }
@@ -171,7 +171,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         find<TextView>(R.id.ftv_tags).text = artist.tags.joinToString("\n", transform = TagEntity::name)
         find<TextView>(R.id.ftv_mics).text = artist.listeners
 
-        // FIXME(jieyi): 2019-04-23 There's a bug when comes back this fragment again.
         find<ViewPager>(R.id.vp_container).also {
             it.adapter = SimpleFragmentPagerAdapter(childFragmentManager, adapterFragments)
             find<TabLayout>(R.id.tl_category).apply {
