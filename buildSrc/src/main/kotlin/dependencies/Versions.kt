@@ -45,7 +45,7 @@ object Versions {
         const val appCompat = "1.1.0-alpha04"
         const val cardView = androidx
         const val recyclerView = appCompat
-        const val constraintLayout = "2.0.0-alpha3"
+        const val constraintLayout = "2.0.0-alpha5"
         const val coordinatorLayout = "1.1.0-alpha01"
     }
 
@@ -53,7 +53,7 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.30"
+        const val kotlinLib = "1.3.31"
         const val kotlinCoroutine = "1.2.0"
     }
 
@@ -65,7 +65,7 @@ object Versions {
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.1.2"
         const val dialog = "1.0.7"
-        const val lottie = "3.0.0"
+        const val lottie = "3.0.1"
     }
 
     /**
@@ -76,7 +76,7 @@ object Versions {
         const val anko = "0.10.8"
         const val kinfer = "2.1.10"
         const val ktx = "1.1.0-alpha05"
-        const val fragmentKtx = "1.1.0-alpha06"
+        const val fragmentKtx = "1.1.0-alpha07"
         const val paletteKtx = "1.0.0"
         const val collectionKtx = "1.1.0-beta01"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
@@ -87,7 +87,7 @@ object Versions {
 
     object AndroidArchitectureComponent {
         const val aacLifecycle = "2.1.0-alpha04"
-        const val room = "2.1.0-alpha06"
+        const val room = "2.1.0-alpha07"
     }
 
     /**
@@ -119,7 +119,7 @@ object Versions {
     object Database {
         const val debug = "1.5.1"
         const val debugDb = "1.0.6"
-        const val mmkv = "1.0.18"
+        const val mmkv = "1.0.19"
     }
 
     /**
