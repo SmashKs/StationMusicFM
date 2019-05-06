@@ -29,7 +29,7 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven { url = "http://dl.bintray.com/kotlin/kotlin-eap" }
+        maven { url = uri("http://dl.bintray.com/kotlin/kotlin-eap") }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.0'
@@ -93,6 +93,7 @@ allprojects {
         // required to find the project's artifacts
         maven { url = "https://dl.bintray.com/pokk/maven" }
         maven { url = "http://dl.bintray.com/kotlin/kotlin-eap" }
+        maven { url = "https://dl.bintray.com/kodein-framework/Kodein-DI" }
     }
 }
 

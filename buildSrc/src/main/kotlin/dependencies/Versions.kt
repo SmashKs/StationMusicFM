@@ -39,7 +39,7 @@ object Versions {
      * Related Android component lib version.
      */
     object AndroidComponent {
-        const val material = "1.1.0-alpha05"
+        const val material = "1.1.0-alpha06"
         const val androidx = "1.0.0"
         const val annotation = "1.1.0-beta01"
         const val appCompat = "1.1.0-alpha04"
@@ -54,7 +54,7 @@ object Versions {
      */
     object Kotlin {
         const val kotlinLib = "1.3.31"
-        const val kotlinCoroutine = "1.2.0"
+        const val kotlinCoroutine = "1.2.1"
     }
 
     /**
@@ -81,7 +81,7 @@ object Versions {
         const val collectionKtx = "1.1.0-beta01"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
         const val navigationKtx = "2.1.0-alpha02"
-        const val workKtx = "2.0.1"
+        const val workKtx = "2.1.0-alpha01"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
@@ -158,7 +158,7 @@ object Versions {
      */
     object Test {
         const val jUnit = "1.1.0"
-        const val assertK = "0.13"
+        const val assertK = "0.14"
         const val runner = "1.1.1"
         const val espresso = "3.1.1"
         const val kakao = "2.0.0"
