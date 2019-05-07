@@ -249,6 +249,9 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
     protected open fun onTransitionEnd(animation: Animation) = Unit
     //endregion
 
+    @UiThread
+    open fun onBackPressed() = Unit
+
     /**
      * Initialize the recycler view with all simple parameters.
      *

@@ -42,10 +42,12 @@ import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.toBitmap
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.cast
+import com.devrapid.kotlinshaver.castOrNull
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment.Companion.PROVIDER_FROM_CUSTOM_FRAGMENT
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
+import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreArtistFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreGenreFragment
@@ -114,6 +116,7 @@ open class MainActivity : BaseActivity() {
             finish()
             return
         }
+        castOrNull<BaseFragment<MainActivity>>(currentFragment)?.onBackPressed()
         fragmentIndexNavigator.navigateUp()
     }
 

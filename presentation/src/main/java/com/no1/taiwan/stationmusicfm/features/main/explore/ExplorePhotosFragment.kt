@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.extraNotNull
+import com.devrapid.kotlinknifer.invisible
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.R
@@ -131,6 +132,10 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
      * @return [LayoutRes] layout xml.
      */
     override fun provideInflateView() = R.layout.fragment_explore_photo
+
+    override fun onBackPressed() {
+        find<RecyclerView>(R.id.rv_photos).invisible()
+    }
 
     private fun loadImageIntoSwitcher(position: Int) {
         parent.loadDrawableIntoListener(preloadList[position].url.toUri()) { resource, _ ->

@@ -112,7 +112,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         // For back here, the view needs to be set again.
         vm.artistInfoLiveData.data()?.first?.let {
             // If the same artist, it's not necessary to search again.
-            if (it.name == artistName)
+            if (it.name == artistName && !firstTimeEnter)
                 setArtistInfo(it)
         }
     }
@@ -147,7 +147,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
             }
             else {
                 switchOfPhotos = true
-                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
+                // FIXME(jieyi): 2019-05-08 Here is double setting.
+                // setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
             }
         }
     }
