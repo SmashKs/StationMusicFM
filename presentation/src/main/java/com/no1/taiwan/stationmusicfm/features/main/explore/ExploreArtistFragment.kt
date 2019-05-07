@@ -111,7 +111,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         super.onViewCreated(view, savedInstanceState)
         // For back here, the view needs to be set again.
         vm.artistInfoLiveData.data()?.first?.let {
-            setArtistInfo(it)
+            // If the same artist, it's not necessary to search again.
+            if (it.name == artistName)
+                setArtistInfo(it)
         }
     }
 
