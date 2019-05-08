@@ -22,9 +22,7 @@
 package com.no1.taiwan.stationmusicfm.features.main.explore
 
 import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
@@ -45,7 +43,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.AdvFragment
 import com.no1.taiwan.stationmusicfm.domain.Parameters
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
-import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity.TagEntity
+import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreArtistViewModel
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerAlbumFragment
@@ -107,16 +105,6 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         SearchShowingByColorLifeRegister(this)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // For back here, the view needs to be set again.
-        vm.artistInfoLiveData.data()?.first?.let {
-            // If the same artist, it's not necessary to search again.
-            if (it.name == artistName && !firstTimeEnter)
-                setArtistInfo(it)
-        }
-    }
-
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         observeNonNull(vm.artistInfoLiveData) {
@@ -148,7 +136,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
             else {
                 switchOfPhotos = true
                 // FIXME(jieyi): 2019-05-08 Here is double setting.
-                // setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
+                setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
             }
         }
     }
@@ -171,7 +159,7 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         showViewStub(R.id.vs_artist, R.id.v_artist)
         find<ImageView>(R.id.iv_artist_backdrop).loadByAny(artist.images.last().text)
         find<ImageView>(R.id.iv_artist_thumbnail).loadByAny(artist.images.last().text)
-        find<TextView>(R.id.ftv_tags).text = artist.tags.joinToString("\n", transform = TagEntity::name)
+        find<TextView>(R.id.ftv_tags).text = artist.tags.joinToString("\n", transform = TagInfoEntity.TagEntity::name)
         find<TextView>(R.id.ftv_mics).text = artist.listeners
 
         find<ViewPager>(R.id.vp_container).also {
