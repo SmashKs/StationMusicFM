@@ -41,11 +41,11 @@ object Versions {
     object AndroidComponent {
         const val material = "1.1.0-alpha06"
         const val androidx = "1.0.0"
-        const val annotation = "1.1.0-beta01"
-        const val appCompat = "1.1.0-alpha04"
+        const val annotation = "1.1.0-rc01"
+        const val appCompat = "1.1.0-alpha05"
         const val cardView = androidx
         const val recyclerView = appCompat
-        const val constraintLayout = "2.0.0-alpha5"
+        const val constraintLayout = "2.0.0-beta1"
         const val coordinatorLayout = "1.1.0-alpha01"
     }
 
@@ -75,19 +75,19 @@ object Versions {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
         const val kinfer = "2.1.10"
-        const val ktx = "1.1.0-alpha05"
-        const val fragmentKtx = "1.1.0-alpha07"
+        const val ktx = "1.2.0-alpha01"
+        const val fragmentKtx = "1.1.0-alpha08"
         const val paletteKtx = "1.0.0"
-        const val collectionKtx = "1.1.0-beta01"
+        const val collectionKtx = "1.1.0-rc01"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
-        const val navigationKtx = "2.1.0-alpha02"
+        const val navigationKtx = "2.1.0-alpha03"
         const val workKtx = "2.1.0-alpha01"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
     object AndroidArchitectureComponent {
-        const val aacLifecycle = "2.1.0-alpha04"
-        const val room = "2.1.0-alpha07"
+        const val aacLifecycle = "2.2.0-alpha01"
+        const val room = "2.1.0-beta01"
     }
 
     /**
@@ -178,6 +178,6 @@ object Versions {
     }
 
     object Player {
-        const val exoplayer = "2.9.6"
+        const val exoplayer = "2.10.0"
     }
 }
