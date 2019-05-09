@@ -67,7 +67,11 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_frag_explore_artist_to_frag_explore_photo"
-            app:destination="@id/frag_explore_photo"/>
+            app:destination="@id/frag_explore_photo"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_frag_explore_artist_to_frag_explore_album"
             app:destination="@id/frag_explore_album"

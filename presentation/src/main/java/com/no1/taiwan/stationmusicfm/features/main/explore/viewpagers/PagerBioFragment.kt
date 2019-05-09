@@ -42,7 +42,7 @@ class PagerBioFragment : BasePagerFragment() {
                 // data will be fetched when count is 0.
                 // That's why count is 1 then it's allowed passing. If the same artist, fetching the same
                 // data again isn't expected, at this condition, count will be 0.
-                if ((enterCount == 0 && searchArtistName == it.name) || enterCount == 1) {
+                if (enterCount <= 1 && searchArtistName == it.name) {
                     bio = it.bio.content.parseAsHtml().toSpannable()
                     find<TextView>(R.id.ftv_bio).apply {
                         text = bio

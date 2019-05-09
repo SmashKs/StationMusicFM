@@ -135,10 +135,19 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
             }
             else {
                 switchOfPhotos = true
-                // FIXME(jieyi): 2019-05-08 Here is double setting.
                 setArtistInfo(requireNotNull(artistInfoLiveData.data()?.first))
             }
         }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        // For backing here from others fragment.
+        if (!firstTimeEnter)
+            showViewStub(R.id.vs_artist, R.id.v_artist)
     }
 
     /**

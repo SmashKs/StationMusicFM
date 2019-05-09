@@ -29,7 +29,7 @@ import com.no1.taiwan.stationmusicfm.bases.BaseFragment
 class SimpleFragmentPagerAdapter(
     fragmentManager: FragmentManager,
     private val fragments: List<BaseFragment<BaseActivity>>
-) : FragmentPagerAdapter(fragmentManager, RESUME_ONLY_CURRENT_FRAGMENT) {
+) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     /**
      * Return the Fragment associated with a specified position.
      */
