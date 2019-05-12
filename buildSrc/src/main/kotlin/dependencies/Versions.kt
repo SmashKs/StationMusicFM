@@ -66,6 +66,7 @@ object Versions {
         const val realtimeBlur = "1.1.2"
         const val dialog = "1.0.7"
         const val lottie = "3.0.1"
+        const val easyPermission = "3.0.0"
     }
 
     /**

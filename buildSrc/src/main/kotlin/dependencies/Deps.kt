@@ -121,6 +121,7 @@ object Deps {
         const val shapeOfView = "com.github.florent37:shapeofview:${Versions.ViewComponent.shapeOfView}"
         const val realtimeBlur = "com.github.mmin18:realtimeblurview:${Versions.ViewComponent.realtimeBlur}"
         const val lottie = "com.airbnb.android:lottie:${Versions.ViewComponent.lottie}"
+        const val easyPermission = "pub.devrel:easypermissions:${Versions.ViewComponent.easyPermission}"
         // Android Jetpack
         const val materialDesign = "com.google.android.material:material:${Versions.AndroidComponent.material}"
         const val appcompat = "androidx.appcompat:appcompat:${Versions.AndroidComponent.appCompat}"
