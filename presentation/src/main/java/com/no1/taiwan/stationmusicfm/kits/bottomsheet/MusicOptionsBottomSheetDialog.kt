@@ -109,16 +109,25 @@ class MusicOptionsBottomSheetDialog(
         }
     }
 
+    /**
+     * Dismiss playlist dialog function.
+     */
     fun dismissPlaylist() {
         playlistBottomSheet.takeIf(Dialog::isShowing)?.let(PlaylistBottomSheetDialog::dismiss)
     }
 
+    /**
+     * When activity's lifecycle [Lifecycle.Event.ON_DESTROY] happens, the events need to release.
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun releaseObjects() {
         if (onDownloaded.isNotNull()) onDownloaded = null
         if (onDeleted.isNotNull()) onDeleted = null
     }
 
+    /**
+     * Require the store permission from the activity.
+     */
     private fun requireStoragePermission(grantedBlock: (() -> Unit)? = null) {
         if (ActivityCompat.checkSelfPermission(context, WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
             grantedBlock?.invoke()
