@@ -26,6 +26,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.view.View
 import androidx.annotation.StyleRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import androidx.lifecycle.Lifecycle
@@ -41,6 +42,7 @@ import com.no1.taiwan.stationmusicfm.entities.MusicEncoder
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.PlaylistInfoToBottomEntityPMapper
 import com.no1.taiwan.stationmusicfm.internal.di.Dispatcher
+import com.no1.taiwan.stationmusicfm.kits.dialogs.AlbumInfoDialog
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.file.FilePathFactory
 import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
@@ -63,6 +65,10 @@ class MusicOptionsBottomSheetDialog(
     private val player: MusicPlayer by instance()
     private val playlistBottomSheet by lazy {
         BottomSheetFactory.createAddPlaylist(activity)
+    }
+    private val infoDialog by lazy {
+        AlbumInfoDialog.createDialog(activity as AppCompatActivity) { view, dialog ->
+        }
     }
     private val act by WeakRef(activity)
     var songEntity by WeakRef<MusicEncoder>()
@@ -101,6 +107,7 @@ class MusicOptionsBottomSheetDialog(
             playlistBottomSheet.show()
         }
         find<View>(R.id.ftv_music_info).setOnClickListener {
+            infoDialog?.show()
             dismiss()
         }
         find<View>(R.id.ftv_music_delete).setOnClickListener {
