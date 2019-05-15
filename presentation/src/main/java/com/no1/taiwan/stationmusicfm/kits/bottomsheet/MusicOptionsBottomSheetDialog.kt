@@ -67,6 +67,7 @@ class MusicOptionsBottomSheetDialog(
         BottomSheetFactory.createAddPlaylist(activity)
     }
     private val infoDialog by lazy {
+        TODO("Not finished yet! sorry")
         AlbumInfoDialog.createDialog(activity as AppCompatActivity) { view, dialog ->
         }
     }
