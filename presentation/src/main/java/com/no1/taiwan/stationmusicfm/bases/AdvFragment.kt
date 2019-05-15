@@ -33,6 +33,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.isNull
+import com.google.android.material.snackbar.Snackbar
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.isDefault
@@ -123,7 +124,10 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     override fun hideRetry() = parent.hideRetryView()
 
     @UiThread
-    override fun showError(message: String) = parent.showErrorView(message)
+    override fun showError(message: String) = if (enableDialogLoading)
+        view?.let { Snackbar.make(it, "Error happened!", Snackbar.LENGTH_SHORT).show() } ?: Unit
+    else
+        parent.showErrorView(message)
     //endregion
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
