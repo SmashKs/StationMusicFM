@@ -65,7 +65,7 @@ object Versions {
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.1.2"
         const val dialog = "1.0.7"
-        const val lottie = "3.0.1"
+        const val lottie = "3.0.2"
         const val easyPermission = "3.0.0"
     }
 
@@ -151,7 +151,7 @@ object Versions {
      */
     object Parser {
         const val gson = "2.8.5"
-        const val jsoup = "1.10.3"
+        const val jsoup = Network.jsoup
     }
 
     /**
