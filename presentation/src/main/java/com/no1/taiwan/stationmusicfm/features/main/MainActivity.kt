@@ -88,12 +88,13 @@ open class MainActivity : BaseActivity() {
                 if (it.itemId == selectedItemId) return@setOnNavigationItemSelectedListener false
                 // Pop all fragments from the back stack.
                 while (navigator.popBackStack());
+                // Close the search view bar.
+                searchItem?.collapseActionView()
                 // Reassign to bottom navigation view.
                 // If we wanna use animation when changing to other navigation page.
                 NavigationUI.onNavDestinationSelected(it, navigator)
             }
         }
-        android.R.color.transparent
     }
 
     override fun provideLayoutId() = R.layout.activity_main
