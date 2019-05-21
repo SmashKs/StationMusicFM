@@ -102,7 +102,7 @@ open class MainActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.action_bar_menu, menu)
         searchItem = menu.findItem(R.id.menu_search)
-        searchItem?.isVisible = true
+        searchItem?.isVisible = false
         searchViewSetting()
         return super.onCreateOptionsMenu(menu)
     }

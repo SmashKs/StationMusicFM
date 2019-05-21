@@ -111,9 +111,7 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
         parent.showLoadingView()
 
     @UiThread
-    override fun hideLoading() = if (enableDialogLoading) {
-        loadingView?.dialog?.dismiss() ?: Unit
-    }
+    override fun hideLoading() = if (enableDialogLoading) loadingView?.dialog?.dismiss() ?: Unit
     else
         parent.hideLoadingView()
 
