@@ -63,7 +63,7 @@ object Versions {
     object ViewComponent {
         const val adaptiveRecyclerView = "1.0.16"
         const val shapeOfView = "1.4.7"
-        const val realtimeBlur = "1.1.2"
+        const val realtimeBlur = "1.2.0"
         const val dialog = "1.0.7"
         const val lottie = "3.0.3"
         const val easyPermission = "3.0.0"
@@ -133,7 +133,7 @@ object Versions {
         const val okhttp3 = "3.14.1"
         const val okhttpProfiler = "1.0.5"
         const val activityLauncher = "1.0.2"
-        const val jsoup = "1.11.3"
+        const val jsoup = "1.12.1"
     }
 
     /**
