@@ -43,7 +43,6 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class SplashActivity : BaseActivity() {
     private val workManager: WorkManager by instance()
-    private val parserRequest by lazy { WorkerRequestFactory.getWorkerRequest(WorkerRequestFactory.WORKER_CHART_CHECKER) }
     private var counter = AtomicInteger(0)
     private var workersSize = 0
 
@@ -55,36 +54,38 @@ class SplashActivity : BaseActivity() {
         listOf("santio_regular.otf", "santio_bold.otf")
             .forEach { TypeFaceProvider.getTypeFace(applicationContext, it) }
 
-        observeNonNull(workManager.getWorkInfoByIdLiveData(parserRequest.id)) {
-            if (state.isFinished) {
-                when (state) {
-                    WorkInfo.State.FAILED -> {
-                        resources.getStringArray(R.array.chart_rank)
-                            .apply { workersSize = size }
-                            .asSequence()
-                            .map { it.split("|") }  // Split the data to a list by "|".
-                            .map {
-                                Data.Builder().putInt(ARGUMENT_DATA_ID, it[0].toInt())
-                                    .putString(ARGUMENT_DATA_TITLE, it[1]).putString(ARGUMENT_DATA_UPDATE, it[2])
-                                    .build()
-                            }  // Build data for the workers' parameter.
-                            .map { OneTimeWorkRequestBuilder<PrefetchChartWorker>().setInputData(it).build() }
-                            .forEach {
-                                // Observe all workers process.
-                                observeNonNull(workManager.getWorkInfoByIdLiveData(it.id)) {
-                                    if (state.isFinished) {
-                                        counter.incrementAndGet()
-                                        if (counter.get() == workersSize) {
-                                            gotoMainMusic()
+        observeNonNull(workManager.getWorkInfosByTagLiveData(WorkerRequestFactory.WORKER_CHART_CHECKER)) {
+            firstOrNull()?.run {
+                if (state.isFinished) {
+                    when (state) {
+                        WorkInfo.State.FAILED -> {
+                            resources.getStringArray(R.array.chart_rank)
+                                .apply { workersSize = size }
+                                .asSequence()
+                                .map { it.split("|") }  // Split the data to a list by "|".
+                                .map {
+                                    Data.Builder().putInt(ARGUMENT_DATA_ID, it[0].toInt())
+                                        .putString(ARGUMENT_DATA_TITLE, it[1]).putString(ARGUMENT_DATA_UPDATE, it[2])
+                                        .build()
+                                }  // Build data for the workers' parameter.
+                                .map { OneTimeWorkRequestBuilder<PrefetchChartWorker>().setInputData(it).build() }
+                                .forEach {
+                                    // Observe all workers process.
+                                    observeNonNull(workManager.getWorkInfoByIdLiveData(it.id)) {
+                                        if (state.isFinished) {
+                                            counter.incrementAndGet()
+                                            if (counter.get() == workersSize) {
+                                                gotoMainMusic()
+                                            }
                                         }
                                     }
+                                    // Put them into queue for processing.
+                                    workManager.enqueue(it)
                                 }
-                                // Put them into queue for processing.
-                                workManager.enqueue(it)
-                            }
+                        }
+                        WorkInfo.State.SUCCEEDED -> gotoMainMusic()
+                        else -> toast("Something wrong with your phone, please relaunch app again.")
                     }
-                    WorkInfo.State.SUCCEEDED -> gotoMainMusic()
-                    else -> toast("Something wrong with your phone, please relaunch app again.")
                 }
             }
         }
