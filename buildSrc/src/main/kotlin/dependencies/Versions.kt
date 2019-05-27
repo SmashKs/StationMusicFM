@@ -63,7 +63,7 @@ object Versions {
     object ViewComponent {
         const val adaptiveRecyclerView = "1.0.16"
         const val shapeOfView = "1.4.7"
-        const val realtimeBlur = "1.2"
+        const val realtimeBlur = "1.2.1"
         const val dialog = "1.0.7"
         const val lottie = "3.0.3"
         const val easyPermission = "3.0.0"
@@ -75,7 +75,7 @@ object Versions {
     object KotlinAndroidExt {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
-        const val kinfer = "2.1.10"
+        const val kinfer = "2.1.11"
         const val ktx = "1.2.0-alpha01"
         const val fragmentKtx = "1.1.0-alpha09"
         const val paletteKtx = "1.0.0"
@@ -95,7 +95,7 @@ object Versions {
      * Related dependency injection lib version.
      */
     object DI {
-        const val kodein = "6.2.0"
+        const val kodein = "6.2.1"
     }
 
     /**
@@ -167,7 +167,7 @@ object Versions {
         const val mockitoKotlin = "2.1.0"
         const val mockitoAndroid = "2.23.0"
         const val mockk = "v1.8.9.kotlin13"
-        const val byteBuddy = "1.9.12"
+        const val byteBuddy = "1.9.13"
     }
 
     /**
