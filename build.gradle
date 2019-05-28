@@ -47,6 +47,10 @@ plugins {
     id("com.github.ben-manes.versions").version("0.21.0")
 }
 
+dependencies {
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:${deteckt_version}"
+}
+
 subprojects {
     apply {
         plugin("io.gitlab.arturbosch.detekt")
