@@ -25,7 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.hwangjr.rxbus.RxBus
-import com.no1.taiwan.stationmusicfm.ktx.acc.lifecycle.ActivityLifeRegister
+import com.no1.taiwan.stationmusicfm.ktx.aac.lifecycle.ActivityLifeRegister
 
 class BusActLifeRegister(activity: AppCompatActivity) : ActivityLifeRegister<AppCompatActivity>(activity) {
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

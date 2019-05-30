@@ -26,7 +26,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
-import com.no1.taiwan.stationmusicfm.ktx.acc.lifecycle.FragmentLifeRegister
+import com.no1.taiwan.stationmusicfm.ktx.aac.lifecycle.FragmentLifeRegister
 import org.jetbrains.anko.support.v4.find
 
 class RestorePositionLifeRegister(

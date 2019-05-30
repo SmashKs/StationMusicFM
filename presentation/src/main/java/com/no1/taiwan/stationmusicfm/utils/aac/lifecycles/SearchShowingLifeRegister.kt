@@ -30,7 +30,7 @@ import com.devrapid.kotlinknifer.toDrawable
 import com.no1.taiwan.stationmusicfm.MusicApp
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
-import com.no1.taiwan.stationmusicfm.ktx.acc.lifecycle.FragmentLifeRegister
+import com.no1.taiwan.stationmusicfm.ktx.aac.lifecycle.FragmentLifeRegister
 
 class SearchShowingLifeRegister(fragment: Fragment) : FragmentLifeRegister<Fragment>(fragment) {
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

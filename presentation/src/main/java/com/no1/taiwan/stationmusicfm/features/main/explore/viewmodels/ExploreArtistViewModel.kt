@@ -51,7 +51,7 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEn
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity.MusicEntity
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 import com.no1.taiwan.stationmusicfm.features.ArtistMixInfo
-import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.TransformedLiveData
+import com.no1.taiwan.stationmusicfm.ktx.aac.livedata.TransformedLiveData
 import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel

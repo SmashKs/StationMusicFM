@@ -88,7 +88,7 @@ object Versions {
 
     object AndroidArchitectureComponent {
         const val aacLifecycle = "2.2.0-alpha01"
-        const val room = "2.1.0-beta01"
+        const val room = "2.1.0-rc01"
     }
 
     /**

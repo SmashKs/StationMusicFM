@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.ktx.acc.livedata
+package com.no1.taiwan.stationmusicfm.ktx.aac.livedata
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LifecycleOwner

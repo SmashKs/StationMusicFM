@@ -19,10 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.ktx.acc.livedata
+package com.no1.taiwan.stationmusicfm.ktx.aac.lifecycle
 
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleObserver
+import com.devrapid.kotlinknifer.SoftRef
 
-interface SilentHook<T> {
-    fun beSilent(observer: Observer<in T>)
+abstract class ActivityLifeRegister<A : AppCompatActivity>(activity: A) : LifecycleObserver {
+    protected val act by SoftRef(activity)
+
+    init {
+        act?.lifecycle?.addObserver(this)
+    }
 }

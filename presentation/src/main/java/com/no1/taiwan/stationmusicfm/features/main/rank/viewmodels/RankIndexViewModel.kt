@@ -28,7 +28,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.RankingIds
 import com.no1.taiwan.stationmusicfm.features.RankingIdsForChart
-import com.no1.taiwan.stationmusicfm.ktx.acc.livedata.TransformedLiveData
+import com.no1.taiwan.stationmusicfm.ktx.aac.livedata.TransformedLiveData
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
