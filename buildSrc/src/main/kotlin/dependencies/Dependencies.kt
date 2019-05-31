@@ -65,6 +65,8 @@ object Dependencies {
         "paletteKtx" to Deps.Presentation.paletteKtx,
         "collectionKtx" to Deps.Presentation.collectionKtx,
         "viewmodelKtx" to Deps.Presentation.viewmodelKtx,
+        "livedataKtx" to Deps.Presentation.livedataKtx,
+        "runtimeKtx" to Deps.Presentation.runtimeKtx,
         "navigationCommonKtx" to Deps.Presentation.navigationCommonKtx,
         "navigationFragmentKtx" to Deps.Presentation.navigationFragmentKtx,
         "navigationUiKtx" to Deps.Presentation.navigationUiKtx,

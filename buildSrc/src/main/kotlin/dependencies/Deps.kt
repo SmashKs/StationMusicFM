@@ -142,6 +142,8 @@ object Deps {
         const val paletteKtx = "androidx.palette:palette-ktx:${Versions.KotlinAndroidExt.paletteKtx}"
         const val collectionKtx = "androidx.collection:collection-ktx:${Versions.KotlinAndroidExt.collectionKtx}"
         const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.KotlinAndroidExt.viewmodelKtx}"
+        const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.KotlinAndroidExt.viewmodelKtx}"
+        const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.KotlinAndroidExt.viewmodelKtx}"
         const val navigationCommonKtx =
             "androidx.navigation:navigation-common-ktx:${Versions.KotlinAndroidExt.navigationKtx}"
         const val navigationFragmentKtx =
