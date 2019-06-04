@@ -65,7 +65,7 @@ object Versions {
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.2.1"
         const val dialog = "1.0.7"
-        const val lottie = "3.0.3"
+        const val lottie = "3.0.6"
         const val easyPermission = "3.0.0"
     }
 
@@ -158,10 +158,10 @@ object Versions {
      * Related Android unit test lib version.
      */
     object Test {
-        const val jUnit = "1.1.0"
+        const val jUnit = "1.1.1"
         const val assertK = "0.14"
-        const val runner = "1.1.1"
-        const val espresso = "3.1.1"
+        const val runner = "1.2.0"
+        const val espresso = "3.2.0"
         const val kakao = "2.0.0"
         const val powerMockito = "1.7.4"
         const val mockitoKotlin = "2.1.0"
