@@ -51,7 +51,7 @@ object Deps {
      * The necessary unit test libs for all modules.
      */
     object GlobalTest {
-        const val junitCore = "androidx.test:core:${Versions.Test.jUnit}"
+        const val junitCore = "androidx.test:core:${Versions.Test.core}"
         const val junit = "androidx.test.ext:junit:${Versions.Test.jUnit}"
         const val kotlin = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.Kotlin.kotlinLib}"
 

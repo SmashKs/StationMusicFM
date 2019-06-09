@@ -39,14 +39,14 @@ object Versions {
      * Related Android component lib version.
      */
     object AndroidComponent {
-        const val material = "1.1.0-alpha06"
+        const val material = "1.1.0-alpha07"
         const val androidx = "1.0.0"
-        const val annotation = "1.1.0-rc01"
-        const val appCompat = "1.1.0-alpha05"
+        const val annotation = "1.1.0"
+        const val appCompat = "1.1.0-beta01"
         const val cardView = androidx
         const val recyclerView = appCompat
         const val constraintLayout = "2.0.0-beta1"
-        const val coordinatorLayout = "1.1.0-alpha01"
+        const val coordinatorLayout = "1.1.0-beta01"
     }
 
     /**
@@ -77,12 +77,12 @@ object Versions {
         const val anko = "0.10.8"
         const val kinfer = "2.1.11"
         const val ktx = "1.2.0-alpha01"
-        const val fragmentKtx = "1.1.0-alpha09"
+        const val fragmentKtx = "1.1.0-beta01"
         const val paletteKtx = "1.0.0"
-        const val collectionKtx = "1.1.0-rc01"
+        const val collectionKtx = "1.1.0"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
-        const val navigationKtx = "2.1.0-alpha04"
-        const val workKtx = "2.1.0-alpha02"
+        const val navigationKtx = "2.1.0-alpha05"
+        const val workKtx = "2.1.0-alpha03"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
@@ -120,7 +120,7 @@ object Versions {
     object Database {
         const val debug = "1.5.1"
         const val debugDb = "1.0.6"
-        const val mmkv = "1.0.19"
+        const val mmkv = "1.0.21"
     }
 
     /**
@@ -128,7 +128,7 @@ object Versions {
      */
     object Network {
         const val glide = "4.9.0"
-        const val retrofit2 = "2.5.0"
+        const val retrofit2 = "2.6.0"
         const val adapterCoroutine = "0.9.2"
         const val okhttp3 = "3.14.1"
         const val okhttpProfiler = "1.0.5"
@@ -159,6 +159,7 @@ object Versions {
      */
     object Test {
         const val jUnit = "1.1.1"
+        const val core = "1.2.0"
         const val assertK = "0.14"
         const val runner = "1.2.0"
         const val espresso = "3.2.0"
@@ -174,7 +175,7 @@ object Versions {
      * Related extension Plugins lib version.
      */
     object Plugin {
-        const val detekt = "1.0.0-RC14"
+        const val detekt = "1.0.0-RC15"
         const val versionUpdater = "0.20.0"
     }
 
