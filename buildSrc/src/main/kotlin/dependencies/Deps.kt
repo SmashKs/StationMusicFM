@@ -101,7 +101,6 @@ object Deps {
         // Internet
         const val retrofit2 = Data.retrofit2
         const val retrofit2Gson = Data.retrofit2ConverterGson
-        const val retrofit2Courtine = Data.retrofit2AdapterCoroutine
         const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Network.okhttp3}"
         const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.Network.okhttp3}"
         const val jsoup = "org.jsoup:jsoup:${Versions.Network.jsoup}"
@@ -187,8 +186,6 @@ object Deps {
         // Internet
         const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.Network.retrofit2}"
         const val retrofit2ConverterGson = "com.squareup.retrofit2:converter-gson:${Versions.Network.retrofit2}"
-        const val retrofit2AdapterCoroutine =
-            "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.Network.adapterCoroutine}"
         // Database
         const val room = "androidx.room:room-runtime:${Versions.AndroidArchitectureComponent.room}"
         const val roomKtx = "androidx.room:room-ktx:${Versions.AndroidArchitectureComponent.room}"

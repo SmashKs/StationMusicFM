@@ -56,7 +56,7 @@ class RemoteDataStore(
 
     //region 🔽 Music Bank
     override suspend fun getMusicRanking(parameterable: Parameterable) =
-        musicBankService.retrieveMusicRanking(parameterable.toApiParam()).await()
+        musicBankService.retrieveMusicRanking(parameterable.toApiParam())
 
     override suspend fun getMusic(parameterable: Parameterable): MusicInfoData {
         val queries = parameterable.toApiParam().apply {
@@ -64,78 +64,78 @@ class RemoteDataStore(
             put(BuildConfig.query2, BuildConfig.param2)
         }
 
-        return seekerBankService.retrieveSearchMusic(queries).await()
+        return seekerBankService.retrieveSearchMusic(queries)
     }
 
     override suspend fun getHotPlaylist(parameterable: Parameterable) =
-        musicBankService.retrieveHotPlaylist(parameterable.toApiParam()).await()
+        musicBankService.retrieveHotPlaylist(parameterable.toApiParam())
 
     override suspend fun getSongList(parameterable: Parameterable) =
-        musicBankService.retrieveSongList(parameterable.toApiParam()).await()
+        musicBankService.retrieveSongList(parameterable.toApiParam())
     //endregion
 
     //region 🔽 Last Fm
     override suspend fun getAlbumInfo(parameterable: Parameterable) =
         lastFmService.retrieveAlbumInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                           Constants.LASTFM_PARAM_ALBUM_GET_INFO)).await()
+                                                           Constants.LASTFM_PARAM_ALBUM_GET_INFO))
 
     override suspend fun getArtistInfo(parameterable: Parameterable) =
         lastFmService.retrieveArtistInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                            Constants.LASTFM_PARAM_ARTIST_GET_INFO)).await()
+                                                            Constants.LASTFM_PARAM_ARTIST_GET_INFO))
 
     override suspend fun getArtistTopAlbum(parameterable: Parameterable) =
         lastFmService.retrieveArtistTopAlbum(combineLastFmQuery(parameterable.toApiParam(),
-                                                                Constants.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS)).await()
+                                                                Constants.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS))
 
     override suspend fun getArtistTopTrack(parameterable: Parameterable) =
         lastFmService.retrieveArtistTopTrack(combineLastFmQuery(parameterable.toApiParam(),
-                                                                Constants.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS)).await()
+                                                                Constants.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS))
 
     override suspend fun getSimilarArtistInfo(parameterable: Parameterable) =
         lastFmService.retrieveSimilarArtistInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                                   Constants.LASTFM_PARAM_ARTIST_GET_SIMILAR)).await()
+                                                                   Constants.LASTFM_PARAM_ARTIST_GET_SIMILAR))
 
     override suspend fun getArtistPhotosInfo(parameterable: Parameterable) = let {
         val artistName = cast<String>(parameterable.toApiAnyParam()[ArtistParams.PARAM_NAME_ARTIST])
         val page = cast<Int>(parameterable.toApiAnyParam()[BaseWithPagingParams.PARAM_NAME_PAGE])
-        lastFmExtraService.retrieveArtistPhotosInfo(artistName, page).await()
+        lastFmExtraService.retrieveArtistPhotosInfo(artistName, page)
     }
 
     override suspend fun getTrackInfo(parameterable: Parameterable) =
         lastFmService.retrieveTrackInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                           Constants.LASTFM_PARAM_TRACK_INFO)).await()
+                                                           Constants.LASTFM_PARAM_TRACK_INFO))
 
     override suspend fun getSimilarTrackInfo(parameterable: Parameterable) =
         lastFmService.retrieveSimilarTrackInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                                  Constants.LASTFM_PARAM_TRACK_GET_SIMILAR)).await()
+                                                                  Constants.LASTFM_PARAM_TRACK_GET_SIMILAR))
 
     override suspend fun getChartTopTrack(parameterable: Parameterable) =
         lastFmService.retrieveChartTopTrack(combineLastFmQuery(parameterable.toApiParam(),
-                                                               Constants.LASTFM_PARAM_CHART_GET_TOP_TRACKS)).await()
+                                                               Constants.LASTFM_PARAM_CHART_GET_TOP_TRACKS))
 
     override suspend fun getChartTopArtist(parameterable: Parameterable) =
         lastFmService.retrieveChartTopArtist(combineLastFmQuery(parameterable.toApiParam(),
-                                                                Constants.LASTFM_PARAM_CHART_GET_TOP_ARTISTS)).await()
+                                                                Constants.LASTFM_PARAM_CHART_GET_TOP_ARTISTS))
 
     override suspend fun getChartTopTag(parameterable: Parameterable) =
         lastFmService.retrieveChartTopTag(combineLastFmQuery(parameterable.toApiParam(),
-                                                             Constants.LASTFM_PARAM_CHART_GET_TOP_TAGS)).await()
+                                                             Constants.LASTFM_PARAM_CHART_GET_TOP_TAGS))
 
     override suspend fun getTagInfo(parameterable: Parameterable) =
         lastFmService.retrieveTagInfo(combineLastFmQuery(parameterable.toApiParam(),
-                                                         Constants.LASTFM_PARAM_TAG_GET_INFO)).await()
+                                                         Constants.LASTFM_PARAM_TAG_GET_INFO))
 
     override suspend fun getTagTopAlbum(parameterable: Parameterable) =
         lastFmService.retrieveTagTopAlbum(combineLastFmQuery(parameterable.toApiParam(),
-                                                             Constants.LASTFM_PARAM_TAG_GET_TOP_ALBUMS)).await()
+                                                             Constants.LASTFM_PARAM_TAG_GET_TOP_ALBUMS))
 
     override suspend fun getTagTopArtist(parameterable: Parameterable) =
         lastFmService.retrieveTagTopArtist(combineLastFmQuery(parameterable.toApiParam(),
-                                                              Constants.LASTFM_PARAM_TAG_GET_TOP_ARTISTS)).await()
+                                                              Constants.LASTFM_PARAM_TAG_GET_TOP_ARTISTS))
 
     override suspend fun getTagTopTrack(parameterable: Parameterable) =
         lastFmService.retrieveTagTopTrack(combineLastFmQuery(parameterable.toApiParam(),
-                                                             Constants.LASTFM_PARAM_TAG_GET_TOP_TRACKS)).await()
+                                                             Constants.LASTFM_PARAM_TAG_GET_TOP_TRACKS))
     //endregion
 
     private fun combineLastFmQuery(query: Fields, method: String) = query.apply {

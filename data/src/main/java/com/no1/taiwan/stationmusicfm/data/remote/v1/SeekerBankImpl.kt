@@ -26,15 +26,11 @@ import com.no1.taiwan.stationmusicfm.data.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
 import com.no1.taiwan.stationmusicfm.data.remote.services.SeekerBankService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import okhttp3.HttpUrl
 import org.jsoup.Jsoup
 
 class SeekerBankImpl : SeekerBankService {
-    override fun retrieveSearchMusic(queries: Map<String, String>): Deferred<MusicInfoData> {
+    override suspend fun retrieveSearchMusic(queries: Map<String, String>): MusicInfoData {
         val domainUrl = "${MusicSeekerConfig().apiBaseUrl}${MusicSeekerConfig.API_REQUEST}"
         val httpUrl = HttpUrl.parse(domainUrl)?.newBuilder()?.apply {
             queries.forEach { (k, v) -> addQueryParameter(k, v) }
@@ -46,8 +42,6 @@ class SeekerBankImpl : SeekerBankService {
 
         val doc = Jsoup.connect(httpUrl.toString()).get()
 
-        return CoroutineScope(Dispatchers.IO).async {
-            Gson().fromJson<MusicInfoData>(doc.text(), MusicInfoData::class.java)
-        }
+        return Gson().fromJson(doc.text(), MusicInfoData::class.java)
     }
 }

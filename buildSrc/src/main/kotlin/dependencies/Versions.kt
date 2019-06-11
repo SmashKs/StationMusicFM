@@ -129,7 +129,6 @@ object Versions {
     object Network {
         const val glide = "4.9.0"
         const val retrofit2 = "2.6.0"
-        const val adapterCoroutine = "0.9.2"
         const val okhttp3 = "3.14.1"
         const val okhttpProfiler = "1.0.5"
         const val activityLauncher = "1.0.2"

@@ -25,7 +25,6 @@ import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
 import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
-import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
 
@@ -35,15 +34,15 @@ import retrofit2.http.QueryMap
  */
 interface MusicBankService {
     @GET("${RankingConfig.API_REQUEST}/rank_song_list")
-    fun retrieveMusicRanking(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
+    suspend fun retrieveMusicRanking(@QueryMap queries: Map<String, String>): MusicInfoData
 
     @GET("${RankingConfig.API_REQUEST}/search")
     @Deprecated("Seeker Bank is better for searching more sources.")
-    fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
+    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoData
 
     @GET("${RankingConfig.API_REQUEST}/hot_song_list")
-    fun retrieveHotPlaylist(@QueryMap queries: Map<String, String>): Deferred<HotPlaylistData>
+    suspend fun retrieveHotPlaylist(@QueryMap queries: Map<String, String>): HotPlaylistData
 
     @GET("${RankingConfig.API_REQUEST}/song_list")
-    fun retrieveSongList(@QueryMap queries: Map<String, String>): Deferred<SongListInfoData>
+    suspend fun retrieveSongList(@QueryMap queries: Map<String, String>): SongListInfoData
 }

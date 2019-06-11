@@ -24,7 +24,6 @@ package com.no1.taiwan.stationmusicfm.internal.di
 import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.no1.taiwan.stationmusicfm.BuildConfig
 import com.no1.taiwan.stationmusicfm.data.hasNetwork
 import okhttp3.Cache
@@ -34,7 +33,6 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
-import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -48,7 +46,6 @@ object NetModule {
 
     fun netProvider(context: Context) = Kodein.Module("Network") {
         bind<Converter.Factory>() with singleton { GsonConverterFactory.create(instance()) }
-        bind<CallAdapter.Factory>() with singleton { CoroutineCallAdapterFactory() }
         bind<Cache>() with singleton { Cache(context.cacheDir, CacheMaxSize /* 10 MiB */) }
         bind<OkHttpClient.Builder>() with singleton {
             OkHttpClient.Builder()
@@ -106,7 +103,6 @@ object NetModule {
         bind<Retrofit.Builder>() with singleton {
             Retrofit.Builder()
                 .addConverterFactory(instance())
-                .addCallAdapterFactory(instance())
                 .client(instance<OkHttpClient.Builder>().build())
         }
     }

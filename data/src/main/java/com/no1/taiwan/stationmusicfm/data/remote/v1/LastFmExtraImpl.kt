@@ -23,9 +23,6 @@ package com.no1.taiwan.stationmusicfm.data.remote.v1
 
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistPhotosData
 import com.no1.taiwan.stationmusicfm.data.remote.services.LastFmExtraService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import org.jsoup.Jsoup
 
 class LastFmExtraImpl : LastFmExtraService {
@@ -36,7 +33,7 @@ class LastFmExtraImpl : LastFmExtraService {
         private const val LASTFM_IMAGE_URL = "https://lastfm-img2.akamaized.net/i/u/770x0/%s.jpg"
     }
 
-    override fun retrieveArtistPhotosInfo(artistName: String, page: Int) = CoroutineScope(Dispatchers.IO).async {
+    override suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosData {
         val doc = Jsoup.connect("$LASTFM_DOMAIN$artistName$LASTFM_IMAGE_REQUEST?page=$page").get()
 
         val hasNext = doc.select("li.pagination-next").select("a").toString().isNotBlank()
@@ -45,6 +42,6 @@ class LastFmExtraImpl : LastFmExtraService {
             .map { it.split("/").last() }
             .map { ArtistPhotosData.ArtistPhotoData(LASTFM_IMAGE_URL.format(it), it) }
 
-        ArtistPhotosData(photos, hasNext)
+        return ArtistPhotosData(photos, hasNext)
     }
 }

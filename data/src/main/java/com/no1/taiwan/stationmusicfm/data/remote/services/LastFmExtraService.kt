@@ -22,7 +22,6 @@
 package com.no1.taiwan.stationmusicfm.data.remote.services
 
 import com.no1.taiwan.stationmusicfm.data.data.lastfm.ArtistPhotosData
-import kotlinx.coroutines.Deferred
 
 /**
  * We will implement those them by [org.jsoup.Jsoup] because we can't use api from
@@ -30,5 +29,5 @@ import kotlinx.coroutines.Deferred
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
 interface LastFmExtraService {
-    fun retrieveArtistPhotosInfo(artistName: String, page: Int): Deferred<ArtistPhotosData>
+    suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosData
 }

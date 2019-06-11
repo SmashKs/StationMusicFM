@@ -99,15 +99,12 @@ dependencies {
 
     //region Internet & ImageData loading
     implementation(dependencies.Deps.Data.retrofit2)
-    implementation(dependencies.Deps.Data.retrofit2AdapterCoroutine) {
-        exclude(group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-core")
-    }
-    //endregion
-
-    //region Firebase
-    //implementation(dependencies.Deps.Data.firebaseDB)
-    //endregion
 }
+//endregion
+
+//region Firebase
+//implementation(dependencies.Deps.Data.firebaseDB)
+//endregion
 
 // Get a variable from local.properties.
 def getProps(String propName) {

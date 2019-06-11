@@ -23,7 +23,6 @@ package com.no1.taiwan.stationmusicfm.data.remote.services
 
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
 import com.no1.taiwan.stationmusicfm.data.remote.config.MusicSeekerConfig
-import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
 
@@ -33,5 +32,5 @@ import retrofit2.http.QueryMap
  */
 interface SeekerBankService {
     @GET(MusicSeekerConfig.API_REQUEST)
-    fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): Deferred<MusicInfoData>
+    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoData
 }
