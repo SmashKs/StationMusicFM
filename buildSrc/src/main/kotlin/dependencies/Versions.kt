@@ -53,7 +53,7 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.40-eap-67"
+        const val kotlinLib = "1.3.40-eap-105"
         const val kotlinCoroutine = "1.2.1"
     }
 
@@ -76,19 +76,19 @@ object Versions {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
         const val kinfer = "2.1.11"
-        const val ktx = "1.2.0-alpha01"
+        const val ktx = "1.2.0-alpha02"
         const val fragmentKtx = "1.1.0-beta01"
         const val paletteKtx = "1.0.0"
         const val collectionKtx = "1.1.0"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
         const val navigationKtx = "2.1.0-alpha05"
-        const val workKtx = "2.1.0-alpha03"
+        const val workKtx = "2.1.0-beta01"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
     object AndroidArchitectureComponent {
         const val aacLifecycle = "2.2.0-alpha01"
-        const val room = "2.1.0-rc01"
+        const val room = "2.1.0"
     }
 
     /**
@@ -120,7 +120,7 @@ object Versions {
     object Database {
         const val debug = "1.5.1"
         const val debugDb = "1.0.6"
-        const val mmkv = "1.0.21"
+        const val mmkv = "1.0.22"
     }
 
     /**
