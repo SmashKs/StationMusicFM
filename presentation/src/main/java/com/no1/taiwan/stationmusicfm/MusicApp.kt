@@ -30,6 +30,10 @@ import com.no1.taiwan.stationmusicfm.services.WorkerRequestFactory
 import com.tencent.mmkv.MMKV
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidFileProperties
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 /**
  * Android Main Application
@@ -59,11 +63,21 @@ class MusicApp : MultiDexApplication(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+        // Start Koin
+        startKoin {
+            // use AndroidLogger as Koin Logger - default Level.INFO
+            androidLogger()
+            // use the Android context given there
+            androidContext(this@MusicApp)
+            // load properties from assets/koin.properties file
+            androidFileProperties()
+        }
         workManager.enqueue(initRequest)
         workManager.enqueue(parserRequest)
         workManager.enqueue(initDataRequest)
         // Special initial.
         MMKV.initialize(applicationContext)
         MmkvPrefs.setPrefSettings()
+
     }
 }

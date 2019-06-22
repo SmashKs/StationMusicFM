@@ -45,6 +45,7 @@ import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
+import org.koin.dsl.module
 
 /**
  * To provide the necessary objects into the repository.
@@ -89,5 +90,9 @@ object RepositoryModule {
         bind<PlaylistRepository>() with singleton {
             PlaylistDataRepository(instance(LOCAL), instance())
         }
+    }
+
+    val repositoryProvider = module {
+        // The necessary providers are from the service provider.
     }
 }

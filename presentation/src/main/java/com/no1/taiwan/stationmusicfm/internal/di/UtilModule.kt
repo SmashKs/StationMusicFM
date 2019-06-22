@@ -37,6 +37,10 @@ import org.kodein.di.generic.factory
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
+import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
 /**
  * To provide the necessary utility objects for the whole app.
@@ -61,5 +65,27 @@ object UtilModule {
             LinearLayoutManager(context, HORIZONTAL, false)
         }
         bind<GridLayoutManager>() with factory { spanCount: Int -> GridLayoutManager(context, spanCount) }
+    }
+
+    val utilProvider = module {
+        single { WorkManager.getInstance(androidApplication().applicationContext) }
+        single {
+            with(GsonBuilder()) {
+                setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
+                setLenient()
+                create()
+            }
+        }
+
+        // Linear Layout Manager.
+        factory(named(ObjectLabel.LINEAR_LAYOUT_VERTICAL)) {
+            LinearLayoutManager(androidContext(), VERTICAL, false)
+        }
+        factory(named(ObjectLabel.LINEAR_LAYOUT_HORIZONTAL)) {
+            LinearLayoutManager(androidContext(), HORIZONTAL, false)
+        }
+        factory { (spanCount: Int) ->
+            GridLayoutManager(androidContext(), spanCount)
+        }
     }
 }

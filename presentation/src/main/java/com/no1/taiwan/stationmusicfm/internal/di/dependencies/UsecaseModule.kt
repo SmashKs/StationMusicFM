@@ -90,6 +90,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
+import org.koin.dsl.module
 
 /**
  * To provide the necessary usecase objects for the specific activities or fragments.
@@ -143,5 +144,55 @@ object UsecaseModule {
 
     fun delegateProvider() = Kodein.Module("Delegate Use Cases") {
         bind<MakeLocalMusic>() with singleton { MakeLocalMusic(instance()) }
+    }
+
+    val usecaseProvider = module {
+        //region For Fragments
+        single<FetchRankMusicCase> { FetchRankMusicRespCase(get()) }
+        single<FetchSongsCase> { FetchSongsRespCase(get()) }
+        single<FetchMusicCase> { FetchMusicRespCase(get()) }
+        single<FetchHotListCase> { FetchHotListRespCase(get()) }
+        single<AddRankIdsCase> { AddRankIdsRespCase(get()) }
+        single<FetchRankIdsCase> { FetchRankIdsRespCase(get()) }
+        single<UpdateRankItemCase> { UpdateRankItemRespCase(get()) }
+        //endregion
+
+        //region LastFm
+        single<FetchAlbumCase> { FetchAlbumRespCase(get()) }
+        single<FetchArtistCase> { FetchArtistRespCase(get()) }
+        single<FetchArtistPhotoCase> { FetchArtistPhotoRespCase(get()) }
+        single<FetchArtistTopAlbumCase> { FetchArtistTopAlbumRespCase(get()) }
+        single<FetchArtistTopTrackCase> { FetchArtistTopTrackRespCase(get()) }
+        single<FetchChartTopArtistCase> { FetchChartTopArtistRespCase(get()) }
+        single<FetchChartTopTagCase> { FetchChartTopTagRespCase(get()) }
+        single<FetchChartTopTrackCase> { FetchChartTopTrackRespCase(get()) }
+        single<FetchSimilarArtistCase> { FetchSimilarArtistRespCase(get()) }
+        single<FetchSimilarTrackCase> { FetchSimilarTrackRespCase(get()) }
+        single<FetchTagCase> { FetchTagRespCase(get()) }
+        single<FetchTagTopAlbumCase> { FetchTagTopAlbumRespCase(get()) }
+        single<FetchTagTopArtistCase> { FetchTagTopArtistRespCase(get()) }
+        single<FetchTagTopTrackCase> { FetchTagTopTrackRespCase(get()) }
+        single<FetchTrackCase> { FetchTrackRespCase(get()) }
+        //endregion
+
+        //region History
+        single<AddOrUpdateSearchHistCase> { AddOrUpdateSearchHistRespCase(get()) }
+        single<DeleteSearchHistCase> { DeleteSearchHistRespCase(get()) }
+        single<FetchSearchHistsCase> { FetchSearchHistsRespCase(get()) }
+        //endregion
+
+        //region Playlist
+        single<AddOrUpdateLocalMusicCase> { AddOrUpdateLocalMusicRespCase(get()) }
+        single<FetchListenedHistCase> { FetchListenedHistsRespCase(get()) }
+        single<FetchTypeOfHistsCase> { FetchTypeOfHistsRespCase(get()) }
+        single<FetchPlaylistsCase> { FetchPlaylistsRespCase(get()) }
+        single<AddPlaylistsCase> { AddPlaylistsRespCase(get()) }
+        single<UpdatePlaylistsCase> { UpdatePlaylistsRespCase(get()) }
+        single<DeletePlaylistsCase> { DeletePlaylistsRespCase(get()) }
+        //endregion
+    }
+
+    val delegateProvider = module {
+        single { MakeLocalMusic(get()) }
     }
 }

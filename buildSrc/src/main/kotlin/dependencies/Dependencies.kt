@@ -78,4 +78,11 @@ object Dependencies {
         "exoplayer" to Deps.Exoplayer.exoplayer,
         "exoplyerUi" to Deps.Exoplayer.exoplyerUi
     )
+
+    val koin = hashMapOf(
+        "koin" to Deps.Global.koin,
+        "koinScope" to Deps.Global.koinScope,
+        "koinVM" to Deps.Global.koinVM,
+        "koinExt" to Deps.Global.koinExt
+    )
 }

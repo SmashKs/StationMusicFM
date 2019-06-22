@@ -64,8 +64,12 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.inSet
 import org.kodein.di.generic.setBinding
 import org.kodein.di.generic.singleton
+import org.koin.dsl.module
 
 object PresentationMapperModule {
+    val presentationUtilProvider = module {
+    }
+
     /**
      * Import this module for each activity entry, they don't be needed in the beginning.
      */

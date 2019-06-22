@@ -120,6 +120,7 @@ dependencies {
     implementation(dependencies.Deps.Global.kodeinAndroidX) {
         exclude(group: "org.jetbrains.kotlin")
     }
+    implementation(dependencies.Dependencies.koin.values())
     //endregion
 
     //region Rx Bus

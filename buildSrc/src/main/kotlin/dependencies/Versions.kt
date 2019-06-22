@@ -96,6 +96,7 @@ object Versions {
      */
     object DI {
         const val kodein = "6.2.1"
+        const val koin = "2.0.1"
     }
 
     /**

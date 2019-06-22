@@ -44,6 +44,10 @@ import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
+import org.koin.android.ext.koin.androidApplication
+import org.koin.core.context.loadKoinModules
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import retrofit2.Retrofit
 
 /**
@@ -66,12 +70,27 @@ object ServiceModule {
         import(implementationLocalProvider(context))
     }
 
+    fun serviceProvider() =
+        loadKoinModules(listOf(
+            // *** For the [Remote] data module.
+            NetModule.netProvider,
+            firebaseProvider,
+            retrofitConfigProvider,
+            // For remote.
+            implementationRemoteProvider,
+            // For local.
+            implementationLocalProvider))
+
     //region Remote Providers
     /**
      * To provide the necessary objects [FirebaseDatabase] into the repository.
      */
     private fun firebaseProvider() = Module("Firebase") {
         //        bind<FirebaseDatabase>() with instance(FirebaseDatabase.getInstance())
+    }
+
+    private val firebaseProvider = module {
+        // single<FirebaseDatabase> { FirebaseDatabase.getInstance() }
     }
 
     /**
@@ -83,6 +102,13 @@ object ServiceModule {
         bind<MusicSeekerConfig>() with instance(RestfulApiFactory().createMusicSeekerConfig())
         bind<RankingConfig>() with instance(RestfulApiFactory().createRankingConfig())
         bind<MusicConfig>() with instance(RestfulApiFactory().createMusicConfig())
+    }
+
+    private val retrofitConfigProvider = module {
+        single { RestfulApiFactory().createLastFmConfig() }
+        single { RestfulApiFactory().createMusicSeekerConfig() }
+        single { RestfulApiFactory().createRankingConfig() }
+        single { RestfulApiFactory().createMusicConfig() }
     }
 
     /**
@@ -109,7 +135,29 @@ object ServiceModule {
             }.create(SeekerBankService::class.java)
         }
         bind<SeekerBankService>(JSOUP) with instance(SeekerBankImpl())
-//        bind<NewsFirebase>() with singleton { NewsFirebaseImpl(instance()) }
+    }
+
+    private val implementationRemoteProvider = module {
+        single {
+            with(get<Retrofit.Builder>()) {
+                baseUrl(get<LastFmConfig>().apiBaseUrl)
+                build()
+            }.create(LastFmService::class.java)
+        }
+        single<LastFmExtraService> { LastFmExtraImpl() }
+        single {
+            with(get<Retrofit.Builder>()) {
+                baseUrl(get<RankingConfig>().apiBaseUrl)
+                build()
+            }.create(MusicBankService::class.java)
+        }
+        single(named(RETROFIT)) {
+            with(get<Retrofit.Builder>()) {
+                baseUrl(get<MusicSeekerConfig>().apiBaseUrl)
+                build()
+            }.create(SeekerBankService::class.java)
+        }
+        single<SeekerBankService>(named(JSOUP)) { SeekerBankImpl() }
     }
     //endregion
 
@@ -120,6 +168,11 @@ object ServiceModule {
     private fun implementationLocalProvider(context: Context) = Module("Implementation Local") {
         bind<MusicDatabase>() with instance(MusicDatabase.getDatabase(context))
         bind<MMKV>() with singleton { defaultMMKV(SINGLE_PROCESS_MODE, TOKEN_PUBLIC_KEY) }
+    }
+
+    private val implementationLocalProvider = module {
+        single { MusicDatabase.getDatabase(androidApplication().applicationContext) }
+        single<MMKV> { defaultMMKV(SINGLE_PROCESS_MODE, TOKEN_PUBLIC_KEY) }
     }
     //endregion
 }

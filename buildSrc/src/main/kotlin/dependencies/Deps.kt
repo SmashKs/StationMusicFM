@@ -43,6 +43,11 @@ object Deps {
         const val kodeinCore = "org.kodein.di:kodein-di-core-jvm:${Versions.DI.kodein}"
         const val kodeinAndroidX = "org.kodein.di:kodein-di-framework-android-x:${Versions.DI.kodein}"
 
+        const val koin = "org.koin:koin-core:${Versions.DI.koin}"
+        const val koinScope = "org.koin:koin-androidx-scope:${Versions.DI.koin}"
+        const val koinVM = "org.koin:koin-androidx-viewmodel:${Versions.DI.koin}"
+        const val koinExt = "org.koin:koin-androidx-ext:${Versions.DI.koin}"
+
         const val gson = "com.google.code.gson:gson:${Versions.Parser.gson}"
         const val jsoup = "org.jsoup:jsoup:${Versions.Parser.jsoup}"
     }

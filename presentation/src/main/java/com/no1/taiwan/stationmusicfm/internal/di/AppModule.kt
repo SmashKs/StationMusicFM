@@ -29,6 +29,8 @@ import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
+import org.koin.android.ext.koin.androidApplication
+import org.koin.dsl.module
 
 /**
  * To provide the necessary App objects(singleton) for the whole app.
@@ -42,5 +44,10 @@ object AppModule {
     fun appProvider(context: Context) = Kodein.Module("Application Module") {
         bind<MusicPlayer>() with instance(ExoPlayerWrapper(context))
         bind<Bus>() with instance(RxBus.get())
+    }
+
+    val appProvider = module {
+        single<MusicPlayer> { ExoPlayerWrapper(androidApplication()) }
+        single<Bus> { RxBus.get() }
     }
 }
