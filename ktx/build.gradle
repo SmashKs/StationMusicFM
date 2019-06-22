@@ -44,7 +44,6 @@ android {
             splits.density.enable = false
             aaptOptions.cruncherEnabled = false
             minifyEnabled = false
-            testCoverageEnabled = true
             // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
             ext.alwaysUpdateBuildId = false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
