@@ -65,7 +65,7 @@ object Versions {
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.2.1"
         const val dialog = "1.0.7"
-        const val lottie = "3.0.6"
+        const val lottie = "3.0.7"
         const val easyPermission = "3.0.0"
     }
 
@@ -82,7 +82,7 @@ object Versions {
         const val collectionKtx = "1.1.0"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
         const val navigationKtx = "2.1.0-alpha05"
-        const val workKtx = "2.1.0-beta01"
+        const val workKtx = "2.1.0-beta02"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
@@ -180,6 +180,6 @@ object Versions {
     }
 
     object Player {
-        const val exoplayer = "2.10.1"
+        const val exoplayer = "2.10.2"
     }
 }
