@@ -53,7 +53,7 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.40"
+        const val kotlinLib = "1.3.41"
         const val kotlinCoroutine = "1.2.1"
     }
 
@@ -75,7 +75,7 @@ object Versions {
     object KotlinAndroidExt {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
-        const val kinfer = "2.1.11"
+        const val kinfer = "2.1.12"
         const val ktx = "1.2.0-alpha02"
         const val fragmentKtx = "1.1.0-beta01"
         const val paletteKtx = "1.0.0"
@@ -95,7 +95,7 @@ object Versions {
      * Related dependency injection lib version.
      */
     object DI {
-        const val kodein = "6.2.1"
+        const val kodein = "6.3.2"
     }
 
     /**
@@ -174,7 +174,7 @@ object Versions {
      * Related extension Plugins lib version.
      */
     object Plugin {
-        const val detekt = "1.0.0-RC15"
+        const val detekt = "1.0.0-RC16"
         const val versionUpdater = "0.20.0"
     }
 
