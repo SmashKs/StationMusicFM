@@ -25,7 +25,7 @@ import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import com.no1.taiwan.stationmusicfm.BuildConfig
-import com.no1.taiwan.stationmusicfm.data.hasNetwork
+import com.no1.taiwan.stationmusicfm.utils.network.ConnectInterceptor
 import okhttp3.Cache
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
@@ -42,7 +42,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object NetModule {
     private const val CacheMaxSize = 10 * 1024 * 1024L
-    private const val AWeekTime = 60 * 60 * 24 * 7
 
     fun netProvider(context: Context) = Kodein.Module("Network") {
         bind<Converter.Factory>() with singleton { GsonConverterFactory.create(instance()) }
@@ -51,42 +50,8 @@ object NetModule {
             OkHttpClient.Builder()
                 .cache(instance())
                 // Keep the internet result into the cache.
-                .addInterceptor {
-                    // Get the request from the chain.
-                    var request = it.request()
-
-                    /**
-                     *  Leveraging the advantage of using Kotlin,
-                     *  we initialize the request and change its header depending on whether
-                     *  the device is connected to Internet or not.
-                     */
-                    request = if (hasNetwork(context) == true) {
-                        /**
-                         *  If there is Internet, get the cache that was stored 5 seconds ago.
-                         *  If the cache is older than 5 seconds, then discard it,
-                         *  and indicate an error in fetching the response.
-                         *  The 'max-age' attribute is responsible for this behavior.
-                         */
-                        request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
-                    }
-                    else {
-                        /**
-                         *  If there is no Internet, get the cache that was stored 7 days ago.
-                         *  If the cache is older than 7 days, then discard it,
-                         *  and indicate an error in fetching the response.
-                         *  The 'max-stale' attribute is responsible for this behavior.
-                         *  The 'only-if-cached' attribute indicates to not retrieve add data; fetch the cache
-                         *  only instead.
-                         */
-                        request.newBuilder().header("Cache-Control",
-                                                    "public, only-if-cached, max-stale=$AWeekTime").build()
-                    }
-                    // End of if-else statement
-
-                    // Add the modified request to the chain.
-                    it.proceed(request)
-                }
                 .apply {
+                    addInterceptor(ConnectInterceptor(context))
                     if (BuildConfig.DEBUG) {
 //                        addInterceptor(HttpLoggingInterceptor().setLevel(BODY))  // For print to logcat.
                         addInterceptor(OkHttpProfilerInterceptor())  // For OkHttp Profiler plugins.

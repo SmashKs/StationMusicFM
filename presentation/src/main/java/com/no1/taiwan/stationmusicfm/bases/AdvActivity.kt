@@ -28,9 +28,6 @@ import com.devrapid.dialogbuilder.support.QuickDialogFragment
 import com.devrapid.kotlinshaver.cast
 import com.google.android.material.snackbar.Snackbar
 import com.no1.taiwan.stationmusicfm.kits.view.hideRetryView
-import com.no1.taiwan.stationmusicfm.kits.view.showErrorView
-import com.no1.taiwan.stationmusicfm.kits.view.showLoadingView
-import com.no1.taiwan.stationmusicfm.kits.view.showRetryView
 import com.no1.taiwan.stationmusicfm.widget.components.dialog.LoadingDialog
 import org.jetbrains.anko.contentView
 import org.kodein.di.generic.instance
@@ -63,7 +60,8 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     override fun showLoading() = if (enableDialogLoading)
         loadingView?.takeUnless(QuickDialogFragment::getShowsDialog)?.show() ?: Unit
     else
-        showLoadingView()
+        TODO()
+    // showLoadingView()
 
     /**
      * Hide a loading view.
@@ -71,12 +69,13 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     override fun hideLoading() = if (enableDialogLoading)
         loadingView?.takeUnless(QuickDialogFragment::isDismiss)?.dismissAllowingStateLoss() ?: Unit
     else
-        showLoadingView()
+        TODO()
+    // showLoadingView()
 
     /**
      * Show a retry view in case of an error when retrieving data.
      */
-    override fun showRetry() = showRetryView()
+    override fun showRetry() = TODO()  // showRetryView()
 
     /**
      * Hide a retry view shown if there was an error when retrieving data.
@@ -91,5 +90,6 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     override fun showError(message: String) = if (enableDialogLoading)
         contentView?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show() } ?: Unit
     else
-        showErrorView(message)
+        TODO()
+    // showErrorView(message)
 }

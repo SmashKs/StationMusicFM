@@ -25,9 +25,7 @@ import android.content.Context
 import androidx.multidex.MultiDexApplication
 import androidx.work.WorkManager
 import com.no1.taiwan.stationmusicfm.internal.di.Dispatcher
-import com.no1.taiwan.stationmusicfm.ktx.delegate.MmkvPrefs
 import com.no1.taiwan.stationmusicfm.services.WorkerRequestFactory
-import com.tencent.mmkv.MMKV
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
@@ -62,8 +60,5 @@ class MusicApp : MultiDexApplication(), KodeinAware {
         workManager.enqueue(initRequest)
         workManager.enqueue(parserRequest)
         workManager.enqueue(initDataRequest)
-        // Special initial.
-        MMKV.initialize(applicationContext)
-        MmkvPrefs.setPrefSettings()
     }
 }

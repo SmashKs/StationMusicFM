@@ -24,24 +24,21 @@ package com.no1.taiwan.stationmusicfm.kits.view
 import android.app.Activity
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import androidx.annotation.IdRes
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.obtainViewStub
-import com.devrapid.kotlinknifer.showViewStub
 import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import org.jetbrains.anko.find
 
 //region Show View Stub
-inline fun Activity.showLoadingView() = showViewStub(R.id.vs_loading, R.id.v_loading, null)
+// inline fun Activity.showLoadingView() = showViewStub(R.id.vs_loading, R.id.v_loading, null)
 
-inline fun Activity.showErrorView(errorMsg: String = DEFAULT_STR) = showViewStub(R.id.vs_error, R.id.v_error) {
-    find<TextView>(R.id.tv_error_msg).text = errorMsg
-}
+// inline fun Activity.showErrorView(errorMsg: String = DEFAULT_STR) = showViewStub(R.id.vs_error, R.id.v_error) {
+//     find<TextView>(R.id.tv_error_msg).text = errorMsg
+// }
 
-inline fun Activity.showRetryView(noinline retryListener: ((View) -> Unit)? = null) =
-    showViewStub(R.id.vs_retry, R.id.v_retry) { retryListener?.let(this::setOnClickListener) }
+// inline fun Activity.showRetryView(noinline retryListener: ((View) -> Unit)? = null) =
+//     showViewStub(R.id.vs_retry, R.id.v_retry) { retryListener?.let(this::setOnClickListener) }
 //endregion
 
 //region Hide View Stub

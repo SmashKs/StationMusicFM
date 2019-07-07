@@ -32,11 +32,11 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.AddPlaylistsReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsReq
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
-import com.no1.taiwan.stationmusicfm.internal.di.Dispatcher
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.BufferedReader
 
@@ -45,7 +45,7 @@ class PreprocessDataWorker(
     workerParams: WorkerParameters
 ) : Worker(context, workerParams), KodeinAware {
     /** A Kodein Aware class must be within reach of a [Kodein] object. */
-    override val kodein = Dispatcher.importIntoService(context)
+    override val kodein by kodein(context)
     private val gson: Gson by instance()
     private val addPlaylistsCase: AddPlaylistsCase by instance()
     private val fetchPlaylistsCase: FetchPlaylistsCase by instance()

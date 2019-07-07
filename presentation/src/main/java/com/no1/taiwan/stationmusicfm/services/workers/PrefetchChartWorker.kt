@@ -35,12 +35,12 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
-import com.no1.taiwan.stationmusicfm.internal.di.Dispatcher
 import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 class PrefetchChartWorker(
@@ -54,7 +54,7 @@ class PrefetchChartWorker(
     }
 
     /** A Kodein Aware class must be within reach of a [Kodein] object. */
-    override val kodein = Dispatcher.importIntoService(context)
+    override val kodein by kodein(context)
     private val fetchRankMusicCase: FetchRankMusicCase by instance()
     private val addRankIdsCase: AddRankIdsCase by instance()
     private val mapperPool: PreziMapperPool by instance()

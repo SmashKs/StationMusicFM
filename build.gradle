@@ -43,7 +43,7 @@ buildscript {
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt").version("1.0.0-RC15")
+    id("io.gitlab.arturbosch.detekt").version("1.0.0-RC16")
     id("com.github.ben-manes.versions").version("0.21.0")
 }
 
@@ -76,10 +76,10 @@ subprojects {
         if (
         task.name.contains("lint") ||
 //        task.name == "clean" ||
-//        task.name.contains("jacoco") ||
-//        task.name.contains("lintVitalRelease") ||
+                task.name.contains("jacoco") ||
+                task.name.contains("lintVitalRelease") ||
                 task.name.contains("Aidl") ||
-//        task.name.contains("mockableAndroidJar") ||
+                task.name.contains("mockableAndroidJar") ||
                 task.name.contains("UnitTest") ||
                 task.name.contains("AndroidTest") ||
                 task.name.contains("Ndk") ||

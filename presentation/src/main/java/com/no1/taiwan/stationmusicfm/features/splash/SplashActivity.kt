@@ -50,6 +50,10 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Special initial.
+        // MMKV.initialize(this)
+        // MmkvPrefs.setPrefSettings()
+
         // Preload the typeface.
         listOf("santio_regular.otf", "santio_bold.otf")
             .forEach { TypeFaceProvider.getTypeFace(applicationContext, it) }

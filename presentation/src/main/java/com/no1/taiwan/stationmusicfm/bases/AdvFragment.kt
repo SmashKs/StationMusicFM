@@ -37,11 +37,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.isDefault
-import com.no1.taiwan.stationmusicfm.kits.view.hideLoadingView
 import com.no1.taiwan.stationmusicfm.kits.view.hideRetryView
-import com.no1.taiwan.stationmusicfm.kits.view.showErrorView
-import com.no1.taiwan.stationmusicfm.kits.view.showLoadingView
-import com.no1.taiwan.stationmusicfm.kits.view.showRetryView
 import com.no1.taiwan.stationmusicfm.widget.components.dialog.LoadingDialog
 import org.jetbrains.anko.findOptional
 import org.kodein.di.generic.instance
@@ -105,27 +101,20 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
 
     //region View Implementation for the Presenter.
     @UiThread
-    override fun showLoading() = if (enableDialogLoading)
-        loadingView?.takeIf { it.tag.isNull() }?.show() ?: Unit
-    else
-        parent.showLoadingView()
+    override fun showLoading() = loadingView?.takeIf { it.tag.isNull() }?.show() ?: Unit
 
     @UiThread
-    override fun hideLoading() = if (enableDialogLoading) loadingView?.dialog?.dismiss() ?: Unit
-    else
-        parent.hideLoadingView()
+    override fun hideLoading() = loadingView?.dialog?.dismiss() ?: Unit
 
     @UiThread
-    override fun showRetry() = parent.showRetryView()
+    override fun showRetry() = TODO()
 
     @UiThread
     override fun hideRetry() = parent.hideRetryView()
 
     @UiThread
-    override fun showError(message: String) = if (enableDialogLoading)
+    override fun showError(message: String) =
         view?.let { Snackbar.make(it, "Error happened!", Snackbar.LENGTH_SHORT).show() } ?: Unit
-    else
-        parent.showErrorView(message)
     //endregion
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
