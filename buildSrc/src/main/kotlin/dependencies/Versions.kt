@@ -65,7 +65,7 @@ object Versions {
         const val shapeOfView = "1.4.7"
         const val realtimeBlur = "1.2.1"
         const val dialog = "1.0.7"
-        const val lottie = "3.0.6"
+        const val lottie = "3.0.7"
         const val easyPermission = "3.0.0"
     }
 
@@ -129,7 +129,7 @@ object Versions {
     object Network {
         const val glide = "4.9.0"
         const val retrofit2 = "2.6.0"
-        const val okhttp3 = "3.14.1"
+        const val okhttp3 = "4.0.0"
         const val okhttpProfiler = "1.0.5"
         const val activityLauncher = "1.0.2"
         const val jsoup = "1.12.1"
@@ -179,6 +179,6 @@ object Versions {
     }
 
     object Player {
-        const val exoplayer = "2.10.1"
+        const val exoplayer = "2.10.2"
     }
 }
