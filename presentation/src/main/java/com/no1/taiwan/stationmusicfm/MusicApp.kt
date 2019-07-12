@@ -57,6 +57,11 @@ class MusicApp : MultiDexApplication(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+        val dir = filesDir.absolutePath + "/mmkv"
+        // val rootDir = MMKV.initialize(dir) { libName ->
+        //     logw(libName)
+        //     ReLinker.loadLibrary(applicationContext, libName)
+        // }
         workManager.enqueue(initRequest)
         workManager.enqueue(parserRequest)
         workManager.enqueue(initDataRequest)

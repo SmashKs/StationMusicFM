@@ -112,7 +112,7 @@ object Deps {
         const val firebaseAuth = "com.google.firebase:firebase-auth:${Versions.Firebase.auth}"
         const val firebaseMessaging = "com.google.firebase:firebase-messaging:${Versions.Firebase.messaging}"
         const val cloudinary = "com.cloudinary:cloudinary-android:${Versions.CloudStore.cloudinary}"
-        const val mmkv = "com.tencent:mmkv:${Versions.Database.mmkv}"
+        const val mmkv = "com.tencent:mmkv-static:${Versions.Database.mmkv}"
         const val room = Data.room
         // UI extensions
         const val arv = "com.devrapid.jieyi:adaptiverecyclerview:${Versions.ViewComponent.adaptiveRecyclerView}"

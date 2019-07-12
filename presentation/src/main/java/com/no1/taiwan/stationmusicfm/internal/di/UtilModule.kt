@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import android.content.Context
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
@@ -32,6 +33,7 @@ import com.google.gson.GsonBuilder
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
+import org.kodein.di.generic.factory
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
@@ -41,7 +43,7 @@ import org.kodein.di.generic.singleton
  */
 object UtilModule {
     fun utilProvider(context: Context) = Module("Util Module") {
-        bind<WorkManager>() with instance(WorkManager.getInstance())
+        bind<WorkManager>() with instance(WorkManager.getInstance(context))
         // OPTIMIZE(jieyi): 2018/10/16 We might use Gson for mapping data.
         bind<Gson>() with singleton {
             with(GsonBuilder()) {
@@ -58,6 +60,6 @@ object UtilModule {
         bind<LinearLayoutManager>(ObjectLabel.LINEAR_LAYOUT_HORIZONTAL) with provider {
             LinearLayoutManager(context, HORIZONTAL, false)
         }
-        // bind<GridLayoutManager>() with factory { spanCount: Int -> GridLayoutManager(context, spanCount) }
+        bind<GridLayoutManager>() with factory { spanCount: Int -> GridLayoutManager(context, spanCount) }
     }
 }

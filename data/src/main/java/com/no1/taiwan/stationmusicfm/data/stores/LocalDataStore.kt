@@ -59,7 +59,6 @@ import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.C
 import com.no1.taiwan.stationmusicfm.domain.parameters.playlist.PlaylistParams.Companion.PARAM_NAME_TRACK_COUNT
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
-import com.tencent.mmkv.MMKV
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
@@ -70,8 +69,8 @@ class LocalDataStore(
     private val searchingHistoryDao: SearchingHistoryDao,
     private val listenHistoryDao: ListenHistoryDao,
     private val localMusicDao: LocalMusicDao,
-    private val playlistDao: PlaylistDao,
-    private val mmkv: MMKV
+    private val playlistDao: PlaylistDao
+    // private val mmkv: MMKV
 ) : DataStore {
     //region Ranking
     override suspend fun createRankingData(params: List<RankingIdData>) = tryWrapper {

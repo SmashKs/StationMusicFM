@@ -66,8 +66,7 @@ object RepositoryModule {
                            instance<MusicDatabase>().createSearchHistoryDao(),
                            instance<MusicDatabase>().createListenHistoryDao(),
                            instance<MusicDatabase>().createLocalMusicDao(),
-                           instance<MusicDatabase>().createPlaylistDao(),
-                           instance())
+                           instance<MusicDatabase>().createPlaylistDao())
         }
         /** Mapper Pool for providing all data mappers */
         bind<DataMapperPool>() with singleton { instance<DataMapperEntries>().toMap() }

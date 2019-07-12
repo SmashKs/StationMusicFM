@@ -40,7 +40,7 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
+import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 
 class PrefetchChartWorker(
@@ -54,7 +54,7 @@ class PrefetchChartWorker(
     }
 
     /** A Kodein Aware class must be within reach of a [Kodein] object. */
-    override val kodein by kodein(context)
+    override val kodein by closestKodein(context)
     private val fetchRankMusicCase: FetchRankMusicCase by instance()
     private val addRankIdsCase: AddRankIdsCase by instance()
     private val mapperPool: PreziMapperPool by instance()

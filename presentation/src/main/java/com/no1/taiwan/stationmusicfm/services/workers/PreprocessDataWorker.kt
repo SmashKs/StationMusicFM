@@ -62,5 +62,6 @@ class PreprocessDataWorker(
             addPlaylistsCase.exec(AddPlaylistsReq(PlaylistParams(ids, names)))
         }
         return if (res) Result.success() else Result.failure()
+        return Result.success()
     }
 }

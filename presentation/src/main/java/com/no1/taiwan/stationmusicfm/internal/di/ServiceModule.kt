@@ -37,9 +37,6 @@ import com.no1.taiwan.stationmusicfm.data.remote.v1.SeekerBankImpl
 import com.no1.taiwan.stationmusicfm.internal.di.NetModule.netProvider
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.JSOUP
 import com.no1.taiwan.stationmusicfm.internal.di.tags.InstanceTag.RETROFIT
-import com.tencent.mmkv.MMKV
-import com.tencent.mmkv.MMKV.SINGLE_PROCESS_MODE
-import com.tencent.mmkv.MMKV.defaultMMKV
 import org.kodein.di.Kodein.Module
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -119,7 +116,7 @@ object ServiceModule {
      */
     private fun implementationLocalProvider(context: Context) = Module("Implementation Local") {
         bind<MusicDatabase>() with instance(MusicDatabase.getDatabase(context))
-        bind<MMKV>() with singleton { defaultMMKV(SINGLE_PROCESS_MODE, TOKEN_PUBLIC_KEY) }
+        // bind<MMKV>() with singleton { defaultMMKV(SINGLE_PROCESS_MODE, TOKEN_PUBLIC_KEY) }
     }
     //endregion
 }

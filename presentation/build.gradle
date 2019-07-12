@@ -150,6 +150,8 @@ dependencies {
     // Android Ktx
     implementation(dependencies.Dependencies.preziKtx.values())
 
+    implementation("com.getkeepsafe.relinker:relinker:1.3.1")
+
     //region Androidx SDK
     implementation(dependencies.Dependencies.commonAndroidx.values() +
             dependencies.Dependencies.preziAndroidx.values())
