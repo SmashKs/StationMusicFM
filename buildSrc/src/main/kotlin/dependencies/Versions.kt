@@ -95,7 +95,7 @@ object Versions {
      * Related dependency injection lib version.
      */
     object DI {
-        const val kodein = "6.3.2"
+        const val kodein = "6.3.3"
     }
 
     /**
