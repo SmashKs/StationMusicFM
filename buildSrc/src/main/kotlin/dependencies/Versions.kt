@@ -82,7 +82,7 @@ object Versions {
         const val collectionKtx = "1.1.0"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
         const val navigationKtx = "2.1.0-alpha05"
-        const val workKtx = "2.1.0-beta01"
+        const val workKtx = "2.1.0"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
@@ -129,7 +129,7 @@ object Versions {
     object Network {
         const val glide = "4.9.0"
         const val retrofit2 = "2.6.0"
-        const val okhttp3 = "4.0.0"
+        const val okhttp3 = "4.0.1"
         const val okhttpProfiler = "1.0.5"
         const val activityLauncher = "1.0.2"
         const val jsoup = "1.12.1"
@@ -162,12 +162,12 @@ object Versions {
         const val assertK = "0.14"
         const val runner = "1.2.0"
         const val espresso = "3.2.0"
-        const val kakao = "2.0.0"
+        const val kakao = "2.1.0"
         const val powerMockito = "1.7.4"
         const val mockitoKotlin = "2.1.0"
         const val mockitoAndroid = "2.23.0"
         const val mockk = "v1.8.9.kotlin13"
-        const val byteBuddy = "1.9.13"
+        const val byteBuddy = "1.9.14"
     }
 
     /**
