@@ -41,6 +41,7 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TrackWithStreamabl
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.TracksWithStreamableDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.lastfm.WikiDMapper
+import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.BriefRankDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.HotListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MusicDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MvDMapper
@@ -69,9 +70,13 @@ object DataMapperModule {
         /** RankInfoData Layer Mapper */
         val songMapper = SongDMapper(MvDMapper())
         val songListMapper = SongListDMapper(songMapper, UserDMapper())
-        bind<DataMapperEntry>().inSet() with singleton { MusicDMapper::class.java to MusicDMapper(songMapper) }
+        bind<DataMapperEntry>().inSet() with singleton {
+            MusicDMapper::class.java to MusicDMapper(songMapper)
+        }
         bind<DataMapperEntry>().inSet() with singleton { SongListDMapper::class.java to songListMapper }
-        bind<DataMapperEntry>().inSet() with singleton { HotListDMapper::class.java to HotListDMapper(songListMapper) }
+        bind<DataMapperEntry>().inSet() with singleton {
+            HotListDMapper::class.java to HotListDMapper(songListMapper)
+        }
 
         val tagMapper = TagDMapper(WikiDMapper())
         val bioMapper = BioDMapper(LinkDMapper())
@@ -82,7 +87,8 @@ object DataMapperModule {
                                        StreamDMapper(),
                                        tagMapper,
                                        WikiDMapper())
-        val albumMapper = AlbumDMapper(AttrDMapper(), ImageDMapper(), tagMapper, trackMapper, WikiDMapper())
+        val albumMapper =
+            AlbumDMapper(AttrDMapper(), ImageDMapper(), tagMapper, trackMapper, WikiDMapper())
         val trackWithStreamableMapper = TrackWithStreamableDMapper(albumMapper,
                                                                    artistMapper,
                                                                    AttrDMapper(),
@@ -104,15 +110,17 @@ object DataMapperModule {
                                                                                   ImageDMapper(),
                                                                                   tagMapper,
                                                                                   trackMapper,
-                                                                                  WikiDMapper()), AttrDMapper())
+                                                                                  WikiDMapper()),
+                                                           AttrDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton { TrackDMapper::class.java to trackMapper }
         bind<DataMapperEntry>().inSet() with singleton {
             TracksDMapper::class.java to TracksDMapper(trackMapper, AttrDMapper())
         }
         bind<DataMapperEntry>().inSet() with singleton {
-            TracksWithStreamableDMapper::class.java to TracksWithStreamableDMapper(trackWithStreamableMapper,
-                                                                                   AttrDMapper())
+            TracksWithStreamableDMapper::class.java to TracksWithStreamableDMapper(
+                trackWithStreamableMapper,
+                AttrDMapper())
         }
 
         bind<DataMapperEntry>().inSet() with singleton { RankingDMapper::class.java to RankingDMapper() }
@@ -122,5 +130,6 @@ object DataMapperModule {
         bind<DataMapperEntry>().inSet() with singleton { SearchHistoryDMapper::class.java to SearchHistoryDMapper() }
         bind<DataMapperEntry>().inSet() with singleton { LocalMusicDMapper::class.java to LocalMusicDMapper() }
         bind<DataMapperEntry>().inSet() with singleton { PlaylistInfoDMapper::class.java to PlaylistInfoDMapper() }
+        bind<DataMapperEntry>().inSet() with singleton { BriefRankDMapper::class.java to BriefRankDMapper() }
     }
 }

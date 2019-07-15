@@ -23,9 +23,11 @@ package com.no1.taiwan.stationmusicfm.data.remote.services
 
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicRankListData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
 import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
 import retrofit2.http.GET
+import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 /**
@@ -33,12 +35,17 @@ import retrofit2.http.QueryMap
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
 interface MusicBankService {
-    @GET("${RankingConfig.API_REQUEST}/rank_song_list")
-    suspend fun retrieveMusicRanking(@QueryMap queries: Map<String, String>): MusicInfoData
+    @GET("${RankingConfig.API_REQUEST}/{rank_id}/")
+    suspend fun retrieveMusicRanking(@Query("rank_id") rankId: Int): MusicInfoData
+
+    @GET("${RankingConfig.API_REQUEST}/detail/")
+    suspend fun retrieveMusicRankList(): MusicRankListData
 
     @GET("${RankingConfig.API_REQUEST}/search")
     @Deprecated("Seeker Bank is better for searching more sources.")
-    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoData
+    suspend
+
+    fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoData
 
     @GET("${RankingConfig.API_REQUEST}/hot_song_list")
     suspend fun retrieveHotPlaylist(@QueryMap queries: Map<String, String>): HotPlaylistData

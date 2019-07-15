@@ -47,6 +47,7 @@ import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksTypeGenrePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksWithStreamablePMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.WikiPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.BriefRankPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.HotListPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MvPMapper
@@ -76,7 +77,9 @@ object PresentationMapperModule {
         /** Presentation Layer Mapper */
         val songMapper = SongPMapper(MvPMapper())
         val songListMapper = SongListPMapper(songMapper, UserPMapper())
-        bind<PreziMapperEntry>().inSet() with singleton { MusicPMapper::class.java to MusicPMapper(songMapper) }
+        bind<PreziMapperEntry>().inSet() with singleton {
+            MusicPMapper::class.java to MusicPMapper(songMapper)
+        }
         bind<PreziMapperEntry>().inSet() with singleton { SongListPMapper::class.java to songListMapper }
         bind<PreziMapperEntry>().inSet() with singleton {
             HotListPMapper::class.java to HotListPMapper(songListMapper)
@@ -85,7 +88,8 @@ object PresentationMapperModule {
         val tagMapper = TagPMapper(WikiPMapper())
         val bioMapper = BioPMapper(LinkPMapper())
         val artistMapper = ArtistPMapper(bioMapper, ImagePMapper(), StatsPMapper(), tagMapper)
-        val artistSimilarMapper = ArtistSimilarPMapper(bioMapper, ImagePMapper(), StatsPMapper(), tagMapper)
+        val artistSimilarMapper =
+            ArtistSimilarPMapper(bioMapper, ImagePMapper(), StatsPMapper(), tagMapper)
         val trackMapper = TrackPMapper(artistMapper,
                                        AttrPMapper(),
                                        ImagePMapper(),
@@ -99,7 +103,8 @@ object PresentationMapperModule {
                                                    tagMapper,
                                                    trackMapper,
                                                    WikiPMapper())
-        val albumMapper = AlbumPMapper(AttrPMapper(), ImagePMapper(), tagMapper, trackMapper, WikiPMapper())
+        val albumMapper =
+            AlbumPMapper(AttrPMapper(), ImagePMapper(), tagMapper, trackMapper, WikiPMapper())
         val trackWithStreamableMapper = TrackWithStreamablePMapper(albumMapper,
                                                                    artistMapper,
                                                                    AttrPMapper(),
@@ -112,7 +117,8 @@ object PresentationMapperModule {
             ArtistsPMapper::class.java to ArtistsPMapper(artistMapper, AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            ArtistsSimilarPMapper::class.java to ArtistsSimilarPMapper(artistSimilarMapper, AttrPMapper())
+            ArtistsSimilarPMapper::class.java to ArtistsSimilarPMapper(artistSimilarMapper,
+                                                                       AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton { TagPMapper::class.java to tagMapper }
         bind<PreziMapperEntry>().inSet() with singleton {
@@ -124,27 +130,32 @@ object PresentationMapperModule {
                                                                                   ImagePMapper(),
                                                                                   tagMapper,
                                                                                   trackMapper,
-                                                                                  WikiPMapper()), AttrPMapper())
+                                                                                  WikiPMapper()),
+                                                           AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            TopAlbumTypeGenrePMapper::class.java to TopAlbumTypeGenrePMapper(AlbumWithArtistTypeGenrePMapper(
-                artistMapper,
-                AttrPMapper(),
-                ImagePMapper(),
-                tagMapper,
-                trackMapper,
-                WikiPMapper()), AttrPMapper())
+            TopAlbumTypeGenrePMapper::class.java to TopAlbumTypeGenrePMapper(
+                AlbumWithArtistTypeGenrePMapper(
+                    artistMapper,
+                    AttrPMapper(),
+                    ImagePMapper(),
+                    tagMapper,
+                    trackMapper,
+                    WikiPMapper()),
+                AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton { TrackPMapper::class.java to trackMapper }
         bind<PreziMapperEntry>().inSet() with singleton {
-            TracksTypeGenrePMapper::class.java to TracksTypeGenrePMapper(trackTypeGenre, AttrPMapper())
+            TracksTypeGenrePMapper::class.java to TracksTypeGenrePMapper(trackTypeGenre,
+                                                                         AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
             TracksPMapper::class.java to TracksPMapper(trackMapper, AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton {
-            TracksWithStreamablePMapper::class.java to TracksWithStreamablePMapper(trackWithStreamableMapper,
-                                                                                   AttrPMapper())
+            TracksWithStreamablePMapper::class.java to TracksWithStreamablePMapper(
+                trackWithStreamableMapper,
+                AttrPMapper())
         }
         bind<PreziMapperEntry>().inSet() with singleton { RankingPMapper::class.java to RankingPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton {
@@ -154,5 +165,6 @@ object PresentationMapperModule {
         bind<PreziMapperEntry>().inSet() with singleton { LocalMusicPMapper::class.java to LocalMusicPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { PlaylistInfoPMapper::class.java to PlaylistInfoPMapper() }
         bind<PreziMapperEntry>().inSet() with singleton { PlaylistInfoToBottomEntityPMapper::class.java to PlaylistInfoToBottomEntityPMapper() }
+        bind<PreziMapperEntry>().inSet() with singleton { BriefRankPMapper::class.java to BriefRankPMapper() }
     }
 }

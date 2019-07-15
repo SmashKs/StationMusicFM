@@ -26,6 +26,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.BriefRankModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
@@ -40,6 +41,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.CommonLastFmEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.Mapper
+import com.no1.taiwan.stationmusicfm.entities.musicbank.BriefRankEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.HotPlaylistEntity
 import com.no1.taiwan.stationmusicfm.entities.musicbank.MusicInfoEntity
@@ -61,6 +63,7 @@ typealias MusicPreziMap = Mapper<MusicInfoModel.MusicModel, MusicInfoEntity.Musi
 typealias MvPreziMap = Mapper<CommonMusicModel.MvModel, CommonMusicEntity.MvEntity>
 typealias SongListPreziMap = Mapper<CommonMusicModel.PlayListModel, CommonMusicEntity.PlayListEntity>
 typealias RankChartPreziMap = Mapper<RankChartModel, RankChartEntity>
+typealias BriefRankPreziMap = Mapper<BriefRankModel, BriefRankEntity>
 typealias SongPreziMap = Mapper<CommonMusicModel.SongModel, CommonMusicEntity.SongEntity>
 typealias UserPreziMap = Mapper<CommonMusicModel.UserModel, CommonMusicEntity.UserEntity>
 

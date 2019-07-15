@@ -34,6 +34,7 @@ import com.no1.taiwan.stationmusicfm.data.data.mappers.Mapper
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.CommonMusicData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.HotPlaylistData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicInfoData
+import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicRankListData.BriefRankData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.RankChartData
 import com.no1.taiwan.stationmusicfm.data.data.others.RankingIdData
 import com.no1.taiwan.stationmusicfm.data.data.others.SearchHistoryData
@@ -44,6 +45,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.BriefRankModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
@@ -64,6 +66,7 @@ typealias MusicDataMap = Mapper<MusicInfoData.MusicData, MusicInfoModel.MusicMod
 typealias MvDataMap = Mapper<CommonMusicData.MvData, CommonMusicModel.MvModel>
 typealias SongListDataMap = Mapper<CommonMusicData.PlayListData, CommonMusicModel.PlayListModel>
 typealias RankChartDataMap = Mapper<RankChartData, RankChartModel>
+typealias BriefRankDataMap = Mapper<BriefRankData, BriefRankModel>
 typealias SongDataMap = Mapper<CommonMusicData.SongData, CommonMusicModel.SongModel>
 typealias UserDataMap = Mapper<CommonMusicData.UserData, CommonMusicModel.UserModel>
 
