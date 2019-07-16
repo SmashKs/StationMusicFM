@@ -36,6 +36,7 @@ import com.no1.taiwan.stationmusicfm.domain.Fields
 import com.no1.taiwan.stationmusicfm.domain.parameters.Parameterable
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.ArtistParams
 import com.no1.taiwan.stationmusicfm.domain.parameters.lastfm.BaseWithPagingParams
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
 import com.no1.taiwan.stationmusicfm.ext.UnsupportedOperation
 
 /**
@@ -54,7 +55,7 @@ class RemoteDataStore(
 
     //region 🔽 Music Bank
     override suspend fun getMusicRanking(parameterable: Parameterable) =
-        musicBankService.retrieveMusicRanking(cast(parameterable.toApiParam()[Constants.LASTFM_RANK_ID]))
+        musicBankService.retrieveMusicRanking(cast(parameterable.toApiParam()[RankParams.PARAM_NAME_RANK_ID]))
 
     override suspend fun getMusicRanks(parameterable: Parameterable) =
         musicBankService.retrieveMusicRanks()

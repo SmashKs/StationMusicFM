@@ -25,13 +25,17 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.devrapid.kotlinshaver.cast
+import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicRanksCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.BriefRankPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.internal.di.PresentationModule
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
@@ -39,6 +43,8 @@ import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
+import com.no1.taiwan.stationmusicfm.utils.presentations.exec
+import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -79,13 +85,12 @@ class PrefetchChartWorker(
     override fun doWork(): Result {
         runBlocking {
             // fetchMusicRanksCase.execListMapping(ranksMapper, FetchMusicRanksReq())
-            // val chart = fetchRankMusicCase.execMapping(musicMapper,
-            //                                            FetchRankMusicReq(RankParams(id)))
-            //     .let {
-            //         RankingIdEntity(id, title, update, it.songs.first().oriCoverUrl, it.songs.size)
-            //     }
-            //
-            // addRankIdsCase.exec(AddRankIdsReq(listOf(rankingMapper.toModelFrom(chart))))
+            val chart = fetchRankMusicCase.execMapping(musicMapper, FetchRankMusicReq(RankParams(id)))
+                .let {
+                    RankingIdEntity(id, title, update, it.songs.first().oriCoverUrl, it.songs.size)
+                }
+
+            addRankIdsCase.exec(AddRankIdsReq(listOf(rankingMapper.toModelFrom(chart))))
         }
 
         return Result.success()
