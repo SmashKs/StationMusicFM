@@ -35,17 +35,15 @@ import retrofit2.http.QueryMap
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
 interface MusicBankService {
-    @GET("${RankingConfig.API_REQUEST}/{rank_id}/")
+    @GET("${RankingConfig.API_REQUEST}/{rank_id}")
     suspend fun retrieveMusicRanking(@Query("rank_id") rankId: Int): MusicInfoData
 
-    @GET("${RankingConfig.API_REQUEST}/detail/")
-    suspend fun retrieveMusicRankList(): MusicRankListData
+    @GET("${RankingConfig.API_REQUEST}/detail")
+    suspend fun retrieveMusicRanks(): MusicRankListData
 
     @GET("${RankingConfig.API_REQUEST}/search")
     @Deprecated("Seeker Bank is better for searching more sources.")
-    suspend
-
-    fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoData
+    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoData
 
     @GET("${RankingConfig.API_REQUEST}/hot_song_list")
     suspend fun retrieveHotPlaylist(@QueryMap queries: Map<String, String>): HotPlaylistData

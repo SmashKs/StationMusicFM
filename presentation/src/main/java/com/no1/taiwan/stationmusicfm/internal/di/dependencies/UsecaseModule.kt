@@ -38,6 +38,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchHotListCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchListenedHistCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicRanksCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchPlaylistsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
@@ -73,6 +74,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopTrackResp
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTrackRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.AddRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRanksRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
@@ -104,6 +106,7 @@ object UsecaseModule {
         bind<AddRankIdsCase>() with singleton { AddRankIdsRespCase(instance()) }
         bind<FetchRankIdsCase>() with singleton { FetchRankIdsRespCase(instance()) }
         bind<UpdateRankItemCase>() with singleton { UpdateRankItemRespCase(instance()) }
+        bind<FetchMusicRanksCase>() with singleton { FetchMusicRanksRespCase(instance()) }
         //endregion
 
         //region LastFm

@@ -50,13 +50,14 @@ class RemoteDataStore(
     context: Context
 ) : DataStore {
     private val lastFmToken by lazy { context.getString(R.string.lastfm_api_key) }
-    private val lastFmAuth by lazy {
-        hashMapOf(Constants.LASTFM_QUERY_TOKEN to lastFmToken)
-    }
+    private val lastFmAuth by lazy { hashMapOf(Constants.LASTFM_QUERY_TOKEN to lastFmToken) }
 
     //region 🔽 Music Bank
     override suspend fun getMusicRanking(parameterable: Parameterable) =
-        musicBankService.retrieveMusicRanking(parameterable.toApiParam())
+        musicBankService.retrieveMusicRanking(cast(parameterable.toApiParam()[Constants.LASTFM_RANK_ID]))
+
+    override suspend fun getMusicRanks(parameterable: Parameterable) =
+        musicBankService.retrieveMusicRanks()
 
     override suspend fun getMusic(parameterable: Parameterable): MusicInfoData {
         val queries = parameterable.toApiParam().apply {

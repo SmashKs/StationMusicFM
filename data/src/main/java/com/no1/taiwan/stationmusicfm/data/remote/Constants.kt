@@ -39,4 +39,6 @@ object Constants {
     const val LASTFM_PARAM_TAG_GET_TOP_ALBUMS = "tag.getTopAlbums"
     const val LASTFM_PARAM_TAG_GET_TOP_ARTISTS = "tag.getTopArtists"
     const val LASTFM_PARAM_TAG_GET_TOP_TRACKS = "tag.getTopTracks"
+
+    const val LASTFM_RANK_ID = "rank id"
 }

@@ -194,6 +194,9 @@ class LocalDataStore(
     override suspend fun getMusicRanking(parameterable: Parameterable) =
         UnsupportedOperation()
 
+    override suspend fun getMusicRanks(parameterable: Parameterable) =
+        UnsupportedOperation()
+
     override suspend fun getMusic(parameterable: Parameterable) =
         UnsupportedOperation()
 

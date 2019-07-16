@@ -27,18 +27,23 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTagReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchChartTopTrackReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicRanksCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicRanksReq
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistsEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity.TagsEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TracksEntity
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.ArtistsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TagsPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.lastfm.TracksPMapper
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.BriefRankPMapper
+import com.no1.taiwan.stationmusicfm.entities.musicbank.BriefRankEntity
 import com.no1.taiwan.stationmusicfm.ext.consts.Pager
 import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespLiveData
 import com.no1.taiwan.stationmusicfm.utils.presentations.RespMutableLiveData
+import com.no1.taiwan.stationmusicfm.utils.presentations.execListMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 
@@ -46,6 +51,7 @@ class ExploreIndexViewModel(
     private val fetchChartTopTrackCase: FetchChartTopTrackCase,
     private val fetchChartTopArtistCase: FetchChartTopArtistCase,
     private val fetchChartTopTagCase: FetchChartTopTagCase,
+    private val fetchMusicRanksCase: FetchMusicRanksCase,
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _topTracks by lazy { RespMutableLiveData<TracksEntity>() }
@@ -58,6 +64,7 @@ class ExploreIndexViewModel(
     private val topTracksMapper by lazy { digMapper(TracksPMapper::class) }
     private val topArtistsMapper by lazy { digMapper(ArtistsPMapper::class) }
     private val topTagsMapper by lazy { digMapper(TagsPMapper::class) }
+    private val ranksMapper by lazy { digMapper(BriefRankPMapper::class) }
     //endregion
 
     fun runTaskFetchTopTrack(limit: Int = Pager.LIMIT) = launchBehind {
@@ -82,5 +89,10 @@ class ExploreIndexViewModel(
             params = FetchChartTopTagReq(autoIncreaseParams(it, limit) ?: return@launchBehind)
         }
         _topTags reqData { fetchChartTopTagCase.execMapping(topTagsMapper, params) }
+    }
+
+    val tt by lazy { RespMutableLiveData<List<BriefRankEntity>>() }
+    fun test() = tt reqData {
+        fetchMusicRanksCase.execListMapping(ranksMapper, FetchMusicRanksReq())
     }
 }

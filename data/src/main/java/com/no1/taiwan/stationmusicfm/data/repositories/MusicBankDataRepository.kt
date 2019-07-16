@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.data.repositories
 
+import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.BriefRankDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.HotListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MusicDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.SongListDMapper
@@ -46,12 +47,16 @@ class MusicBankDataRepository constructor(
     diggerDelegate: DataMapperDigger
 ) : MusicBankRepository, DataMapperDigger by diggerDelegate {
     private val musicMapper by lazy { digMapper(MusicDMapper::class) }
+    private val ranksMapper by lazy { digMapper(BriefRankDMapper::class) }
     private val hotListMapper by lazy { digMapper(HotListDMapper::class) }
     private val playlistMapper by lazy { digMapper(SongListDMapper::class) }
     private val rankingMapper by lazy { digMapper(RankingDMapper::class) }
 
     override suspend fun fetchMusicRanking(parameters: Parameterable) =
         remote.getMusicRanking(parameters).data.run(musicMapper::toModelFrom)
+
+    override suspend fun fetchMusicRanks(parameters: Parameterable) =
+        remote.getMusicRanks(parameters).briefRankDatas.map(ranksMapper::toModelFrom)
 
     override suspend fun fetchMusic(parameters: Parameterable) =
         remote.getMusic(parameters).data.run(musicMapper::toModelFrom)

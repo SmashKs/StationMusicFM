@@ -120,6 +120,12 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
                 loge(it)
             } doWith this@ExploreIndexFragment
         }
+        observeNonNull(vm.tt) {
+            peel {
+            } happenError {
+                loge(it)
+            } doWith this@ExploreIndexFragment
+        }
     }
 
     /**
@@ -136,6 +142,8 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
                 runTaskFetchTopArtist()
             if (topTags.value.isNull())
                 runTaskFetchTopTag()
+
+            test()
         }
     }
 

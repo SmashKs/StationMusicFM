@@ -55,6 +55,7 @@ object SuperFragmentModule {
             ExploreIndexViewModel::class.java to ExploreIndexViewModel(instance(),
                                                                        instance(),
                                                                        instance(),
+                                                                       instance(),
                                                                        instance())
         }
         bind<ViewModelEntry>().inSet() with provider {

@@ -25,15 +25,13 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.devrapid.kotlinshaver.cast
-import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicRanksCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
 import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.BriefRankPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.MusicPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
-import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.internal.di.PresentationModule
 import com.no1.taiwan.stationmusicfm.internal.di.RepositoryModule
@@ -41,8 +39,6 @@ import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
-import com.no1.taiwan.stationmusicfm.utils.presentations.exec
-import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -70,23 +66,26 @@ class PrefetchChartWorker(
         import(PresentationMapperModule.presentationUtilProvider())
     }
     private val fetchRankMusicCase: FetchRankMusicCase by instance()
+    private val fetchMusicRanksCase: FetchMusicRanksCase by instance()
     private val addRankIdsCase: AddRankIdsCase by instance()
     private val mapperPool: PreziMapperPool by instance()
     private val musicMapper by lazy { cast<MusicPMapper>(mapperPool[MusicPMapper::class.java]) }
     private val rankingMapper by lazy { cast<RankingPMapper>(mapperPool[RankingPMapper::class.java]) }
+    private val ranksMapper by lazy { cast<BriefRankPMapper>(mapperPool[BriefRankPMapper::class.java]) }
     private val id by lazy { inputData.getInt(ARGUMENT_DATA_ID, DEFAULT_INT) }
     private val title by lazy { requireNotNull(inputData.getString(ARGUMENT_DATA_TITLE)) }
     private val update by lazy { requireNotNull(inputData.getString(ARGUMENT_DATA_UPDATE)) }
 
     override fun doWork(): Result {
         runBlocking {
-            val chart = fetchRankMusicCase.execMapping(musicMapper,
-                                                       FetchRankMusicReq(RankParams(id)))
-                .let {
-                    RankingIdEntity(id, title, update, it.songs.first().oriCoverUrl, it.songs.size)
-                }
-
-            addRankIdsCase.exec(AddRankIdsReq(listOf(rankingMapper.toModelFrom(chart))))
+            // fetchMusicRanksCase.execListMapping(ranksMapper, FetchMusicRanksReq())
+            // val chart = fetchRankMusicCase.execMapping(musicMapper,
+            //                                            FetchRankMusicReq(RankParams(id)))
+            //     .let {
+            //         RankingIdEntity(id, title, update, it.songs.first().oriCoverUrl, it.songs.size)
+            //     }
+            //
+            // addRankIdsCase.exec(AddRankIdsReq(listOf(rankingMapper.toModelFrom(chart))))
         }
 
         return Result.success()

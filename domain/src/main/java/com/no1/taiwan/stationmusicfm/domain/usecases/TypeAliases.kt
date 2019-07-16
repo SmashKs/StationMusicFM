@@ -27,6 +27,7 @@ import com.no1.taiwan.stationmusicfm.domain.models.lastfm.ArtistInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.CommonLastFmModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TagInfoModel
 import com.no1.taiwan.stationmusicfm.domain.models.lastfm.TrackInfoModel
+import com.no1.taiwan.stationmusicfm.domain.models.musicbank.BriefRankModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.CommonMusicModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.HotPlaylistModel
 import com.no1.taiwan.stationmusicfm.domain.models.musicbank.MusicInfoModel
@@ -54,6 +55,7 @@ import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTagTopTrackResp
 import com.no1.taiwan.stationmusicfm.domain.usecases.lastfm.FetchTrackRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.AddRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchHotListRespCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRanksRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchMusicRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankIdsRespCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.musicbank.FetchRankMusicRespCase
@@ -117,6 +119,7 @@ typealias FetchTrackCase = DeferredUsecase<TrackInfoModel.TrackModel, FetchTrack
 
 typealias AddRankIdsReq = AddRankIdsRespCase.Request
 typealias FetchRankIdsReq = FetchRankIdsRespCase.Request
+typealias FetchMusicRanksReq = FetchMusicRanksRespCase.Request
 typealias AddOrUpdateSearchHistReq = AddOrUpdateSearchHistRespCase.Request
 typealias DeleteSearchHistReq = DeleteSearchHistRespCase.Request
 typealias FetchSearchHistsReq = FetchSearchHistsRespCase.Request
@@ -124,6 +127,7 @@ typealias UpdateRankItemReq = UpdateRankItemRespCase.Request
 
 typealias AddRankIdsCase = DeferredUsecase<Boolean, AddRankIdsReq>
 typealias FetchRankIdsCase = DeferredUsecase<List<RankingIdModel>, FetchRankIdsReq>
+typealias FetchMusicRanksCase = DeferredUsecase<List<BriefRankModel>, FetchMusicRanksReq>
 typealias AddOrUpdateSearchHistCase = DeferredUsecase<Boolean, AddOrUpdateSearchHistReq>
 typealias DeleteSearchHistCase = DeferredUsecase<Boolean, DeleteSearchHistReq>
 typealias FetchSearchHistsCase = DeferredUsecase<List<SearchHistModel>, FetchSearchHistsReq>
