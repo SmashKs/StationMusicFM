@@ -20,19 +20,22 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <!--region Dialog-->
-    <style name="Dialog"/>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <style name="Dialog.Fragment.Animation" parent="Dialog">
-        <item name="android:windowEnterAnimation">@anim/dialog_loading_enter</item>
-        <item name="android:windowExitAnimation">@anim/dialog_loading_exit</item>
-    </style>
-    <!--endregion-->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_tooltip"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/dove_gray"
+        android:textSize="10dp"
+        tools:text="Tooltip using PopupWindow :)"/>
+</androidx.appcompat.widget.LinearLayoutCompat>
 
-    <!--region Popup Window-->
-    <style name="PopupWindow.Animation" parent="">
-        <item name="android:windowEnterAnimation">@anim/popup_showing</item>
-    </style>
-    <!--endregion-->
-</resources>

@@ -20,19 +20,10 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <!--region Dialog-->
-    <style name="Dialog"/>
-
-    <style name="Dialog.Fragment.Animation" parent="Dialog">
-        <item name="android:windowEnterAnimation">@anim/dialog_loading_enter</item>
-        <item name="android:windowExitAnimation">@anim/dialog_loading_exit</item>
-    </style>
-    <!--endregion-->
-
-    <!--region Popup Window-->
-    <style name="PopupWindow.Animation" parent="">
-        <item name="android:windowEnterAnimation">@anim/popup_showing</item>
-    </style>
-    <!--endregion-->
-</resources>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/white"/>
+    <stroke
+        android:width="1dp"
+        android:color="@android:color/darker_gray"/>
+</shape>

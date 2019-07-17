@@ -20,19 +20,18 @@
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<resources>
-    <!--region Dialog-->
-    <style name="Dialog"/>
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="50">
+    <alpha
+        android:fromAlpha="0.1"
+        android:toAlpha="1"/>
+    <scale
+        android:fromXScale="0.3"
+        android:fromYScale="0.3"
+        android:pivotX="0.5"
+        android:pivotY="0.5"
+        android:toXScale="1"
+        android:toYScale="1"/>
+</set>
 
-    <style name="Dialog.Fragment.Animation" parent="Dialog">
-        <item name="android:windowEnterAnimation">@anim/dialog_loading_enter</item>
-        <item name="android:windowExitAnimation">@anim/dialog_loading_exit</item>
-    </style>
-    <!--endregion-->
-
-    <!--region Popup Window-->
-    <style name="PopupWindow.Animation" parent="">
-        <item name="android:windowEnterAnimation">@anim/popup_showing</item>
-    </style>
-    <!--endregion-->
-</resources>
