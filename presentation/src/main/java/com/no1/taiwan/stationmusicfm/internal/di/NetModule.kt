@@ -32,23 +32,29 @@ import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * To provide the necessary object for the internet model.
  */
 object NetModule {
     private const val CacheMaxSize = 10 * 1024 * 1024L
+    private const val TIME_OUT = 10L
 
     fun netProvider(context: Context) = Kodein.Module("Network") {
         bind<Converter.Factory>() with singleton { GsonConverterFactory.create(instance()) }
-        bind<Cache>() with singleton { Cache(context.cacheDir, CacheMaxSize /* 10 MiB */) }
-        bind<OkHttpClient.Builder>() with singleton {
+        bind<Cache>() with provider { Cache(context.cacheDir, CacheMaxSize /* 10 MiB */) }
+        bind<OkHttpClient.Builder>() with provider {
             OkHttpClient.Builder()
                 .cache(instance())
+                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 // Keep the internet result into the cache.
                 .apply {
                     addInterceptor(ConnectInterceptor(context))
