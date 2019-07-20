@@ -1,5 +1,8 @@
 <h1 align="center"> StationMusicFM </h1>
 <p align="center">
+<a href="https://codeclimate.com/github/SmashKs/StationMusicFM/maintainability"><img src="https://api.codeclimate.com/v1/badges/c247648345423c1a9cf3/maintainability" /></a>
+<a href="https://www.codacy.com/app/pokk/StationMusicFM?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SmashKs/StationMusicFM&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/70610c62a3134eb2a8451e0630a459ee"/></a>
+<a href="https://codebeat.co/projects/github-com-smashks-stationmusicfm-master"><img alt="codebeat badge" src="https://codebeat.co/badges/6f2f18f3-eca7-4dd4-b951-2ba3658ebb60" /></a>
 <a href="https://opensource.org/licenses/MIT"><img alt="Licence" src="https://img.shields.io/badge/license-MIT-green.svg" /></a>
 </p>
 
