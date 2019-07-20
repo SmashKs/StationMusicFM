@@ -39,7 +39,7 @@ object Versions {
      * Related Android component lib version.
      */
     object AndroidComponent {
-        const val material = "1.1.0-alpha07"
+        const val material = "1.1.0-alpha08"
         const val androidx = "1.0.0"
         const val annotation = "1.1.0"
         const val appCompat = "1.1.0-beta01"
@@ -53,7 +53,7 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.41"
+        const val kotlinLib = "1.3.50-eap-5"
         const val kotlinCoroutine = "1.2.1"
     }
 
@@ -75,7 +75,7 @@ object Versions {
     object KotlinAndroidExt {
         const val dex = "2.0.1"
         const val anko = "0.10.8"
-        const val kinfer = "2.1.12"
+        const val kinfer = "2.1.13"
         const val ktx = "1.2.0-alpha02"
         const val fragmentKtx = "1.1.0-beta01"
         const val paletteKtx = "1.0.0"
@@ -179,6 +179,6 @@ object Versions {
     }
 
     object Player {
-        const val exoplayer = "2.10.2"
+        const val exoplayer = "2.10.3"
     }
 }

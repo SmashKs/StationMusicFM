@@ -54,6 +54,7 @@ class RankIndexViewModel(
     private val briefRankMapper by lazy { digMapper(BriefRankPMapper::class) }
     //endregion
 
+    @Deprecated("This api was broken.")
     fun runTaskFetchRankIds() = launchBehind {
         _rankIds reqData { fetchRankIdsCase.execListMapping(rankingIdMapper, FetchRankIdsReq()) }
     }
