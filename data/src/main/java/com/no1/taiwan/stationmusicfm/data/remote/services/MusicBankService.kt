@@ -27,8 +27,8 @@ import com.no1.taiwan.stationmusicfm.data.data.musicbank.MusicRankListData
 import com.no1.taiwan.stationmusicfm.data.data.musicbank.SongListInfoData
 import com.no1.taiwan.stationmusicfm.data.remote.config.RankingConfig
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Path
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 /**
@@ -36,9 +36,11 @@ import retrofit2.http.QueryMap
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
 interface MusicBankService {
+    @Headers("User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
     @GET("${RankingConfig.API_REQUEST}/{rank_id}")
-    suspend fun retrieveMusicRanking(@Path("rank_id") rankId: String, @Query("appid") appId: String = "com.bassmusicfm.ios.fm"): MusicInfoData
+    suspend fun retrieveMusicRanking(@Path("rank_id") rankId: String): MusicInfoData
 
+    @Headers("User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
     @GET("${RankingConfig.API_REQUEST}/detail")
     suspend fun retrieveMusicRanks(): MusicRankListData
 

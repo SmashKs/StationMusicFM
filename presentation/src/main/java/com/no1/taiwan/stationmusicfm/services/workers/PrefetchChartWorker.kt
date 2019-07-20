@@ -24,10 +24,10 @@ package com.no1.taiwan.stationmusicfm.services.workers
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinshaver.cast
 import com.no1.taiwan.stationmusicfm.domain.parameters.musicbank.RankParams
 import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsCase
-import com.no1.taiwan.stationmusicfm.domain.usecases.AddRankIdsReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicRanksCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankMusicReq
@@ -43,7 +43,6 @@ import com.no1.taiwan.stationmusicfm.internal.di.UtilModule
 import com.no1.taiwan.stationmusicfm.internal.di.dependencies.UsecaseModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.DataMapperModule
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
-import com.no1.taiwan.stationmusicfm.utils.presentations.exec
 import com.no1.taiwan.stationmusicfm.utils.presentations.execMapping
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
@@ -85,12 +84,16 @@ class PrefetchChartWorker(
     override fun doWork(): Result {
         runBlocking {
             // fetchMusicRanksCase.execListMapping(ranksMapper, FetchMusicRanksReq())
-            val chart = fetchRankMusicCase.execMapping(musicMapper, FetchRankMusicReq(RankParams(id)))
-                .let {
-                    RankingIdEntity(id, title, update, it.songs.first().oriCoverUrl, it.songs.size)
-                }
+            val chart = try {
+                fetchRankMusicCase.execMapping(musicMapper, FetchRankMusicReq(RankParams(id)))
+                    .let { RankingIdEntity(id, title, update, it.songs.first().oriCoverUrl, it.songs.size) }
+            }
+            catch (e: Exception) {
+                loge(e)
+                return@runBlocking Result.failure()
+            }
 
-            addRankIdsCase.exec(AddRankIdsReq(listOf(rankingMapper.toModelFrom(chart))))
+            // addRankIdsCase.exec(AddRankIdsReq(listOf(rankingMapper.toModelFrom(chart))))
         }
 
         return Result.success()

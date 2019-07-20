@@ -22,12 +22,17 @@
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewmodels
 
 import com.no1.taiwan.stationmusicfm.domain.ResponseState
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicRanksCase
+import com.no1.taiwan.stationmusicfm.domain.usecases.FetchMusicRanksReq
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsCase
 import com.no1.taiwan.stationmusicfm.domain.usecases.FetchRankIdsReq
+import com.no1.taiwan.stationmusicfm.entities.mappers.musicbank.BriefRankPMapper
 import com.no1.taiwan.stationmusicfm.entities.mappers.others.RankingPMapper
+import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.features.RankingIds
 import com.no1.taiwan.stationmusicfm.features.RankingIdsForChart
+import com.no1.taiwan.stationmusicfm.features.Rankings
 import com.no1.taiwan.stationmusicfm.ktx.aac.livedata.TransformedLiveData
 import com.no1.taiwan.stationmusicfm.utils.aac.delegates.PreziMapperDigger
 import com.no1.taiwan.stationmusicfm.utils.aac.viewmodels.AutoViewModel
@@ -37,38 +42,47 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.reqData
 
 class RankIndexViewModel(
     private val fetchRankIdsCase: FetchRankIdsCase,
+    private val fetchMusicRanksCase: FetchMusicRanksCase,
     diggerDelegate: PreziMapperDigger
 ) : AutoViewModel(), PreziMapperDigger by diggerDelegate {
     private val _rankIds by lazy { RespMutableLiveData<RankingIds>() }
-    val rankTopper = RankingIdLiveData(_rankIds)
-    val rankElse = RankingIdForChartLiveData(_rankIds)
+    private val _topRanks by lazy { RespMutableLiveData<Rankings>() }
+    val rankTopper = RankingIdLiveData(_topRanks)
+    val rankElse = RankingIdForChartLiveData(_topRanks)
     //region Mappers
     private val rankingIdMapper by lazy { digMapper(RankingPMapper::class) }
+    private val briefRankMapper by lazy { digMapper(BriefRankPMapper::class) }
     //endregion
 
     fun runTaskFetchRankIds() = launchBehind {
         _rankIds reqData { fetchRankIdsCase.execListMapping(rankingIdMapper, FetchRankIdsReq()) }
     }
 
+    fun runTaskFetchMusicRanks() = launchBehind {
+        _topRanks reqData { fetchMusicRanksCase.execListMapping(briefRankMapper, FetchMusicRanksReq()) }
+    }
+
     class RankingIdForChartLiveData(
-        override val source: RespMutableLiveData<RankingIds>
-    ) : TransformedLiveData<ResponseState<RankingIds>, RankingIdsForChart>() {
-        override fun getTransformed(source: ResponseState<RankingIds>) =
-            if (source is ResponseState.Success<RankingIds>)
+        override val source: RespMutableLiveData<Rankings>
+    ) : TransformedLiveData<ResponseState<Rankings>, RankingIdsForChart>() {
+        override fun getTransformed(source: ResponseState<Rankings>) =
+            if (source is ResponseState.Success<Rankings>)
                 source.data?.let { it.subList(4, it.size - 1) }
                     ?.map {
-                        RankingIdForChartItem(it.id, it.title, it.update, it.topTrackUri, it.trackNumber)
+                        RankingIdForChartItem(it.rankId, it.title, it.subTitle, it.coverUrl, 0)
                     }.orEmpty()
             else
                 emptyList()
     }
 
     class RankingIdLiveData(
-        override val source: RespMutableLiveData<RankingIds>
-    ) : TransformedLiveData<ResponseState<RankingIds>, RankingIds>() {
-        override fun getTransformed(source: ResponseState<RankingIds>) =
-            if (source is ResponseState.Success<RankingIds>)
-                source.data?.subList(0, 4).orEmpty()
+        override val source: RespMutableLiveData<Rankings>
+    ) : TransformedLiveData<ResponseState<Rankings>, RankingIds>() {
+        override fun getTransformed(source: ResponseState<Rankings>) =
+            if (source is ResponseState.Success<Rankings>)
+                source.data?.subList(0, 4)?.map {
+                    RankingIdEntity(it.rankId, it.title, it.subTitle, it.coverUrl, 0)
+                }
             else
                 emptyList()
     }

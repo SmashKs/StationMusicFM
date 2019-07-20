@@ -22,22 +22,12 @@
 package com.no1.taiwan.stationmusicfm.features.splash
 
 import android.os.Bundle
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
-import com.no1.taiwan.stationmusicfm.services.WorkerRequestFactory
-import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker
-import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Companion.ARGUMENT_DATA_ID
-import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Companion.ARGUMENT_DATA_TITLE
-import com.no1.taiwan.stationmusicfm.services.workers.PrefetchChartWorker.Companion.ARGUMENT_DATA_UPDATE
-import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.widget.components.typeface.TypeFaceProvider
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import org.kodein.di.generic.instance
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -50,49 +40,47 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Special initial.
-        // MMKV.initialize(this)
-        // MmkvPrefs.setPrefSettings()
-
         // Preload the typeface.
         listOf("santio_regular.otf", "santio_bold.otf")
             .forEach { TypeFaceProvider.getTypeFace(applicationContext, it) }
+        gotoMainMusic()
 
-        observeNonNull(workManager.getWorkInfosByTagLiveData(WorkerRequestFactory.WORKER_CHART_CHECKER)) {
-            firstOrNull()?.run {
-                if (state.isFinished) {
-                    when (state) {
-                        WorkInfo.State.FAILED -> {
-                            resources.getStringArray(R.array.chart_rank)
-                                .apply { workersSize = size }
-                                .asSequence()
-                                .map { it.split("|") }  // Split the data to a list by "|".
-                                .map {
-                                    Data.Builder().putInt(ARGUMENT_DATA_ID, it[0].toInt())
-                                        .putString(ARGUMENT_DATA_TITLE, it[1]).putString(ARGUMENT_DATA_UPDATE, it[2])
-                                        .build()
-                                }  // Build data for the workers' parameter.
-                                .map { OneTimeWorkRequestBuilder<PrefetchChartWorker>().setInputData(it).build() }
-                                .forEach {
-                                    // Observe all workers process.
-                                    observeNonNull(workManager.getWorkInfoByIdLiveData(it.id)) {
-                                        if (state.isFinished) {
-                                            counter.incrementAndGet()
-                                            if (counter.get() == workersSize) {
-                                                gotoMainMusic()
-                                            }
-                                        }
-                                    }
-                                    // Put them into queue for processing.
-                                    workManager.enqueue(it)
-                                }
-                        }
-                        WorkInfo.State.SUCCEEDED -> gotoMainMusic()
-                        else -> toast("Something wrong with your phone, please relaunch app again.")
-                    }
-                }
-            }
-        }
+        // OPTIMIZE(Jieyi): 2019-07-20 It's unnecessary to check.
+        // observeNonNull(workManager.getWorkInfosByTagLiveData(WorkerRequestFactory.WORKER_CHART_CHECKER)) {
+        //     firstOrNull()?.run {
+        //         if (state.isFinished) {
+        //             when (state) {
+        //                 WorkInfo.State.FAILED -> {
+        //                     resources.getStringArray(R.array.chart_rank)
+        //                         .apply { workersSize = size }
+        //                         .asSequence()
+        //                         .map { it.split("|") }  // Split the data to a list by "|".
+        //                         .map {
+        //                             Data.Builder().putInt(ARGUMENT_DATA_ID, it[0].toInt())
+        //                                 .putString(ARGUMENT_DATA_TITLE, it[1]).putString(ARGUMENT_DATA_UPDATE, it[2])
+        //                                 .build()
+        //                         }  // Build data for the workers' parameter.
+        //                         .map { OneTimeWorkRequestBuilder<PrefetchChartWorker>().setInputData(it).build() }
+        //                         .forEach {
+        //                             // Observe all workers process.
+        //                             observeNonNull(workManager.getWorkInfoByIdLiveData(it.id)) {
+        //                                 if (state.isFinished) {
+        //                                     counter.incrementAndGet()
+        //                                     if (counter.get() == workersSize) {
+        //                                         gotoMainMusic()
+        //                                     }
+        //                                 }
+        //                             }
+        //                             // Put them into queue for processing.
+        //                             workManager.enqueue(it)
+        //                         }
+        //                 }
+        //                 WorkInfo.State.SUCCEEDED -> gotoMainMusic()
+        //                 else -> toast("Something wrong with your phone, please relaunch app again.")
+        //             }
+        //         }
+        //     }
+        // }
     }
 
     private fun gotoMainMusic() {

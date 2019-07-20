@@ -25,6 +25,7 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.AlbumInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
+import com.no1.taiwan.stationmusicfm.entities.musicbank.BriefRankEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
@@ -40,6 +41,7 @@ typealias GenreMixInfo = Quadruple<TagInfoEntity.TagEntity, ArtistInfoEntity.Art
 
 typealias SearchHistories = List<SearchHistoryEntity>
 typealias RankingIds = List<RankingIdEntity>
+typealias Rankings = List<BriefRankEntity>
 typealias RankingIdsForChart = List<RankingIdForChartItem>
 typealias Playlists = List<PlaylistInfoEntity>
 typealias LocalMusics = List<LocalMusicEntity>

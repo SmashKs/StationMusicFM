@@ -69,7 +69,8 @@ class RankIndexFragment : IndexFragment<RankIndexViewModel>() {
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         // Update every time because the top thumbnail will be change after went to detail.
-        vm.runTaskFetchRankIds()
+        // vm.runTaskFetchRankIds()
+        vm.runTaskFetchMusicRanks()
     }
 
     /**
