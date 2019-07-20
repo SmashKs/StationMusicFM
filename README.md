@@ -5,6 +5,8 @@
 
 # Introduction
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7924f3cf4f21463a9fd42fdd88884f9c)](https://app.codacy.com/app/pokk/StationMusicFM?utm_source=github.com&utm_medium=referral&utm_content=SmashKs/StationMusicFM&utm_campaign=Badge_Grade_Settings)
+
 A showcase of music app which provides the functions that listening online musics, downloading a music from remote
 server, checking top charts of artists, tracks, albums in this week. Also, with searching function for a track, artist,
 album. Basically, it's a demo app but all the basic functions we provide.
