@@ -42,7 +42,7 @@ object Versions {
         const val material = "1.1.0-alpha08"
         const val androidx = "1.0.0"
         const val annotation = "1.1.0"
-        const val appCompat = "1.1.0-beta01"
+        const val appCompat = "1.1.0-rc01"
         const val cardView = androidx
         const val recyclerView = appCompat
         const val constraintLayout = "2.0.0-beta2"
@@ -77,18 +77,18 @@ object Versions {
         const val anko = "0.10.8"
         const val kinfer = "2.1.13"
         const val ktx = "1.2.0-alpha02"
-        const val fragmentKtx = "1.1.0-beta01"
+        const val fragmentKtx = "1.2.0-alpha01"
         const val paletteKtx = "1.0.0"
         const val collectionKtx = "1.1.0"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
-        const val navigationKtx = "2.1.0-alpha05"
-        const val workKtx = "2.1.0"
+        const val navigationKtx = "2.1.0-beta02"
+        const val workKtx = "2.2.0-beta02"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
     object AndroidArchitectureComponent {
-        const val aacLifecycle = "2.2.0-alpha01"
-        const val room = "2.1.0"
+        const val aacLifecycle = "2.2.0-alpha02"
+        const val room = "2.2.0-alpha01"
     }
 
     /**
@@ -167,7 +167,7 @@ object Versions {
         const val mockitoKotlin = "2.1.0"
         const val mockitoAndroid = "2.23.0"
         const val mockk = "v1.8.9.kotlin13"
-        const val byteBuddy = "1.9.14"
+        const val byteBuddy = "1.9.15"
     }
 
     /**

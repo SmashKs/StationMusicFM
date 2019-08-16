@@ -1,0 +1,50 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/workspace
+    environment:
+      JVM_OPTS: -Xms512m -Xmx4096m
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+      ANDROID_API_LEVEL: 28
+      EMULATOR_API_LEVEL: 22
+      ANDROID_ABI: armeabi-v7a
+      ANDROID_TAG: google_apis
+      ANDROID_TARGET: android-$ANDROID_API_LEVEL
+      ADB_INSTALL_TIMEOUT: 20 # minutes (2 minutes by default)
+    docker:
+      - image: circleci/android:api-28
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradlew
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
+      - run:
+          name: Run Unit Tests
+          command: ./gradlew test
+      - run:
+          name: Run Unit Tests
+          command: ./gradlew test
+      - run:
+          name: Assemble Debug APK
+          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
+      - store_artifacts:
+          path: app/build/outputs/apk
+          destination: apk
+          environment:
+            TERM: dumb
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+          environment:
+            TERM: dumb
+      - store_test_results:
+          path: app/build/test-results
+          environment:
+            TERM: dumb
