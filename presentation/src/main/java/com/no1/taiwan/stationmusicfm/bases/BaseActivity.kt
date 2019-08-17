@@ -33,6 +33,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModul
 import com.no1.taiwan.stationmusicfm.widget.components.viewmodel.ViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.android.retainedKodein
@@ -74,6 +75,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope b
     override fun onDestroy() {
         super.onDestroy()
         uninit()
+        cancel() // cancel is extension on CoroutineScope
     }
     //endregion
 

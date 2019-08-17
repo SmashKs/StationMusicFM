@@ -48,6 +48,7 @@ import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.subKodein
 import org.kodein.di.android.x.kodein
@@ -82,6 +83,7 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(),
 
     private val actionTitle by extra<String>(COMMON_TITLE)
 
+    //region Lifecycle
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         // Focusing on entering animation ([enter] == true) with animation ([nextAnim] != 0).
         if (!enter || nextAnim == 0) return super.onCreateAnimation(transit, enter, nextAnim)
@@ -149,6 +151,12 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(),
         // When the fragment has base_layout uid, it'll attach the function of hiding soft keyboard.
 //        view.findOptional<View>(R.id.base_layout)?.clickedThenHideKeyboard()
     }
+
+    override fun onDetach() {
+        super.onDetach()
+        cancel() // cancel is extension on CoroutineScope
+    }
+
     //endregion
 
     //region Customized methods
