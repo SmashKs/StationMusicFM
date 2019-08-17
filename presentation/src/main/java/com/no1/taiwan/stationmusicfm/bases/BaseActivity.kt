@@ -32,8 +32,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.dependencies.activities.SuperAc
 import com.no1.taiwan.stationmusicfm.internal.di.mappers.PresentationMapperModule
 import com.no1.taiwan.stationmusicfm.widget.components.viewmodel.ViewModelFactory
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.android.retainedKodein
@@ -42,11 +41,9 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
 /**
- * The basic activity is for the normal activity which prepares all necessary variables or functions.
+ * The basic activity is for the normal activity that prepares all necessary variables or functions.
  */
-abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
-    /** Context of this scope.*/
-    override val coroutineContext get() = Dispatchers.Main + job
+abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope by MainScope() {
     override val kodein by retainedKodein {
         extend(parentKodein)
 //        import(appProvider())
@@ -61,12 +58,10 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
         }
     }
     private val parentKodein by kodein()
-    private lateinit var job: Job
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        job = Job()
         // Pre-set the view components.
         preSetContentView()
         setContentView(provideLayoutId())
@@ -79,8 +74,6 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     override fun onDestroy() {
         super.onDestroy()
         uninit()
-        // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically.
-        job.cancel()
     }
     //endregion
 

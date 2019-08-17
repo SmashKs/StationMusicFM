@@ -47,8 +47,7 @@ import com.no1.taiwan.stationmusicfm.utils.FragmentArguments.COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLongerLifeRegister
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.subKodein
 import org.kodein.di.android.x.kodein
@@ -58,7 +57,9 @@ import org.kodein.di.generic.multiton
 /**
  * The basic fragment is for the normal activity that prepares all necessary variables or functions.
  */
-abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, CoroutineScope {
+abstract class BaseFragment<out A : BaseActivity> : Fragment(),
+                                                    KodeinAware,
+                                                    CoroutineScope by MainScope() {
     override val kodein by subKodein(kodein()) {
         /* fragment specific bindings */
         import(SuperFragmentModule.fragmentModule())
@@ -69,9 +70,6 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
             BusFragLongerLifeRegister(fragment)
         }
     }
-    /** Context of this scope.*/
-    override val coroutineContext get() = Dispatchers.Main + job
-    private lateinit var job: Job
     @Suppress("UNCHECKED_CAST")
     protected val parent
         // If there's no parent, forcing crashing the app.
@@ -104,12 +102,6 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
         })
 
         return anim
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically
-        job = Job()
     }
 
     override fun onCreateView(
@@ -156,11 +148,6 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
         rendered(savedInstanceState)
         // When the fragment has base_layout uid, it'll attach the function of hiding soft keyboard.
 //        view.findOptional<View>(R.id.base_layout)?.clickedThenHideKeyboard()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        job.cancel()
     }
     //endregion
 
