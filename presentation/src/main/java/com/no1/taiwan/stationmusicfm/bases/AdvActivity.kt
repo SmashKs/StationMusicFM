@@ -34,13 +34,14 @@ import org.kodein.di.generic.instance
 import java.lang.reflect.ParameterizedType
 
 /**
- * The basic activity is in MVVM architecture which prepares all necessary variables or functions.
+ * The basic activity is in MVVM architecture that prepares all necessary variables or functions.
  */
 abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     /** Add the AAC [ViewModel] for each fragments. */
     @Suppress("UNCHECKED_CAST")
     protected val vm
-        get() = vmCreateMethod.invoke(vmProviders, vmConcreteClass) as? VM ?: throw ClassCastException()
+        get() = vmCreateMethod.invoke(vmProviders,
+                                      vmConcreteClass) as? VM ?: throw ClassCastException()
 
     private val viewModelFactory: ViewModelProvider.Factory by instance()
     /** [VM] is the first (index: 0) in the generic declare. */
@@ -48,10 +49,12 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
         get() = cast<Class<*>>(cast<ParameterizedType>(this::class.java.genericSuperclass).actualTypeArguments[0])
     private val vmProviders get() = ViewModelProviders.of(this, viewModelFactory)
     /** The [ViewModelProviders.of] function for obtaining a [ViewModel]. */
-    private val vmCreateMethod get() = vmProviders.javaClass.getMethod("get", vmConcreteClass.superclass.javaClass)
+    private val vmCreateMethod
+        get() = vmProviders.javaClass.getMethod("get",
+                                                vmConcreteClass.superclass.javaClass)
     /** Dialog loading view. */
     private val loadingView by lazy { LoadingDialog.getInstance(this) }
-    /** Enable dialog loading view or use loading layout. */
+    /** Enable a dialog loading view or use loading layout. */
     protected open var enableDialogLoading = true
 
     /**
@@ -85,7 +88,7 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
     /**
      * Show an error message
      *
-     * @param message A string representing an error.
+     * @param message String representing an error.
      */
     override fun showError(message: String) = if (enableDialogLoading)
         contentView?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show() } ?: Unit

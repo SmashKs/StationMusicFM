@@ -38,7 +38,7 @@ suspend fun <M : Any, V : BaseUsecase.RequestValues> AsyncCase<M, V>.exec(
 
 /**
  * Connected [com.no1.taiwan.newsbasket.domain.DeferredUsecase] and execute the usecase work with
- * the mapper for transform to an object for presentation layer. (Because the variables should be
+ * the mapper for transforming to an object for presentation layer. (Because the variables should be
  * primitive variable).
  *
  * @param mapper the mapper for transforming from [Model] to [Entity].
@@ -51,7 +51,7 @@ suspend fun <M : Model, E : Entity, V : BaseUsecase.RequestValues> AsyncCase<M, 
 
 /**
  * Connected [com.no1.taiwan.newsbasket.domain.DeferredUsecase] and execute the usecase work with
- * the mapper for transform to a list of object for presentation layer. (Because the variables should be
+ * the mapper for transforming to a list of object for presentation layer. (Because the variables should be
  * primitive variable).
  *
  * @param mapper the mapper for transforming from List<[Model]> to List<[Entity]>.

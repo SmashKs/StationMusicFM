@@ -54,7 +54,7 @@ interface LoadView {
     /**
      * Show an error message
      *
-     * @param message A string representing an error.
+     * @param message String representing an error.
      */
     @UiThread
     fun showError(message: String)

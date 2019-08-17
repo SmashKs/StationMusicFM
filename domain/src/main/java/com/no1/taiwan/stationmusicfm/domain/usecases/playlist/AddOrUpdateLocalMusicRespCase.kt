@@ -45,11 +45,14 @@ class AddOrUpdateLocalMusicRespCase(
         // Get the parameter and pass into `increasing` or `deceasing` track count operation.
         val params = it.parameters.toApiAnyParam()
         val addOrMinus = cast<Boolean>(params[PARAM_NAME_PLAYLIST_ADD_OR_MINUS])
-        // Playlist list will be a string with multiple number so it needs to be separated by ",".
+        // Playlist list will be string with multiple number, so it needs to be separated by ",".
         cast<String>(params[PARAM_NAME_PLAYLIST_LIST])
             .takeIf(String::isNotBlank)
             ?.split(",")
-            ?.forEach { repository.updateCountOfPlaylist(PlaylistParams(listOf(it.toInt()), addOrMinus = addOrMinus)) }
+            ?.forEach {
+                repository.updateCountOfPlaylist(PlaylistParams(listOf(it.toInt()),
+                                                                addOrMinus = addOrMinus))
+            }
         true
     }
 

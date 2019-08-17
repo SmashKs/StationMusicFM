@@ -46,7 +46,7 @@ class RankChartHasParsedWorker(
         /** bindings */
         import(UtilModule.utilProvider(context))
         import(PresentationModule.kitsProvider())
-        /** usecases are bind here but the scope is depending on each layers.  */
+        /** usecases are bind here, but the scope is depending on each layer.  */
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(context))
         import(DataMapperModule.dataUtilProvider())

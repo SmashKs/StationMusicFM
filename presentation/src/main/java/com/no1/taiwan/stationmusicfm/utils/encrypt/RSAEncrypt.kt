@@ -64,7 +64,7 @@ class RSAEncrypt private constructor() {
         return kp.public.key() to kp.private.key()
     }
 
-    // Encrypts a string
+    // Encrypts string
     fun encrypt(message: String, key: String): String {
         val encryptedBytes: ByteArray
         val pubKey = key.toPublicKey()
@@ -88,7 +88,7 @@ class RSAEncrypt private constructor() {
         return String(decryptedBytes)
     }
 
-    // Converts a string to a PublicKey object
+    // Converts string to a PublicKey object
     private fun String.toPublicKey(): PublicKey {
         val keyBytes: ByteArray = Base64.decode(this, Base64.DEFAULT)
         val spec = X509EncodedKeySpec(keyBytes)

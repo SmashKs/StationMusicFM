@@ -45,7 +45,7 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 /**
- * The basic fragment is in MVVM architecture which prepares all necessary variables or functions.
+ * The basic fragment is in MVVM architecture that prepares all necessary variables or functions.
  */
 abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragment<A>(), LoadView {
     companion object {
@@ -61,9 +61,10 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     /** Add the AAC [ViewModel] for each fragments. */
     @Suppress("UNCHECKED_CAST")
     protected val vm by lazy {
-        vmCreateMethod.invoke(vmProvider(viewmodelProviderSource), vmConcreteClass) as? VM ?: throw ClassCastException()
+        vmCreateMethod.invoke(vmProvider(viewmodelProviderSource),
+                              vmConcreteClass) as? VM ?: throw ClassCastException()
     }
-    // OPTIMIZE(jieyi): 2019/02/15 In old phone here will cause frame drops.
+    // OPTIMIZE(jieyi): 2019/02/15 In an old phone here will cause frame drops.
     private val viewModelFactory: ViewModelProvider.Factory by instance()
     /** [VM] is the first (index: 1) in the generic declare. */
     private val vmConcreteClass: Class<*>
@@ -75,7 +76,10 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
             // If we don't set viewmodel index by ourselves, it can find the first generic viewmodel.
             val viewmodelClass = if (genericVMIndex.isDefault())
             // Recursively find the first generic viewmodel data type.
-                actualTypeArguments.firstOrNull { checkAllSuperClass(cast(it), ViewModel::class.java) }
+                actualTypeArguments.firstOrNull {
+                    checkAllSuperClass(cast(it),
+                                       ViewModel::class.java)
+                }
             else
             // Customize index.
                 actualTypeArguments[genericVMIndex]
@@ -84,16 +88,21 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
         }
     /** The [ViewModelProviders.of] function for obtaining a [ViewModel]. */
     private val vmCreateMethod by lazy {
-        vmProvider(viewmodelProviderSource).javaClass.getMethod("get", vmConcreteClass.superclass.javaClass)
+        vmProvider(viewmodelProviderSource).javaClass.getMethod("get",
+                                                                vmConcreteClass.superclass.javaClass)
     }
     /** Dialog loading view. */
     private val loadingView by lazy { LoadingDialog.getInstance(this, true) }
-    /** Enable dialog loading view or use loading layout. */
+    /** Enable a dialog loading view or use loading layout. */
     protected open var enableDialogLoading = true
     protected open var firstTimeEnter = true
 
     //region Fragment's lifecycle.
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         bindLiveData()
         return super.onCreateView(inflater, container, savedInstanceState)
     }

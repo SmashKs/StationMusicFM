@@ -22,7 +22,7 @@
 package com.no1.taiwan.stationmusicfm.internal.di.tags
 
 /**
- * The tags for separating the same provided data type. Also, using a string to individual
+ * The tags for separating the same provided data type. Also, using string to individual
  * them.
  */
 object InstanceTag {

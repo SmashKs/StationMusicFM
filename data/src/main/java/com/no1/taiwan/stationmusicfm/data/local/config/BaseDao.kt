@@ -28,8 +28,8 @@ import androidx.room.Update
 
 /**
  * Integrated the base [androidx.room.Room] database operations.
- * Thru [androidx.room.Room] we can just define the interfaces which we want to
- * access for from local database.
+ * Thru [androidx.room.Room] we can just define the interfaces that we want to
+ * access for from a local database.
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
 interface BaseDao<T> {

@@ -56,7 +56,7 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.multiton
 
 /**
- * The basic fragment is for the normal activity which prepares all necessary variables or functions.
+ * The basic fragment is for the normal activity that prepares all necessary variables or functions.
  */
 abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, CoroutineScope {
     override val kodein by subKodein(kodein()) {
@@ -78,7 +78,8 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
         get() = requireActivity() as A
     // Set action bar's back icon color into all fragments are inheriting advFragment.
     protected open val backDrawable by lazy {
-        R.drawable.ic_arrow_back_black.toDrawable(parent).changeColor(getColor(R.color.colorPrimaryTextV1))
+        R.drawable.ic_arrow_back_black.toDrawable(parent)
+            .changeColor(getColor(R.color.colorPrimaryTextV1))
     }
 
     private val actionTitle by extra<String>(COMMON_TITLE)
@@ -111,7 +112,11 @@ abstract class BaseFragment<out A : BaseActivity> : Fragment(), KodeinAware, Cor
         job = Job()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Keep the instance data.
         retainInstance = true
 

@@ -70,7 +70,7 @@ class PagerTrackFragment : BasePagerFragment() {
             peel {
                 if (enterCount <= 1 && it.tracks.isNotEmpty() && adapter.itemCount == 0)
                     adapter.append(cast<MusicVisitables>(it.tracks))
-                // FIXME(jieyi): 2019-04-17 [vm.tracksLiveData] will be update after fetching more.
+                // FIXME(jieyi): 2019-04-17 [vm.tracksLiveData] will be updated after fetching more.
                 // After run fetch more function, [countShouldBe] will must be larger than current.
                 val countShouldBe = Pager.LIMIT * it.attr.page.toInt()
                 if (enterCount > 0 && it.attr.page.toInt() > 1 && countShouldBe > adapter.itemCount) {

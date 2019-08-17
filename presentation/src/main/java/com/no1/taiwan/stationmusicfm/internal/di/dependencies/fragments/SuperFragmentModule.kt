@@ -44,7 +44,7 @@ import org.kodein.di.generic.provider
  */
 object SuperFragmentModule {
     fun fragmentModule() = Kodein.Module("All Fragments") {
-        // Import all of the fragment modules.
+        // Import all the fragment modules.
         import(providerViewModel())
         import(RankModule.rankProvider())
     }
@@ -59,7 +59,9 @@ object SuperFragmentModule {
                                                                        instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            ExploreAlbumViewModel::class.java to ExploreAlbumViewModel(instance(), instance(), instance())
+            ExploreAlbumViewModel::class.java to ExploreAlbumViewModel(instance(),
+                                                                       instance(),
+                                                                       instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
             ExploreArtistViewModel::class.java to ExploreArtistViewModel(instance(),
@@ -78,7 +80,9 @@ object SuperFragmentModule {
                                                                        instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            ExploreTrackViewModel::class.java to ExploreTrackViewModel(instance(), instance(), instance())
+            ExploreTrackViewModel::class.java to ExploreTrackViewModel(instance(),
+                                                                       instance(),
+                                                                       instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
             ExplorePhotoViewModel::class.java to ExplorePhotoViewModel(instance(), instance())
@@ -95,13 +99,21 @@ object SuperFragmentModule {
             RankIndexViewModel::class.java to RankIndexViewModel(instance(), instance(), instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            RankDetailViewModel::class.java to RankDetailViewModel(instance(), instance(), instance(), instance())
+            RankDetailViewModel::class.java to RankDetailViewModel(instance(),
+                                                                   instance(),
+                                                                   instance(),
+                                                                   instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            MyMusicIndexViewModel::class.java to MyMusicIndexViewModel(instance(), instance(), instance(), instance())
+            MyMusicIndexViewModel::class.java to MyMusicIndexViewModel(instance(),
+                                                                       instance(),
+                                                                       instance(),
+                                                                       instance())
         }
         bind<ViewModelEntry>().inSet() with provider {
-            MyMusicDetailViewModel::class.java to MyMusicDetailViewModel(instance(), instance(), instance())
+            MyMusicDetailViewModel::class.java to MyMusicDetailViewModel(instance(),
+                                                                         instance(),
+                                                                         instance())
         }
     }
 }

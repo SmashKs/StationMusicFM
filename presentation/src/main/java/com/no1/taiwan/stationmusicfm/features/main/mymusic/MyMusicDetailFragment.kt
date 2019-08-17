@@ -72,7 +72,8 @@ class MyMusicDetailFragment : AdvFragment<MainActivity, MyMusicDetailViewModel>(
          *
          * @return A new bundle of this fragment.
          */
-        fun createBundle(playlistInfo: PlaylistInfoEntity) = bundleOf(ARGUMENT_PLAYLIST_INFO to playlistInfo)
+        fun createBundle(playlistInfo: PlaylistInfoEntity) =
+            bundleOf(ARGUMENT_PLAYLIST_INFO to playlistInfo)
     }
 
     private var hasDelete = false
@@ -81,9 +82,13 @@ class MyMusicDetailFragment : AdvFragment<MainActivity, MyMusicDetailViewModel>(
     private val playlistInfo by extraNotNull<PlaylistInfoEntity>(ARGUMENT_PLAYLIST_INFO)
     //endregion
     private val adapter: TrackOfPlaylistNotifiableAdapter by instance(ADAPTER_TRACK_OF_PLAYLIST)
-    private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR)
+    private val decoration: RecyclerView.ItemDecoration by instance(
+        ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR)
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val bottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent, viewLifecycleOwner) }
+    private val bottomSheet by lazy {
+        BottomSheetFactory.createMusicSheet(parent,
+                                            viewLifecycleOwner)
+    }
 
     init {
         BusFragLifeRegister(this)
@@ -101,7 +106,7 @@ class MyMusicDetailFragment : AdvFragment<MainActivity, MyMusicDetailViewModel>(
                 loge(it)
             } doWith this@MyMusicDetailFragment
         }
-        // After removing a music from the playlist.
+        // After removing music from the playlist.
         observeNonNull(vm.removeRes) {
             if (this) {
                 hasDelete = true
@@ -175,7 +180,8 @@ class MyMusicDetailFragment : AdvFragment<MainActivity, MyMusicDetailViewModel>(
         // Update the recycler view.
         adapter.updateViewHolderItems()
         // Update number of the songs displaying.
-        find<TextView>(R.id.ftv_track_count).text = getString(R.string.viewholder_playlist_song).format(count)
+        find<TextView>(R.id.ftv_track_count).text =
+            getString(R.string.viewholder_playlist_song).format(count)
         // Only the music was downloaded, it should be deleted.
         if (playlistInfo.id == PlaylistIndex.DOWNLOADED.ordinal)
             FilePathFactory.removeMusic(FilePathFactory.obtainMusicPath(tempSongEntity.encodeByName()))

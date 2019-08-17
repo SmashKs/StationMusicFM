@@ -70,7 +70,7 @@ internal inline infix fun <D> ResponseState<D>.peel(noinline λ: (D) -> Unit) =
     LoadingBuilder(this).apply { successBlock = λ }
 
 /**
- * Check the [ResponseState]'s changing and do the corresponding reaction. For the situation which we need
+ * Check the [ResponseState]'s changing and do the corresponding reaction. For the situation that we need
  * to use multi-requests in the same time.
  */
 internal inline infix fun <D> ResponseState<D>.peelAndContinue(noinline successBlock: (D) -> Unit) =
@@ -88,13 +88,15 @@ internal inline infix fun <D> ResponseState<D>.peelSkipLoading(noinline successB
 internal inline infix fun <D> ResponseState<D>.peelCompleted(noinline completedBlock: () -> Unit) =
     LoadingBuilder(this).apply { this.completedBlock = completedBlock }
 
-internal inline infix fun <D> LoadingBuilder<D>.happenError(noinline errorBlock: (String) -> Unit) = apply {
-    this.errorBlock = errorBlock
-}
+internal inline infix fun <D> LoadingBuilder<D>.happenError(noinline errorBlock: (String) -> Unit) =
+    apply {
+        this.errorBlock = errorBlock
+    }
 
-internal inline infix fun <D> LoadingBuilder<D>.finally(noinline completedBlock: () -> Unit) = apply {
-    this.completedBlock = completedBlock
-}
+internal inline infix fun <D> LoadingBuilder<D>.finally(noinline completedBlock: () -> Unit) =
+    apply {
+        this.completedBlock = completedBlock
+    }
 
 /**
  * Execute the checking [ResponseState]'s process with the triggering [LoadView].

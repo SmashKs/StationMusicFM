@@ -36,7 +36,7 @@ import org.kodein.di.generic.setBinding
  */
 object SuperActivityModule {
     fun activityModule() = Kodein.Module("All Activities") {
-        // Import all of the activity modules.
+        /* Import all of the activity modules. */
         import(TestModule.testProvider())
 
         /** ViewModel Set for [com.no1.taiwan.stationmusicfm.utils.viewmodel.ViewModelFactory] */

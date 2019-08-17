@@ -25,12 +25,12 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity
 import com.no1.taiwan.stationmusicfm.utils.file.FilePathFactory
 
 /**
- * Transform the list, if the uri we has downloaded then change to it.
+ * Transform the list, if the uri we have downloaded then change to it.
  *
  * @receiver List<CommonMusicEntity.SongEntity>
  * @return List<String>
  */
 fun List<CommonMusicEntity.SongEntity>.transformLocalUri() = asSequence()
-    // Get the local uri from the downloaded path if the track is exist.
+    // Get the local uri from the downloaded path if the track is existed.
     .map { song -> FilePathFactory.getMusicPath(song.encodeByName()) ?: song.url }
     .toList()

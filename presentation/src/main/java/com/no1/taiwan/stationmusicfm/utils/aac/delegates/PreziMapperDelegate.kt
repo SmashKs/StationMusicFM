@@ -29,7 +29,7 @@ class PreziMapperDelegate(private val mapperPool: PreziMapperPool) : PreziMapper
     /**
      * Get a mapper object from the mapper pool.
      *
-     * @param klass the data type of the the mapper.
+     * @param klass the data type of the mapper.
      */
     override fun <PM : PreziMapper> digMapper(klass: KClass<PM>) = mapperPool[klass.java] as PM
 }

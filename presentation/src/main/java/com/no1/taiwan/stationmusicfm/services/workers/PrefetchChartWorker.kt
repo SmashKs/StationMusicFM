@@ -64,7 +64,7 @@ class PrefetchChartWorker(
         /** bindings */
         import(UtilModule.utilProvider(context))
         import(PresentationModule.kitsProvider())
-        /** usecases are bind here but the scope is depending on each layers.  */
+        /** usecases are bind here, but the scope is depending on each layer.  */
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(context))
         import(DataMapperModule.dataUtilProvider())
@@ -86,7 +86,13 @@ class PrefetchChartWorker(
             // fetchMusicRanksCase.execListMapping(ranksMapper, FetchMusicRanksReq())
             val chart = try {
                 fetchRankMusicCase.execMapping(musicMapper, FetchRankMusicReq(RankParams(id)))
-                    .let { RankingIdEntity(id, title, update, it.songs.first().oriCoverUrl, it.songs.size) }
+                    .let {
+                        RankingIdEntity(id,
+                                        title,
+                                        update,
+                                        it.songs.first().oriCoverUrl,
+                                        it.songs.size)
+                    }
             }
             catch (e: Exception) {
                 loge(e)

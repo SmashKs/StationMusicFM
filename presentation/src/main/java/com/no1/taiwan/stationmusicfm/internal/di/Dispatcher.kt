@@ -35,7 +35,7 @@ object Dispatcher {
         import(AppModule.appProvider(app.applicationContext))
         /** bindings */
         import(UtilModule.utilProvider(app.applicationContext))
-        /** usecases are bind here but the scope is depending on each layers.  */
+        /** usecases are bind here, but the scope is depending on each layer.  */
         import(UsecaseModule.usecaseProvider())
         import(UsecaseModule.delegateProvider())
         import(RepositoryModule.repositoryProvider(app.applicationContext))
@@ -46,7 +46,7 @@ object Dispatcher {
         /** bindings */
         import(UtilModule.utilProvider(context))
         import(PresentationModule.kitsProvider())
-        /** usecases are bind here but the scope is depending on each layers.  */
+        /** usecases are bind here, but the scope is depending on each layer.  */
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(context))
         import(DataMapperModule.dataUtilProvider())
@@ -59,7 +59,7 @@ object Dispatcher {
         /** bindings */
         import(UtilModule.utilProvider(context))
         import(PresentationModule.kitsProvider())
-        /** usecases are bind here but the scope is depending on each layers.  */
+        /** usecases are bind here, but the scope is depending on each layer.  */
         import(UsecaseModule.usecaseProvider())
         import(RepositoryModule.repositoryProvider(context))
         import(DataMapperModule.dataUtilProvider())

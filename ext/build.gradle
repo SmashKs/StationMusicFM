@@ -35,7 +35,7 @@ dependencies {
         exclude(group: "org.jetbrains.kotlin")
     }
 
-    //region For the the newest version.
+    //region For the newest version.
     testImplementation(Deps.GlobalTest.byteBuddy)
     testImplementation(Deps.GlobalTest.byteBuddyAgent)
     //endregion

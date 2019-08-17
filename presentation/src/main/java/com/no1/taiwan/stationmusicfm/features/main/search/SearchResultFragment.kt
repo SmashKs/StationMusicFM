@@ -74,10 +74,14 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: NotifiableAdapter by instance(ADAPTER_TRACK)
     private val decoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_SEPARATOR)
-    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
+    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(
+        ITEM_DECORATION_ACTION_BAR_BLANK)
     private val rvScrollListener: LoadMoreScrollListener by instance()
     private val player: MusicPlayer by instance()
-    private val optionsBottomSheet by lazy { BottomSheetFactory.createMusicSheet(parent, viewLifecycleOwner) }
+    private val optionsBottomSheet by lazy {
+        BottomSheetFactory.createMusicSheet(parent,
+                                            viewLifecycleOwner)
+    }
 
     init {
         BusFragLongerLifeRegister(this)
@@ -200,10 +204,11 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
         val res = player.play(position)
         if (res)
-            adapter.playingPosition = position  // For updating current views are showing on the recycler view.
+            adapter.playingPosition =
+                position  // For updating current views are showing on the recycler view.
         else
             adapter.setStateMusicBy(position, res)
-        // Add the play history into database.
+        /* Add the play history into a database. */
         vm.runTaskAddOrUpdateToPlayHistory(song)
     }
 
