@@ -60,6 +60,3 @@ dependencies {
     implementation(Deps.Presentation.appcompat)
     implementation(Dependencies.player.values())
 }
-repositories {
-    mavenCentral()
-}
