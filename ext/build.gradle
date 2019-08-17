@@ -19,6 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import dependencies.Dependencies
+import dependencies.Deps
+
 apply plugin: "java-library"
 apply plugin: "kotlin"
 
@@ -34,19 +37,19 @@ tasks.whenObjectAdded {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation(dependencies.Dependencies.kotlin.values())
+    implementation(Dependencies.kotlin.values())
 
-    testImplementation(dependencies.Deps.GlobalTest.kotlin)
-    testImplementation(dependencies.Deps.GlobalTest.mockito) {
+    testImplementation(Deps.GlobalTest.kotlin)
+    testImplementation(Deps.GlobalTest.mockito) {
         exclude(group: "org.jetbrains.kotlin", module: "kotlin-reflect")
     }
-    testImplementation(dependencies.Deps.GlobalTest.assertk) {
+    testImplementation(Deps.GlobalTest.assertk) {
         exclude(group: "org.jetbrains.kotlin")
     }
 
     //region For the the newest version.
-    testImplementation(dependencies.Deps.GlobalTest.byteBuddy)
-    testImplementation(dependencies.Deps.GlobalTest.byteBuddyAgent)
+    testImplementation(Deps.GlobalTest.byteBuddy)
+    testImplementation(Deps.GlobalTest.byteBuddyAgent)
     //endregion
 }
 

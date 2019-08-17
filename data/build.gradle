@@ -19,17 +19,21 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import dependencies.Dependencies
+import dependencies.Deps
+import dependencies.Versions
+
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "org.jetbrains.kotlin.kapt"
 
 android {
-    compileSdkVersion dependencies.Versions.Android.compileSdk
+    compileSdkVersion Versions.Android.compileSdk
 
     defaultConfig {
-        minSdkVersion dependencies.Versions.Android.minSdk
-        targetSdkVersion dependencies.Versions.Android.targetSdk
+        minSdkVersion Versions.Android.minSdk
+        targetSdkVersion Versions.Android.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -84,23 +88,23 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation([project(":domain"), project(":ext")])
 
-    implementation(dependencies.Dependencies.commonAndroidx.values())
-    implementation(dependencies.Dependencies.kotlinAndroid.values())
-    implementation(dependencies.Deps.Global.shaver) {
+    implementation(Dependencies.commonAndroidx.values())
+    implementation(Dependencies.kotlinAndroid.values())
+    implementation(Deps.Global.shaver) {
         exclude(group: "io.reactivex.rxjava2")
     }
-    implementation(dependencies.Deps.Global.gson)
+    implementation(Deps.Global.gson)
 
-    kapt(dependencies.Deps.Data.roomAnnotation)
-    implementation(dependencies.Deps.Data.room)
-    implementation(dependencies.Deps.Data.roomKtx)
-    implementation(dependencies.Deps.Data.mmkv)
-    implementation(dependencies.Deps.Data.jsoup)
+    kapt(Deps.Data.roomAnnotation)
+    implementation(Deps.Data.room)
+    implementation(Deps.Data.roomKtx)
+    implementation(Deps.Data.mmkv)
+    implementation(Deps.Data.jsoup)
 
     //region Internet & ImageData loading
-    implementation(dependencies.Deps.Data.retrofit2)
+    implementation(Deps.Data.retrofit2)
+    //endregion
 }
-//endregion
 
 //region Firebase
 //implementation(dependencies.Deps.Data.firebaseDB)
