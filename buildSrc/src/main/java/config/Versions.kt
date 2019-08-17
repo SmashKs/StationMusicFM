@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dependencies
+package config
 
 /**
  * Collect all libs of the version number.

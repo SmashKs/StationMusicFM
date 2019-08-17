@@ -19,8 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import dependencies.Dependencies
-import dependencies.Deps
+import config.Dependencies
+import config.Deps
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])

@@ -19,14 +19,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import dependencies.Versions
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext {
-        deteckt_version = Versions.Plugin.detekt
-    }
+    extra["detekt_version"] = config.Versions.Plugin.detekt
 
     repositories {
         google()
@@ -34,12 +30,12 @@ buildscript {
         maven { url = uri("http://dl.bintray.com/kotlin/kotlin-eap") }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.0-alpha06'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Kotlin.kotlinLib}"
+        classpath("com.android.tools.build:gradle:3.5.0-beta05")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${config.Versions.Kotlin.kotlinLib}")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
 //        classpath "org.jacoco:org.jacoco.core:0.8.4"
-        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0"
+        classpath("android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0")
 //        classpath "com.google.gms:google-services:4.2.0"
     }
 }
@@ -49,30 +45,26 @@ plugins {
     id("com.github.ben-manes.versions").version("0.22.0")
 }
 
-dependencies {
-    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:${deteckt_version}"
-}
+// dependencies {
+//     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${deteckt_version}")
+// }
 
 subprojects {
     //region Apply plugin
     apply {
-        switch (name) {
-            case "domain":
-            case "ext":
+        when (name) {
+            "domain", "ext" -> {
                 plugin("java-library")
                 plugin("kotlin")
-                break
-            case "widget":
-            case "ktx":
-            case "player":
-            case "data":
+            }
+            "widget", "ktx", "player", "data" -> {
                 plugin("com.android.library")
                 plugin("kotlin-android")
-                break
-            case "presentation":
+            }
+            "presentation" -> {
                 plugin("com.android.application")
                 plugin("kotlin-android")
-                break
+            }
         }
         if (name == "data" || name == "presentation") {
             plugin("kotlin-android-extensions")
@@ -83,12 +75,13 @@ subprojects {
     }
     //endregion
 
+    //region Detekt
+    val detekt_version: String by rootProject.extra
     detekt {
-        toolVersion = "$deteckt_version"
+        toolVersion = detekt_version
         debug = true
         parallel = true
         input = files("src/main/java")
-        filters = ".*/resources/.*,.*/build/.*"
         config = files("$rootDir/detekt.yml")
 
         idea {
@@ -99,20 +92,25 @@ subprojects {
         }
     }
 
-    tasks.whenObjectAdded { task ->
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
+        exclude(".*/resources/.*", ".*/build/.*") // but exclude our legacy internal package
+    }
+    //endregion
+
+    tasks.whenObjectAdded {
         if (
-        task.name.contains("lint") ||
-                task.name == "clean" ||
-                task.name.contains("jacoco") ||
-                task.name.contains("lintVitalRelease") ||
-                task.name.contains("Aidl") ||
-                task.name.contains("mockableAndroidJar") ||
-                task.name.contains("UnitTest") ||
-                task.name.contains("AndroidTest") ||
-                task.name.contains("Ndk") ||
-                task.name.contains("Jni")
+            name.contains("lint") ||
+            name == "clean" ||
+            name.contains("jacoco") ||
+            name.contains("lintVitalRelease") ||
+            name.contains("Aidl") ||
+            name.contains("mockableAndroidJar") ||
+            name.contains("UnitTest") ||
+            name.contains("AndroidTest") ||
+            name.contains("Ndk") ||
+            name.contains("Jni")
         ) {
-            task.enabled = false
+            enabled = false
         }
     }
 }
@@ -123,12 +121,12 @@ allprojects {
         jcenter()
         mavenCentral()
         // required to find the project's artifacts
-        maven { url = "https://dl.bintray.com/pokk/maven" }
-        maven { url = "http://dl.bintray.com/kotlin/kotlin-eap" }
-        maven { url = "https://dl.bintray.com/kodein-framework/Kodein-DI" }
+        maven { url = uri("https://dl.bintray.com/pokk/maven") }
+        maven { url = uri("http://dl.bintray.com/kotlin/kotlin-eap") }
+        maven { url = uri("https://dl.bintray.com/kodein-framework/Kodein-DI") }
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }

@@ -19,9 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import dependencies.Dependencies
-import dependencies.Deps
-import dependencies.Versions
+import config.Dependencies
+import config.Deps
+import config.Versions
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
@@ -31,16 +31,10 @@ apply from: "../utils.gradle"
 
 android {
     compileSdkVersion Versions.Android.compileSdk
-
     defaultConfig {
         minSdkVersion Versions.Android.minSdk
         targetSdkVersion Versions.Android.targetSdk
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -75,6 +69,10 @@ android {
             buildConfigField 'String', "param2", getProps("param_2")
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     testOptions { unitTests.returnDefaultValues = true }
     lintOptions { abortOnError = false }
 }
@@ -105,8 +103,8 @@ dependencies {
     //region Internet & ImageData loading
     implementation(Deps.Data.retrofit2)
     //endregion
-}
 
-//region Firebase
-//implementation(dependencies.Deps.Data.firebaseDB)
-//endregion
+    //region Firebase
+    // implementation(dependencies.Deps.Data.firebaseDB)
+    //endregion
+}

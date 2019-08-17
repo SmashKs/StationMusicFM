@@ -19,22 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import dependencies.Dependencies
-import dependencies.Deps
-import dependencies.Versions
+import config.Dependencies
+import config.Deps
+import config.Versions
 
 android {
     compileSdkVersion Versions.Android.compileSdk
-
     defaultConfig {
         minSdkVersion Versions.Android.minSdk
         targetSdkVersion Versions.Android.targetSdk
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled = true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -50,6 +44,10 @@ android {
             ext.alwaysUpdateBuildId = false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     testOptions { unitTests.returnDefaultValues = true }
     lintOptions { abortOnError = false }
