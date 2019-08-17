@@ -54,9 +54,34 @@ dependencies {
 }
 
 subprojects {
+    //region Apply plugin
     apply {
+        switch (name) {
+            case "domain":
+            case "ext":
+                plugin("java-library")
+                plugin("kotlin")
+                break
+            case "widget":
+            case "ktx":
+            case "player":
+            case "data":
+                plugin("com.android.library")
+                plugin("kotlin-android")
+                break
+            case "presentation":
+                plugin("com.android.application")
+                plugin("kotlin-android")
+                break
+        }
+        if (name == "data" || name == "presentation") {
+            plugin("kotlin-android-extensions")
+            plugin("org.jetbrains.kotlin.kapt")
+        }
         plugin("io.gitlab.arturbosch.detekt")
+//        plugin("org.jlleitschuh.gradle.ktlint")
     }
+    //endregion
 
     detekt {
         toolVersion = "$deteckt_version"

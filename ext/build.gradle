@@ -22,9 +22,6 @@
 import dependencies.Dependencies
 import dependencies.Deps
 
-apply plugin: "java-library"
-apply plugin: "kotlin"
-
 tasks.whenObjectAdded {
     if (name == "clean" ||
             name.contains("lint") ||

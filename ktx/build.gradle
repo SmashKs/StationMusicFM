@@ -23,9 +23,6 @@ import dependencies.Dependencies
 import dependencies.Deps
 import dependencies.Versions
 
-apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-
 android {
     compileSdkVersion Versions.Android.compileSdk
 

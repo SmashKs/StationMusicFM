@@ -23,10 +23,6 @@ import dependencies.Dependencies
 import dependencies.Deps
 import dependencies.Versions
 
-apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-apply plugin: 'kotlin-android-extensions'
-
 android {
     compileSdkVersion Versions.Android.compileSdk
 

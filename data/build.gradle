@@ -27,6 +27,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
 apply plugin: "org.jetbrains.kotlin.kapt"
+apply from: "../utils.gradle"
 
 android {
     compileSdkVersion Versions.Android.compileSdk
@@ -109,15 +110,3 @@ dependencies {
 //region Firebase
 //implementation(dependencies.Deps.Data.firebaseDB)
 //endregion
-
-// Get a variable from local.properties.
-def getProps(String propName) {
-    def propsFile = rootProject.file('local.properties')
-
-    if (!propsFile.exists()) return "\"No_Exist\""
-
-    def props = new Properties()
-    props.load(new FileInputStream(propsFile))
-
-    return null != props[propName] ? props[propName] : "\"There_is_no_parameter\""
-}

@@ -23,12 +23,6 @@ import dependencies.Dependencies
 import dependencies.Deps
 import dependencies.Versions
 
-apply plugin: "com.android.application"
-apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
-apply plugin: "org.jetbrains.kotlin.kapt"
-//apply plugin: "androidx.navigation.safeargs"
-
 android {
     compileSdkVersion Versions.Android.compileSdk
 
