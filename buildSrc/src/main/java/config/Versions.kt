@@ -53,8 +53,8 @@ object Versions {
      * Related Kotlin lib version.
      */
     object Kotlin {
-        const val kotlinLib = "1.3.50-eap-86"
-        const val kotlinCoroutine = "1.3.0-RC2"
+        const val kotlinLib = "1.3.50"
+        const val kotlinCoroutine = "1.3.0"
     }
 
     /**
@@ -174,7 +174,7 @@ object Versions {
      * Related extension Plugins lib version.
      */
     object Plugin {
-        const val detekt = "1.0.0"
+        const val detekt = "1.0.1"
         const val versionUpdater = "0.20.0"
     }
 
