@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.decorateGradientMask
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.toBitmap
 import com.devrapid.kotlinshaver.cast
 import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.isNull
@@ -47,13 +48,13 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreTrackViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.ktx.image.loadStrDecorator
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -70,9 +71,10 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
         private const val ARGUMENT_ARTIST_NAME = "fragment argument artist name"
         private const val ARGUMENT_TRACK_NAME = "fragment argument track name"
 
-        fun createBundle(mbid: String, artistName: String, trackName: String) = bundleOf(ARGUMENT_MBID to mbid,
-                                                                                         ARGUMENT_ARTIST_NAME to artistName,
-                                                                                         ARGUMENT_TRACK_NAME to trackName)
+        fun createBundle(mbid: String, artistName: String, trackName: String) =
+            bundleOf(ARGUMENT_MBID to mbid,
+                     ARGUMENT_ARTIST_NAME to artistName,
+                     ARGUMENT_TRACK_NAME to trackName)
     }
 
     //region Arguments
@@ -146,8 +148,10 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     @Subscribe(tags = [Tag(TAG_TO_DETAIL)])
     fun gotoSelf(params: AnyParameters) {
         val mbid = castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_COMMON_MBID]).orEmpty()
-        val artistName = castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME]).orEmpty()
-        val trackName = castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME]).orEmpty()
+        val artistName =
+            castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME]).orEmpty()
+        val trackName =
+            castOrNull<String>(params[RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME]).orEmpty()
         findNavController().navigate(R.id.action_frag_explore_track_self,
                                      createBundle(mbid, artistName, trackName))
     }
@@ -159,11 +163,18 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
             setHighlightLink()
         }
         track.album.images.takeIf { it.isNotEmpty() }?.let {
-            find<ImageView>(R.id.iv_track_backdrop).loadAnyDecorator(it.last().text) { bitmap, _ ->
-                val shader = LinearGradient(0f, 0f, 0f, bitmap.height.toFloat(),
-                                            Color.TRANSPARENT, Color.BLACK, Shader.TileMode.CLAMP)
-                bitmap.decorateGradientMask(shader)
-            }
+            find<ImageView>(R.id.iv_track_backdrop)
+                .loadStrDecorator(it.last().text, requireContext()) {
+                    val bitmap = it.toBitmap()
+                    val shader = LinearGradient(0f,
+                                                0f,
+                                                0f,
+                                                bitmap.height.toFloat(),
+                                                Color.TRANSPARENT,
+                                                Color.BLACK,
+                                                Shader.TileMode.CLAMP)
+                    bitmap.decorateGradientMask(shader)
+                }
         }
     }
 }

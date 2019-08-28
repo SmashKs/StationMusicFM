@@ -34,11 +34,11 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.ArtistEntity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.Companion.FRAGMENT_TARGET_ARTIST
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.ktx.image.load
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
@@ -54,7 +54,7 @@ class ExploreArtistViewHolder(view: View) : MultiViewHolder<ArtistEntity>(view) 
      */
     override fun initView(model: ArtistEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
-            find<ImageView>(R.id.iv_artist).loadByAny(model.images.last().text)
+            find<ImageView>(R.id.iv_artist).load(model.images.last().text)
             find<TextView>(R.id.ftv_artist_name).text = model.name
             find<TextView>(R.id.ftv_favorite).apply {
                 addDrawable(R.drawable.ic_heart_black,
@@ -66,9 +66,10 @@ class ExploreArtistViewHolder(view: View) : MultiViewHolder<ArtistEntity>(view) 
             }
             find<CardView>(R.id.mcv_artist).setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
-                emitter.post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_ARTIST,
-                                                      PARAMS_COMMON_MBID to model.mbid,
-                                                      PARAMS_COMMON_ARTIST_NAME to model.name))
+                emitter.post(TAG_TO_DETAIL,
+                             hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_ARTIST,
+                                       PARAMS_COMMON_MBID to model.mbid,
+                                       PARAMS_COMMON_ARTIST_NAME to model.name))
             }
         }
     }

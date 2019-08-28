@@ -32,10 +32,10 @@ import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.ktx.image.load
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_TITLE
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_RANK_ID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_RANK_DETAIL
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
@@ -54,7 +54,11 @@ class TopperViewHolder(view: View) : MultiViewHolder<RankingIdEntity>(view) {
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-    override fun initView(model: RankingIdEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(
+        model: RankingIdEntity,
+        position: Int,
+        adapter: AdaptiveAdapter<*, *, *>
+    ) {
         itemView.apply {
             val (width, height) = context.getDisplayMetrics().let {
                 val halfWidth = (it.widthPixels * CONST_SIZE_RATIO_WIDTH).toInt()
@@ -63,7 +67,7 @@ class TopperViewHolder(view: View) : MultiViewHolder<RankingIdEntity>(view) {
             resizeView(width, height)
             find<TextView>(R.id.ftv_chart).text =
                 listOf(model.title, model.update, "${model.trackNumber} tracks").joinToString("\n")
-            find<ImageView>(R.id.aiv_thumbnail).loadByAny(model.topTrackUri, context)
+            find<ImageView>(R.id.aiv_thumbnail).load(model.topTrackUri)
             /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankIndexFragment.gotoDetailFragment] */
             find<CardView>(R.id.mcv_chart).setOnClickListener {
                 emitter.post(TAG_RANK_DETAIL, hashMapOf(PARAMS_TO_RANK_ID to model.id,

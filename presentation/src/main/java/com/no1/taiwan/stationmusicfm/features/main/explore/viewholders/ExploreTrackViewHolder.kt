@@ -31,12 +31,12 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity.TrackEntity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.Companion.FRAGMENT_TARGET_TRACK
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.ktx.image.load
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
@@ -53,7 +53,7 @@ class ExploreTrackViewHolder(view: View) : MultiViewHolder<TrackEntity>(view) {
     override fun initView(model: TrackEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
         itemView.apply {
             model.images.takeIf { it.isNotEmpty() }?.let {
-                find<ImageView>(R.id.iv_track).loadByAny(it.last().text)
+                find<ImageView>(R.id.iv_track).load(it.last().text)
             }
             find<TextView>(R.id.ftv_track_name).text = model.name
             find<TextView>(R.id.ftv_name).text = model.artist.name
@@ -63,10 +63,11 @@ class ExploreTrackViewHolder(view: View) : MultiViewHolder<TrackEntity>(view) {
                  * @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreAlbumFragment.gotoTrackDetailFragment]
                  * @enevt_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreTrackFragment.gotoSelf]
                  */
-                emitter.post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_TRACK,
-                                                      PARAMS_COMMON_MBID to model.mbid,
-                                                      PARAMS_COMMON_ARTIST_NAME to model.artist.name,
-                                                      PARAMS_TO_TRACK_NAME to model.name))
+                emitter.post(TAG_TO_DETAIL,
+                             hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_TRACK,
+                                       PARAMS_COMMON_MBID to model.mbid,
+                                       PARAMS_COMMON_ARTIST_NAME to model.artist.name,
+                                       PARAMS_TO_TRACK_NAME to model.name))
             }
         }
     }

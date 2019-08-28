@@ -51,6 +51,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerBioFr
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerSimilarArtistFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
+import com.no1.taiwan.stationmusicfm.ktx.image.load
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_NAME
@@ -61,7 +62,6 @@ import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingByColorLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.muteErrorDoWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -76,9 +76,10 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         const val ARGUMENT_ARTIST_NAME = "fragment argument artist name"
         private const val ARGUMENT_MBID = "fragment argument mbid"
 
-        fun createBundle(mbid: String, name: String, vmProvider: Int) = bundleOf(ARGUMENT_MBID to mbid,
-                                                                                 ARGUMENT_ARTIST_NAME to name,
-                                                                                 ARGUMENT_VM_DEPENDENT to vmProvider)
+        fun createBundle(mbid: String, name: String, vmProvider: Int) =
+            bundleOf(ARGUMENT_MBID to mbid,
+                     ARGUMENT_ARTIST_NAME to name,
+                     ARGUMENT_VM_DEPENDENT to vmProvider)
     }
 
     // ViewModel's lifecycle will be itself when open a new same fragment.
@@ -94,7 +95,10 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     //endregion
     private val inflater: LayoutInflater by instance()
     private val adapterFragments by lazy {
-        listOf(PagerBioFragment(), PagerAlbumFragment(), PagerTrackFragment(), PagerSimilarArtistFragment()).onEach {
+        listOf(PagerBioFragment(),
+               PagerAlbumFragment(),
+               PagerTrackFragment(),
+               PagerSimilarArtistFragment()).onEach {
             it.withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource,
                              ARGUMENT_ARTIST_NAME to artistName)
         }
@@ -166,9 +170,10 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
 
     private fun setArtistInfo(artist: ArtistEntity) {
         showViewStub(R.id.vs_artist, R.id.v_artist)
-        find<ImageView>(R.id.iv_artist_backdrop).loadByAny(artist.images.last().text)
-        find<ImageView>(R.id.iv_artist_thumbnail).loadByAny(artist.images.last().text)
-        find<TextView>(R.id.ftv_tags).text = artist.tags.joinToString("\n", transform = TagInfoEntity.TagEntity::name)
+        find<ImageView>(R.id.iv_artist_backdrop).load(artist.images.last().text)
+        find<ImageView>(R.id.iv_artist_thumbnail).load(artist.images.last().text)
+        find<TextView>(R.id.ftv_tags).text =
+            artist.tags.joinToString("\n", transform = TagInfoEntity.TagEntity::name)
         find<TextView>(R.id.ftv_mics).text = artist.listeners
 
         find<ViewPager>(R.id.vp_container).also {
@@ -188,9 +193,11 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         firstTimeEnter = false
     }
 
-    private fun getTabView(position: Int) = inflater.inflate(R.layout.tabitem_introduction, null).apply {
-        this.find<TextView>(R.id.ftv_title).text = resources.getStringArray(R.array.artist_detail_column)[position]
-    }
+    private fun getTabView(position: Int) =
+        inflater.inflate(R.layout.tabitem_introduction, null).apply {
+            this.find<TextView>(R.id.ftv_title).text =
+                resources.getStringArray(R.array.artist_detail_column)[position]
+        }
 
     /**
      * @event_from [com.no1.taiwan.stationmusicfm.features.main.explore.viewholders.SimilarArtistViewHolder.initView]
@@ -201,7 +208,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
         val name = requireNotNull(params[PARAMS_COMMON_ARTIST_NAME])
         val mbid = requireNotNull(params[PARAMS_COMMON_MBID])
         findNavController().navigate(R.id.action_frag_explore_artist_self,
-                                     ExploreArtistFragment.createBundle(mbid, name, PROVIDER_FROM_CUSTOM_FRAGMENT))
+                                     ExploreArtistFragment.createBundle(mbid,
+                                                                        name,
+                                                                        PROVIDER_FROM_CUSTOM_FRAGMENT))
     }
 
     /**

@@ -31,8 +31,8 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
+import com.no1.taiwan.stationmusicfm.ktx.image.load
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
@@ -46,11 +46,15 @@ class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view)
      * @param position  the index of a list.
      * @param adapter   parent adapter.
      */
-    override fun initView(model: LocalMusicEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(
+        model: LocalMusicEntity,
+        position: Int,
+        adapter: AdaptiveAdapter<*, *, *>
+    ) {
         itemView.apply {
             find<TextView>(R.id.ftv_playlist_index).text = (layoutPosition + 1).toString()
             find<TextView>(R.id.ftv_music_name).text = model.trackName
-            find<ImageView>(R.id.iv_thumbnail).loadByAny(model.coverUri)
+            find<ImageView>(R.id.iv_thumbnail).load(model.coverUri)
             find<TextView>(R.id.ftv_artist_name).text = model.artistName
             find<TextView>(R.id.ftv_track_duration).text = model.duration.toTimeString()
             setOnClickListener {

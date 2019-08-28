@@ -118,6 +118,7 @@ object Deps {
         const val jsoup = "org.jsoup:jsoup:${Versions.Network.jsoup}"
         // Internet for image
         const val glide = "com.github.bumptech.glide:glide:${Versions.Network.glide}"
+        const val coil = "io.coil-kt:coil:${Versions.Network.coil}"
         // Storage (cloud & local)
         const val firebaseCore = "com.google.firebase:firebase-core:${Versions.Firebase.core}"
         const val firebaseDB = "com.google.firebase:firebase-database:${Versions.Firebase.database}"

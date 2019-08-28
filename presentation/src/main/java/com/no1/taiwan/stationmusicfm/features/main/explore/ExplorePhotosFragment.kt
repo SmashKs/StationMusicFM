@@ -26,7 +26,6 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import android.widget.ImageSwitcher
 import android.widget.ImageView
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,7 +45,6 @@ import com.no1.taiwan.stationmusicfm.kits.recyclerview.snaphelper.SnapOnScrollLi
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.snaphelper.attachSnapHelperWithListener
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadDrawableIntoListener
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -54,7 +52,6 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
 import org.jetbrains.anko.support.v4.find
-import org.jetbrains.anko.support.v4.findOptional
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -115,7 +112,9 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
     override fun componentListenersBinding() {
         super.componentListenersBinding()
         find<RecyclerView>(R.id.rv_photos)
-            .attachSnapHelperWithListener(snapHelper, NOTIFY_ON_SCROLL_STATE_IDLE, ::loadImageIntoSwitcher)
+            .attachSnapHelperWithListener(snapHelper,
+                                          NOTIFY_ON_SCROLL_STATE_IDLE,
+                                          ::loadImageIntoSwitcher)
     }
 
     /**
@@ -133,8 +132,8 @@ class ExplorePhotosFragment : AdvFragment<MainActivity, ExplorePhotoViewModel>()
     override fun provideInflateView() = R.layout.fragment_explore_photo
 
     private fun loadImageIntoSwitcher(position: Int) {
-        parent.loadDrawableIntoListener(preloadList[position].url.toUri()) { resource, _ ->
-            findOptional<ImageSwitcher>(R.id.is_backdrop)?.setImageDrawable(resource)
-        }
+        // parent.loadDrawableIntoListener(preloadList[position].url.toUri()) { resource, _ ->
+        //     findOptional<ImageSwitcher>(R.id.is_backdrop)?.setImageDrawable(resource)
+        // }
     }
 }

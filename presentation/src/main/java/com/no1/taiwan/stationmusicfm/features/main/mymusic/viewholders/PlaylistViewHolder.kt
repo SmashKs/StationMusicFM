@@ -29,8 +29,8 @@ import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.ktx.image.load
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_PLAYLIST_DETAIL
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
@@ -44,9 +44,13 @@ class PlaylistViewHolder(view: View) : MultiViewHolder<PlaylistInfoEntity>(view)
      * @param position  the index of a list.
      * @param adapter   parent adapter.
      */
-    override fun initView(model: PlaylistInfoEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(
+        model: PlaylistInfoEntity,
+        position: Int,
+        adapter: AdaptiveAdapter<*, *, *>
+    ) {
         itemView.apply {
-            find<ImageView>(R.id.iv_playlist_thumbnail).loadByAny(R.drawable.thumbnail_default_playlist)
+            find<ImageView>(R.id.iv_playlist_thumbnail).load(R.drawable.thumbnail_default_playlist)
             find<TextView>(R.id.ftv_playlist_name).text = model.name
             find<TextView>(R.id.ftv_track_count).text =
                 context.getString(R.string.viewholder_playlist_song).format(model.trackCount)

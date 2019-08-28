@@ -21,151 +21,129 @@
 
 package com.no1.taiwan.stationmusicfm.utils.imageview
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.widget.ImageView
-import androidx.annotation.DrawableRes
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.BitmapImageViewTarget
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.CustomViewTarget
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.transition.Transition
-import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.utils.resoureces.gContext
-
-fun ImageView.loadByString(str: String, context: Context = gContext()) =
-    glideTemplate(context) { load(str) }
-
-fun ImageView.loadByBitmap(bitmap: Bitmap, context: Context = gContext()) =
-    glideTemplate(context) { load(bitmap) }
-
-fun ImageView.loadByUri(uri: Uri, context: Context = gContext()) =
-    glideTemplate(context) { load(uri) }
-
-fun ImageView.loadByDrawable(drawable: Drawable, context: Context = gContext()) =
-    glideTemplate(context) { load(drawable) }
-
-fun ImageView.loadByAny(any: Any, context: Context = gContext()) =
-    glideTemplate(context) { load(any) }
-
-fun glideMusicOptions(
-    @DrawableRes phResource: Int = R.drawable.placeholder,
-    @DrawableRes erSource: Int = R.drawable.placeholder
-) =
-    RequestOptions().apply {
-        centerCrop()
-        placeholder(phResource)
-        error(erSource)
-        priority(Priority.HIGH)
-        diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-    }
-
-fun ImageView.glideTemplate(
-    context: Context = gContext(),
-    block: RequestBuilder<Bitmap>.() -> RequestBuilder<Bitmap>
-) = Glide.with(context)
-    .asBitmap()
-    .apply(glideMusicOptions())
-    .block()
-    .into(this)
-
-fun ImageView.loadAnyByInternetListener(
-    uri: Any,
-    context: Context = gContext(),
-    failBlock: ((errorDrawable: Drawable?) -> Unit)? = null,
-    clearedBlock: ((placeholder: Drawable?) -> Unit)? = null,
-    readyBlock: ((resource: Bitmap, transition: Transition<in Bitmap>?) -> Unit)? = null
-) = Glide.with(context)
-    .asBitmap()
-    .load(uri)
-    .apply(glideMusicOptions())
-    .into(object : CustomViewTarget<ImageView, Bitmap>(this) {
-        override fun onLoadFailed(errorDrawable: Drawable?) {
-            failBlock?.invoke(errorDrawable)
-        }
-
-        override fun onResourceCleared(placeholder: Drawable?) {
-            clearedBlock?.invoke(placeholder)
-        }
-
-        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-            readyBlock?.invoke(resource, transition)
-        }
-    })
-
-fun ImageView.loadAnyDecorator(
-    uri: Any,
-    context: Context = gContext(),
-    afterDecorated: ((bitmap: Bitmap, transition: Transition<in Bitmap>?) -> Unit)? = null,
-    beforeDecorate: ((bitmap: Bitmap, transition: Transition<in Bitmap>?) -> Bitmap)? = null
-) = Glide.with(context)
-    .asBitmap()
-    .load(uri)
-    .apply(glideMusicOptions())
-    .into(object : BitmapImageViewTarget(this) {
-        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-            val decorated = beforeDecorate?.invoke(resource, transition)
-            super.onResourceReady(decorated ?: resource, transition)
-            afterDecorated?.invoke(resource, transition)
-        }
-    })
-
-fun ImageView.loadAnyWithBitmapListener(
-    uri: Any,
-    context: Context = gContext(),
-    failBlock: ((e: GlideException?) -> Unit)? = null,
-    readyBlock: ((resource: Bitmap?) -> Unit)? = null
-) = Glide.with(context)
-    .asBitmap()
-    .load(uri)
-    .apply(glideMusicOptions())
-    .listener(object : RequestListener<Bitmap> {
-        override fun onLoadFailed(
-            e: GlideException?,
-            model: Any?,
-            target: Target<Bitmap>?,
-            isFirstResource: Boolean
-        ): Boolean {
-            failBlock?.invoke(e)
-            return false
-        }
-
-        override fun onResourceReady(
-            resource: Bitmap,
-            model: Any?,
-            target: Target<Bitmap>?,
-            dataSource: DataSource?,
-            isFirstResource: Boolean
-        ): Boolean {
-            readyBlock?.invoke(resource)
-            return true
-        }
-    }).into(this)
-
-fun Context.loadDrawableIntoListener(
-    uri: Any,
-    onLoadCleared: ((placeholder: Drawable?) -> Unit)? = null,
-    onResourceReady: ((resource: Drawable, transition: Transition<in Drawable>?) -> Unit)? = null
-) = Glide.with(this)
-    .asDrawable()
-    .load(uri)
-    .apply(glideMusicOptions())
-    .into(object : CustomTarget<Drawable>() {
-        override fun onLoadCleared(placeholder: Drawable?) {
-            onLoadCleared?.invoke(placeholder)
-        }
-
-        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-            onResourceReady?.invoke(resource, transition)
-        }
-    })
+// fun ImageView.loadByString(str: String, context: Context = gContext()) =
+//     glideTemplate(context) { load(str) }
+//
+// fun ImageView.loadByBitmap(bitmap: Bitmap, context: Context = gContext()) =
+//     glideTemplate(context) { load(bitmap) }
+//
+// fun ImageView.loadByUri(uri: Uri, context: Context = gContext()) =
+//     glideTemplate(context) { load(uri) }
+//
+// fun ImageView.loadByDrawable(drawable: Drawable, context: Context = gContext()) =
+//     glideTemplate(context) { load(drawable) }
+//
+// fun ImageView.loadByAny(any: Any, context: Context = gContext()) =
+//     glideTemplate(context) { load(any) }
+//
+// fun glideMusicOptions(
+//     @DrawableRes phResource: Int = R.drawable.placeholder,
+//     @DrawableRes erSource: Int = R.drawable.placeholder
+// ) =
+//     RequestOptions().apply {
+//         centerCrop()
+//         placeholder(phResource)
+//         error(erSource)
+//         priority(Priority.HIGH)
+//         diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+//     }
+//
+// fun ImageView.glideTemplate(
+//     context: Context = gContext(),
+//     block: RequestBuilder<Bitmap>.() -> RequestBuilder<Bitmap>
+// ) = Glide.with(context)
+//     .asBitmap()
+//     .apply(glideMusicOptions())
+//     .block()
+//     .into(this)
+//
+// fun ImageView.loadAnyByInternetListener(
+//     uri: Any,
+//     context: Context = gContext(),
+//     failBlock: ((errorDrawable: Drawable?) -> Unit)? = null,
+//     clearedBlock: ((placeholder: Drawable?) -> Unit)? = null,
+//     readyBlock: ((resource: Bitmap, transition: Transition<in Bitmap>?) -> Unit)? = null
+// ) = Glide.with(context)
+//     .asBitmap()
+//     .load(uri)
+//     .apply(glideMusicOptions())
+//     .into(object : CustomViewTarget<ImageView, Bitmap>(this) {
+//         override fun onLoadFailed(errorDrawable: Drawable?) {
+//             failBlock?.invoke(errorDrawable)
+//         }
+//
+//         override fun onResourceCleared(placeholder: Drawable?) {
+//             clearedBlock?.invoke(placeholder)
+//         }
+//
+//         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+//             readyBlock?.invoke(resource, transition)
+//         }
+//     })
+//
+// fun ImageView.loadAnyDecorator(
+//     uri: Any,
+//     context: Context = gContext(),
+//     afterDecorated: ((bitmap: Bitmap, transition: Transition<in Bitmap>?) -> Unit)? = null,
+//     beforeDecorate: ((bitmap: Bitmap, transition: Transition<in Bitmap>?) -> Bitmap)? = null
+// ) = Glide.with(context)
+//     .asBitmap()
+//     .load(uri)
+//     .apply(glideMusicOptions())
+//     .into(object : BitmapImageViewTarget(this) {
+//         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+//             val decorated = beforeDecorate?.invoke(resource, transition)
+//             super.onResourceReady(decorated ?: resource, transition)
+//             afterDecorated?.invoke(resource, transition)
+//         }
+//     })
+//
+// fun ImageView.loadAnyWithBitmapListener(
+//     uri: Any,
+//     context: Context = gContext(),
+//     failBlock: ((e: GlideException?) -> Unit)? = null,
+//     readyBlock: ((resource: Bitmap?) -> Unit)? = null
+// ) = Glide.with(context)
+//     .asBitmap()
+//     .load(uri)
+//     .apply(glideMusicOptions())
+//     .listener(object : RequestListener<Bitmap> {
+//         override fun onLoadFailed(
+//             e: GlideException?,
+//             model: Any?,
+//             target: Target<Bitmap>?,
+//             isFirstResource: Boolean
+//         ): Boolean {
+//             failBlock?.invoke(e)
+//             return false
+//         }
+//
+//         override fun onResourceReady(
+//             resource: Bitmap,
+//             model: Any?,
+//             target: Target<Bitmap>?,
+//             dataSource: DataSource?,
+//             isFirstResource: Boolean
+//         ): Boolean {
+//             readyBlock?.invoke(resource)
+//             return true
+//         }
+//     }).into(this)
+//
+// fun Context.loadDrawableIntoListener(
+//     uri: Any,
+//     onLoadCleared: ((placeholder: Drawable?) -> Unit)? = null,
+//     onResourceReady: ((resource: Drawable, transition: Transition<in Drawable>?) -> Unit)? = null
+// ) = Glide.with(this)
+//     .asDrawable()
+//     .load(uri)
+//     .apply(glideMusicOptions())
+//     .into(object : CustomTarget<Drawable>() {
+//         override fun onLoadCleared(placeholder: Drawable?) {
+//             onLoadCleared?.invoke(placeholder)
+//         }
+//
+//         override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+//             onResourceReady?.invoke(resource, transition)
+//         }
+//     })

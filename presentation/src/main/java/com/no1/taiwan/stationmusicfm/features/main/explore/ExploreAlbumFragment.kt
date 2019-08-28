@@ -35,6 +35,7 @@ import com.devrapid.kotlinknifer.changeColor
 import com.devrapid.kotlinknifer.decorateGradientMask
 import com.devrapid.kotlinknifer.extraNotNull
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.toBitmap
 import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.cast
@@ -51,6 +52,8 @@ import com.no1.taiwan.stationmusicfm.entities.lastfm.TrackInfoEntity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreAlbumViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.ktx.image.load
+import com.no1.taiwan.stationmusicfm.ktx.image.loadStrDecorator
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_TRACK_NAME
@@ -59,8 +62,6 @@ import com.no1.taiwan.stationmusicfm.utils.aac.data
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadAnyDecorator
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.finally
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
@@ -115,7 +116,8 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
         observeNonNull(vm.albumLiveData) {
             peel {
                 find<TextView>(R.id.ftv_published_at).text = it.wiki.published
-                find<TextView>(R.id.ftv_tags).text = it.tags.map(TagInfoEntity.TagEntity::name).joinToString("\n")
+                find<TextView>(R.id.ftv_tags).text =
+                    it.tags.map(TagInfoEntity.TagEntity::name).joinToString("\n")
                 find<TextView>(R.id.ftv_album_wiki).apply {
                     text = it.wiki.summary.parseAsHtml()
                     setHighlightLink()
@@ -141,7 +143,7 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
         }
         observeNonNull(vm.artistLiveData) {
             peel {
-                find<ImageView>(R.id.iv_artist_icon).loadByAny(it.images.last().text, parent)
+                find<ImageView>(R.id.iv_artist_icon).load(it.images.last().text)
             } happenError {
                 loge(it)
             } doWith this@ExploreAlbumFragment
@@ -167,9 +169,10 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         initRecyclerViewWith(find(R.id.rv_tracks_of_album), adapter, linearLayoutManager())
-        find<ImageView>(R.id.iv_artist_icon).loadByAny(artistThumbUri, parent)
+        find<ImageView>(R.id.iv_artist_icon).load(artistThumbUri)
         find<TextView>(R.id.ftv_album_name).text = albumName
-        find<ImageView>(R.id.iv_album_backdrop).loadAnyDecorator(albumThumbUri) { bitmap, _ ->
+        find<ImageView>(R.id.iv_album_backdrop).loadStrDecorator(albumThumbUri, requireContext()) {
+            val bitmap = it.toBitmap()
             val shader = LinearGradient(0f, 0f, 0f, bitmap.height.toFloat(),
                                         Color.BLACK, Color.TRANSPARENT, Shader.TileMode.CLAMP)
             bitmap.decorateGradientMask(shader)

@@ -19,28 +19,40 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.no1.taiwan.stationmusicfm.features.main.explore.viewholders
+package com.no1.taiwan.stationmusicfm.ktx.image
 
-import android.view.View
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.widget.ImageView
-import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.no1.taiwan.stationmusicfm.R
-import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotoEntity
-import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
-import com.no1.taiwan.stationmusicfm.ktx.image.load
-import org.jetbrains.anko.find
+import androidx.annotation.DrawableRes
+import coil.Coil
+import coil.api.load
 
-class ExplorePhotoViewHolder(view: View) : MultiViewHolder<PhotoEntity>(view) {
-    /**
-     * Set the views' properties.
-     *
-     * @param model a data model after input from a list.
-     * @param position the index of a list.
-     * @param adapter parent adapter.
-     */
-    override fun initView(model: PhotoEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
-        itemView.apply {
-            find<ImageView>(R.id.iv_photo_thumbnail).load(model.url)
-        }
+fun ImageView.load(str: String, context: Context? = null) =
+    load(str) { allowHardware(false) }
+
+fun ImageView.load(bitmap: Bitmap, context: Context? = null) =
+    load(bitmap) { allowHardware(false) }
+
+fun ImageView.load(uri: Uri, context: Context? = null) =
+    load(uri) { allowHardware(false) }
+
+fun ImageView.load(drawable: Drawable, context: Context? = null) =
+    load(drawable) { allowHardware(false) }
+
+fun ImageView.load(@DrawableRes resource: Int, context: Context? = null) =
+    load(resource) { allowHardware(false) }
+
+fun ImageView.loadStrDecorator(
+    uri: String,
+    context: Context,
+    decorate: ((drawable: Drawable) -> Bitmap)? = null
+) = Coil.load(context, uri) {
+    target {
+        val bitmap = decorate?.invoke(it)
+        bitmap?.let { this@loadStrDecorator.load(it) }
     }
+    allowHardware(false)
 }

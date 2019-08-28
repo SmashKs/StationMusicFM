@@ -47,12 +47,12 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATIO
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.bottomsheet.BottomSheetFactory
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.TrackOfPlaylistNotifiableAdapter
+import com.no1.taiwan.stationmusicfm.ktx.image.load
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchShowingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.file.FilePathFactory
-import com.no1.taiwan.stationmusicfm.utils.imageview.loadByAny
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
@@ -135,7 +135,7 @@ class MyMusicDetailFragment : AdvFragment<MainActivity, MyMusicDetailViewModel>(
         find<TextView>(R.id.ftv_playlist_name).text = playlistInfo.name
         find<TextView>(R.id.ftv_track_count).text =
             getString(R.string.viewholder_playlist_song).format(playlistInfo.trackCount)
-        find<ImageView>(R.id.iv_playlist_thumbnail).loadByAny(R.drawable.thumbnail_default_playlist)
+        find<ImageView>(R.id.iv_playlist_thumbnail).load(R.drawable.thumbnail_default_playlist)
         bottomSheet.also {
             it.find<View>(R.id.ftv_download).gone()
             it.find<View>(R.id.ftv_to_playlist).gone()

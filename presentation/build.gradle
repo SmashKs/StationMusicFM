@@ -132,7 +132,6 @@ dependencies {
     implementation(Deps.Presentation.retrofit2)
     implementation(Deps.Presentation.retrofit2Gson)
     implementation(Deps.Presentation.okhttp)
-    implementation(Deps.Presentation.glide)
     implementation(Deps.Presentation.jsoup)
 
     implementation(Deps.Presentation.okhttpLogging)

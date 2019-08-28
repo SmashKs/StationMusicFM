@@ -61,6 +61,6 @@ dependencies {
     implementation(Dependencies.kotlinAndroid.values())
     implementation(Dependencies.commonAndroidx.values() +
             Dependencies.preziAndroidx.values())
-
     implementation(Deps.Presentation.mmkv)
+    api(Deps.Presentation.coil)
 }

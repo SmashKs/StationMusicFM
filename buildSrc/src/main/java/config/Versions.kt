@@ -128,6 +128,7 @@ object Versions {
      */
     object Network {
         const val glide = "4.9.0"
+        const val coil = "0.6.1"
         const val retrofit2 = "2.6.1"
         const val okhttp3 = "4.1.0"
         const val okhttpProfiler = "1.0.5"
