@@ -20,7 +20,7 @@
  */
 
 plugins {
-    id("org.gradle.kotlin.kotlin-dsl").version("1.2.10")
+    id("org.gradle.kotlin.kotlin-dsl").version("1.2.11")
 }
 
 // gradle versions above 4.10.
