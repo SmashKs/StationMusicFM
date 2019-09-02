@@ -176,7 +176,7 @@ object Versions {
      */
     object Plugin {
         const val detekt = "1.0.1"
-        const val versionUpdater = "0.20.0"
+        const val versionUpdater = "0.24.0"
     }
 
     object Player {
