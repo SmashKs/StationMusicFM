@@ -42,9 +42,9 @@ object Versions {
         const val material = "1.1.0-alpha08"
         const val androidx = "1.0.0"
         const val annotation = "1.1.0"
-        const val appCompat = "1.1.0-rc01"
+        const val appCompat = "1.1.0"
         const val cardView = androidx
-        const val recyclerView = appCompat
+        const val recyclerView = "1.1.0-beta04"
         const val constraintLayout = "2.0.0-beta2"
         const val coordinatorLayout = "1.1.0-beta01"
     }
@@ -54,7 +54,7 @@ object Versions {
      */
     object Kotlin {
         const val kotlinLib = "1.3.50"
-        const val kotlinCoroutine = "1.3.0"
+        const val kotlinCoroutine = "1.3.1"
     }
 
     /**
@@ -120,7 +120,7 @@ object Versions {
     object Database {
         const val debug = "1.5.1"
         const val debugDb = "1.0.6"
-        const val mmkv = "1.0.22"
+        const val mmkv = "1.0.23"
     }
 
     /**
@@ -130,7 +130,7 @@ object Versions {
         const val glide = "4.9.0"
         const val coil = "0.6.1"
         const val retrofit2 = "2.6.1"
-        const val okhttp3 = "4.1.0"
+        const val okhttp3 = "4.1.1"
         const val okhttpProfiler = "1.0.5"
         const val activityLauncher = "1.0.2"
         const val jsoup = "1.12.1"
