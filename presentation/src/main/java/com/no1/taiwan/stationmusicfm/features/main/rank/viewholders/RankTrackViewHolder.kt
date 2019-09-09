@@ -25,7 +25,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
-import com.devrapid.kotlinknifer.toDrawable
 import com.devrapid.kotlinshaver.toTimeString
 import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
@@ -33,13 +32,12 @@ import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEn
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.ktx.image.load
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_LAYOUT_POSITION
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_SONG_ENTITY
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_OPEN_BOTTOM_SHEET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_PLAY_A_SONG
-import org.jetbrains.anko.find
-import org.jetbrains.anko.image
 import org.kodein.di.generic.instance
 
 class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notifiable {
@@ -88,8 +86,7 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
     }
 
     override fun notifyChange(position: Int, isSuccessToPlay: Boolean) {
-        if (position == layoutPosition)
-            setCurStateIcon(!isSuccessToPlay)
+        if (position == layoutPosition) setCurStateIcon(!isSuccessToPlay)
     }
 
     /**
@@ -100,10 +97,10 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
     private fun setCurStateIcon(isIdle: Boolean) {
         itemView.apply {
             find<ImageView>(R.id.iv_play).apply {
-                image = (if (isIdle)
-                    R.drawable.ic_play_circle_outline_black
-                else
-                    R.drawable.ic_pause_circle_outline_black).toDrawable(context)
+                setImageResource(if (isIdle)
+                                     R.drawable.ic_play_circle_outline_black
+                                 else
+                                     R.drawable.ic_pause_circle_outline_black)
             }
         }
     }

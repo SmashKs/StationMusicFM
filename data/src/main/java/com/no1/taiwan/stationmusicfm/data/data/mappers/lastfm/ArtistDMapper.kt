@@ -67,7 +67,8 @@ class ArtistDMapper(
                                       playCount,
                                       statsMapper.toDataFrom(stats),
                                       ArtistInfoData.SimilarData(similars.map(this@ArtistDMapper::toDataFrom)),
-                                      CommonLastFmData.TagsData(tags.map(tagMapper::toDataFrom), null),
+                                      CommonLastFmData.TagsData(tags.map(tagMapper::toDataFrom),
+                                                                null),
                                       bioMapper.toDataFrom(bio))
         }
     }

@@ -53,12 +53,25 @@ class MyMusicDetailViewModel(
     private val playlistMapper by lazy { digMapper(LocalMusicPMapper::class) }
     //endregion
 
-    override fun runTaskAddOrUpdateToPlayHistory(song: SongEntity, playlistIndex: Int, addOrMinus: Boolean) =
-        launchBehind { makeLocalMusic.runTaskAddOrUpdateToPlayHistory(song, playlistIndex, addOrMinus).await() }
-
-    override fun runTaskUpdateToPlayHistory(song: LocalMusicEntity, playlistIndex: Int, addOrMinus: Boolean) =
+    override fun runTaskAddOrUpdateToPlayHistory(
+        song: SongEntity,
+        playlistIndex: Int,
+        addOrMinus: Boolean
+    ) =
         launchBehind {
-            val result = makeLocalMusic.runTaskUpdateToPlayHistory(song, playlistIndex, addOrMinus).await()
+            makeLocalMusic.runTaskAddOrUpdateToPlayHistory(song,
+                                                           playlistIndex,
+                                                           addOrMinus).await()
+        }
+
+    override fun runTaskUpdateToPlayHistory(
+        song: LocalMusicEntity,
+        playlistIndex: Int,
+        addOrMinus: Boolean
+    ) =
+        launchBehind {
+            val result =
+                makeLocalMusic.runTaskUpdateToPlayHistory(song, playlistIndex, addOrMinus).await()
             _removeRes.postValue(result)
         }
 
@@ -67,7 +80,8 @@ class MyMusicDetailViewModel(
 
     fun runTaskFetchPlaylist(id: Int) = launchBehind {
         _playlist reqData {
-            fetchTypeOfHistsCase.execListMapping(playlistMapper, FetchTypeOfHistsReq(PlaylistParams(listOf(id))))
+            fetchTypeOfHistsCase.execListMapping(playlistMapper,
+                                                 FetchTypeOfHistsReq(PlaylistParams(listOf(id))))
         }
     }
 

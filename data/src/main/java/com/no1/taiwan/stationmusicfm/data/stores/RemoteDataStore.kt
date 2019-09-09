@@ -152,7 +152,8 @@ class RemoteDataStore(
 
     override suspend fun modifyRankingData(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun createOrModifySearchHistory(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun createOrModifySearchHistory(parameterable: Parameterable) =
+        UnsupportedOperation()
 
     override suspend fun getSearchHistories(parameterable: Parameterable) = UnsupportedOperation()
 
@@ -160,7 +161,8 @@ class RemoteDataStore(
 
     override suspend fun getLocalMusics(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun createOrModifyLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun createOrModifyLocalMusic(parameterable: Parameterable) =
+        UnsupportedOperation()
 
     override suspend fun removeLocalMusic(parameterable: Parameterable) = UnsupportedOperation()
 
@@ -174,7 +176,8 @@ class RemoteDataStore(
 
     override suspend fun modifyPlaylist(parameterable: Parameterable) = UnsupportedOperation()
 
-    override suspend fun modifyCountOfPlaylist(parameterable: Parameterable) = UnsupportedOperation()
+    override suspend fun modifyCountOfPlaylist(parameterable: Parameterable) =
+        UnsupportedOperation()
 
     override suspend fun removePlaylist(parameterable: Parameterable) = UnsupportedOperation()
 

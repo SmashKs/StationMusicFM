@@ -41,6 +41,7 @@ import com.no1.taiwan.stationmusicfm.features.main.mymusic.viewmodels.MyMusicInd
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_PLAYLIST
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_CREATE_NEW_PLAYLIST
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_PLAYLIST_DETAIL
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
@@ -52,15 +53,14 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
 import com.no1.taiwan.stationmusicfm.widget.components.dialog.InputDialog
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
-import org.jetbrains.anko.find
-import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
 class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
     private val adapter: MusicAdapter by instance(ADAPTER_PLAYLIST)
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
+    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(
+        ITEM_DECORATION_ACTION_BAR_BLANK)
     private val footerCreatePlaylist by lazy {
         CreatePlaylistEntity(content = getString(R.string.fragment_playlist_create_list))
     }
@@ -127,7 +127,10 @@ class MyMusicIndexFragment : IndexFragment<MyMusicIndexViewModel>() {
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(R.id.rv_playlist), adapter, linearLayoutManager(), listOf(actionBarBlankDecoration))
+        initRecyclerViewWith(find(R.id.rv_playlist),
+                             adapter,
+                             linearLayoutManager(),
+                             listOf(actionBarBlankDecoration))
     }
 
     /**

@@ -43,6 +43,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExplorePho
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.snaphelper.SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.snaphelper.attachSnapHelperWithListener
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.SearchHidingLifeRegister
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
@@ -51,7 +52,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
 import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
-import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 

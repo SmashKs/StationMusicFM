@@ -32,8 +32,8 @@ import com.no1.taiwan.stationmusicfm.entities.playlist.LocalMusicEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.Notifiable
 import com.no1.taiwan.stationmusicfm.ktx.image.load
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_LOCAL_MUSIC_FROM_PLAYLIST
-import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
 class LocalMusicViewHolder(view: View) : MultiViewHolder<LocalMusicEntity>(view), Notifiable {

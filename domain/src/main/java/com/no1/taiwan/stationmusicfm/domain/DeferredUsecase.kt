@@ -39,5 +39,6 @@ abstract class DeferredUsecase<T : Any, R : BaseUsecase.RequestValues> : BaseUse
         acquireCase()
     }
 
-    protected suspend fun attachParameter(λ: suspend (R) -> T) = requireNotNull(requestValues?.run { λ(this) })
+    protected suspend fun attachParameter(λ: suspend (R) -> T) =
+        requireNotNull(requestValues?.run { λ(this) })
 }

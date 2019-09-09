@@ -37,11 +37,13 @@ class PlayerEventListener(func: PlayerEventListerBuilder.() -> Unit) : EventList
 
     override fun onBufferPercentage(percent: Int) = func.onBufferPercentage?.invoke(percent) ?: Unit
 
-    override fun onChangeTrack(oldIndex: Int, newIndex: Int) = func.onChangeTrack?.invoke(oldIndex, newIndex) ?: Unit
+    override fun onChangeTrack(oldIndex: Int, newIndex: Int) =
+        func.onChangeTrack?.invoke(oldIndex, newIndex) ?: Unit
 
     override fun onCurrentTime(second: Int) = func.onCurrentTime?.invoke(second) ?: Unit
 
-    override fun onPlayerStateChanged(state: MusicPlayerState) = func.onPlayerStateChanged?.invoke(state) ?: Unit
+    override fun onPlayerStateChanged(state: MusicPlayerState) =
+        func.onPlayerStateChanged?.invoke(state) ?: Unit
 
     override fun onDownloadTrack(isSuccess: Boolean) = func.onDownloadTrack?.invoke(isSuccess) ?: -1
 }

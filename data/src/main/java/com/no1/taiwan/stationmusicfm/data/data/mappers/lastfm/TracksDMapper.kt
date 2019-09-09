@@ -40,6 +40,7 @@ class TracksDMapper(
     }
 
     override fun toDataFrom(model: TrackInfoModel.TracksModel) = model.run {
-        TopTrackInfoData.TracksData(tracks.map(trackMapper::toDataFrom), attrMapper.toDataFrom(attr))
+        TopTrackInfoData.TracksData(tracks.map(trackMapper::toDataFrom),
+                                    attrMapper.toDataFrom(attr))
     }
 }

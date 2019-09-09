@@ -31,8 +31,8 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.CreatePlaylistEntity
 import com.no1.taiwan.stationmusicfm.ext.takeUnlessDefault
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_CREATE_NEW_PLAYLIST
-import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
 class CreatePlaylistViewHolder(view: View) : MultiViewHolder<CreatePlaylistEntity>(view) {
@@ -45,7 +45,11 @@ class CreatePlaylistViewHolder(view: View) : MultiViewHolder<CreatePlaylistEntit
      * @param position  the index of a list.
      * @param adapter   parent adapter.
      */
-    override fun initView(model: CreatePlaylistEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(
+        model: CreatePlaylistEntity,
+        position: Int,
+        adapter: AdaptiveAdapter<*, *, *>
+    ) {
         itemView.apply {
             find<TextView>(R.id.ftv_new_playlist).apply {
                 text = model.content

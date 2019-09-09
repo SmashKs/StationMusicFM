@@ -21,13 +21,13 @@
 
 package com.no1.taiwan.stationmusicfm.features.splash
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.work.WorkManager
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.bases.BaseActivity
 import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.widget.components.typeface.TypeFaceProvider
-import org.jetbrains.anko.startActivity
 import org.kodein.di.generic.instance
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -84,7 +84,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun gotoMainMusic() {
-        startActivity<MainActivity>()
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 }

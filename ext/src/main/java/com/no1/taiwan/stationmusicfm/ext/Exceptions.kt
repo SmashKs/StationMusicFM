@@ -19,8 +19,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.no1.taiwan.stationmusicfm.ext
 
 inline fun UnsupportedOperation(): Nothing = throw UnsupportedOperationException()
 
-inline fun UnsupportedOperation(reason: String): Nothing = throw UnsupportedOperationException(reason)
+inline fun UnsupportedOperation(reason: String): Nothing =
+    throw UnsupportedOperationException(reason)

@@ -35,35 +35,37 @@ class ArtistPMapper(
     private val statsMapper: StatsPMapper,
     private val tagMapper: TagPMapper
 ) : ArtistPreziMap {
-    override fun toEntityFrom(model: ArtistInfoModel.ArtistModel): ArtistInfoEntity.ArtistEntity = model.run {
-        ArtistInfoEntity.ArtistEntity(name,
-                                      mbid,
-                                      match,
-                                      url,
-                                      images.map(imageMapper::toEntityFrom),
-                                      streamable,
-                                      listeners,
-                                      onTour,
-                                      playCount,
-                                      stats.let(statsMapper::toEntityFrom),
-                                      similars.map(this@ArtistPMapper::toEntityFrom),
-                                      tags.map(tagMapper::toEntityFrom),
-                                      bio.let(bioMapper::toEntityFrom))
-    }
+    override fun toEntityFrom(model: ArtistInfoModel.ArtistModel): ArtistInfoEntity.ArtistEntity =
+        model.run {
+            ArtistInfoEntity.ArtistEntity(name,
+                                          mbid,
+                                          match,
+                                          url,
+                                          images.map(imageMapper::toEntityFrom),
+                                          streamable,
+                                          listeners,
+                                          onTour,
+                                          playCount,
+                                          stats.let(statsMapper::toEntityFrom),
+                                          similars.map(this@ArtistPMapper::toEntityFrom),
+                                          tags.map(tagMapper::toEntityFrom),
+                                          bio.let(bioMapper::toEntityFrom))
+        }
 
-    override fun toModelFrom(entity: ArtistInfoEntity.ArtistEntity): ArtistInfoModel.ArtistModel = entity.run {
-        ArtistInfoModel.ArtistModel(name,
-                                    mbid,
-                                    match,
-                                    url,
-                                    images.map(imageMapper::toModelFrom),
-                                    streamable,
-                                    listeners,
-                                    onTour,
-                                    playCount,
-                                    statsMapper.toModelFrom(stats),
-                                    similars.map(this@ArtistPMapper::toModelFrom),
-                                    tags.map(tagMapper::toModelFrom),
-                                    bioMapper.toModelFrom(bio))
-    }
+    override fun toModelFrom(entity: ArtistInfoEntity.ArtistEntity): ArtistInfoModel.ArtistModel =
+        entity.run {
+            ArtistInfoModel.ArtistModel(name,
+                                        mbid,
+                                        match,
+                                        url,
+                                        images.map(imageMapper::toModelFrom),
+                                        streamable,
+                                        listeners,
+                                        onTour,
+                                        playCount,
+                                        statsMapper.toModelFrom(stats),
+                                        similars.map(this@ArtistPMapper::toModelFrom),
+                                        tags.map(tagMapper::toModelFrom),
+                                        bioMapper.toModelFrom(bio))
+        }
 }

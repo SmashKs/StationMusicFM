@@ -30,11 +30,12 @@ fun RecyclerView.attachSnapHelperWithListener(
     onSnapPositionChangeListener: (position: Int) -> Unit
 ) {
     snapHelper.attachToRecyclerView(this)
-    val snapOnScrollListener = SnapOnScrollListener(snapHelper, behavior, object : OnSnapPositionChangeListener {
-        override fun onSnapPositionChange(position: Int) {
-            onSnapPositionChangeListener(position)
-        }
-    })
+    val snapOnScrollListener =
+        SnapOnScrollListener(snapHelper, behavior, object : OnSnapPositionChangeListener {
+            override fun onSnapPositionChange(position: Int) {
+                onSnapPositionChangeListener(position)
+            }
+        })
     addOnScrollListener(snapOnScrollListener)
 }
 

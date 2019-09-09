@@ -29,7 +29,8 @@ import com.no1.taiwan.stationmusicfm.data.data.Data
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
 import java.util.Date
 
-@Entity(tableName = "table_local_music", indices = [Index("track_name", "artist_name", unique = true)])
+@Entity(tableName = "table_local_music",
+        indices = [Index("track_name", "artist_name", unique = true)])
 data class LocalMusicData(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

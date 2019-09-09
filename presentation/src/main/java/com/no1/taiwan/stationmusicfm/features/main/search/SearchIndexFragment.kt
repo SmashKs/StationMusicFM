@@ -36,6 +36,7 @@ import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ADAPTER_HISTOR
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.ITEM_DECORATION_ACTION_BAR_BLANK
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.adapters.HistoryAdapter
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.aac.lifecycles.BusFragLifeRegister
@@ -45,7 +46,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
-import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -54,7 +54,8 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
     override val viewmodelProviderFragment get() = requireParentFragment()
     private val linearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
     private val adapter: HistoryAdapter by instance(ADAPTER_HISTORY)
-    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(ITEM_DECORATION_ACTION_BAR_BLANK)
+    private val actionBarBlankDecoration: RecyclerView.ItemDecoration by instance(
+        ITEM_DECORATION_ACTION_BAR_BLANK)
     private var dropWord = DEFAULT_STR
 
     init {
@@ -110,7 +111,10 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        initRecyclerViewWith(find(R.id.rv_histories), adapter, linearLayoutManager(), actionBarBlankDecoration)
+        initRecyclerViewWith(find(R.id.rv_histories),
+                             adapter,
+                             linearLayoutManager(),
+                             actionBarBlankDecoration)
     }
 
     /**

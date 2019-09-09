@@ -37,7 +37,8 @@ object ObjectLabel {
 
     const val ITEM_DECORATION_ACTION_BAR_BLANK = "recycler item decoration action bar blank"
     const val ITEM_DECORATION_SEPARATOR = "recycler item decoration separator"
-    const val ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR = "recycler music of playlist decoration separator"
+    const val ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR =
+        "recycler music of playlist decoration separator"
 
     const val ADAPTER_HISTORY = "for history adapter"
     const val ADAPTER_RANK = "for rank adapter"

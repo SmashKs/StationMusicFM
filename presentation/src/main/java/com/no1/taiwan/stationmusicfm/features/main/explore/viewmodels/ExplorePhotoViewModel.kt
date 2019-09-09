@@ -45,7 +45,8 @@ class ExplorePhotoViewModel(
 
     fun runTaskFetchArtistPhoto(artistName: String) = launchBehind {
         _photosLiveData reqData {
-            fetchArtistPhotoCase.execMapping(photosMapper, FetchArtistPhotoReq(ArtistParams(artistName = artistName)))
+            fetchArtistPhotoCase.execMapping(photosMapper,
+                                             FetchArtistPhotoReq(ArtistParams(artistName = artistName)))
         }
     }
 }

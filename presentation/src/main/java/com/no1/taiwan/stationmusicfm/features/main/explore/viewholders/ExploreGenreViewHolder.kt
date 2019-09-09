@@ -29,10 +29,10 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.TagInfoEntity.TagEntity
 import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.Companion.FRAGMENT_TARGET_GENRE
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_GENRE_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_DETAIL
-import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
 class ExploreGenreViewHolder(view: View) : MultiViewHolder<TagEntity>(view) {
@@ -50,8 +50,9 @@ class ExploreGenreViewHolder(view: View) : MultiViewHolder<TagEntity>(view) {
             find<TextView>(R.id.ftv_genre).text = model.name
             setOnClickListener {
                 /** @event_to [com.no1.taiwan.stationmusicfm.features.main.explore.ExploreIndexFragment.gotoNextDetailFragment] */
-                emitter.post(TAG_TO_DETAIL, hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_GENRE,
-                                                      PARAMS_TO_GENRE_NAME to model.name))
+                emitter.post(TAG_TO_DETAIL,
+                             hashMapOf(PARAMS_TO_DETAIL_TARGET to FRAGMENT_TARGET_GENRE,
+                                       PARAMS_TO_GENRE_NAME to model.name))
             }
         }
     }

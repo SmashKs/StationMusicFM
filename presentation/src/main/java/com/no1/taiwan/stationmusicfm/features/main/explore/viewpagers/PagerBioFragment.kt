@@ -26,11 +26,11 @@ import androidx.core.text.parseAsHtml
 import androidx.core.text.toSpannable
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.doWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peelSkipLoading
 import com.no1.taiwan.stationmusicfm.utils.textview.setHighlightLink
-import org.jetbrains.anko.support.v4.find
 
 class PagerBioFragment : BasePagerFragment() {
     private var bio: CharSequence = DEFAULT_STR

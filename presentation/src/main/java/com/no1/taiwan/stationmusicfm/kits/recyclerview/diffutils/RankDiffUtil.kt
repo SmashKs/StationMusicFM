@@ -31,10 +31,12 @@ class RankDiffUtil : MusicMultiDiffUtil() {
     override var oldList = mutableListOf<MusicMultiVisitable>()
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(oldList[oldItemPosition]).topTrackUri
+        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(
+            oldList[oldItemPosition]).topTrackUri
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(oldList[oldItemPosition]).topTrackUri
+        cast<RankingIdForChartItem>(newList[newItemPosition]).topTrackUri == cast<RankingIdForChartItem>(
+            oldList[oldItemPosition]).topTrackUri
 
     override fun getNewListSize() = newList.size
 

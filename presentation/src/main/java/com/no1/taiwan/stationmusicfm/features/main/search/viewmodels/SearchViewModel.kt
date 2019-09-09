@@ -76,7 +76,8 @@ class SearchViewModel(
         if (page.value != DEFAULT_INT) {  // -1 means to the end.
             _musics reqData {
                 fetchMusicCase.execMapping(musicMapper,
-                                           FetchMusicReq(SrchSongParams(keyword, requireNotNull(page.value))))
+                                           FetchMusicReq(SrchSongParams(keyword,
+                                                                        requireNotNull(page.value))))
             }
         }
     }
@@ -88,16 +89,20 @@ class SearchViewModel(
 
     fun runTaskFetchHistories() = launchBehind {
         _histories reqData {
-            fetchSearchHistoriesCase.execListMapping(historyMapper, FetchSearchHistsReq(SearchHistParams(limit = 100)))
+            fetchSearchHistoriesCase.execListMapping(historyMapper,
+                                                     FetchSearchHistsReq(SearchHistParams(limit = 100)))
         }
     }
 
     fun runTaskDeleteHistory(keyword: String) = launchBehind {
-        _removeRes reqData { deleteSearchHistoriesCase.exec(DeleteSearchHistReq(SearchHistParams(keyword))) }
+        _removeRes reqData {
+            deleteSearchHistoriesCase.exec(DeleteSearchHistReq(SearchHistParams(keyword)))
+        }
     }
 
     fun increasePageNumber() {
-        page.value = if (_musics.data()?.items?.isEmpty() == false) requireNotNull(page.value) + 1 else -1
+        page.value =
+            if (_musics.data()?.items?.isEmpty() == false) requireNotNull(page.value) + 1 else -1
     }
 
     fun getCurPageNumber() = requireNotNull(page.value)

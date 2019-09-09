@@ -60,6 +60,9 @@ object UtilModule {
         bind<LinearLayoutManager>(ObjectLabel.LINEAR_LAYOUT_HORIZONTAL) with provider {
             LinearLayoutManager(context, HORIZONTAL, false)
         }
-        bind<GridLayoutManager>() with factory { spanCount: Int -> GridLayoutManager(context, spanCount) }
+        bind<GridLayoutManager>() with factory { spanCount: Int ->
+            GridLayoutManager(context,
+                              spanCount)
+        }
     }
 }

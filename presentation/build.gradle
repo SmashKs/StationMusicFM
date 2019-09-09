@@ -107,9 +107,6 @@ dependencies {
     implementation(Deps.Presentation.quickDialog)
     //endregion
 
-    // Anko
-    implementation(Dependencies.preziAnko.values())
-
     //region DI
     implementation(Deps.Global.kodeinJVM) {
         exclude(group: "org.jetbrains.kotlin")

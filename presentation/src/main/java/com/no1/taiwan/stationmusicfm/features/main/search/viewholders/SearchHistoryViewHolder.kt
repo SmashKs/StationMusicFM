@@ -29,9 +29,9 @@ import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.SearchHistoryEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_REMOVING_SEARCH_HIST
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_SEARCH_HIST
-import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
 class SearchHistoryViewHolder(view: View) : MultiViewHolder<SearchHistoryEntity>(view) {
@@ -44,7 +44,11 @@ class SearchHistoryViewHolder(view: View) : MultiViewHolder<SearchHistoryEntity>
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-    override fun initView(model: SearchHistoryEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(
+        model: SearchHistoryEntity,
+        position: Int,
+        adapter: AdaptiveAdapter<*, *, *>
+    ) {
         itemView.apply {
             find<TextView>(R.id.ftv_history).text = model.keyword
             find<ImageButton>(R.id.ib_remove).setOnClickListener {

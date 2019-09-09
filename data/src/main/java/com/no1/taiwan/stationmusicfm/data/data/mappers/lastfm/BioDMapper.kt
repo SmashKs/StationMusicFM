@@ -40,6 +40,9 @@ class BioDMapper(
     }
 
     override fun toDataFrom(model: ArtistInfoModel.BioModel) = model.run {
-        ArtistInfoData.BioData(ArtistInfoData.LinksData(linkMapper.toDataFrom(link)), published, summary, content)
+        ArtistInfoData.BioData(ArtistInfoData.LinksData(linkMapper.toDataFrom(link)),
+                               published,
+                               summary,
+                               content)
     }
 }

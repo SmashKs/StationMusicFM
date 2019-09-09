@@ -74,8 +74,7 @@ object Versions {
      */
     object KotlinAndroidExt {
         const val dex = "2.0.1"
-        const val anko = "0.10.8"
-        const val kinfer = "2.1.15"
+        const val kinfer = "2.1.16"
         const val ktx = "1.2.0-alpha02"
         const val fragmentKtx = "1.2.0-alpha01"
         const val paletteKtx = "1.0.0"
@@ -95,7 +94,7 @@ object Versions {
      * Related dependency injection lib version.
      */
     object DI {
-        const val kodein = "6.3.4"
+        const val kodein = "6.3.3"
     }
 
     /**

@@ -27,7 +27,8 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.ktx.aac.lifecycle.ActivityLifeRegister
 
-class BusActLongerLifeRegister(activity: AppCompatActivity) : ActivityLifeRegister<AppCompatActivity>(activity) {
+class BusActLongerLifeRegister(activity: AppCompatActivity) : ActivityLifeRegister<AppCompatActivity>(
+    activity) {
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun registerRxBus() {
         act?.run(RxBus.get()::register)

@@ -88,7 +88,8 @@ class MyMusicIndexViewModel(
     fun runTaskFetchPlaylist(ids: List<Int>) = launchBehind {
         tempIds = ids
         _playlist reqData {
-            fetchTypeOfHistsCase.execListMapping(playlistMapper, FetchTypeOfHistsReq(PlaylistParams(ids)))
+            fetchTypeOfHistsCase.execListMapping(playlistMapper,
+                                                 FetchTypeOfHistsReq(PlaylistParams(ids)))
         }
     }
 

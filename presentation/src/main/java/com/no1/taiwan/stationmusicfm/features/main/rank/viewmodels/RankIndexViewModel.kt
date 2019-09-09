@@ -60,7 +60,10 @@ class RankIndexViewModel(
     }
 
     fun runTaskFetchMusicRanks() = launchBehind {
-        _topRanks reqData { fetchMusicRanksCase.execListMapping(briefRankMapper, FetchMusicRanksReq()) }
+        _topRanks reqData {
+            fetchMusicRanksCase.execListMapping(briefRankMapper,
+                                                FetchMusicRanksReq())
+        }
     }
 
     class RankingIdForChartLiveData(

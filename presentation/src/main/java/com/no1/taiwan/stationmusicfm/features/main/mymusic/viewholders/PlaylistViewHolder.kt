@@ -30,8 +30,8 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistInfoEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.ktx.image.load
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_TO_PLAYLIST_DETAIL
-import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
 class PlaylistViewHolder(view: View) : MultiViewHolder<PlaylistInfoEntity>(view) {

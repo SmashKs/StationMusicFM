@@ -54,10 +54,10 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.ExploreGenreFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchCommonOperations
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchIndexFragment
 import com.no1.taiwan.stationmusicfm.features.main.search.SearchResultFragment
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.find
 
 open class MainActivity : BaseActivity() {
     private val navigator by lazy { findNavController(R.id.frag_nav_main) }
@@ -70,7 +70,10 @@ open class MainActivity : BaseActivity() {
     private val fragmentIndexNavigator get() = currentFragment.findNavController()
     private val bottomNavigation by lazy { find<BottomNavigationView>(R.id.bnv_navigation) }
     private val indexFragmentIds by lazy {
-        listOf(R.id.frag_explore_index, R.id.frag_music_index, R.id.frag_rank_index, R.id.frag_search_index)
+        listOf(R.id.frag_explore_index,
+               R.id.frag_music_index,
+               R.id.frag_rank_index,
+               R.id.frag_search_index)
     }
     var searchItem: MenuItem? = null
     var onQuerySubmit by SoftRef<(query: String) -> Unit>()
@@ -128,7 +131,8 @@ open class MainActivity : BaseActivity() {
 
         when (currentFragment) {
             is SearchIndexFragment -> fragmentIndexNavigator.navigate(R.id.action_frag_search_index_to_frag_search_result)
-            is SearchResultFragment -> cast<SearchResultFragment>(currentFragment).searchMusicBy(query)
+            is SearchResultFragment -> cast<SearchResultFragment>(currentFragment).searchMusicBy(
+                query)
             is ExploreArtistFragment -> {
                 fragmentIndexNavigator.navigate(R.id.action_frag_explore_artist_self,
                                                 ExploreArtistFragment.createBundle(DEFAULT_STR,

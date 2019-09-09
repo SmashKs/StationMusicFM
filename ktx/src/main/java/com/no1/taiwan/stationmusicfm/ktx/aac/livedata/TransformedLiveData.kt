@@ -59,7 +59,8 @@ abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHoo
             objectWrapper = requireNotNull(objectWrapperEntry.value)
         }
         val classObserverWrapper = objectWrapper.javaClass.superclass
-        val fieldLastVersion = requireNotNull(classObserverWrapper?.getDeclaredField("mLastVersion")).accessible()
+        val fieldLastVersion =
+            requireNotNull(classObserverWrapper?.getDeclaredField("mLastVersion")).accessible()
         // Get LiveData's version.
         val fieldVersion = classLiveData.getDeclaredField("mVersion").accessible()
         val objectVersion = fieldVersion.get(this)

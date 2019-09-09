@@ -31,7 +31,10 @@ import com.no1.taiwan.stationmusicfm.widget.R
 import java.lang.ref.WeakReference
 
 object InputDialog {
-    fun createDialog(fragment: Fragment, viewBlock: (view: View, dialogFragment: DialogFragment) -> Unit) =
+    fun createDialog(
+        fragment: Fragment,
+        viewBlock: (view: View, dialogFragment: DialogFragment) -> Unit
+    ) =
         WeakReference(fragment).get()?.let {
             QuickDialogFragment.Builder(fragment) {
                 defaultBuilder()

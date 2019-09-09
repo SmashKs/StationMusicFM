@@ -51,7 +51,10 @@ class RankDetailViewModel(
     //endregion
 
     fun runTaskFetchTopTrack(rankId: Int) = launchBehind {
-        _rankMusic reqData { fetchRankMusicCase.execMapping(topTracksMapper, FetchRankMusicReq(RankParams(rankId))) }
+        _rankMusic reqData {
+            fetchRankMusicCase.execMapping(topTracksMapper,
+                                           FetchRankMusicReq(RankParams(rankId)))
+        }
     }
 
     fun runTaskUpdateRankItem(rankId: Int, topTrackUri: String, numOfTracks: Int) = launchBehind {

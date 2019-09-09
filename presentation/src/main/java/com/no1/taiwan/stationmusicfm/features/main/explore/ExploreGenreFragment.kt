@@ -45,6 +45,7 @@ import com.no1.taiwan.stationmusicfm.features.main.MainActivity
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreGenreViewModel
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_NAME
@@ -62,7 +63,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
-import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -77,7 +77,8 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
     private val tagName by extraNotNull<String>(ARGUMENT_TAG_NAME)
     //endregion
     private val verLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val horLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
+    private val horLinearLayoutManager: () -> LinearLayoutManager by provider(
+        LINEAR_LAYOUT_HORIZONTAL)
     private val albumAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
     private val trackAdapter: MusicAdapter by instance()
@@ -92,7 +93,8 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
     override fun bindLiveData() {
         observeNonNull(vm.tagInfoLiveData) {
             peel { (tag, artist, album, tracks) ->
-                find<TextView>(R.id.ftv_genre_about).text = tag.wiki.content.parseAsHtml().toSpannable()
+                find<TextView>(R.id.ftv_genre_about).text =
+                    tag.wiki.content.parseAsHtml().toSpannable()
                 albumAdapter.append(cast<MusicVisitables>(album.albums))
                 artistAdapter.append(cast<MusicVisitables>(artist.artists))
                 trackAdapter.append(cast<MusicVisitables>(tracks.tracks))

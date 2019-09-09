@@ -40,6 +40,7 @@ class TopAlbumPMapper(
     }
 
     override fun toModelFrom(entity: AlbumInfoEntity.TopAlbumsEntity) = entity.run {
-        CommonLastFmModel.TopAlbumsModel(albums.map(albumWithArtistMapper::toModelFrom), attrMapper.toModelFrom(attr))
+        CommonLastFmModel.TopAlbumsModel(albums.map(albumWithArtistMapper::toModelFrom),
+                                         attrMapper.toModelFrom(attr))
     }
 }

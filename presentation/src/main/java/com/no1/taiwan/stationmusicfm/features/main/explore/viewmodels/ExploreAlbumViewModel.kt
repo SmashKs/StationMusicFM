@@ -55,13 +55,15 @@ class ExploreAlbumViewModel(
     fun runTaskFetchAlbum(mbid: String, albumName: String, artistName: String) =
         launchBehind {
             _albumLiveData reqData {
-                fetchAlbumCase.execMapping(albumMapper, FetchAlbumReq(AlbumParams(mbid, albumName, artistName)))
+                fetchAlbumCase.execMapping(albumMapper,
+                                           FetchAlbumReq(AlbumParams(mbid, albumName, artistName)))
             }
         }
 
     fun runTaskFetchArtist(artistName: String) = launchBehind {
         _artistLiveData reqData {
-            fetchArtistCase.execMapping(artistMapper, FetchArtistReq(ArtistParams(artistName = artistName)))
+            fetchArtistCase.execMapping(artistMapper,
+                                        FetchArtistReq(ArtistParams(artistName = artistName)))
         }
     }
 }

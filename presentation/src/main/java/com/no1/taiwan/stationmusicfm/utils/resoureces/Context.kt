@@ -21,23 +21,24 @@
 
 package com.no1.taiwan.stationmusicfm.utils.resoureces
 
-import android.content.res.Resources
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import com.devrapid.kotlinknifer.getDimen
 import com.no1.taiwan.stationmusicfm.MusicApp
-import org.jetbrains.anko.dimen
 
 fun gContext() = MusicApp.appContext.applicationContext
 
-fun gDimen(@DimenRes id: Int) = gContext().dimen(id)
+fun gDimen(@DimenRes id: Int) = gContext().getDimen(id)
 
 fun gString(@StringRes id: Int) = gContext().getString(id)
 
 fun gText(@StringRes id: Int) = gContext().getText(id)
 
-fun gColor(@ColorRes id: Int, theme: Resources.Theme? = null) = gContext().resources.getColor(id, theme)
+fun gColor(@ColorRes id: Int) =
+    ContextCompat.getColor(gContext(), id)
 
 fun gStringArray(@ArrayRes id: Int) = gContext().resources.getStringArray(id)
 

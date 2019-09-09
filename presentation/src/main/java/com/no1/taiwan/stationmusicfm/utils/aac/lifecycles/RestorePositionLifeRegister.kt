@@ -27,7 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.no1.taiwan.stationmusicfm.ktx.aac.lifecycle.FragmentLifeRegister
-import org.jetbrains.anko.support.v4.find
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 
 class RestorePositionLifeRegister(
     fragment: Fragment,
@@ -38,8 +38,6 @@ class RestorePositionLifeRegister(
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun listenScrollViewPositions() {
         frag?.find<NestedScrollView>(scrollViewId)
-            // Keeping the last position because when go to other views, the position Y of
-            // [NestedScrollView] will be reset.
             ?.setOnScrollChangeListener { _: NestedScrollView, _: Int, scrollY: Int, _: Int, _: Int ->
                 posY = scrollY
             }

@@ -22,11 +22,11 @@
 package com.no1.taiwan.stationmusicfm.services.workers
 
 import android.content.Context
+import android.preference.PreferenceManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.devrapid.kotlinknifer.SharedPrefs
 import com.facebook.stetho.Stetho
-import org.jetbrains.anko.defaultSharedPreferences
 
 class InitialWorker(
     context: Context,
@@ -34,7 +34,7 @@ class InitialWorker(
 ) : Worker(context, workerParams) {
     override fun doWork(): Result {
         // key-value storage, choose one for using.
-        SharedPrefs.setPrefSettings(applicationContext.defaultSharedPreferences)
+        SharedPrefs.setPrefSettings(PreferenceManager.getDefaultSharedPreferences(applicationContext))
         Stetho.initializeWithDefaults(applicationContext)
 
         return Result.success()

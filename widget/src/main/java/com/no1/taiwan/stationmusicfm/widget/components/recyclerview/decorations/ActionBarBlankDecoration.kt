@@ -45,7 +45,12 @@ class ActionBarBlankDecoration : RecyclerView.ItemDecoration() {
      * @param parent  RecyclerView this ItemDecoration is decorating
      * @param state   The current state of RecyclerView.
      */
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         super.getItemOffsets(outRect, view, parent, state)
         val position = parent.getChildAdapterPosition(view)
         val topMargin = parent.context.resources.getDimension(R.dimen.md_seven_unit)

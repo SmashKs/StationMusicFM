@@ -34,10 +34,12 @@ class TracksPMapper(
     private val attrMapper: AttrPMapper
 ) : TracksPreziMap {
     override fun toEntityFrom(model: TrackInfoModel.TracksModel) = model.run {
-        TrackInfoEntity.TracksEntity(tracks.map(trackMapper::toEntityFrom), attr.let(attrMapper::toEntityFrom))
+        TrackInfoEntity.TracksEntity(tracks.map(trackMapper::toEntityFrom),
+                                     attr.let(attrMapper::toEntityFrom))
     }
 
     override fun toModelFrom(entity: TrackInfoEntity.TracksEntity) = entity.run {
-        TrackInfoModel.TracksModel(tracks.map(trackMapper::toModelFrom), attrMapper.toModelFrom(attr))
+        TrackInfoModel.TracksModel(tracks.map(trackMapper::toModelFrom),
+                                   attrMapper.toModelFrom(attr))
     }
 }

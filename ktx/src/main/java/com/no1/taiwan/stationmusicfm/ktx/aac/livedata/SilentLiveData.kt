@@ -52,7 +52,8 @@ abstract class SilentLiveData<T> : LiveData<T>(), SilentHook<T> {
             objectWrapper = requireNotNull(objectWrapperEntry.value)
         }
         val classObserverWrapper = objectWrapper.javaClass.superclass
-        val fieldLastVersion = requireNotNull(classObserverWrapper?.getDeclaredField("mLastVersion")).accessible()
+        val fieldLastVersion =
+            requireNotNull(classObserverWrapper?.getDeclaredField("mLastVersion")).accessible()
         // Get LiveData's version.
         val fieldVersion = classLiveData.getDeclaredField("mVersion").accessible()
         val objectVersion = fieldVersion.get(this)

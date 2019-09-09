@@ -19,6 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.no1.taiwan.stationmusicfm.utils.presentations
 
 import com.devrapid.kotlinknifer.WeakRef

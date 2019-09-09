@@ -40,7 +40,8 @@ class TrackTypeGenrePMapper(
     private val wikiMapper: WikiPMapper
 ) : TrackTypeGenrePreziMap {
     // OPTIMIZE(jieyi): 2019-02-07 Here will happened recursive dependency if as an argument.
-    private val albumMapper = AlbumPMapper(attrMapper, imageMapper, tagMapper, trackMapper, wikiMapper)
+    private val albumMapper =
+        AlbumPMapper(attrMapper, imageMapper, tagMapper, trackMapper, wikiMapper)
 
     override fun toEntityFrom(model: TrackInfoModel.TrackModel): TrackInfoEntity.TrackTypeGenreEntity {
         return model.run {

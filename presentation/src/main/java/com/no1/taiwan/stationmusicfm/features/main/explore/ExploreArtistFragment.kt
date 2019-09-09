@@ -52,6 +52,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerSimil
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.PagerTrackFragment
 import com.no1.taiwan.stationmusicfm.features.main.explore.viewpagers.SimpleFragmentPagerAdapter
 import com.no1.taiwan.stationmusicfm.ktx.image.load
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_ALBUM_NAME
@@ -65,9 +66,6 @@ import com.no1.taiwan.stationmusicfm.utils.aac.observeNonNull
 import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.muteErrorDoWith
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
-import org.jetbrains.anko.find
-import org.jetbrains.anko.support.v4.find
-import org.jetbrains.anko.support.v4.withArguments
 import org.kodein.di.generic.instance
 
 class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>() {
@@ -99,8 +97,8 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
                PagerAlbumFragment(),
                PagerTrackFragment(),
                PagerSimilarArtistFragment()).onEach {
-            it.withArguments(ARGUMENT_VM_DEPENDENT to vmProviderSource,
-                             ARGUMENT_ARTIST_NAME to artistName)
+            it.arguments = bundleOf(ARGUMENT_VM_DEPENDENT to vmProviderSource,
+                                    ARGUMENT_ARTIST_NAME to artistName)
         }
     }
 

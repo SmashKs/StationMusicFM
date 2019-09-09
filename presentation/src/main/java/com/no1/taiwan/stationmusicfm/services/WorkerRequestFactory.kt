@@ -39,7 +39,8 @@ object WorkerRequestFactory {
             put(WORKER_INIT, OneTimeWorkRequestBuilder<InitialWorker>().addTag(WORKER_INIT).build())
             put(WORKER_CHART_CHECKER,
                 OneTimeWorkRequestBuilder<RankChartHasParsedWorker>().addTag(WORKER_CHART_CHECKER).build())
-            put(WORKER_INIT_DATA, OneTimeWorkRequestBuilder<PreprocessDataWorker>().addTag(WORKER_INIT_DATA).build())
+            put(WORKER_INIT_DATA,
+                OneTimeWorkRequestBuilder<PreprocessDataWorker>().addTag(WORKER_INIT_DATA).build())
         }
     }
 

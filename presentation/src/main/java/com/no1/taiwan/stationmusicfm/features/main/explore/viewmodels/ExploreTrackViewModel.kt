@@ -58,7 +58,8 @@ class ExploreTrackViewModel(
         val parameters = TrackParams(mbid, trackName, artistName)
         _trackInfoLiveData reqData {
             val track = fetchTrackCase.execMapping(trackMapper, FetchTrackReq(parameters))
-            val similarTracks = fetchSimilarTrackCase.execMapping(tracksMapper, FetchSimilarTrackReq(parameters))
+            val similarTracks =
+                fetchSimilarTrackCase.execMapping(tracksMapper, FetchSimilarTrackReq(parameters))
             _trackLiveData.postValue(ResponseState.Success(track))
             _similarTracksLiveData.postValue(ResponseState.Success(similarTracks))
 

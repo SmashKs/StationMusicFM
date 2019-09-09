@@ -39,6 +39,7 @@ import com.no1.taiwan.stationmusicfm.features.main.explore.viewmodels.ExploreInd
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_HORIZONTAL
 import com.no1.taiwan.stationmusicfm.internal.di.tags.ObjectLabel.LINEAR_LAYOUT_VERTICAL
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.scrolllisteners.LoadMoreScrollListener
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_ARTIST_NAME
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_COMMON_MBID
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Parameter.PARAMS_TO_DETAIL_TARGET
@@ -53,7 +54,6 @@ import com.no1.taiwan.stationmusicfm.utils.presentations.happenError
 import com.no1.taiwan.stationmusicfm.utils.presentations.peel
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicAdapter
 import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitables
-import org.jetbrains.anko.support.v4.find
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
@@ -65,7 +65,8 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
     }
 
     private val verLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_VERTICAL)
-    private val horLinearLayoutManager: () -> LinearLayoutManager by provider(LINEAR_LAYOUT_HORIZONTAL)
+    private val horLinearLayoutManager: () -> LinearLayoutManager by provider(
+        LINEAR_LAYOUT_HORIZONTAL)
     private val girdLayoutManager: () -> GridLayoutManager by provider(null, 3)
     private val trackAdapter: MusicAdapter by instance()
     private val artistAdapter: MusicAdapter by instance()
@@ -196,18 +197,27 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
         navTo(target, mbid, artistName, trackName, genreName)
     }
 
-    private fun navTo(target: String, mbid: String, artistName: String, trackName: String, genreName: String) {
+    private fun navTo(
+        target: String,
+        mbid: String,
+        artistName: String,
+        trackName: String,
+        genreName: String
+    ) {
         val (fragment, bundle) = when (target) {
             FRAGMENT_TARGET_TRACK ->
-                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(mbid,
-                                                                                                          artistName,
-                                                                                                          trackName)
+                R.id.action_frag_explore_index_to_frag_explore_track to ExploreTrackFragment.createBundle(
+                    mbid,
+                    artistName,
+                    trackName)
             FRAGMENT_TARGET_ARTIST ->
-                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(mbid,
-                                                                                                            artistName,
-                                                                                                            PROVIDER_FROM_ACTIVITY)
+                R.id.action_frag_explore_index_to_frag_explore_artist to ExploreArtistFragment.createBundle(
+                    mbid,
+                    artistName,
+                    PROVIDER_FROM_ACTIVITY)
             FRAGMENT_TARGET_GENRE ->
-                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(genreName)
+                R.id.action_frag_explore_index_to_frag_explore_tag to ExploreGenreFragment.createBundle(
+                    genreName)
             else -> throw IllegalArgumentException()
         }
 

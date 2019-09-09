@@ -296,7 +296,9 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
         val uri = Uri.parse(url)
         // Produces DataSource instances through which media data is loaded.
         val dataSourceFactory =
-            DefaultDataSourceFactory(context, Util.getUserAgent(context, NAME), DefaultBandwidthMeter())
+            DefaultDataSourceFactory(context,
+                                     Util.getUserAgent(context, NAME),
+                                     DefaultBandwidthMeter())
         // This is the MediaSource representing the media to be played.
         return ExtractorMediaSource.Factory(dataSourceFactory)
             .setExtractorsFactory(DefaultExtractorsFactory())
@@ -334,12 +336,14 @@ class ExoPlayerWrapper(private val context: Context) : MusicPlayer {
 
         override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int) {
             val millis = 1000
-            val threshold = 1_000_000  // Avoiding the bigger timeline comes, cause the running time is incorrect.
+            val threshold =
+                1_000_000  // Avoiding the bigger timeline comes, cause the running time is incorrect.
 
             if (exoPlayer.duration in 1..threshold) {
                 wrapper.listener?.onDurationChanged(exoPlayer.duration.div(millis).toInt())
                 wrapper.timer =
-                    PausableTimer(exoPlayer.duration.minus(exoPlayer.currentPosition), millis.toLong())
+                    PausableTimer(exoPlayer.duration.minus(exoPlayer.currentPosition),
+                                  millis.toLong())
                 wrapper.timer.onTick = { millisUntilFinished ->
                     val time = (exoPlayer.duration - millisUntilFinished).div(millis).toInt()
                     wrapper.listener?.onCurrentTime(time)

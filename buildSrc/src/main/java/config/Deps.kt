@@ -93,16 +93,6 @@ object Deps {
         const val dexTool = "androidx.multidex:multidex:${Versions.KotlinAndroidExt.dex}"
         const val androidCoroutine =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.kotlinCoroutine}"
-        // Anko
-        const val anko = "org.jetbrains.anko:anko-commons:${Versions.KotlinAndroidExt.anko}"
-        const val ankoSdk25 = "org.jetbrains.anko:anko-sdk25:${Versions.KotlinAndroidExt.anko}"
-        const val ankoV7 = "org.jetbrains.anko:anko-appcompat-v7:${Versions.KotlinAndroidExt.anko}"
-        const val ankoCoroutine =
-            "org.jetbrains.anko:anko-sdk25-coroutines:${Versions.KotlinAndroidExt.anko}"
-        const val ankoV7Coroutine =
-            "org.jetbrains.anko:anko-appcompat-v7-coroutines:${Versions.KotlinAndroidExt.anko}"
-        const val ankoCoroutines =
-            "org.jetbrains.anko:anko-coroutines:${Versions.KotlinAndroidExt.anko}"
         // Jieyi Utils
         const val knifer = "com.devrapid.jieyi:kotlinknifer:${Versions.KotlinAndroidExt.kinfer}"
         // Rx
@@ -151,7 +141,8 @@ object Deps {
             "androidx.constraintlayout:constraintlayout:${Versions.AndroidComponent.constraintLayout}"
         const val coordinatorLayout =
             "androidx.coordinatorlayout:coordinatorlayout:${Versions.AndroidComponent.coordinatorLayout}"
-        const val lifecycle =  // ViewModel and LiveData
+        // ViewModel and LiveData
+        const val lifecycle =
             "androidx.lifecycle:lifecycle-extensions:${Versions.AndroidArchitectureComponent.aacLifecycle}"
         const val lifecycleCompiler =
             "android.arch.lifecycle:compiler:${Versions.AndroidArchitectureComponent.aacLifecycle}"

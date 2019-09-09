@@ -68,7 +68,8 @@ abstract class LocalMusicDao : BaseDao<LocalMusicData> {
                                            (splitFromOrigin + splitFromUpdated).distinct()
                                        }
                                        else  // Remove the playlist from original playlist.
-                                           splitFromOrigin.subtract(splitFromUpdated)).joinToString(",")
+                                           splitFromOrigin.subtract(splitFromUpdated)).joinToString(
+                                           ",")
                                    }
                                } ?: existMusic.playlistList  // There's no new playlist inside of parameters, just put original playlist.
             // If remove a track from playlist and the track was downloaded, we should clean the [LocalTrackUri] to be blank.

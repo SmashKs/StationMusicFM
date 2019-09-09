@@ -19,6 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.no1.taiwan.stationmusicfm.kits.view
 
 import android.app.Activity
@@ -28,7 +30,7 @@ import androidx.annotation.IdRes
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.obtainViewStub
 import com.no1.taiwan.stationmusicfm.R
-import org.jetbrains.anko.find
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 
 //region Show View Stub
 // inline fun Activity.showLoadingView() = showViewStub(R.id.vs_loading, R.id.v_loading, null)

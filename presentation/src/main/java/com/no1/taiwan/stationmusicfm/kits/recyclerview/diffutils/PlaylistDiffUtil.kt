@@ -31,10 +31,12 @@ class PlaylistDiffUtil : MusicMultiDiffUtil() {
     override var oldList = mutableListOf<MusicMultiVisitable>()
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        castOrNull<PlaylistInfoEntity>(newList[newItemPosition])?.trackCount == castOrNull<PlaylistInfoEntity>(oldList[oldItemPosition])?.trackCount
+        castOrNull<PlaylistInfoEntity>(newList[newItemPosition])?.trackCount == castOrNull<PlaylistInfoEntity>(
+            oldList[oldItemPosition])?.trackCount
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        castOrNull<PlaylistInfoEntity>(newList[newItemPosition])?.id == castOrNull<PlaylistInfoEntity>(oldList[oldItemPosition])?.id
+        castOrNull<PlaylistInfoEntity>(newList[newItemPosition])?.id == castOrNull<PlaylistInfoEntity>(
+            oldList[oldItemPosition])?.id
 
     override fun getNewListSize() = newList.size
 

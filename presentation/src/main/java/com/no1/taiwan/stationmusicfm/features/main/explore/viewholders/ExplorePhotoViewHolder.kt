@@ -28,7 +28,7 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.lastfm.ArtistInfoEntity.PhotoEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
 import com.no1.taiwan.stationmusicfm.ktx.image.load
-import org.jetbrains.anko.find
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 
 class ExplorePhotoViewHolder(view: View) : MultiViewHolder<PhotoEntity>(view) {
     /**

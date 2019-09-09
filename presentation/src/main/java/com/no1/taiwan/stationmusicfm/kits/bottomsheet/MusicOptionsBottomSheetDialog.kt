@@ -43,10 +43,10 @@ import com.no1.taiwan.stationmusicfm.entities.PreziMapperPool
 import com.no1.taiwan.stationmusicfm.entities.mappers.playlist.PlaylistInfoToBottomEntityPMapper
 import com.no1.taiwan.stationmusicfm.internal.di.Dispatcher
 import com.no1.taiwan.stationmusicfm.kits.dialogs.AlbumInfoDialog
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.player.MusicPlayer
 import com.no1.taiwan.stationmusicfm.utils.file.FilePathFactory
 import com.no1.taiwan.stationmusicfm.widget.components.toast.toastX
-import org.jetbrains.anko.find
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
@@ -137,7 +137,8 @@ class MusicOptionsBottomSheetDialog(
      * Require the store permission from the activity.
      */
     private fun requireStoragePermission(grantedBlock: (() -> Unit)? = null) {
-        if (ActivityCompat.checkSelfPermission(context, WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context,
+                                               WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
             grantedBlock?.invoke()
         }
         else {

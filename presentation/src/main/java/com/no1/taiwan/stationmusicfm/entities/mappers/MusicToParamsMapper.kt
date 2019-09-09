@@ -31,7 +31,11 @@ import com.no1.taiwan.stationmusicfm.ext.DEFAULT_STR
  * The different layers have their own data objects, the objects should transform and fit each layers.
  */
 class MusicToParamsMapper {
-    fun toParamsWith(song: SongEntity, playlistIndex: List<Int> = emptyList(), addOrMinus: Boolean = true) = song.run {
+    fun toParamsWith(
+        song: SongEntity,
+        playlistIndex: List<Int> = emptyList(),
+        addOrMinus: Boolean = true
+    ) = song.run {
         LocalMusicParams(title,
                          artist,
                          length,
@@ -43,7 +47,11 @@ class MusicToParamsMapper {
                          addOrMinus)
     }
 
-    fun toParamsWith(entity: LocalMusicEntity, playlistIndex: List<Int> = emptyList(), addOrMinus: Boolean = true) =
+    fun toParamsWith(
+        entity: LocalMusicEntity,
+        playlistIndex: List<Int> = emptyList(),
+        addOrMinus: Boolean = true
+    ) =
         entity.run {
             LocalMusicParams(trackName,
                              artistName,

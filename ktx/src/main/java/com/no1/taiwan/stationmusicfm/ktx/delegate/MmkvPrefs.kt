@@ -56,7 +56,10 @@ class MmkvPrefs<T>(
             is String -> prefs.decodeString(name, defaultValue as String) as T
             is Set<*> -> prefs.decodeStringSet(name, defaultValue as Set<String>) as T
             // Using json format to deserialize a string to an object.
-            else -> prefs.decodeString(name, null)?.let { gson.fromJson(it, objectType) } ?: defaultValue
+            else -> prefs.decodeString(name, null)?.let {
+                gson.fromJson(it,
+                              objectType)
+            } ?: defaultValue
         }
     }
 

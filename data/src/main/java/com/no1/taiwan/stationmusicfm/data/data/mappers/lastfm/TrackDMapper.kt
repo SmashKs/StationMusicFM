@@ -50,7 +50,8 @@ class TrackDMapper(
             .apply {
                 album = data.album?.let(albumMapper::toModelFrom) ?: AlbumInfoModel.AlbumModel()
                 attr = data.attr?.let(attrMapper::toModelFrom) ?: CommonLastFmModel.AttrModel()
-                artist = data.artist?.let(artistMapper::toModelFrom) ?: ArtistInfoModel.ArtistModel()
+                artist =
+                    data.artist?.let(artistMapper::toModelFrom) ?: ArtistInfoModel.ArtistModel()
                 duration = data.duration.orEmpty()
                 images = data.images?.map(imageMapper::toModelFrom).orEmpty()
                 listeners = data.listeners.orEmpty()

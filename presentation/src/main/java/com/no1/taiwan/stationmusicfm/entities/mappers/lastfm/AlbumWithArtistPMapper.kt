@@ -38,7 +38,9 @@ class AlbumWithArtistPMapper(
     private val wikiMapper: WikiPMapper
 ) : AlbumWithArtistPreziMap {
     override fun toEntityFrom(model: AlbumInfoModel.AlbumWithArtistModel) = model.run {
-        AlbumInfoEntity.AlbumWithArtistEntity(artist.let(artistMapper::toEntityFrom), playCount, index).apply {
+        AlbumInfoEntity.AlbumWithArtistEntity(artist.let(artistMapper::toEntityFrom),
+                                              playCount,
+                                              index).apply {
             attr = model.attr.let(attrMapper::toEntityFrom)
             images = model.images.map(imageMapper::toEntityFrom)
             listeners = model.listeners
@@ -53,17 +55,18 @@ class AlbumWithArtistPMapper(
     }
 
     override fun toModelFrom(entity: AlbumInfoEntity.AlbumWithArtistEntity) = entity.run {
-        AlbumInfoModel.AlbumWithArtistModel(artistMapper.toModelFrom(artist), playCount, index).apply {
-            attr = attrMapper.toModelFrom(entity.attr)
-            images = entity.images.map(imageMapper::toModelFrom)
-            listeners = entity.listeners
-            mbid = entity.mbid
-            name = entity.name
-            tags = entity.tags.map(tagMapper::toModelFrom)
-            title = entity.title
-            tracks = entity.tracks.map(trackMapper::toModelFrom)
-            url = entity.url
-            wiki = wikiMapper.toModelFrom(entity.wiki)
-        }
+        AlbumInfoModel.AlbumWithArtistModel(artistMapper.toModelFrom(artist), playCount, index)
+            .apply {
+                attr = attrMapper.toModelFrom(entity.attr)
+                images = entity.images.map(imageMapper::toModelFrom)
+                listeners = entity.listeners
+                mbid = entity.mbid
+                name = entity.name
+                tags = entity.tags.map(tagMapper::toModelFrom)
+                title = entity.title
+                tracks = entity.tracks.map(trackMapper::toModelFrom)
+                url = entity.url
+                wiki = wikiMapper.toModelFrom(entity.wiki)
+            }
     }
 }

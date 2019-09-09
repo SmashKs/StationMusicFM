@@ -38,8 +38,8 @@ import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.ext.DEFAULT_INT
 import com.no1.taiwan.stationmusicfm.ext.isDefault
 import com.no1.taiwan.stationmusicfm.kits.view.hideRetryView
+import com.no1.taiwan.stationmusicfm.ktx.view.findOptional
 import com.no1.taiwan.stationmusicfm.widget.components.dialog.LoadingDialog
-import org.jetbrains.anko.findOptional
 import org.kodein.di.generic.instance
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type

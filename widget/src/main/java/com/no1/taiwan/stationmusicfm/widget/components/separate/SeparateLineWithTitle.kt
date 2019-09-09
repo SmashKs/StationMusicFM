@@ -61,15 +61,17 @@ class SeparateLineWithTitle @JvmOverloads constructor(
     //endregion
 
     init {
-        context.obtainStyledAttributes(attrs, R.styleable.SeparateLineWithTitle, defStyleAttr, 0).apply {
-            title = getString(R.styleable.SeparateLineWithTitle_sltTitle) ?: title
-            titleSize = getFloat(R.styleable.SeparateLineWithTitle_sltTitleSize, titleSize)
-            titleColor = getColor(R.styleable.SeparateLineWithTitle_sltTitleColor, titleColor)
-            textFont = getString(R.styleable.SeparateLineWithTitle_sltTextFont) ?: textFont
-            between = getDimension(R.styleable.SeparateLineWithTitle_sltBetween, between)
-            lineColor = getColor(R.styleable.SeparateLineWithTitle_sltLineColor, lineColor)
-            lineHeight = getDimension(R.styleable.SeparateLineWithTitle_sltLineHeight, lineHeight)
-        }.recycle()
+        context.obtainStyledAttributes(attrs, R.styleable.SeparateLineWithTitle, defStyleAttr, 0)
+            .apply {
+                title = getString(R.styleable.SeparateLineWithTitle_sltTitle) ?: title
+                titleSize = getFloat(R.styleable.SeparateLineWithTitle_sltTitleSize, titleSize)
+                titleColor = getColor(R.styleable.SeparateLineWithTitle_sltTitleColor, titleColor)
+                textFont = getString(R.styleable.SeparateLineWithTitle_sltTextFont) ?: textFont
+                between = getDimension(R.styleable.SeparateLineWithTitle_sltBetween, between)
+                lineColor = getColor(R.styleable.SeparateLineWithTitle_sltLineColor, lineColor)
+                lineHeight =
+                    getDimension(R.styleable.SeparateLineWithTitle_sltLineHeight, lineHeight)
+            }.recycle()
         setBackgroundColor(resources.getColor(android.R.color.transparent))
         addView(FontTextView(context, attrs, defStyleAttr).apply {
             tvTitle = this

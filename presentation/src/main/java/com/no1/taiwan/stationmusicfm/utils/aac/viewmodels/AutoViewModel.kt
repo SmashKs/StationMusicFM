@@ -31,10 +31,12 @@ open class AutoViewModel : BehindViewModel() {
      * @param attr
      * @param perPage
      */
-    protected fun autoIncreaseParams(attr: CommonLastFmEntity.AttrEntity, perPage: Int): BaseWithPagingParams? {
+    protected fun autoIncreaseParams(
+        attr: CommonLastFmEntity.AttrEntity,
+        perPage: Int
+    ): BaseWithPagingParams? {
         // If it's already found until the last page, we need to return.
-        if (attr.perPage.toInt() >= attr.totalPages.toInt())
-            return null
+        if (attr.perPage.toInt() >= attr.totalPages.toInt()) return null
         return BaseWithPagingParams().apply {
             page = attr.page.toInt() + 1
             limit = perPage

@@ -36,23 +36,24 @@ class ArtistSimilarPMapper(
     private val statsMapper: StatsPMapper,
     private val tagMapper: TagPMapper
 ) : ArtistSimilarPreziMap {
-    override fun toEntityFrom(model: ArtistInfoModel.ArtistModel): ArtistInfoEntity.ArtistSimilarEntity = model.let {
-        ArtistInfoEntity.ArtistSimilarEntity().apply {
-            name = it.name
-            mbid = it.mbid
-            match = it.match
-            url = it.url
-            images = it.images.map(imageMapper::toEntityFrom)
-            streamable = it.streamable
-            listeners = it.listeners
-            onTour = it.onTour
-            playCount = it.playCount
-            stats = it.stats.let(statsMapper::toEntityFrom)
-            similars = it.similars.map(this@ArtistSimilarPMapper::toEntityFrom)
-            tags = it.tags.map(tagMapper::toEntityFrom)
-            bio = it.bio.let(bioMapper::toEntityFrom)
+    override fun toEntityFrom(model: ArtistInfoModel.ArtistModel): ArtistInfoEntity.ArtistSimilarEntity =
+        model.let {
+            ArtistInfoEntity.ArtistSimilarEntity().apply {
+                name = it.name
+                mbid = it.mbid
+                match = it.match
+                url = it.url
+                images = it.images.map(imageMapper::toEntityFrom)
+                streamable = it.streamable
+                listeners = it.listeners
+                onTour = it.onTour
+                playCount = it.playCount
+                stats = it.stats.let(statsMapper::toEntityFrom)
+                similars = it.similars.map(this@ArtistSimilarPMapper::toEntityFrom)
+                tags = it.tags.map(tagMapper::toEntityFrom)
+                bio = it.bio.let(bioMapper::toEntityFrom)
+            }
         }
-    }
 
     override fun toModelFrom(entity: ArtistInfoEntity.ArtistSimilarEntity) =
         UnsupportedOperation()

@@ -42,15 +42,30 @@ class MakeLocalMusic(
         playlistIndex: Int,
         addOrMinus: Boolean
     ) = CoroutineScope(Dispatchers.IO).async {
-        execAddOrUpdateToPlayHistory(playlistIndex) { MusicToParamsMapper().toParamsWith(song, it, addOrMinus) }
+        execAddOrUpdateToPlayHistory(playlistIndex) {
+            MusicToParamsMapper().toParamsWith(song,
+                                               it,
+                                               addOrMinus)
+        }
     }
 
-    override fun runTaskUpdateToPlayHistory(song: LocalMusicEntity, playlistIndex: Int, addOrMinus: Boolean) =
+    override fun runTaskUpdateToPlayHistory(
+        song: LocalMusicEntity,
+        playlistIndex: Int,
+        addOrMinus: Boolean
+    ) =
         CoroutineScope(Dispatchers.IO).async {
-            execAddOrUpdateToPlayHistory(playlistIndex) { MusicToParamsMapper().toParamsWith(song, it, addOrMinus) }
+            execAddOrUpdateToPlayHistory(playlistIndex) {
+                MusicToParamsMapper().toParamsWith(song,
+                                                   it,
+                                                   addOrMinus)
+            }
         }
 
-    override fun runTaskAddDownloadedTrackInfo(song: CommonMusicEntity.SongEntity, localUri: String) =
+    override fun runTaskAddDownloadedTrackInfo(
+        song: CommonMusicEntity.SongEntity,
+        localUri: String
+    ) =
         CoroutineScope(Dispatchers.IO).async {
             val parameter = MusicToParamsMapper()
                 .toParamsWith(song, listOf(PlaylistIndex.DOWNLOADED.ordinal))

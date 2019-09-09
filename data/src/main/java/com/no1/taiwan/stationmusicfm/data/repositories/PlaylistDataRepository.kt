@@ -46,9 +46,11 @@ class PlaylistDataRepository constructor(
     override suspend fun fetchLocalMusics(parameters: Parameterable) =
         local.getLocalMusics(parameters).map(musicMapper::toModelFrom)
 
-    override suspend fun addOrUpdateLocalMusic(parameters: Parameterable) = local.createOrModifyLocalMusic(parameters)
+    override suspend fun addOrUpdateLocalMusic(parameters: Parameterable) =
+        local.createOrModifyLocalMusic(parameters)
 
-    override suspend fun deleteLocalMusic(parameters: Parameterable) = local.removeLocalMusic(parameters)
+    override suspend fun deleteLocalMusic(parameters: Parameterable) =
+        local.removeLocalMusic(parameters)
 
     override suspend fun fetchPlaylists() =
         local.getPlaylists().map(playlistMapper::toModelFrom)
@@ -61,11 +63,14 @@ class PlaylistDataRepository constructor(
 
     override suspend fun addPlaylist(parameters: Parameterable) = local.createPlaylist(parameters)
 
-    override suspend fun updatePlaylist(parameters: Parameterable) = local.modifyPlaylist(parameters)
+    override suspend fun updatePlaylist(parameters: Parameterable) =
+        local.modifyPlaylist(parameters)
 
-    override suspend fun updateCountOfPlaylist(parameters: Parameterable) = local.modifyCountOfPlaylist(parameters)
+    override suspend fun updateCountOfPlaylist(parameters: Parameterable) =
+        local.modifyCountOfPlaylist(parameters)
 
-    override suspend fun deletePlaylist(parameters: Parameterable) = local.removePlaylist(parameters)
+    override suspend fun deletePlaylist(parameters: Parameterable) =
+        local.removePlaylist(parameters)
 
     override suspend fun fetchListenedHistories(parameters: Parameterable) =
         local.getListenedHistories(parameters).map(musicMapper::toModelFrom)

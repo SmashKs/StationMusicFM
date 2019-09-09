@@ -114,7 +114,10 @@ object RecyclerViewModule {
         bind<MultiTypeFactory>() with singleton { MultiTypeFactory(instance()) }
         // *** Adapters
         bind<MusicAdapter>() with provider { MultiTypeAdapter(instance()) }
-        bind<MusicAdapter>(ADAPTER_RANK) with provider { MultiTypeAdapter(instance(), instance(UTIL_DIFF_RANK)) }
+        bind<MusicAdapter>(ADAPTER_RANK) with provider {
+            MultiTypeAdapter(instance(),
+                             instance(UTIL_DIFF_RANK))
+        }
         bind<MusicAdapter>(ADAPTER_PLAYLIST) with provider {
             MultiTypeAdapter(instance(), instance(UTIL_DIFF_PLAYLIST))
         }
@@ -135,7 +138,9 @@ object RecyclerViewModule {
 
     private fun decorationProvider() = Module("Recycler View Item Decoration") {
         bind<RecyclerView.ItemDecoration>(ITEM_DECORATION_ACTION_BAR_BLANK) with provider { ActionBarBlankDecoration() }
-        bind<RecyclerView.ItemDecoration>(ITEM_DECORATION_SEPARATOR) with provider { SeparateLineDecoration(MusicApp.appContext) }
+        bind<RecyclerView.ItemDecoration>(ITEM_DECORATION_SEPARATOR) with provider {
+            SeparateLineDecoration(MusicApp.appContext)
+        }
         bind<RecyclerView.ItemDecoration>(ITEM_DECORATION_MUSIC_OF_PLAYLIST_SEPARATOR) with provider {
             TrackOfPlaylistSeparateLineDecoration(MusicApp.appContext)
         }

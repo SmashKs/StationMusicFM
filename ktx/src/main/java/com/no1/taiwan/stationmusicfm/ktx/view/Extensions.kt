@@ -21,16 +21,59 @@
 
 package com.no1.taiwan.stationmusicfm.ktx.view
 
+import android.app.Activity
 import android.view.View
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatDialog
+import androidx.fragment.app.Fragment
 
 fun View.obtainPositionOnScreen(): Pair<Float, Float> {
     val position = IntArray(2)
     getLocationOnScreen(position)
-    return Pair(position[0].toFloat(), position[1].toFloat())
+    return position[0].toFloat() to position[1].toFloat()
 }
 
 fun View.obtainPositionInWindow(): Pair<Float, Float> {
     val position = IntArray(2)
     getLocationInWindow(position)
-    return Pair(position[0].toFloat(), position[1].toFloat())
+    return position[0].toFloat() to position[1].toFloat()
 }
+
+//region FindViewById
+fun <vt : View> Activity.find(@IdRes idRes: Int) = requireNotNull(findViewById<vt>(idRes)) {
+    "ID does not reference a View inside this Activity"
+}
+
+fun <vt : View> Fragment.find(@IdRes idRes: Int) =
+    requireNotNull(requireView().findViewById<vt>(idRes)) {
+        "ID does not reference a View inside this Fragment"
+    }
+
+fun <vt : View> View.find(@IdRes idRes: Int) = requireNotNull(findViewById<vt>(idRes)) {
+    "ID does not reference a View inside this View"
+}
+
+fun <vt : View> AppCompatDialog.find(@IdRes idRes: Int) =
+    requireNotNull(findViewById<vt>(idRes)) {
+        "ID does not reference a View inside this View"
+    }
+
+fun <vt : View> Activity.findOptional(@IdRes idRes: Int) = findViewById<vt>(idRes)
+fun <vt : View> Fragment.findOptional(@IdRes idRes: Int) = requireView().findViewById<vt>(idRes)
+fun <vt : View> View.findOptional(@IdRes idRes: Int) = findViewById<vt>(idRes)
+fun <vt : View> AppCompatDialog.findOptional(@IdRes idRes: Int) = findViewById<vt>(idRes)
+//endregion
+
+//region Lazy Binding
+fun <vt : View> Activity.bindView(@IdRes idRes: Int): Lazy<vt> {
+    return lazy(LazyThreadSafetyMode.NONE) { find<vt>(idRes) }
+}
+
+fun <vt : View> Fragment.bindView(@IdRes idRes: Int): Lazy<vt> {
+    return lazy(LazyThreadSafetyMode.NONE) { find<vt>(idRes) }
+}
+
+fun <vt : View> View.bindView(@IdRes idRes: Int): Lazy<vt> {
+    return lazy(LazyThreadSafetyMode.NONE) { find<vt>(idRes) }
+}
+//endregion

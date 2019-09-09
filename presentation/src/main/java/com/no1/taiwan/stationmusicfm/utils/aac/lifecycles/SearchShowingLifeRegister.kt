@@ -38,7 +38,8 @@ class SearchShowingLifeRegister(fragment: Fragment) : FragmentLifeRegister<Fragm
         (frag?.activity as? MainActivity)?.apply {
             showSearchButton()
             frag?.getColor(R.color.colorPrimaryTextV1)?.let {
-                searchItem?.icon = R.drawable.ic_search_black.toDrawable(MusicApp.appContext).changeColor(it)
+                searchItem?.icon =
+                    R.drawable.ic_search_black.toDrawable(MusicApp.appContext).changeColor(it)
             }
         }
     }

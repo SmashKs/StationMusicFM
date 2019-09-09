@@ -45,7 +45,10 @@ abstract class ListenHistoryDao {
      * @return
      */
     @Query("SELECT * FROM table_local_music WHERE local_track_uri<>'' AND last_listen_date>=:zeroTime ORDER BY last_listen_date ASC LIMIT :limit")
-    abstract fun retrieveDownloadedMusics(limit: Int = 30, zeroTime: Date = Date(0)): List<LocalMusicData>
+    abstract fun retrieveDownloadedMusics(
+        limit: Int = 30,
+        zeroTime: Date = Date(0)
+    ): List<LocalMusicData>
 
     /**
      * Get data which in the playlist from the the music table.
@@ -57,7 +60,11 @@ abstract class ListenHistoryDao {
      * @return
      */
     @Query("SELECT * FROM table_local_music WHERE playlist_list LIKE '%'||:playlistId||'%' AND last_listen_date>=:zeroTime ORDER BY last_listen_date ASC LIMIT :limit")
-    abstract fun retrieveTypeOfMusics(playlistId: Int, limit: Int = 30, zeroTime: Date = Date(0)): List<LocalMusicData>
+    abstract fun retrieveTypeOfMusics(
+        playlistId: Int,
+        limit: Int = 30,
+        zeroTime: Date = Date(0)
+    ): List<LocalMusicData>
 
     /**
      * Reset the update time of a history.

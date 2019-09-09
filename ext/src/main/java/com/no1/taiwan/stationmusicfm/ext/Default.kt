@@ -19,6 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.no1.taiwan.stationmusicfm.ext
 
 const val DEFAULT_INT = -1
@@ -99,7 +101,8 @@ inline fun <T> Long.takeUnlessDefault(block: (Long) -> T) = takeUnless(Long::isD
  */
 inline fun Long.takeUnlessDefault() = takeUnless(Long::isDefault)
 
-inline fun <T> String.takeUnlessDefault(block: (String) -> T) = takeUnless(String::isDefault)?.let(block)
+inline fun <T> String.takeUnlessDefault(block: (String) -> T) =
+    takeUnless(String::isDefault)?.let(block)
 
 /**
  * Check [String] is default value or not.
@@ -108,7 +111,8 @@ inline fun <T> String.takeUnlessDefault(block: (String) -> T) = takeUnless(Strin
  */
 inline fun String.takeUnlessDefault() = takeUnless(String::isDefault)
 
-inline fun <T> Double.takeUnlessDefault(block: (Double) -> T) = takeUnless(Double::isDefault)?.let(block)
+inline fun <T> Double.takeUnlessDefault(block: (Double) -> T) =
+    takeUnless(Double::isDefault)?.let(block)
 
 /**
  * Check [Double] is default value or not.
@@ -117,7 +121,9 @@ inline fun <T> Double.takeUnlessDefault(block: (Double) -> T) = takeUnless(Doubl
  */
 inline fun Double.takeUnlessDefault() = takeUnless(Double::isDefault)
 
-inline fun <T> Float.takeUnlessDefault(block: (Float) -> T) = takeUnless(Float::isDefault)?.let(block)
+inline fun <T> Float.takeUnlessDefault(block: (Float) -> T) =
+    takeUnless(Float::isDefault)?.let(block)
+
 /**
  * Check [Float] is default value or not.
  *

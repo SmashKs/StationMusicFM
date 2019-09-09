@@ -39,6 +39,7 @@ class TopAlbumDMapper(
     }
 
     override fun toDataFrom(model: CommonLastFmModel.TopAlbumsModel) = model.run {
-        CommonLastFmData.TopAlbumsData(albums.map(albumWithArtistMapper::toDataFrom), attrMapper.toDataFrom(attr))
+        CommonLastFmData.TopAlbumsData(albums.map(albumWithArtistMapper::toDataFrom),
+                                       attrMapper.toDataFrom(attr))
     }
 }

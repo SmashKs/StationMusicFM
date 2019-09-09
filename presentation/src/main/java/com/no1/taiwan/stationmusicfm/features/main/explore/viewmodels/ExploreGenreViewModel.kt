@@ -75,9 +75,12 @@ class ExploreGenreViewModel(
         val parameters = TagParams(tagName)
         _tagInfoLiveData reqData {
             val tag = fetchTagCase.execMapping(tagMapper, FetchTagReq(parameters))
-            val artist = fetchTagTopArtistCase.execMapping(artistsMapper, FetchTagTopArtistReq(parameters))
-            val album = fetchTagTopAlbumCase.execMapping(albumsMapper, FetchTagTopAlbumReq(parameters))
-            val tracks = fetchTagTopTrackCase.execMapping(tracksMapper, FetchTagTopTrackReq(parameters))
+            val artist =
+                fetchTagTopArtistCase.execMapping(artistsMapper, FetchTagTopArtistReq(parameters))
+            val album =
+                fetchTagTopAlbumCase.execMapping(albumsMapper, FetchTagTopAlbumReq(parameters))
+            val tracks =
+                fetchTagTopTrackCase.execMapping(tracksMapper, FetchTagTopTrackReq(parameters))
             // If success to get them assign to each livedata.
             _tagLiveData.postValue(ResponseState.Success(tag))
             _topArtistsLiveData.postValue(ResponseState.Success(artist))

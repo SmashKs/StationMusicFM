@@ -31,7 +31,10 @@ import com.no1.taiwan.stationmusicfm.R
 import java.lang.ref.WeakReference
 
 object AlbumInfoDialog {
-    fun createDialog(activity: AppCompatActivity, viewBlock: (view: View, dialogFragment: DialogFragment) -> Unit) =
+    fun createDialog(
+        activity: AppCompatActivity,
+        viewBlock: (view: View, dialogFragment: DialogFragment) -> Unit
+    ) =
         WeakReference(activity).get()?.let {
             QuickDialogFragment.Builder(it) {
                 onTransitionBlock = {

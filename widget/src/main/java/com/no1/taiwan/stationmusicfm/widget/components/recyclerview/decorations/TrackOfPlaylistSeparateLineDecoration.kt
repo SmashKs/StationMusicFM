@@ -57,7 +57,12 @@ class TrackOfPlaylistSeparateLineDecoration(
      * @param parent  RecyclerView this ItemDecoration is decorating
      * @param state   The current state of RecyclerView.
      */
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         super.getItemOffsets(outRect, view, parent, state)
         outRect.set(0, 0, 0, margin.toInt())
     }

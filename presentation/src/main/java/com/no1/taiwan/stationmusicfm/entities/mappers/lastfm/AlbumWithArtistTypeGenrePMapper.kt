@@ -56,17 +56,18 @@ class AlbumWithArtistTypeGenrePMapper(
     }
 
     override fun toModelFrom(entity: AlbumInfoEntity.AlbumWithArtistTypeGenreEntity) = entity.run {
-        AlbumInfoModel.AlbumWithArtistModel(artistMapper.toModelFrom(artist), playCount, index).apply {
-            attr = attrMapper.toModelFrom(entity.attr)
-            images = entity.images.map(imageMapper::toModelFrom)
-            listeners = entity.listeners
-            mbid = entity.mbid
-            name = entity.name
-            tags = entity.tags.map(tagMapper::toModelFrom)
-            title = entity.title
-            tracks = entity.tracks.map(trackMapper::toModelFrom)
-            url = entity.url
-            wiki = wikiMapper.toModelFrom(entity.wiki)
-        }
+        AlbumInfoModel.AlbumWithArtistModel(artistMapper.toModelFrom(artist), playCount, index)
+            .apply {
+                attr = attrMapper.toModelFrom(entity.attr)
+                images = entity.images.map(imageMapper::toModelFrom)
+                listeners = entity.listeners
+                mbid = entity.mbid
+                name = entity.name
+                tags = entity.tags.map(tagMapper::toModelFrom)
+                title = entity.title
+                tracks = entity.tracks.map(trackMapper::toModelFrom)
+                url = entity.url
+                wiki = wikiMapper.toModelFrom(entity.wiki)
+            }
     }
 }

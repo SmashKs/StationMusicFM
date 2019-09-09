@@ -21,6 +21,7 @@
 
 package com.no1.taiwan.stationmusicfm.bases
 
+import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -28,8 +29,8 @@ import com.devrapid.dialogbuilder.support.QuickDialogFragment
 import com.devrapid.kotlinshaver.cast
 import com.google.android.material.snackbar.Snackbar
 import com.no1.taiwan.stationmusicfm.kits.view.hideRetryView
+import com.no1.taiwan.stationmusicfm.ktx.view.findOptional
 import com.no1.taiwan.stationmusicfm.widget.components.dialog.LoadingDialog
-import org.jetbrains.anko.contentView
 import org.kodein.di.generic.instance
 import java.lang.reflect.ParameterizedType
 
@@ -91,7 +92,9 @@ abstract class AdvActivity<out VM : ViewModel> : BaseActivity(), LoadView {
      * @param message String representing an error.
      */
     override fun showError(message: String) = if (enableDialogLoading)
-        contentView?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show() } ?: Unit
+        findOptional<ViewGroup>(android.R.id.content)?.getChildAt(0)?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT).show()
+        } ?: Unit
     else
         TODO()
     // showErrorView(message)

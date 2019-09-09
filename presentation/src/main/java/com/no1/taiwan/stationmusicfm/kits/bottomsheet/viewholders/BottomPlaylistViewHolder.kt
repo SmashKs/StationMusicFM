@@ -28,8 +28,8 @@ import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.playlist.PlaylistBottomSheetEntity
 import com.no1.taiwan.stationmusicfm.kits.recyclerview.viewholder.MultiViewHolder
+import com.no1.taiwan.stationmusicfm.ktx.view.find
 import com.no1.taiwan.stationmusicfm.utils.RxBusConstant.Tag.TAG_SAVING_PLAYLIST
-import org.jetbrains.anko.find
 import org.kodein.di.generic.instance
 
 class BottomPlaylistViewHolder(view: View) : MultiViewHolder<PlaylistBottomSheetEntity>(view) {
@@ -42,7 +42,11 @@ class BottomPlaylistViewHolder(view: View) : MultiViewHolder<PlaylistBottomSheet
      * @param position the index of a list.
      * @param adapter parent adapter.
      */
-    override fun initView(model: PlaylistBottomSheetEntity, position: Int, adapter: AdaptiveAdapter<*, *, *>) {
+    override fun initView(
+        model: PlaylistBottomSheetEntity,
+        position: Int,
+        adapter: AdaptiveAdapter<*, *, *>
+    ) {
         itemView.apply {
             find<TextView>(R.id.ftv_playlist_name).text = model.name
             setOnClickListener {

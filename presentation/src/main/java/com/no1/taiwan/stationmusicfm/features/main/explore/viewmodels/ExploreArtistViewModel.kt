@@ -100,13 +100,18 @@ class ExploreArtistViewModel(
         val parameters = ArtistParams(mbid, name)
         _artistInfoLiveData reqData {
             val artist = fetchArtistCase.execMapping(artistMapper, FetchArtistReq(parameters))
-            val album = fetchArtistTopAlbumCase.execMapping(topAlbumMapper, FetchArtistTopAlbumReq(parameters))
+            val album =
+                fetchArtistTopAlbumCase.execMapping(topAlbumMapper,
+                                                    FetchArtistTopAlbumReq(parameters))
             val similarArtist =
-                fetchSimilarArtistCase.execMapping(artistsSimilarMapper, FetchSimilarArtistReq(parameters))
+                fetchSimilarArtistCase.execMapping(artistsSimilarMapper,
+                                                   FetchSimilarArtistReq(parameters))
             val tracks =
-                fetchArtistTopTrackCase.execMapping(tracksWithStreamableMapper, FetchArtistTopTrackReq(parameters))
+                fetchArtistTopTrackCase.execMapping(tracksWithStreamableMapper,
+                                                    FetchArtistTopTrackReq(parameters))
             val photos = fetchArtistPhotoCase.execMapping(photosMapper,
-                                                          FetchArtistPhotoReq(ArtistParams(artistName = name)))
+                                                          FetchArtistPhotoReq(ArtistParams(
+                                                              artistName = name)))
             // If success to get them assign to each livedata.
             _artistLiveData.postValue(ResponseState.Success(artist))
             _albumsLiveData.postValue(ResponseState.Success(album))
@@ -140,12 +145,16 @@ class ExploreArtistViewModel(
             }
         }
         _tracksLiveData reqData {
-            fetchArtistTopTrackCase.execMapping(tracksWithStreamableMapper, FetchArtistTopTrackReq(parameter!!))
+            fetchArtistTopTrackCase.execMapping(tracksWithStreamableMapper,
+                                                FetchArtistTopTrackReq(parameter!!))
         }
     }
 
     fun runTaskSearchMusic(wholeKeyword: String) = launchBehind {
-        _musics reqData { fetchMusicCase.execMapping(musicMapper, FetchMusicReq(SrchSongParams(wholeKeyword))) }
+        _musics reqData {
+            fetchMusicCase.execMapping(musicMapper,
+                                       FetchMusicReq(SrchSongParams(wholeKeyword)))
+        }
     }
 
     class MusicLiveData(

@@ -99,8 +99,9 @@ class LocalDataStore(
     }
 
     override suspend fun removeSearchHistory(parameterable: Parameterable) = tryWrapper {
-        val data = castOrNull<SearchHistModel>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD_MODEL])
-            ?.let(SearchHistoryDMapper()::toDataFrom)
+        val data =
+            castOrNull<SearchHistModel>(parameterable.toApiAnyParam()[PARAM_NAME_KEYWORD_MODEL])
+                ?.let(SearchHistoryDMapper()::toDataFrom)
 
         if (data != null)
             searchingHistoryDao.release(data)
@@ -112,18 +113,21 @@ class LocalDataStore(
     //endregion
 
     //region Playlist
-    override suspend fun getLocalMusics(parameterable: Parameterable) = localMusicDao.retrieveMusics()
+    override suspend fun getLocalMusics(parameterable: Parameterable) =
+        localMusicDao.retrieveMusics()
 
     override suspend fun createOrModifyLocalMusic(parameterable: Parameterable) = tryWrapper {
         val trackName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_NAME])
         val artistName = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_ARTIST_NAME])
         val duration = cast<Int>(parameterable.toApiAnyParam()[PARAM_NAME_DURATION])
         val hasOwn = cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_HAS_OWN])
-        val remoteTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_REMOTE_TRACK_URI])
+        val remoteTrackUri =
+            cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_REMOTE_TRACK_URI])
         val localTrackUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_LOCAL_TRACK_URI])
         val coverUri = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_COVER_URI])
         val playlistList = cast<String>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_LIST])
-        val addOrMinus = cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_ADD_OR_MINUS])
+        val addOrMinus =
+            cast<Boolean>(parameterable.toApiAnyParam()[PARAM_NAME_PLAYLIST_ADD_OR_MINUS])
         localMusicDao.insertBy(LocalMusicData(0,
                                               trackName,
                                               artistName,
@@ -161,7 +165,8 @@ class LocalDataStore(
     override suspend fun modifyPlaylist(parameterable: Parameterable) = tryWrapper {
         val id = cast<List<Int>>(parameterable.toApiAnyParam()[PARAM_NAME_IDS]).first()
         val name = cast<List<String>>(parameterable.toApiAnyParam()[PARAM_NAME_NAMES]).first()
-        val trackNumbers = castOrNull<Int>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_COUNT]) ?: DEFAULT_INT
+        val trackNumbers =
+            castOrNull<Int>(parameterable.toApiAnyParam()[PARAM_NAME_TRACK_COUNT]) ?: DEFAULT_INT
         playlistDao.replaceBy(id, name, trackNumbers)
     }
 

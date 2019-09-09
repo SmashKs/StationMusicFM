@@ -50,15 +50,6 @@ object Dependencies {
         "annot" to Deps.Presentation.annot
     )
 
-    val preziAnko = hashMapOf(
-        "anko" to Deps.Presentation.anko,
-        "ankoSdk25" to Deps.Presentation.ankoSdk25,
-        "ankoV7" to Deps.Presentation.ankoV7,
-        "ankoCoroutine" to Deps.Presentation.ankoCoroutine,
-        "ankoV7Coroutine" to Deps.Presentation.ankoV7Coroutine,
-        "ankoCoroutines" to Deps.Presentation.ankoCoroutines
-    )
-
     val preziKtx = hashMapOf(
         "ktx" to Deps.Presentation.ktx,
         "fragmentKtx" to Deps.Presentation.fragmentKtx,
