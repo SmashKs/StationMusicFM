@@ -95,7 +95,7 @@ object Versions {
      * Related dependency injection lib version.
      */
     object DI {
-        const val kodein = "6.3.3"
+        const val kodein = "6.3.4"
     }
 
     /**
@@ -128,7 +128,7 @@ object Versions {
      */
     object Network {
         const val glide = "4.9.0"
-        const val coil = "0.6.1"
+        const val coil = "0.7.0"
         const val retrofit2 = "2.6.1"
         const val okhttp3 = "4.1.1"
         const val okhttpProfiler = "1.0.5"
@@ -160,12 +160,12 @@ object Versions {
     object Test {
         const val jUnit = "1.1.1"
         const val core = "1.2.0"
-        const val assertK = "0.14"
+        const val assertK = "0.19"
         const val runner = "1.2.0"
         const val espresso = "3.2.0"
         const val kakao = "2.1.0"
         const val powerMockito = "1.7.4"
-        const val mockitoKotlin = "2.1.0"
+        const val mockitoKotlin = "2.2.0"
         const val mockitoAndroid = "2.23.0"
         const val mockk = "v1.8.9.kotlin13"
         const val byteBuddy = "1.10.1"
