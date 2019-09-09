@@ -26,6 +26,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.kotlinknifer.resizeView
+import com.devrapid.kotlinknifer.waitForMeasure
 import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.others.RankingIdForChartItem
@@ -53,8 +55,10 @@ class ChartViewHolder(view: View) : MultiViewHolder<RankingIdForChartItem>(view)
         adapter: AdaptiveAdapter<*, *, *>
     ) {
         itemView.apply {
+            // Change the size.
+            waitForMeasure { v, w, _ -> v.resizeView(w, w) }
             find<TextView>(R.id.ftv_chart).text =
-                listOf(model.title, model.update, "${model.trackNumber} tracks").joinToString("\n")
+                listOf(model.title, "${model.trackNumber} tracks", model.update).joinToString("\n")
             find<ImageView>(R.id.aiv_thumbnail).load(model.topTrackUri)
             /** @event_to [com.no1.taiwan.stationmusicfm.features.main.rank.RankIndexFragment.gotoDetailFragment] */
             find<CardView>(R.id.mcv_chart).setOnClickListener {

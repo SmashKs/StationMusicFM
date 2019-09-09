@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2019 The Smash Ks Open Project
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,10 +20,11 @@
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/cl_others"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".features.main.rank.viewholders.ChartViewHolder">
 
     <com.google.android.material.card.MaterialCardView
@@ -36,12 +36,15 @@
             android:id="@+id/aiv_thumbnail"
             style="@style/Constraint.MatchParent"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars"/>
+            tools:src="@tools:sample/avatars" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_chart"
         style="@style/Rank.TextView.ItemRank.Chart"
+        android:layout_marginBottom="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
         android:gravity="center"
-        tools:text="@tools:sample/lorem[2]"/>
+        android:textSize="10sp"
+        tools:text="@tools:sample/lorem[2]" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,8 +25,12 @@ import android.content.Context
 import android.preference.PreferenceManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import coil.Coil
+import coil.ImageLoader
+import coil.util.CoilUtils
 import com.devrapid.kotlinknifer.SharedPrefs
 import com.facebook.stetho.Stetho
+import okhttp3.OkHttpClient
 
 class InitialWorker(
     context: Context,
@@ -36,6 +40,16 @@ class InitialWorker(
         // key-value storage, choose one for using.
         SharedPrefs.setPrefSettings(PreferenceManager.getDefaultSharedPreferences(applicationContext))
         Stetho.initializeWithDefaults(applicationContext)
+        Coil.setDefaultImageLoader {
+            ImageLoader(applicationContext) {
+                crossfade(true)
+                okHttpClient {
+                    OkHttpClient.Builder()
+                        .cache(CoilUtils.createDefaultCache(applicationContext))
+                        .build()
+                }
+            }
+        }
 
         return Result.success()
     }
