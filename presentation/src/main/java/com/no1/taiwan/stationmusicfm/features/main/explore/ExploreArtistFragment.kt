@@ -148,8 +148,9 @@ class ExploreArtistFragment : AdvFragment<MainActivity, ExploreArtistViewModel>(
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         // For backing here from others fragment.
-        if (!firstTimeEnter)
+        if (!firstTimeEnter) {
             showViewStub(R.id.vs_artist, R.id.v_artist)
+        }
     }
 
     /**

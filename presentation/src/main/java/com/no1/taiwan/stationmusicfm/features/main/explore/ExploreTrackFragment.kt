@@ -111,8 +111,9 @@ class ExploreTrackFragment : AdvFragment<MainActivity, ExploreTrackViewModel>() 
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (trackInfoLiveData.value.isNull())
+            if (trackInfoLiveData.value.isNull()) {
                 runTaskFetchTrack(mbid, artistName, trackName)
+            }
         }
     }
 

@@ -112,8 +112,9 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (tagInfoLiveData.value.isNull())
+            if (tagInfoLiveData.value.isNull()) {
                 runTaskFetchGenreInfo(tagName)
+            }
         }
     }
 
@@ -129,9 +130,10 @@ class ExploreGenreFragment : AdvFragment<MainActivity, ExploreGenreViewModel>() 
                              verLinearLayoutManager(),
                              VerticalItemDecorator(getDimen(R.dimen.md_one_unit).toInt()))
         // For coming back here and show it again.
-        if (vm.tagInfoLiveData.value != null)
+        if (vm.tagInfoLiveData.value != null) {
             find<TextView>(R.id.ftv_genre_about).text =
                 vm.tagInfoLiveData.data()?.first?.wiki?.content?.parseAsHtml()?.toSpannable()
+        }
     }
 
     /**

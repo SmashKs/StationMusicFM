@@ -81,14 +81,16 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        if (trackLoadMoreListener.fetchMoreBlock.isNull())
+        if (trackLoadMoreListener.fetchMoreBlock.isNull()) {
             trackLoadMoreListener.fetchMoreBlock = {
                 vm.runTaskFetchTopTrack()
             }
-        if (artistLoadMoreListener.fetchMoreBlock.isNull())
+        }
+        if (artistLoadMoreListener.fetchMoreBlock.isNull()) {
             artistLoadMoreListener.fetchMoreBlock = {
                 vm.runTaskFetchTopArtist()
             }
+        }
     }
 
     override fun onDetach() {
@@ -137,12 +139,9 @@ class ExploreIndexFragment : IndexFragment<ExploreIndexViewModel>() {
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (topTracks.value.isNull())
-                runTaskFetchTopTrack()
-            if (topArtists.value.isNull())
-                runTaskFetchTopArtist()
-            if (topTags.value.isNull())
-                runTaskFetchTopTag()
+            if (topTracks.value.isNull()) runTaskFetchTopTrack()
+            if (topArtists.value.isNull()) runTaskFetchTopArtist()
+            if (topTags.value.isNull()) runTaskFetchTopTag()
 
             test()
         }

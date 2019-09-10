@@ -137,8 +137,9 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
                 loge(it)
             } finally {
                 val artistName = vm.albumLiveData.data()?.artist.orEmpty()
-                if (artistThumbUri.isBlank() && artistName.isNotBlank())
+                if (artistThumbUri.isBlank() && artistName.isNotBlank()) {
                     vm.runTaskFetchArtist(artistName)
+                }
             } doWith this@ExploreAlbumFragment
         }
         observeNonNull(vm.artistLiveData) {
@@ -158,8 +159,9 @@ class ExploreAlbumFragment : AdvFragment<MainActivity, ExploreAlbumViewModel>() 
     override fun rendered(savedInstanceState: Bundle?) {
         super.rendered(savedInstanceState)
         vm.apply {
-            if (vm.albumLiveData.value.isNull())
+            if (vm.albumLiveData.value.isNull()) {
                 vm.runTaskFetchAlbum(mbid, albumName, artistName)
+            }
         }
     }
 
