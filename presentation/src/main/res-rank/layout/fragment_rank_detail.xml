@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2019 The Smash Ks Open Project
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,5 +30,5 @@
         android:id="@+id/rv_songs"
         style="@style/Constraint.MatchParent"
         tools:itemCount="7"
-        tools:listitem="@layout/item_rank_detail"/>
+        tools:listitem="@layout/item_rank_detail" />
 </androidx.constraintlayout.widget.ConstraintLayout>

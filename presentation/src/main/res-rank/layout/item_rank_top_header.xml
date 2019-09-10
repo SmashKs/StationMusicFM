@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2019 The Smash Ks Open Project
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,12 +30,12 @@
         android:id="@+id/aiv_thumbnail"
         style="@style/Constraint.MatchParent"
         android:scaleType="centerCrop"
-        tools:src="@tools:sample/avatars"/>
+        tools:src="@tools:sample/avatars" />
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_chart"
         style="@style/Rank.TextView.ItemRank.Top"
         android:layout_width="match_parent"
         android:textColor="?themeTextColorSecondary"
-        tools:text="@tools:sample/lorem[2]"/>
+        tools:text="@tools:sample/lorem[2]" />
 </com.google.android.material.card.MaterialCardView>
