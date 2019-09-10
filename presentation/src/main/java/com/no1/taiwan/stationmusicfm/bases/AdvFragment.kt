@@ -139,27 +139,33 @@ abstract class AdvFragment<out A : BaseActivity, out VM : ViewModel> : BaseFragm
     override fun provideActionBarResource() = parent.findOptional<Toolbar>(R.id.tb_header)
 
     protected fun vmProvider(providerFrom: Int) = when (providerFrom) {
-        PROVIDER_FROM_ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)
-        PROVIDER_FROM_FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)
-        PROVIDER_FROM_CUSTOM_FRAGMENT -> if (viewmodelProviderFragment != null)
-            ViewModelProviders.of(requireNotNull(viewmodelProviderFragment), viewModelFactory)
-        else
-            ViewModelProviders.of(this, viewModelFactory)
+        PROVIDER_FROM_ACTIVITY -> ViewModelProvider(requireActivity(), viewModelFactory)
+        PROVIDER_FROM_FRAGMENT -> ViewModelProvider(this, viewModelFactory)
+        PROVIDER_FROM_CUSTOM_FRAGMENT -> if (viewmodelProviderFragment != null) {
+            ViewModelProvider(requireNotNull(viewmodelProviderFragment), viewModelFactory)
+        }
+        else {
+            ViewModelProvider(this, viewModelFactory)
+        }
         else -> throw IllegalArgumentException()
     }
 
     private fun recursiveFindGenericSuperClass(superclass: Class<*>): Type =
-        if (superclass.genericSuperclass is ParameterizedType)
+        if (superclass.genericSuperclass is ParameterizedType) {
             requireNotNull(superclass.genericSuperclass)
-        else
+        }
+        else {
             recursiveFindGenericSuperClass(requireNotNull(superclass.superclass))
+        }
 
     private fun checkAllSuperClass(objClass: Class<*>, assignable: Class<*>): Boolean {
         objClass.superclass?.takeUnless { it.isAssignableFrom(java.lang.Object::class.java) }?.let {
-            return if (it.isAssignableFrom(assignable))
+            return if (it.isAssignableFrom(assignable)) {
                 true
-            else
+            }
+            else {
                 checkAllSuperClass(it, assignable)
+            }
         } ?: return false
     }
 }
