@@ -109,4 +109,3 @@ class SearchViewModel(
 
     fun resetPageNumber() = page.postValue(0)
 }
-

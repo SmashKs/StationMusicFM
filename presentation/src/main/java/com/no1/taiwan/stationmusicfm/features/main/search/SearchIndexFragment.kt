@@ -88,8 +88,9 @@ class SearchIndexFragment : IndexFragment<SearchViewModel>(), SearchCommonOperat
         }
         observeNonNull(vm.removeRes) {
             peelSkipLoading {
-                if (it && dropWord != DEFAULT_STR)
+                if (it && dropWord != DEFAULT_STR) {
                     adapter.removeItem(dropWord)
+                }
             } happenError {
                 loge(it)
             } doWith this@SearchIndexFragment

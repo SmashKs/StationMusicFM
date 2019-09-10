@@ -21,11 +21,14 @@
 
 package com.no1.taiwan.stationmusicfm.features.main.rank.viewholders
 
+import android.media.MediaMetadataRetriever
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.devrapid.adaptiverecyclerview.AdaptiveAdapter
+import com.devrapid.kotlinshaver.bkg
 import com.devrapid.kotlinshaver.toTimeString
+import com.devrapid.kotlinshaver.uiSwitch
 import com.hwangjr.rxbus.Bus
 import com.no1.taiwan.stationmusicfm.R
 import com.no1.taiwan.stationmusicfm.entities.musicbank.CommonMusicEntity.SongEntity
@@ -59,6 +62,19 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
             find<TextView>(R.id.ftv_order).text = (position + 1).toString()
             find<TextView>(R.id.ftv_track_name).text = model.title
             find<TextView>(R.id.ftv_artist_name).text = model.artist
+            if (model.length == 0) {
+                bkg {
+                    val retriever = MediaMetadataRetriever().apply {
+                        setDataSource(model.url, hashMapOf())
+                    }
+                    // FIXME(Jieyi): 2019-09-11 binder thread pool (15 threads) starved
+                    val time =
+                        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).toLong() / 1000
+                    uiSwitch {
+                        find<TextView>(R.id.ftv_duration).text = time.toInt().toTimeString()
+                    }
+                }
+            }
             find<TextView>(R.id.ftv_duration).text = model.length.toTimeString()
             setCurStateIcon(!player.isPlaying || player.curPlayingUri != model.url)
             setOnClickListener {
@@ -97,10 +113,12 @@ class RankTrackViewHolder(view: View) : MultiViewHolder<SongEntity>(view), Notif
     private fun setCurStateIcon(isIdle: Boolean) {
         itemView.apply {
             find<ImageView>(R.id.iv_play).apply {
-                setImageResource(if (isIdle)
-                                     R.drawable.ic_play_circle_outline_black
-                                 else
-                                     R.drawable.ic_pause_circle_outline_black)
+                setImageResource(if (isIdle) {
+                    R.drawable.ic_play_circle_outline_black
+                }
+                                 else {
+                    R.drawable.ic_pause_circle_outline_black
+                })
             }
         }
     }

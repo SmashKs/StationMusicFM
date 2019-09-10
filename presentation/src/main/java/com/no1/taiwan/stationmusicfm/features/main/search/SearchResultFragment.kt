@@ -90,8 +90,9 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
 
     override fun onResume() {
         super.onResume()
-        if (rvScrollListener.fetchMoreBlock.isNull())
+        if (rvScrollListener.fetchMoreBlock.isNull()) {
             rvScrollListener.fetchMoreBlock = ::fetchMore
+        }
         parent.onQuerySubmit = {
             vm.resetPageNumber()
             vm.runTaskAddHistory(it)
@@ -125,8 +126,9 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
                     adapter.replaceWholeList(cast(it.items))
                     player.clearPlaylist()
                 }
-                else
+                else {
                     adapter.append(cast<MusicVisitables>(it.items))
+                }
                 it.items.transformLocalUri().let(player::addToPlaylist)
                 vm.increasePageNumber()  // after success fetching, auto increasing the page.
                 fetchAgainForFirstTime()
@@ -160,8 +162,9 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
             onChangeTrack = listener@{ oldIndex, newIndex ->
                 // In the beginning, avoid changing play position multiple times.
                 if (oldIndex == DEFAULT_INT) return@listener
-                if (adapter.retrieveTrackUri(oldIndex) != player.curPlayingUri)
+                if (adapter.retrieveTrackUri(oldIndex) != player.curPlayingUri) {
                     adapter.playingPosition = newIndex
+                }
             }
         })
     }
@@ -203,11 +206,13 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
         val position = cast<Int>(parameter[PARAMS_LAYOUT_POSITION])
         val song = cast<SongEntity>(parameter[PARAMS_SONG_ENTITY])
         val res = player.play(position)
-        if (res)
-            adapter.playingPosition =
-                position  // For updating current views are showing on the recycler view.
-        else
+        if (res) {
+            adapter.playingPosition = position
+        }
+        else {
             adapter.setStateMusicBy(position, res)
+        }
+        // For updating current views are showing on the recycler view.
         /* Add the play history into a database. */
         vm.runTaskAddOrUpdateToPlayHistory(song)
     }
@@ -236,8 +241,9 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
 
     private fun fetchAgainForFirstTime() {
         // The first time searching will fetch two times in the beginning.
-        if (vm.getCurPageNumber() == 1)
+        if (vm.getCurPageNumber() == 1) {
             vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
+        }
     }
 
     private fun initRecyclerView() {
@@ -260,8 +266,9 @@ class SearchResultFragment : AdvFragment<MainActivity, SearchViewModel>(), Searc
     private fun fetchMore() {
         // NOTE: totalItemCount is set for avoiding that the first page to load again and again.
         //  If there's only few items(1 ~ 7) will trigger load more in the beginning.
-        if (vm.getCurPageNumber() > 1)
+        if (vm.getCurPageNumber() > 1) {
             vm.runTaskSearchMusic(vm.keyword.value.orEmpty())
+        }
     }
 
     private fun switchStub(isResult: Boolean) {
