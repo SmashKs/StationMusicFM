@@ -38,13 +38,16 @@ class FetchPlaylistsRespCase(
     override var requestValues: FetchPlaylistsReq? = null
 
     override suspend fun acquireCase() = attachParameter {
-        if (it.parameters is EmptyParams)
+        if (it.parameters is EmptyParams) {
             repository.fetchPlaylists()
+        }
         else {
-            if (cast<List<Int>>(it.parameters.toApiAnyParam()[PARAM_NAME_IDS]).isEmpty())
+            if (cast<List<Int>>(it.parameters.toApiAnyParam()[PARAM_NAME_IDS]).isEmpty()) {
                 listOf(repository.fetchTheNewestPlaylist())
-            else
+            }
+            else {
                 listOf(repository.fetchPlaylist(it.parameters))
+            }
         }
     }
 

@@ -44,7 +44,7 @@ object CommonMusicModel {
         val copyrightType: Int = 0,
         val coverURL: String = DEFAULT_STR,
         val flag: Int = 0,
-        val length: Int = 0,
+        var length: Int = 0,
         val lyricURL: String = DEFAULT_STR,
         val mv: MvModel = MvModel(),
         val oriCoverUrl: String = DEFAULT_STR,

@@ -21,6 +21,8 @@
 
 package com.no1.taiwan.stationmusicfm.data.repositories
 
+import android.media.MediaMetadataRetriever
+import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.BriefRankDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.HotListDMapper
 import com.no1.taiwan.stationmusicfm.data.data.mappers.musicbank.MusicDMapper
@@ -59,7 +61,18 @@ class MusicBankDataRepository constructor(
         remote.getMusicRanks(parameters).briefRankDatas.map(ranksMapper::toModelFrom)
 
     override suspend fun fetchMusic(parameters: Parameterable) =
-        remote.getMusic(parameters).data.run(musicMapper::toModelFrom)
+        remote.getMusic(parameters).data.run(musicMapper::toModelFrom).apply {
+            items.forEach {
+                // Fix the track with 0 duration.
+                if (it.length == 0) {
+                    val retriever = MediaMetadataRetriever().apply {
+                        setDataSource(it.url, hashMapOf())
+                    }
+                    val time = retriever.extractMetadata(METADATA_KEY_DURATION).toLong() / 1000
+                    it.length = time.toInt()
+                }
+            }
+        }
 
     override suspend fun fetchHotPlaylist(parameters: Parameterable) =
         remote.getHotPlaylist(parameters).data.run(hotListMapper::toModelFrom)
