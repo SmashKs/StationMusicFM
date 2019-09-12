@@ -39,7 +39,7 @@ object Versions {
      * Related Android component lib version.
      */
     object AndroidComponent {
-        const val material = "1.1.0-alpha08"
+        const val material = "1.1.0-alpha10"
         const val androidx = "1.0.0"
         const val annotation = "1.1.0"
         const val appCompat = "1.1.0"
@@ -80,8 +80,8 @@ object Versions {
         const val paletteKtx = "1.0.0"
         const val collectionKtx = "1.1.0"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
-        const val navigationKtx = "2.1.0-alpha02"
-        const val workKtx = "2.2.0"
+        const val navigationKtx = "2.2.0-alpha02"
+        const val workKtx = "2.3.0-alpha01"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
@@ -129,7 +129,7 @@ object Versions {
         const val glide = "4.9.0"
         const val coil = "0.7.0"
         const val retrofit2 = "2.6.1"
-        const val okhttp3 = "4.1.1"
+        const val okhttp3 = "4.2.0"
         const val okhttpProfiler = "1.0.5"
         const val activityLauncher = "1.0.2"
         const val jsoup = "1.12.1"
@@ -175,7 +175,7 @@ object Versions {
      */
     object Plugin {
         const val detekt = "1.0.1"
-        const val versionUpdater = "0.24.0"
+        const val versionUpdater = "0.25.0"
     }
 
     object Player {
