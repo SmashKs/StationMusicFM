@@ -79,7 +79,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
-    viewBinding { enabled = true }
+//    viewBinding.enabled = true
 }
 
 androidExtensions {

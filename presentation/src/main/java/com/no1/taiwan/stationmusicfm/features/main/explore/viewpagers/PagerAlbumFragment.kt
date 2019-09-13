@@ -35,8 +35,9 @@ import com.no1.taiwan.stationmusicfm.widget.components.recyclerview.MusicVisitab
 class PagerAlbumFragment : BasePagerFragment() {
     override fun onResume() {
         super.onResume()
-        if (scrollListener.fetchMoreBlock.isNull())
+        if (scrollListener.fetchMoreBlock.isNull()) {
             scrollListener.fetchMoreBlock = ::fetchMore
+        }
     }
 
     override fun onDetach() {
@@ -53,7 +54,8 @@ class PagerAlbumFragment : BasePagerFragment() {
                 // When `count` is 0 that means only the same artist searched can be appended because it doesn't
                 // need to fetch again from the remote server.
                 // Otherwise `count` is 1 will prevent adding again and again.
-                if ((enterCount == 0 && it.albums.firstOrNull()?.artist?.name == searchArtistName) ||
+                if ((enterCount == 0 &&
+                     it.albums.firstOrNull()?.artist?.name == searchArtistName) ||
                     (enterCount == 1 && it.albums.isNotEmpty() && adapter.itemCount == 0)) {
                     adapter.append(cast<MusicVisitables>(it.albums))
                 }

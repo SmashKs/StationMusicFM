@@ -36,7 +36,6 @@ object Deps {
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.kotlinCoroutine}"
 
         const val rxJava2 = "io.reactivex.rxjava2:rxjava:${Versions.RxDep.rxJava2}"
-        const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.RxDep.rxKotlin2}"
 
         const val shaver = "com.devrapid.jieyi:kotlinshaver:${Versions.KotlinAndroidExt.kinfer}"
 

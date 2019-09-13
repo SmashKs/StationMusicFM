@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2019 The Smash Ks Open Project
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,7 +18,7 @@
   ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
   ~ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
-
+<!-- FrameLayout is for make card view center of grid layout. -->
 <FrameLayout
     style="@style/Constraint.Wrap.FitWidth"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,6 +32,7 @@
         android:layout_gravity="center"
         android:clickable="true"
         android:focusable="true"
+        app:cardCornerRadius="@dimen/md_one_half_unit"
         app:cardElevation="@dimen/md_one_unit"
         app:cardUseCompatPadding="true">
 
@@ -46,7 +46,7 @@
                 android:layout_height="@dimen/md_zero_unit"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars"/>
+                tools:src="@tools:sample/avatars" />
 
             <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
                 android:id="@+id/ftv_album_name"
@@ -57,7 +57,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_album"
-                tools:text="@tools:sample/full_names"/>
+                tools:text="@tools:sample/full_names" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </FrameLayout>
