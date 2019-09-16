@@ -120,6 +120,8 @@ dependencies {
     }
     //endregion
 
+    implementation(Dependencies.preziFirebaseQuality.values())
+
     //region Rx Bus
     implementation(Deps.Presentation.rxBus) {
         exclude(group: "com.jakewharton.timber", module: "timber")
@@ -182,3 +184,6 @@ dependencies {
     androidTestImplementation(Deps.PresentationTest.kakao)
     //endregion
 }
+
+// Add to the bottom of the file
+apply plugin: "com.google.gms.google-services"

@@ -105,8 +105,10 @@ object Versions {
         const val database = "16.1.0"
         const val auth = "16.0.3"
         const val messaging = "17.5.0"
+        const val analytics = "17.2.0"
+        const val crashlytics = "2.10.1"
 
-        const val googleService = "4.2.0"
+        const val googleService = "4.3.0"
     }
 
     object CloudStore {

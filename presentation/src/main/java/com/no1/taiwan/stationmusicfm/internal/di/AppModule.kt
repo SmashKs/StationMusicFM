@@ -22,6 +22,7 @@
 package com.no1.taiwan.stationmusicfm.internal.di
 
 import android.content.Context
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.hwangjr.rxbus.Bus
 import com.hwangjr.rxbus.RxBus
 import com.no1.taiwan.stationmusicfm.player.ExoPlayerWrapper
@@ -42,5 +43,7 @@ object AppModule {
     fun appProvider(context: Context) = Kodein.Module("Application Module") {
         bind<MusicPlayer>() with instance(ExoPlayerWrapper(context))
         bind<Bus>() with instance(RxBus.get())
+
+        bind<FirebaseAnalytics>() with instance(FirebaseAnalytics.getInstance(context))
     }
 }

@@ -25,12 +25,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.main.mymusic.MyMusicIndexFragment">
+    tools:context="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicIndexFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_playlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:itemCount="5"
-        tools:listitem="@layout/item_playlist"/>
+        tools:listitem="@layout/item_playlist" />
 </androidx.constraintlayout.widget.ConstraintLayout>

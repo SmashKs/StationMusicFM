@@ -43,5 +43,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/fragment_playlist_create_list"/>
+        tools:text="@string/fragment_playlist_create_list" />
 </androidx.constraintlayout.widget.ConstraintLayout>

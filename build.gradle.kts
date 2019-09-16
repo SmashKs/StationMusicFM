@@ -25,7 +25,10 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven { url = uri("http://dl.bintray.com/kotlin/kotlin-eap") }
+        maven {
+            url = uri("http://dl.bintray.com/kotlin/kotlin-eap")
+            url = uri("https://maven.fabric.io/public")
+        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle:3.5.0")
@@ -34,7 +37,8 @@ buildscript {
         // in the individual module build.gradle files
 //        classpath "org.jacoco:org.jacoco.core:0.8.4"
         classpath("android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0")
-//        classpath "com.google.gms:google-services:4.2.0"
+        classpath("com.google.gms:google-services:${config.Versions.Firebase.googleService}")
+        classpath("io.fabric.tools:gradle:1.31.0")
     }
 }
 
@@ -42,10 +46,6 @@ plugins {
     id("io.gitlab.arturbosch.detekt").version(config.Versions.Plugin.detekt)
     id("com.github.ben-manes.versions").version(config.Versions.Plugin.versionUpdater)
 }
-
-// dependencies {
-//     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${deteckt_version}")
-// }
 
 subprojects {
     //region Apply plugin
@@ -62,6 +62,7 @@ subprojects {
             "presentation" -> {
                 plugin("com.android.application")
                 plugin("kotlin-android")
+                plugin("io.fabric")
             }
         }
         if (name == "data" || name == "presentation") {

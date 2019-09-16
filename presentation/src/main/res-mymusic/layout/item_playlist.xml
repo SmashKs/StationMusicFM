@@ -37,18 +37,16 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars"/>
+        tools:src="@tools:sample/avatars" />
 
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_playlist_name"
-        style="@style/MusicTextView.Bold.AnyWidth"
-        android:textSize="@dimen/text_size_normal"
-        app:layout_constraintBottom_toTopOf="@id/ftv_track_count"
-        app:layout_constraintEnd_toStartOf="@id/iv_detail"
-        app:layout_constraintStart_toEndOf="@id/iv_playlist_thumbnail"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="@tools:sample/lorem"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_right_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_track_count"
@@ -59,14 +57,16 @@
         app:layout_constraintEnd_toStartOf="@id/iv_detail"
         app:layout_constraintStart_toEndOf="@id/iv_playlist_thumbnail"
         app:layout_constraintTop_toBottomOf="@id/ftv_playlist_name"
-        tools:text="32 songs"/>
+        tools:text="32 songs" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_right_black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_playlist_name"
+        style="@style/MusicTextView.Bold.AnyWidth"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintBottom_toTopOf="@id/ftv_track_count"
+        app:layout_constraintEnd_toStartOf="@id/iv_detail"
+        app:layout_constraintStart_toEndOf="@id/iv_playlist_thumbnail"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@tools:sample/lorem" />
 </androidx.constraintlayout.widget.ConstraintLayout>

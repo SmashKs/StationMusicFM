@@ -222,7 +222,7 @@ formatting:
     active: true
     autoCorrect: true
   ImportOrdering:
-    active: true
+    active: false
     autoCorrect: true
   Indentation:
     active: false

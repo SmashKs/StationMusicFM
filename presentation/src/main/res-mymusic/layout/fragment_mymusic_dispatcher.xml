@@ -26,7 +26,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.main.mymusic.MyMusicIndexFragment">
+    tools:context="com.no1.taiwan.stationmusicfm.features.main.mymusic.MyMusicIndexFragment">
 
     <fragment
         android:id="@+id/frag_nav_mymusic"
@@ -34,5 +34,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_mymusic"/>
+        app:navGraph="@navigation/nav_mymusic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

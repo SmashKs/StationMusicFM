@@ -23,10 +23,6 @@ import config.Dependencies
 import config.Deps
 import config.Versions
 
-apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
-apply plugin: "org.jetbrains.kotlin.kapt"
 apply from: "../utils.gradle"
 
 android {

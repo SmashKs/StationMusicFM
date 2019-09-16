@@ -112,8 +112,10 @@ object Deps {
         const val firebaseCore = "com.google.firebase:firebase-core:${Versions.Firebase.core}"
         const val firebaseDB = "com.google.firebase:firebase-database:${Versions.Firebase.database}"
         const val firebaseAuth = "com.google.firebase:firebase-auth:${Versions.Firebase.auth}"
-        const val firebaseMessaging =
-            "com.google.firebase:firebase-messaging:${Versions.Firebase.messaging}"
+        const val firebaseAnalytics =
+            "com.google.firebase:firebase-analytics:${Versions.Firebase.analytics}"
+        const val firebaseCrashlytics =
+            "com.crashlytics.sdk.android:crashlytics:${Versions.Firebase.crashlytics}"
         const val cloudinary = "com.cloudinary:cloudinary-android:${Versions.CloudStore.cloudinary}"
         const val mmkv = "com.tencent:mmkv-static:${Versions.Database.mmkv}"
         const val room = Data.room

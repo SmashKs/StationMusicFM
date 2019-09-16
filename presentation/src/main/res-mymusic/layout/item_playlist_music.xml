@@ -29,15 +29,6 @@
     android:paddingTop="@dimen/md_one_unit"
     tools:context=".features.main.mymusic.viewholders.LocalMusicViewHolder">
 
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
-        android:id="@+id/ftv_playlist_index"
-        style="@style/MusicTextView.AnyWidth"
-        android:drawablePadding="@dimen/md_two_unit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="5"/>
-
     <ImageView
         android:id="@+id/iv_thumbnail"
         android:layout_width="@dimen/md_five_unit"
@@ -46,7 +37,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars"/>
+        tools:src="@tools:sample/avatars" />
+
+    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+        android:id="@+id/ftv_playlist_index"
+        style="@style/MusicTextView.AnyWidth"
+        android:drawablePadding="@dimen/md_two_unit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="5" />
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_music_name"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="@tools:sample/full_names"/>
+        tools:text="@tools:sample/full_names" />
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_artist_name"
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ftv_track_duration"
         app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
         app:layout_constraintTop_toBottomOf="@id/ftv_music_name"
-        tools:text="@tools:sample/full_names"/>
+        tools:text="@tools:sample/full_names" />
 
     <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
         android:id="@+id/ftv_track_duration"
@@ -81,5 +81,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ftv_music_name"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="00:00"/>
+        tools:text="00:00" />
 </androidx.constraintlayout.widget.ConstraintLayout>

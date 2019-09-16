@@ -22,17 +22,25 @@
 
 <resources>
     <!-- Theme Reference -->
-    <attr name="themeColorPrimary" format="reference"/>
-    <attr name="themeColorPrimaryLight" format="reference"/>
-    <attr name="themeColorPrimaryDark" format="reference"/>
-    <attr name="themeColorAccent" format="reference"/>
-    <attr name="themeColorSecondary" format="reference"/>
-    <attr name="themeColorSecondaryLight" format="reference"/>
-    <attr name="themeColorSecondaryDark" format="reference"/>
-    <attr name="themeColorSecondaryAccent" format="reference"/>
-    <attr name="themeTextColorPrimary" format="reference"/>
-    <attr name="themeTextColorSecondary" format="reference"/>
-    <attr name="themeFont" format="reference"/>
-    <attr name="themeNavigationBarColor" format="reference"/>
-    <attr name="themeBackgroundColor" format="reference"/>
+    <attr name="themeColorPrimary" format="reference" />
+    <attr name="themeColorPrimaryLight" format="reference" />
+    <attr name="themeColorPrimaryDark" format="reference" />
+    <attr name="themeColorAccent" format="reference" />
+    <attr name="themeColorSecondary" format="reference" />
+    <attr name="themeColorSecondaryLight" format="reference" />
+    <attr name="themeColorSecondaryDark" format="reference" />
+    <attr name="themeColorSecondaryAccent" format="reference" />
+    <attr name="themeTextColorPrimary" format="reference" />
+    <attr name="themeTextColorSecondary" format="reference" />
+    <attr name="themeFont" format="reference" />
+    <attr name="themeNavigationBarColor" format="reference" />
+    <attr name="themeBackgroundColor" format="reference" />
+
+    <!-- TODO: This is a temporary fix for this issue: https://issuetracker.google.com/issues/136103084 -->
+    <attr name="flow_horizontalSeparator" />
+    <attr name="flow_verticalSeparator" />
+    <attr name="motionProgress" />
+    <attr name="waveDecay" />
+    <attr name="motionPathRotate" />
+    <attr name="duration" />
 </resources>
