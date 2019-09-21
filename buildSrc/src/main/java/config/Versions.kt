@@ -76,17 +76,17 @@ object Versions {
         const val dex = "2.0.1"
         const val kinfer = "2.1.16"
         const val ktx = "1.2.0-alpha04"
-        const val fragmentKtx = "1.2.0-alpha03"
+        const val fragmentKtx = "1.2.0-alpha04"
         const val paletteKtx = "1.0.0"
         const val collectionKtx = "1.1.0"
         const val viewmodelKtx = AndroidArchitectureComponent.aacLifecycle
-        const val navigationKtx = "2.2.0-alpha02"
+        const val navigationKtx = "2.2.0-alpha03"
         const val workKtx = "2.3.0-alpha01"
         const val dynAnimKtx = "1.0.0-alpha01"
     }
 
     object AndroidArchitectureComponent {
-        const val aacLifecycle = "2.2.0-alpha04"
+        const val aacLifecycle = "2.2.0-alpha05"
         const val room = "2.2.0-rc01"
     }
 
@@ -108,7 +108,7 @@ object Versions {
         const val analytics = "17.2.0"
         const val crashlytics = "2.10.1"
 
-        const val googleService = "4.3.0"
+        const val googleService = "4.3.2"
     }
 
     object CloudStore {

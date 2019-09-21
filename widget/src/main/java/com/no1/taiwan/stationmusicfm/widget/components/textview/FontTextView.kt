@@ -33,7 +33,7 @@ import com.no1.taiwan.stationmusicfm.widget.components.typeface.TypeFaceProvider
 class FontTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = android.R.attr.textViewStyle
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
     init {
         context.obtainStyledAttributes(attrs, R.styleable.FontTextView, defStyleAttr, 0).also {
