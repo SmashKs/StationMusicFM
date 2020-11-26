@@ -17,6 +17,15 @@ album. Basically, it's a demo app but all the basic functions we provide.
 
 Talking is wasting time XD Let's just see the Demo.
 
+# 🚫 Deprecated
+
+If you did contribute on this project, I really apprecaited it a lot. Unfortunally, this project's
+architecture andlibraries have been old. Don't have so much time to maintain this project so we
+decided to archive this project.
+
+I have recreated the same music app with morden architecture and dynamic features here https://github.com/pokk/DropBeat.
+If you are interested in, please take a look.
+
 # Screenshots
 
 1. Main View
